@@ -14,10 +14,7 @@ public class Grid : Node2D
 
     private RandomNumberGenerator rand = new RandomNumberGenerator();
 
-    public Grid()
-    {
-        
-    }
+    public Grid(){}
 
     public Grid(int x, Vector2 viewportSize)
     {
