@@ -54,28 +54,42 @@ public class Grid : Node2D
         UpdateGrid();
     }
 
-    private void UpdateGrid()
+    public void UpdateGrid()
     {
         AssignTileTypes();
         Draw();
     }
 
-    public void AssignTileTypes()
+    private void AssignTileTypes()
     {
+        ClearTypes();
         AssignGoalTiles(1, 3);
+    }
+
+    private void ClearTypes()
+    {
+        foreach (Tile t in Tiles)
+        {
+            t.Type = Type.Black;
+        }
     }
 
     private void AssignGoalTiles(int goalTileCount, int stepsFromPlayer)
     {
-        int x = rand.RandiRange(1,stepsFromPlayer);
+        int x = rand.RandiRange(0, stepsFromPlayer);
         Vector2 relativeGridPosition = new Vector2(x, stepsFromPlayer - x);
-        for (int i = 0; i <= rand.RandiRange(0,3); i++)
+        Vector2 absoluteGridPosition;
+        do
         {
-            float tempY = relativeGridPosition.y;
-            relativeGridPosition.y = relativeGridPosition.x * -1;
-            relativeGridPosition.x = tempY;
-        }
-        Vector2 absoluteGridPosition = relativeGridPosition + Player.GridPosition;
+            for (int i = 0; i <= rand.RandiRange(0,3); i++)
+            {
+                float tempY = relativeGridPosition.y;
+                relativeGridPosition.y = relativeGridPosition.x * -1;
+                relativeGridPosition.x = tempY;
+            }
+        absoluteGridPosition = relativeGridPosition + Player.GridPosition;
+        } while (absoluteGridPosition.x < 0 || absoluteGridPosition.x >= GridWidth ||
+                 absoluteGridPosition.y < 0 || absoluteGridPosition.y >= GridHeight );
 
         Tiles[(int)absoluteGridPosition.x, (int)absoluteGridPosition.y].Type = Type.White;
     }

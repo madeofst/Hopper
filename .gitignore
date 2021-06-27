@@ -36,3 +36,4 @@
 .mono/temp/obj/Debug/Hopper.csprojAssemblyReference.cache
 .mono/temp/obj/Debug/Hopper.dll
 .mono/temp/obj/Debug/Hopper.pdb
+.mono/metadata/ide_messaging_meta.txt

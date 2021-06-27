@@ -38,26 +38,48 @@ public class Player : Sprite
     {
         if (@event.IsActionPressed("ui_left"))
         {
-            if(GridPosition.x > 0) GridPosition += new Vector2(-1, 0);
+            if(GridPosition.x > 0) 
+            {
+                GridPosition += new Vector2(-1, 0);
+                CheckPosition();
+            }
         }
         else if (@event.IsActionPressed("ui_right"))
         {
-            if(GridPosition.x < Grid.GridWidth - 1) GridPosition += new Vector2(1, 0);
+            if(GridPosition.x < Grid.GridWidth - 1)
+            {
+                GridPosition += new Vector2(1, 0);
+                CheckPosition();
+            }
         }
         else if (@event.IsActionPressed("ui_up"))
         {
-            if(GridPosition.y > 0) GridPosition += new Vector2(0, -1);
+            if(GridPosition.y > 0)
+            {
+                GridPosition += new Vector2(0, -1);
+                CheckPosition();
+            }
         }
         else if (@event.IsActionPressed("ui_down"))
         {
-            if(GridPosition.y < Grid.GridHeight - 1) GridPosition += new Vector2(0, 1);
+            if(GridPosition.y < Grid.GridHeight - 1)
+            {
+                GridPosition += new Vector2(0, 1);
+                CheckPosition();
+            }
         }
-        
         
         if (@event.IsActionPressed("ui_select"))
         {
-            Grid.AssignTileTypes();
+            Grid.UpdateGrid();
         }
     }
 
+    private void CheckPosition()
+    {
+        if (Grid.Tiles[(int)GridPosition.x, (int)GridPosition.y].Type == Type.White)
+        {
+            Grid.UpdateGrid();
+        }
+    }
 }
