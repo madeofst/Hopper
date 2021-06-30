@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://World.cs" type="Script" id=1]
 [ext_resource path="res://HopCounter.cs" type="Script" id=2]
+[ext_resource path="res://BlackSquare.png" type="Texture" id=3]
+[ext_resource path="res://GameOverLabel.cs" type="Script" id=4]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -23,6 +25,23 @@ margin_top = 37.0
 margin_right = 110.0
 margin_bottom = 55.0
 text = "Hops:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverLabel" type="Sprite" parent="."]
+visible = false
+position = Vector2( 288.473, 283.983 )
+scale = Vector2( 8.47139, 8.54154 )
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="GameOverRichTextLabel" type="RichTextLabel" parent="GameOverLabel"]
+margin_left = -20.31
+margin_top = -15.2502
+margin_right = 22.69
+margin_bottom = 16.7498
+text = "GAME OVER"
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -3,7 +3,8 @@ using System;
 
 public class World : Node2D
 {
-
+    public bool GameOver = false;
+    private Sprite GameOverLabel { get; set; }
     private Grid Grid { get; set; }
     private Player Player { get; set; }
     
@@ -14,6 +15,21 @@ public class World : Node2D
         AddChild(Grid);
         Player = new Player();
         AddChild(Player);
+        CallDeferred("GetChildReferences");
+    }
+
+    public override void _Process(float delta)
+    {
+        if (GameOver)
+        {
+            MoveChild(GameOverLabel, GetChildCount());
+            GameOverLabel.Visible = true;
+        }
+    }
+
+    public void GetChildReferences()
+    {
+        GameOverLabel = GetNode<Sprite>("GameOverLabel");
     }
 
 }
