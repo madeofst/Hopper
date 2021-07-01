@@ -60,7 +60,7 @@ public class Grid : Node2D
     private void AssignTileTypes()
     {
         ClearTypes();
-        AssignGoalTiles(1, 3);
+        AssignGoalTiles(1, 3, 2);
     }
 
     private void ClearTypes()
@@ -71,17 +71,18 @@ public class Grid : Node2D
         }
     }
 
-    private void AssignGoalTiles(int goalTileCount, int stepsFromPlayer)
+    private void AssignGoalTiles(int goalTileCount, int maxStepsFromPlayer, int minStepsFromPlayer = 1)
     {
-        int x = rand.RandiRange(0, stepsFromPlayer);
-        Vector2 relativeGridPosition = new Vector2(x, stepsFromPlayer - x);
+        int possibleSteps = rand.RandiRange(minStepsFromPlayer, maxStepsFromPlayer);
+        int x = rand.RandiRange(0, possibleSteps);
+        Vector2 relativeGridPosition = new Vector2(x, possibleSteps - x);
         Vector2 absoluteGridPosition;
         do
         {
             for (int i = 0; i <= rand.RandiRange(0,3); i++)
             {
                 float tempY = relativeGridPosition.y;
-                relativeGridPosition.y = relativeGridPosition.x * -1;
+                relativeGridPosition.y = relativeGridPosition.x * - 1;
                 relativeGridPosition.x = tempY;
             }
         absoluteGridPosition = relativeGridPosition + Player.GridPosition;
