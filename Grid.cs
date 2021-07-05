@@ -114,13 +114,16 @@ public class Grid : Node2D
                 PlayerToScore = new Vector2(x, possibleSteps - x);
                 ScoreGridPosition = PlayerToScore + Player.GridPosition;
                 ScoreToGoal = GoalTile.GridPosition - ScoreGridPosition;;
-                totalSteps = ScoreToGoal.PathLength() + PlayerToScore.PathLength();
+                totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
             } 
-            while (ScoreGridPosition != Player.GridPosition &&
-                   ScoreGridPosition != GoalTile.GridPosition &&
-                  (totalSteps >= Player.MaxHops || totalSteps <= 0) &&
-                  (ScoreGridPosition.x < 0 || ScoreGridPosition.x >= GridWidth ||
-                   ScoreGridPosition.y < 0 || ScoreGridPosition.y >= GridHeight));
+            while (ScoreGridPosition == Player.GridPosition ||
+                   ScoreGridPosition == GoalTile.GridPosition ||
+                   totalSteps >= Player.MaxHops || 
+                   totalSteps <= 0 ||
+                   ScoreGridPosition.x < 0 || 
+                   ScoreGridPosition.x >= GridWidth ||
+                   ScoreGridPosition.y < 0 || 
+                   ScoreGridPosition.y >= GridHeight);
             
             Tile(ScoreGridPosition).Type = Type.Score;
             //GD.Print(tempScoreAbsoluteGridPosition);

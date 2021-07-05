@@ -19,14 +19,17 @@ public class Tile : Node2D
             if (_type == Type.Blank)
             {
                 Sprite.Texture = GD.Load<Texture>("res://BlackSquare.png");
+                PointValue = 0;
             }
             else if (_type == Type.Goal)
             {
                 Sprite.Texture = GD.Load<Texture>("res://WhiteSquare.png");
+                PointValue = 50;
             }
             else if (_type == Type.Score)
             {
                 Sprite.Texture = GD.Load<Texture>("res://Coin.png");
+                PointValue = 200;
             }
         }
     }
@@ -44,6 +47,7 @@ public class Tile : Node2D
     public Vector2 GridOffset;
     public Grid Grid;
     public Sprite Sprite;
+    public int PointValue;
 
     public Tile()
     {
