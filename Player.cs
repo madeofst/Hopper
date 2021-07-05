@@ -7,6 +7,7 @@ public class Player : Sprite
     private Grid Grid;
     private HopCounter HopCounter;
     public int HopsRemaining = 3;
+    public int MaxHops = 7;
     private Vector2 _GridPosition;
     public Vector2 GridPosition
     { 
@@ -98,7 +99,7 @@ public class Player : Sprite
 
     private void CheckPosition()
     {
-        if (Grid.Tiles[(int)GridPosition.x, (int)GridPosition.y].Type == Type.White)
+        if (Grid.Tiles[(int)GridPosition.x, (int)GridPosition.y].Type == Type.Goal)
         {
             UpdateHopsRemaining(3);
             Grid.UpdateGrid();
@@ -107,7 +108,6 @@ public class Player : Sprite
         if (HopsRemaining <= 0)
         {
             World.GameOver = true;
-            HopCounter.UpdateText("GAME OVER.");
         }
     }
 }
