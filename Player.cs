@@ -37,7 +37,7 @@ public class Player : Sprite
         HopCounter = GetNode<Counter>("../HopCounter");
         ScoreCounter = GetNode<Counter>("../ScoreCounter");
         GridPosition = new Vector2(3, 3); //Magic number
-        Texture = GD.Load<Texture>("res://icon.png");
+        Texture = GD.Load<Texture>("res://frog.png");
         Scale = new Vector2(0.9f, 0.9f);
 
         Grid.SetupGrid();
