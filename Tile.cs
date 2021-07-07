@@ -29,10 +29,11 @@ public class Tile : Node2D
             else if (_type == Type.Score)
             {
                 Sprite.Texture = GD.Load<Texture>("res://Coin.png");
-                PointValue = 200;
+                PointValue = 100;
             }
         }
     }
+    
     private Vector2 _gridPosition;
     public Vector2 GridPosition
     { 
@@ -48,21 +49,25 @@ public class Tile : Node2D
     public Grid Grid;
     public Sprite Sprite;
     public int PointValue;
+    public Counter Label;
 
-    public Tile()
-    {
-
-    }   
+    public Tile(){}   
 
     public void BuildTile(Type type, Vector2 size, Vector2 offset, Vector2 gridPosition)
     {
-        Grid = GetNode<Grid>("/root/World/Grid");
-        Size = size;
-        GridOffset = offset;
         Sprite = new Sprite();
         Sprite.Scale = new Vector2(0.95f,0.95f);
-        Grid.AddChild(Sprite);
-        GridPosition = gridPosition;
+
+        Size = size;
+        GridOffset = offset;
         Type = type;
+        GridPosition = gridPosition;
+
+        Grid = GetNode<Grid>("/root/World/Grid");
+        Grid.AddChild(Sprite);
+
+        Label = new Counter();
+        Label.SetPosition(Position);
+        AddChild(Label);
     }
 }

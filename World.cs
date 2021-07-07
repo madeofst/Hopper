@@ -19,7 +19,7 @@ public class World : Node2D
         AddChild(Player);
         CallDeferred("GetChildReferences");
         Timer = new milliTimer();
-        Timer.Start(10);
+        Timer.Start(100);
     }
 
 
@@ -35,13 +35,14 @@ public class World : Node2D
         if (GameOver)
         {
             MoveChild(GameOverLabel, GetChildCount());
+            Counter FinalScore = GameOverLabel.GetNode<Counter>("GameOverScore");
+            FinalScore.UpdateText(Player.Score);
             GameOverLabel.Visible = true;
         }
     }
 
     private void UpdateTimeRemaining()
     {
-        GD.Print(Timer.Remaining());
         TimeCounter.UpdateText(Timer.Remaining());
     }
 

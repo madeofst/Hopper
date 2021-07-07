@@ -58,6 +58,7 @@ public class Grid : Node2D
 
     public void UpdateGrid()
     {
+        //Clear existing tiles
         AssignTileTypes();
     }
 
@@ -126,7 +127,8 @@ public class Grid : Node2D
                    ScoreGridPosition.y >= GridHeight);
             
             Tile(ScoreGridPosition).Type = Type.Score;
-            //GD.Print(tempScoreAbsoluteGridPosition);
+            Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
+            Tile(ScoreGridPosition).Label.UpdateText(Tile(ScoreGridPosition).PointValue);
         }
     }
 }

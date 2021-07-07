@@ -54,6 +54,7 @@ public class Player : Sprite
     public void UpdateHopsRemaining(int addedHops)
     {
         HopsRemaining += addedHops;
+        if (HopsRemaining > MaxHops) HopsRemaining = MaxHops;
         HopCounter.UpdateText(HopsRemaining);
     }
 

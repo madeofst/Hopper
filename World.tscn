@@ -73,17 +73,41 @@ __meta__ = {
 
 [node name="GameOverLabel" type="Sprite" parent="."]
 visible = false
-position = Vector2( 288.473, 283.983 )
-scale = Vector2( 8.47139, 8.54154 )
+position = Vector2( 287.35, 285.105 )
+scale = Vector2( 8.54155, 8.50647 )
 texture = ExtResource( 3 )
 script = ExtResource( 4 )
 
-[node name="GameOverRichTextLabel" type="RichTextLabel" parent="GameOverLabel"]
-margin_left = -20.31
-margin_top = -15.2502
-margin_right = 22.69
-margin_bottom = 16.7498
+[node name="RichTextLabel" type="RichTextLabel" parent="GameOverLabel"]
+margin_left = -13.0
+margin_top = -15.7361
+margin_right = 66.0
+margin_bottom = 4.26391
+rect_scale = Vector2( 0.3, 0.3 )
 text = "GAME OVER"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="GameOverLabel"]
+margin_left = -15.6282
+margin_top = -4.68046
+margin_right = 27.3718
+margin_bottom = 12.3195
+rect_scale = Vector2( 0.3, 0.3 )
+text = "Score:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverScore" type="RichTextLabel" parent="GameOverLabel"]
+margin_left = -3.006
+margin_top = -4.9439
+margin_right = 66.994
+margin_bottom = 12.0561
+rect_scale = Vector2( 0.3, 0.3 )
+text = "0"
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
