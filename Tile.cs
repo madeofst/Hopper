@@ -46,7 +46,7 @@ public class Tile : Node2D
     }
     public Vector2 Size;
     public Vector2 GridOffset;
-    public Grid Grid;
+    //public Grid Grid;
     public Sprite Sprite;
     public int PointValue;
     public Counter Label;
@@ -63,11 +63,12 @@ public class Tile : Node2D
         Type = type;
         GridPosition = gridPosition;
 
-        Grid = GetNode<Grid>("/root/World/Grid");
-        Grid.AddChild(Sprite);
+        //Grid = GetNode<Grid>("/root/World/Grid");
+        //AddChild(Sprite);
 
         Label = new Counter();
-        Label.SetPosition(Position);
+        //Label.SetPosition(Position);
+        Label.Text = PointValue.ToString();
         AddChild(Label);
     }
 }

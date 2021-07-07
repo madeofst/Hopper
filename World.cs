@@ -19,7 +19,7 @@ public class World : Node2D
         AddChild(Player);
         CallDeferred("GetChildReferences");
         Timer = new milliTimer();
-        Timer.Start(100);
+        Timer.Start(10000);
     }
 
 

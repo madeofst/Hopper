@@ -24,11 +24,16 @@ public class Grid : Node2D
         Name = "Grid";
         GridWidth = x;
         GridHeight = x;
-        Tiles = new Tile[GridWidth, GridHeight];
+        NewBlankTileArray();
 
         Offset = viewportSize/9;            //this is a constant
         Size = viewportSize - (Offset*2);   //448
         TileSize = new Vector2(Size.x/GridWidth, Size.y/GridHeight);
+    }
+
+    private void NewBlankTileArray()
+    {
+        Tiles = new Tile[GridWidth, GridHeight];
     }
 
     public Tile Tile(Vector2 position)
@@ -44,27 +49,32 @@ public class Grid : Node2D
     public void SetupGrid()
     {
         Player = GetNode<Player>("../Player");
+        NewBlankTileArray();
+        InitializeTileArray();
+        UpdateGrid();
+    }
+
+    private void InitializeTileArray()
+    {
         for (int i = 0; i < GridWidth; i++)
         {
             for (int j = 0; j < GridHeight; j++)
             {
-                Tiles[i, j] = new Tile(); 
-                AddChild(Tiles[i,j]);
+                Tiles[i, j] = new Tile();
+                AddChild(Tiles[i, j]);
                 Tiles[i, j].BuildTile(Type.Blank, TileSize, Offset, new Vector2(i, j));
             }
         }
-        UpdateGrid();
     }
 
     public void UpdateGrid()
     {
-        //Clear existing tiles
         AssignTileTypes();
     }
 
     private void AssignTileTypes()
     {
-        ClearTypes();
+        //ClearTypes();
         AssignGoalTile(3, 2);
         AssignScoreTiles(1);
     }
@@ -128,7 +138,7 @@ public class Grid : Node2D
             
             Tile(ScoreGridPosition).Type = Type.Score;
             Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
-            Tile(ScoreGridPosition).Label.UpdateText(Tile(ScoreGridPosition).PointValue);
+            //Tile(ScoreGridPosition).Label.UpdateText(Tile(ScoreGridPosition).PointValue);
         }
     }
 }
