@@ -22,7 +22,6 @@ public class World : Node2D
         Timer.Start(10000);
     }
 
-
     public override void _Process(float delta)
     {
         UpdateTimeRemaining();

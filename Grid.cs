@@ -74,7 +74,7 @@ public class Grid : Node2D
 
     private void AssignTileTypes()
     {
-        //ClearTypes();
+        ClearTypes();
         AssignGoalTile(3, 2);
         AssignScoreTiles(1);
     }
@@ -138,7 +138,6 @@ public class Grid : Node2D
             
             Tile(ScoreGridPosition).Type = Type.Score;
             Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
-            //Tile(ScoreGridPosition).Label.UpdateText(Tile(ScoreGridPosition).PointValue);
         }
     }
 }

@@ -46,29 +46,45 @@ public class Tile : Node2D
     }
     public Vector2 Size;
     public Vector2 GridOffset;
-    //public Grid Grid;
+    public Grid Grid;
     public Sprite Sprite;
-    public int PointValue;
+    private int _PointValue;
+    public int PointValue
+    {
+        get { return _PointValue; }
+        set
+        {
+            if (_type == Type.Score)
+            {
+                _PointValue = value;
+                Label.Text = _PointValue.ToString();
+            }
+            else
+            {
+                Label.Text = "";
+            }
+        }
+    }
     public Counter Label;
 
     public Tile(){}   
 
     public void BuildTile(Type type, Vector2 size, Vector2 offset, Vector2 gridPosition)
     {
+        Size = size;
+        Label = new Counter(Size);
+
         Sprite = new Sprite();
         Sprite.Scale = new Vector2(0.95f,0.95f);
 
-        Size = size;
         GridOffset = offset;
         Type = type;
         GridPosition = gridPosition;
 
-        //Grid = GetNode<Grid>("/root/World/Grid");
-        //AddChild(Sprite);
+        Grid = GetNode<Grid>("/root/World/Grid");
+        AddChild(Sprite);
 
-        Label = new Counter();
-        //Label.SetPosition(Position);
-        Label.Text = PointValue.ToString();
+        Label.RectPosition = Sprite.Position - Size/5;
         AddChild(Label);
     }
 }

@@ -3,6 +3,13 @@ using System;
 
 public class Counter : RichTextLabel
 {
+    public Counter(){}
+
+    public Counter(Vector2 size)
+    {
+        RectSize = size;
+    }
+
     public void UpdateText(string text)
     {
         Text = text;
