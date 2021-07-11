@@ -3,13 +3,15 @@ using Godot;
 
 public class Player : Sprite
 {
+    //References to existing nodes
     private World World;
     private Grid Grid;
     private Counter HopCounter;
     private Counter ScoreCounter;
-    public int HopsRemaining = 3;
-    public int MaxHops = 7;
-    public int Score = 0;
+
+    //Player parameters
+    public int HopsRemaining { get; set; } = 3;
+    public int Score { get; set; } = 0;
     private Vector2 _GridPosition;
     public Vector2 GridPosition
     { 
@@ -24,6 +26,12 @@ public class Player : Sprite
         } 
     }
 
+    //Signals
+    [Signal]
+    public delegate void MovementCompleted();
+    [Signal]
+    public delegate void GoalReached();
+
     public override void _Ready()
     {
         Name = "Player";
@@ -36,46 +44,33 @@ public class Player : Sprite
         Grid = GetNode<Grid>("../Grid");
         HopCounter = GetNode<Counter>("../HopCounter");
         ScoreCounter = GetNode<Counter>("../ScoreCounter");
-        GridPosition = new Vector2(3, 3); //Magic number
         Texture = GD.Load<Texture>("res://frog.png");
+
+        GridPosition = new Vector2(0, 0);
         Scale = new Vector2(0.9f, 0.9f);
 
-        Grid.SetupGrid();
+        Grid.InitializeGrid();
     }
 
     private void AfterMovement()
     {
         UpdateHopsRemaining(-1);
-        UpdateScore();
-        CheckGoal();
+        EmitSignal(nameof(MovementCompleted));
+        UpdateScore();  //to be outside player and triggered by signal
+        CheckGoal();    //maybe this should be in grid
         CheckHopsRemaining();
     }
 
     public void UpdateHopsRemaining(int addedHops)
     {
         HopsRemaining += addedHops;
-        if (HopsRemaining > MaxHops) HopsRemaining = MaxHops;
+        if (HopsRemaining > Grid.CurrentLevel.MaxHops) 
+        {
+            HopsRemaining = Grid.CurrentLevel.MaxHops;
+        }
         HopCounter.UpdateText(HopsRemaining);
     }
 
-    private void CheckGoal()
-    {
-        if (Grid.Tiles[(int)GridPosition.x, (int)GridPosition.y].Type == Type.Goal)
-        {
-            UpdateHopsRemaining(3);
-            Grid.UpdateGrid();
-            World.Timer.Reset();
-        }
-    }
-
-    private void CheckHopsRemaining()
-    {
-        if (HopsRemaining <= 0)
-        {
-            World.GameOver = true;
-        }
-    }
-    
     private void UpdateScore()
     {
         Tile currentTile = Grid.Tile(GridPosition);
@@ -88,6 +83,27 @@ public class Player : Sprite
         }
     }
 
+    private void CheckGoal()
+    {
+        if (Grid.Tile(GridPosition).Type == Type.Goal)
+        {
+            UpdateHopsRemaining(Grid.CurrentLevel.HopsToAdd);
+
+            EmitSignal(nameof(GoalReached));
+
+            Grid.UpdateGrid();
+
+            World.Timer.Reset();
+        }
+    }
+
+    private void CheckHopsRemaining()
+    {
+        if (HopsRemaining <= 0)
+        {
+            World.GameOver = true;
+        }
+    }
     
     public override void _Input(InputEvent @event)
     {

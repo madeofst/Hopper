@@ -8,32 +8,44 @@ public class Grid : Node2D
 
     public int GridWidth;
     public int GridHeight;
-    public Tile[,] Tiles;
-    public Vector2 Size;
+    public int GoalCount;
+    
+    private Vector2 ViewportSize;
     public Vector2 Offset;
+    public Vector2 Size;
     public Vector2 TileSize;
-    private Vector2 GoalTileGridPosition;
-    private Tile GoalTile;
 
+    private Tile[,] Tiles;
     private RandomNumberGenerator rand = new RandomNumberGenerator();
+
+    private Tile GoalTile;
+    private Level currentLevel;
+    public Level CurrentLevel 
+    {
+        get { return currentLevel; }
+        set
+        {
+            currentLevel = value;
+            int previousGridWidth = GridWidth;
+            DefineGridParameters();
+            if (Player != null)
+            {
+                SetupGrid();
+                if (GridWidth != previousGridWidth) Player.GridPosition = new Vector2(0, 0);
+            }
+        }
+    }
+
+    [Signal]
+    public delegate void NextLevel();
 
     public Grid(){}
 
-    public Grid(int x, Vector2 viewportSize)
+    public Grid(Level level, Vector2 viewportSize)
     {
         Name = "Grid";
-        GridWidth = x;
-        GridHeight = x;
-        NewBlankTileArray();
-
-        Offset = viewportSize/9;            //this is a constant
-        Size = viewportSize - (Offset*2);   //448
-        TileSize = new Vector2(Size.x/GridWidth, Size.y/GridHeight);
-    }
-
-    private void NewBlankTileArray()
-    {
-        Tiles = new Tile[GridWidth, GridHeight];
+        ViewportSize = viewportSize;
+        CurrentLevel = level;
     }
 
     public Tile Tile(Vector2 position)
@@ -46,16 +58,33 @@ public class Grid : Node2D
         rand.Randomize();
     }
 
-    public void SetupGrid()
+    private void DefineGridParameters()
+    {
+        GridWidth = CurrentLevel.GridSize;
+        GridHeight = CurrentLevel.GridSize;
+        Tiles = new Tile[GridWidth, GridHeight];
+
+        Offset = ViewportSize / 9;            //this is a constant
+        Size = ViewportSize - (Offset * 2);   //448
+        TileSize = new Vector2(Size.x / GridWidth, Size.y / GridHeight);
+    }
+
+    public void InitializeGrid()
     {
         Player = GetNode<Player>("../Player");
-        NewBlankTileArray();
+        Player.Connect(nameof(Player.GoalReached), this, "IncrementGoalCount");
+        SetupGrid();
+    }
+
+    private void SetupGrid()
+    {
         InitializeTileArray();
         UpdateGrid();
     }
 
     private void InitializeTileArray()
     {
+        ClearExistingChildren();
         for (int i = 0; i < GridWidth; i++)
         {
             for (int j = 0; j < GridHeight; j++)
@@ -67,6 +96,16 @@ public class Grid : Node2D
         }
     }
 
+    private void ClearExistingChildren()
+    {
+        Godot.Collections.Array children = GetChildren();
+        foreach (Node2D child in children)
+        {
+            RemoveChild(child);
+            child.QueueFree();
+        }
+    }
+
     public void UpdateGrid()
     {
         AssignTileTypes();
@@ -75,8 +114,8 @@ public class Grid : Node2D
     private void AssignTileTypes()
     {
         ClearTypes();
-        AssignGoalTile(3, 2);
-        AssignScoreTiles(1);
+        AssignGoalTile(CurrentLevel.HopsToAdd, 2);
+        AssignScoreTiles(CurrentLevel.ScoreTileCount);
     }
 
     private void ClearTypes()
@@ -105,7 +144,6 @@ public class Grid : Node2D
         } while (absoluteGridPosition.x < 0 || absoluteGridPosition.x >= GridWidth ||
                  absoluteGridPosition.y < 0 || absoluteGridPosition.y >= GridHeight );
 
-        GoalTileGridPosition = absoluteGridPosition;
         GoalTile = Tiles[(int)absoluteGridPosition.x, (int)absoluteGridPosition.y];
         GoalTile.Type = Type.Goal;
     }
@@ -120,7 +158,7 @@ public class Grid : Node2D
             Vector2 PlayerToScore;
             do
             {
-                int possibleSteps = rand.RandiRange(-Player.MaxHops, Player.MaxHops);
+                int possibleSteps = rand.RandiRange(-CurrentLevel.MaxHops, CurrentLevel.MaxHops);
                 int x = rand.RandiRange(-possibleSteps, possibleSteps);
                 PlayerToScore = new Vector2(x, possibleSteps - x);
                 ScoreGridPosition = PlayerToScore + Player.GridPosition;
@@ -129,7 +167,7 @@ public class Grid : Node2D
             } 
             while (ScoreGridPosition == Player.GridPosition ||
                    ScoreGridPosition == GoalTile.GridPosition ||
-                   totalSteps >= Player.MaxHops || 
+                   totalSteps >= CurrentLevel.MaxHops || 
                    totalSteps <= 0 ||
                    ScoreGridPosition.x < 0 || 
                    ScoreGridPosition.x >= GridWidth ||
@@ -138,6 +176,18 @@ public class Grid : Node2D
             
             Tile(ScoreGridPosition).Type = Type.Score;
             Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
+        }
+    }
+
+    public void IncrementGoalCount()
+    {
+        GoalCount += 1;
+        GD.Print($"Goals reached = {GoalCount}");
+        if (GoalCount % CurrentLevel.GoalsToNextLevel == 0)
+        {
+            GoalCount = 0;
+            EmitSignal(nameof(NextLevel));
+            GD.Print($"Level = {CurrentLevel.ID}");
         }
     }
 }

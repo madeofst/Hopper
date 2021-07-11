@@ -4,9 +4,20 @@ using System;
 public class milliTimer
 {
     private ulong TimerLength;
+    private ulong TimerLengthSecs
+    {
+        get { return TimerLength / 1000; }
+    }
     private ulong TimerEnd;
+    public ulong TimeAdjustment
+    {
+        set
+        {
+            TimerLength += value * 1000;
+        }
+    }
 
-    public void Start(ulong lengthSecs = 10)
+    public void Start(ulong lengthSecs)
     {
         TimerLength = lengthSecs * 1000;
         TimerEnd = OS.GetSystemTimeMsecs() + TimerLength;
@@ -31,7 +42,7 @@ public class milliTimer
 
     public void Reset()
     {
-        Start();
+        Start(TimerLengthSecs);
     }
 
     public void Add(ulong timeSecs)

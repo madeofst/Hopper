@@ -1,0 +1,18 @@
+
+// Fixes
+* Check that new coin tile location is not already a coin tile
+* Improve score assignment
+
+
+//Possible process improvements
+* Transfer to path finding algorithm for coins?
+* Correct score values for unreachable coins (aka other side of goal)
+
+// Definite additions
+* Add jump tile
+* Add max hop limit increase tile
+* Add timer extension tile
+* Add impassable tiles
+
+// Possible additions
+* Enemies to dodge?
