@@ -2,9 +2,11 @@
 // Fixes
 * Check that new coin tile location is not already a coin tile
 * Improve score assignment
+* Investigate occasional crashing - seems to be when moving onto a goal tile
 
 
 //Possible process improvements
+* Maybe only introduce timer after Level 1 or 2
 * Transfer to path finding algorithm for coins?
 * Correct score values for unreachable coins (aka other side of goal)
 
@@ -12,7 +14,21 @@
 * Add jump tile
 * Add max hop limit increase tile
 * Add timer extension tile
-* Add impassable tiles
+* Add impassable tiles - will need pathfinding for automatic placement
 
 // Possible additions
 * Enemies to dodge?
+
+
+//Plan in steps
+* Add a splash screen
+* Add a main menu
+    - Start
+    - High Scores
+* Design and add visual representation of timer and hops
+* Draw/find sprites for
+    - lily pad
+    - frog
+    - coin (points)
+    - water
+* Add persistent high score data file
