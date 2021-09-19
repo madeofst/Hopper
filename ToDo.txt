@@ -1,9 +1,7 @@
-
 // Fixes
 * Check that new coin tile location is not already a coin tile
 * Improve score assignment
 * Investigate occasional crashing - seems to be when moving onto a goal tile
-
 
 //Possible process improvements
 * Maybe only introduce timer after Level 1 or 2
@@ -18,7 +16,6 @@
 
 // Possible additions
 * Enemies to dodge?
-
 
 //Plan in steps
 * Add a splash screen
