@@ -29,3 +29,5 @@
     - coin (points)
     - water
 * Add persistent high score data file
+* Do game over screen properly
+* Add a restart and main menu button

@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class Menu : MarginContainer
 {
@@ -18,5 +20,20 @@ public class Menu : MarginContainer
     public void highScoresPressed()
     {
         GD.Print("High scores button pressed.");
+        HighScoreData data = new HighScoreData();
+        
+/*         data.Init();
+        data.Add(new HighScore {
+            UserName = "Zo",
+            Score = 23000
+        }); */
+
+        List<HighScore> highScores = data.List;
+        int id = 1;
+        foreach (HighScore hs in highScores)
+        {
+            GD.Print($"{id}: {hs.UserName} - {hs.Score}.");
+            id ++;
+        }
     }
 }
