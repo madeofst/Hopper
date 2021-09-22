@@ -20,13 +20,17 @@ public class Menu : MarginContainer
     public void highScoresPressed()
     {
         GD.Print("High scores button pressed.");
-        HighScoreData data = new HighScoreData();
+        HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
+        GetTree().Root.AddChild(table);
+        Hide();
+
+/*         HighScoreData data = new HighScoreData();
         
-/*         data.Init();
+        data.Init();
         data.Add(new HighScore {
             UserName = "Zo",
             Score = 23000
-        }); */
+        });
 
         List<HighScore> highScores = data.List;
         int id = 1;
@@ -34,6 +38,6 @@ public class Menu : MarginContainer
         {
             GD.Print($"{id}: {hs.UserName} - {hs.Score}.");
             id ++;
-        }
+        } */
     }
 }

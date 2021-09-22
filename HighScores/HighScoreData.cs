@@ -15,7 +15,7 @@ public class HighScoreData
             if (!File.Exists(highScoreFile)) Init();
             string jsonString = File.ReadAllText(highScoreFile);
             _list = JsonSerializer.Deserialize<List<HighScore>>(jsonString);           
-            return _list;
+            return _list.OrderByDescending(hs => hs.Score).ToList();
         }
         set
         {
