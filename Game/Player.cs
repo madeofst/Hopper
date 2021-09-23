@@ -7,6 +7,7 @@ public class Player : Sprite
     private World World;
     private Grid Grid;
     private Counter HopCounter;
+    private TextureRect HopCounterBar;
     private Counter ScoreCounter;
 
     //Player parameters
@@ -42,8 +43,11 @@ public class Player : Sprite
     {
         World = GetNode<World>("..");
         Grid = GetNode<Grid>("../Grid");
-        HopCounter = GetNode<Counter>("../HopCounter");
-        ScoreCounter = GetNode<Counter>("../ScoreCounter");
+        
+        HopCounter = GetNode<Counter>("../HUD/VSplitContainer/HBoxContainer/HopCounter");
+        HopCounterBar = GetNode<TextureRect>("../HUD/VSplitContainer/HopCounterBar");
+        
+        ScoreCounter = GetNode<Counter>("../HUD/VSplitContainer/HBoxContainer/ScoreCounter");
         Texture = GD.Load<Texture>("res://Game/Resources/frog.png");
 
         GridPosition = new Vector2(0, 0);
@@ -69,6 +73,8 @@ public class Player : Sprite
             HopsRemaining = Grid.CurrentLevel.MaxHops;
         }
         HopCounter.UpdateText(HopsRemaining);
+        HopCounterBar.RectSize = new Vector2(20 * HopsRemaining, HopCounterBar.RectSize.y);
+
     }
 
     private void UpdateScore()

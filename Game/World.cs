@@ -11,11 +11,14 @@ public class World : Node2D
     //World parameters
     public bool GameOver = false;
     public milliTimer Timer;
-    public Level[] Levels { get; set; } = new Level[] {new Level(1, 5, 7, 1, 5),
-                                                       new Level(2, 7, 8, 2, 5),
-                                                       new Level(3, 7, 10, 2),
-                                                       new Level(4, 7, 10, 3),
-                                                       new Level(5, 7, 10, 4)};
+    public Level[] Levels { get; set; } = new Level[] 
+    {
+        new Level(1, 5, 7, 1, 5),
+        new Level(2, 7, 8, 2, 5),
+        new Level(3, 7, 10, 2),
+        new Level(4, 7, 10, 3),
+        new Level(5, 7, 10, 4) 
+    };
 
     public override void _Ready()
     {
@@ -43,7 +46,7 @@ public class World : Node2D
 
     public void GetChildReferences()
     {
-        TimeCounter = GetNode<Counter>("TimeCounter");
+        TimeCounter = GetNode<Counter>("HUD/VSplitContainer/HBoxContainer/TimeCounter");
     }
 
     public override void _Process(float delta)
