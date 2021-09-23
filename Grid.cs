@@ -128,21 +128,37 @@ public class Grid : Node2D
 
     private void AssignGoalTile(int maxStepsFromPlayer, int minStepsFromPlayer = 1)
     {
-        int possibleSteps = rand.RandiRange(minStepsFromPlayer, maxStepsFromPlayer);
+        
+        int TopMax = (int)Math.Max(Player.GridPosition.x, Player.GridPosition.y);
+        int BottomMax = (int)Math.Max(GridWidth - 1 - Player.GridPosition.x, GridHeight - 1 - Player.GridPosition.y);
+        int OverallMax = Math.Max(TopMax, BottomMax);
+        int limitedMaxStepsFromPlayer = maxStepsFromPlayer;
+        if (OverallMax < limitedMaxStepsFromPlayer) limitedMaxStepsFromPlayer = OverallMax;
+
+        int possibleSteps = rand.RandiRange(minStepsFromPlayer, limitedMaxStepsFromPlayer);
         int x = rand.RandiRange(0, possibleSteps);
         Vector2 relativeGridPosition = new Vector2(x, possibleSteps - x);
         Vector2 absoluteGridPosition;
+
+        int limitCounter = 0;
         do
         {
-            for (int i = 0; i <= rand.RandiRange(0,3); i++)
+            int limit = rand.RandiRange(0, 3);
+            for (int i = 0; i <= limit; i++)
             {
                 float tempY = relativeGridPosition.y;
                 relativeGridPosition.y = relativeGridPosition.x * - 1;
                 relativeGridPosition.x = tempY;
             }
             absoluteGridPosition = relativeGridPosition + Player.GridPosition;
-        } while (absoluteGridPosition.x < 0 || absoluteGridPosition.x >= GridWidth ||
-                 absoluteGridPosition.y < 0 || absoluteGridPosition.y >= GridHeight );
+            limitCounter++;
+
+        } while ((absoluteGridPosition.x < 0 || absoluteGridPosition.x >= GridWidth ||
+                 absoluteGridPosition.y < 0 || absoluteGridPosition.y >= GridHeight)
+                 &&
+                 (limitCounter < 100));
+
+        GD.Print($"Limit: {limitCounter}");
 
         GoalTile = Tiles[(int)absoluteGridPosition.x, (int)absoluteGridPosition.y];
         GoalTile.Type = Type.Goal;
@@ -156,6 +172,7 @@ public class Grid : Node2D
         {
             float totalSteps;
             Vector2 PlayerToScore;
+            //int limitCounter = 0;
             do
             {
                 int possibleSteps = rand.RandiRange(-CurrentLevel.MaxHops, CurrentLevel.MaxHops);
@@ -164,16 +181,21 @@ public class Grid : Node2D
                 ScoreGridPosition = PlayerToScore + Player.GridPosition;
                 ScoreToGoal = GoalTile.GridPosition - ScoreGridPosition;;
                 totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
+                //limitCounter++;
             } 
-            while (ScoreGridPosition == Player.GridPosition ||
+            while ((ScoreGridPosition == Player.GridPosition ||
                    ScoreGridPosition == GoalTile.GridPosition ||
                    totalSteps >= CurrentLevel.MaxHops || 
                    totalSteps <= 0 ||
                    ScoreGridPosition.x < 0 || 
                    ScoreGridPosition.x >= GridWidth ||
                    ScoreGridPosition.y < 0 || 
-                   ScoreGridPosition.y >= GridHeight);
+                   ScoreGridPosition.y >= GridHeight)
+                   //&&(limitCounter < 100)
+                   );
             
+            //GD.Print($"Limit: {limitCounter}");
+
             Tile(ScoreGridPosition).Type = Type.Score;
             Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
         }
@@ -182,12 +204,12 @@ public class Grid : Node2D
     public void IncrementGoalCount()
     {
         GoalCount += 1;
-        GD.Print($"Goals reached = {GoalCount}");
+        //GD.Print($"Goals reached = {GoalCount}");
         if (GoalCount % CurrentLevel.GoalsToNextLevel == 0)
         {
             GoalCount = 0;
             EmitSignal(nameof(NextLevel));
-            GD.Print($"Level = {CurrentLevel.ID}");
+            //GD.Print($"Level = {CurrentLevel.ID}");
         }
     }
 }
