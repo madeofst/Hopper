@@ -59,10 +59,10 @@ public class World : Node2D
 
         if (GameOver)
         {
-            MoveChild(GameOverLabel, GetChildCount());
-            Counter FinalScore = GameOverLabel.GetNode<Counter>("GameOverScore");
-            FinalScore.UpdateText(Player.Score);
-            GameOverLabel.Visible = true;
+            GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
+            GetTree().Root.AddChild(GameOver);
+            GameOver.score = Player.Score;
+            QueueFree();
         }
     }
 
