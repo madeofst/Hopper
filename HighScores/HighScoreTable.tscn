@@ -236,5 +236,6 @@ margin_top = 66.0
 margin_right = 273.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 70, 30 )
+mouse_default_cursor_shape = 2
 text = "Back"
 [connection signal="pressed" from="VSplitContainer2/CenterContainer/BackButton" to="." method="OnBackButtonPressed"]

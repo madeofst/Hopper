@@ -74,5 +74,6 @@ margin_left = 208.0
 margin_right = 308.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 100, 0 )
+mouse_default_cursor_shape = 2
 text = "Save Score"
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/SubmitButton" to="." method="onSubmitButtonPressed"]
