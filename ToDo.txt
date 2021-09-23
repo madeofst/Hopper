@@ -12,22 +12,19 @@
 * Add jump tile
 * Add max hop limit increase tile
 * Add timer extension tile
+
+// Potential additons
 * Add impassable tiles - will need pathfinding for automatic placement
+* make goals unlockable with a minimum score - this could allow for actual puzzle design.
 
 // Possible additions
 * Enemies to dodge?
 
 //Plan in steps
 * Add a splash screen
-* Add a main menu
-    - Start
-    - High Scores
 * Design and add visual representation of timer and hops
 * Draw/find sprites for
     - lily pad
     - frog
     - coin (points)
     - water
-* Add persistent high score data file
-* Do game over screen properly
-* Add a restart and main menu button

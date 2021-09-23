@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Coin.png-f9edd39819b72868099841de45eb7631.stex"
+path="res://.import/BlackSquare.png-57f65a137a30f4d8c515e5ce9b13c2c1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Coin.png"
-dest_files=[ "res://.import/Coin.png-f9edd39819b72868099841de45eb7631.stex" ]
+source_file="res://Game/Resources/BlackSquare.png"
+dest_files=[ "res://.import/BlackSquare.png-57f65a137a30f4d8c515e5ce9b13c2c1.stex" ]
 
 [params]
 
@@ -19,8 +19,8 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=false
+flags/repeat=1
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -4,7 +4,6 @@ using System;
 public class World : Node2D
 {
     //References to existing nodes
-    private Sprite GameOverLabel { get; set; }
     private Grid Grid { get; set; }
     private Player Player { get; set; }
     private Counter TimeCounter { get; set; }
@@ -44,7 +43,6 @@ public class World : Node2D
 
     public void GetChildReferences()
     {
-        GameOverLabel = GetNode<Sprite>("GameOverLabel");
         TimeCounter = GetNode<Counter>("TimeCounter");
     }
 
@@ -61,7 +59,8 @@ public class World : Node2D
         {
             GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
             GetTree().Root.AddChild(GameOver);
-            GameOver.score = Player.Score;
+            GameOver.Score = Player.Score;
+            GameOver.ScoreLabel.Text = GameOver.Score.ToString();
             QueueFree();
         }
     }

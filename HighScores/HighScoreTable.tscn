@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://HighScores/HighScoreTable.cs" type="Script" id=1]
+[ext_resource path="res://HighScores/BackButton.cs" type="Script" id=2]
 
 [node name="HighScoreTable" type="MarginContainer"]
 anchor_right = 1.0
@@ -238,4 +239,5 @@ margin_bottom = 96.0
 rect_min_size = Vector2( 70, 30 )
 mouse_default_cursor_shape = 2
 text = "Back"
+script = ExtResource( 2 )
 [connection signal="pressed" from="VSplitContainer2/CenterContainer/BackButton" to="." method="OnBackButtonPressed"]

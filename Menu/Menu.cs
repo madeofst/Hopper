@@ -12,7 +12,7 @@ public class Menu : MarginContainer
     public void newGamePressed()
     {
         GD.Print("New game button pressed.");
-        World world = (World)GD.Load<PackedScene>("res://World.tscn").Instance();
+        World world = (World)GD.Load<PackedScene>("res://Game/World.tscn").Instance();
         GetTree().Root.AddChild(world);
         Hide();
     }

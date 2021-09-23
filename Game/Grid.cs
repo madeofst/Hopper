@@ -158,7 +158,7 @@ public class Grid : Node2D
                  &&
                  (limitCounter < 100));
 
-        GD.Print($"Limit: {limitCounter}");
+        GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
 
         GoalTile = Tiles[(int)absoluteGridPosition.x, (int)absoluteGridPosition.y];
         GoalTile.Type = Type.Goal;
@@ -172,7 +172,6 @@ public class Grid : Node2D
         {
             float totalSteps;
             Vector2 PlayerToScore;
-            //int limitCounter = 0;
             do
             {
                 int possibleSteps = rand.RandiRange(-CurrentLevel.MaxHops, CurrentLevel.MaxHops);
@@ -181,20 +180,15 @@ public class Grid : Node2D
                 ScoreGridPosition = PlayerToScore + Player.GridPosition;
                 ScoreToGoal = GoalTile.GridPosition - ScoreGridPosition;;
                 totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
-                //limitCounter++;
             } 
-            while ((ScoreGridPosition == Player.GridPosition ||
+            while (ScoreGridPosition == Player.GridPosition ||
                    ScoreGridPosition == GoalTile.GridPosition ||
                    totalSteps >= CurrentLevel.MaxHops || 
                    totalSteps <= 0 ||
                    ScoreGridPosition.x < 0 || 
                    ScoreGridPosition.x >= GridWidth ||
                    ScoreGridPosition.y < 0 || 
-                   ScoreGridPosition.y >= GridHeight)
-                   //&&(limitCounter < 100)
-                   );
-            
-            //GD.Print($"Limit: {limitCounter}");
+                   ScoreGridPosition.y >= GridHeight);
 
             Tile(ScoreGridPosition).Type = Type.Score;
             Tile(ScoreGridPosition).PointValue *= (int)totalSteps;

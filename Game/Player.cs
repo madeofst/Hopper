@@ -44,7 +44,7 @@ public class Player : Sprite
         Grid = GetNode<Grid>("../Grid");
         HopCounter = GetNode<Counter>("../HopCounter");
         ScoreCounter = GetNode<Counter>("../ScoreCounter");
-        Texture = GD.Load<Texture>("res://frog.png");
+        Texture = GD.Load<Texture>("res://Game/Resources/frog.png");
 
         GridPosition = new Vector2(0, 0);
         Scale = new Vector2(0.9f, 0.9f);

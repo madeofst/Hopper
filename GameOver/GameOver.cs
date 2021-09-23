@@ -4,29 +4,31 @@ using System.Collections.Generic;
 
 public class GameOver : MarginContainer
 {
-    private LineEdit textInput;
-    private HighScoreData data = new HighScoreData();
+    private LineEdit TextInput;
+    private HighScoreData Data = new HighScoreData();
+    
     public string userName { get; set; }
-    public int score { get; set; }
+    public int Score { get; set; }
+
+    public RichTextLabel ScoreLabel { get; set; }
 
     public override void _Ready()
     {
-        RichTextLabel ScoreLabel = GetNode<RichTextLabel>("VBoxContainer/HBoxContainer1/ScoreLabel");        
-        ScoreLabel.Text = score.ToString();
+        ScoreLabel = GetNode<RichTextLabel>("VBoxContainer/HBoxContainer1/ScoreLabel");        
     }
 
     public void onSubmitButtonPressed()
     {
         GD.Print("Submit button pressed");
-        textInput = GetNode<LineEdit>("VBoxContainer/HBoxContainer/UserNameEntry");
-        userName = textInput.Text;
+        TextInput = GetNode<LineEdit>("VBoxContainer/HBoxContainer/UserNameEntry");
+        userName = TextInput.Text;
 
-        List<HighScore> List = data.List;
+        List<HighScore> List = Data.List;
         List.Add(new HighScore(){ 
             UserName = userName, 
-            Score = score
+            Score = Score
         });
-        data.List = List;
+        Data.List = List;
 
         HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
         GetTree().Root.AddChild(table);

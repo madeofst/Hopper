@@ -18,17 +18,17 @@ public class Tile : Node2D
             _type = value;
             if (_type == Type.Blank)
             {
-                Sprite.Texture = GD.Load<Texture>("res://BlackSquare.png");
+                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/BlackSquare.png");
                 PointValue = 0;
             }
             else if (_type == Type.Goal)
             {
-                Sprite.Texture = GD.Load<Texture>("res://WhiteSquare.png");
+                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/WhiteSquare.png");
                 PointValue = 50;
             }
             else if (_type == Type.Score)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Coin.png");
+                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/Coin.png");
                 PointValue = 100;
             }
         }

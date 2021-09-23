@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://World.cs" type="Script" id=1]
-[ext_resource path="res://Counter.cs" type="Script" id=2]
-[ext_resource path="res://BlackSquare.png" type="Texture" id=3]
-[ext_resource path="res://GameOverLabel.cs" type="Script" id=4]
+[ext_resource path="res://Game/World.cs" type="Script" id=1]
+[ext_resource path="res://HUD/Counter.cs" type="Script" id=2]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -66,47 +64,6 @@ margin_top = 37.0
 margin_right = 351.0
 margin_bottom = 52.0
 text = "10.0"
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="GameOverLabel" type="Sprite" parent="."]
-visible = false
-position = Vector2( 287.35, 285.105 )
-scale = Vector2( 8.54155, 8.50647 )
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="RichTextLabel" type="RichTextLabel" parent="GameOverLabel"]
-margin_left = -13.0
-margin_top = -15.7361
-margin_right = 66.0
-margin_bottom = 4.26391
-rect_scale = Vector2( 0.3, 0.3 )
-text = "GAME OVER"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="GameOverLabel"]
-margin_left = -15.6282
-margin_top = -4.68046
-margin_right = 27.3718
-margin_bottom = 12.3195
-rect_scale = Vector2( 0.3, 0.3 )
-text = "Score:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="GameOverScore" type="RichTextLabel" parent="GameOverLabel"]
-margin_left = -3.006
-margin_top = -4.9439
-margin_right = 66.994
-margin_bottom = 12.0561
-rect_scale = Vector2( 0.3, 0.3 )
-text = "0"
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
