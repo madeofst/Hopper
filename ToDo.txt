@@ -21,7 +21,7 @@
 * Enemies to dodge?
 
 //Plan in steps
-* Add a splash screen
+* Limit saved score list to 10 only
 * Design and add visual representation of timer and hops
 * Draw/find sprites for
     - lily pad

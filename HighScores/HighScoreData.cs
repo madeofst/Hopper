@@ -61,7 +61,7 @@ public class HighScoreData
         return null;
     }
 
-    public bool IsHigh(HighScore HighScore)
+    private bool IsHigh(HighScore HighScore)
     {
         if (HighScore.Score > List.LastOrDefault().Score)
         {
