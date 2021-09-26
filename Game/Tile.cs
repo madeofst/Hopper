@@ -27,11 +27,13 @@ public class Tile : Node2D
             else if (_type == Type.Goal)
             {
                 Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad2.png");
+                Sprite.Rotation = 0;
                 PointValue = 50;
             }
             else if (_type == Type.Score)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/Coin.png");
+                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPadCoin.png");
+                Sprite.Rotation = 0;
                 PointValue = 100;
             }
         }
