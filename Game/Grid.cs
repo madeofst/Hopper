@@ -2,7 +2,7 @@ using System;
 using Godot;
 using GodotExtension;    
 
-public class Grid : Node2D
+public class Grid : Control
 {
     public Player Player { get; set; }
 
@@ -16,7 +16,7 @@ public class Grid : Node2D
     public Vector2 TileSize;
 
     private Tile[,] Tiles;
-    private RandomNumberGenerator rand = new RandomNumberGenerator();
+    public RandomNumberGenerator rand = new RandomNumberGenerator();
 
     private Tile GoalTile;
     private Level currentLevel;
@@ -41,10 +41,9 @@ public class Grid : Node2D
 
     public Grid(){}
 
-    public Grid(Level level, Vector2 viewportSize)
+    public Grid(Level level)
     {
         Name = "Grid";
-        ViewportSize = viewportSize;
         CurrentLevel = level;
     }
 
@@ -60,13 +59,15 @@ public class Grid : Node2D
 
     private void DefineGridParameters()
     {
-        GridWidth = CurrentLevel.GridSize;
-        GridHeight = CurrentLevel.GridSize;
-        Tiles = new Tile[GridWidth, GridHeight];
+        TileSize = new Vector2(64, 64);
+        RectSize = TileSize * CurrentLevel.GridSize;
+        SetPosition(new Vector2(
+            60 + ((7 - CurrentLevel.GridSize) * TileSize.x)/2, 
+            80 + ((7 - CurrentLevel.GridSize) * TileSize.y)/2
+        ));
 
-        Offset = ViewportSize / 9;            //this is a constant
-        Size = ViewportSize - (Offset * 2);   //448
-        TileSize = new Vector2(Size.x / GridWidth, Size.y / GridHeight);
+        GridWidth = GridHeight = CurrentLevel.GridSize;
+        Tiles = new Tile[GridWidth, GridHeight];
     }
 
     public void InitializeGrid()
@@ -91,7 +92,7 @@ public class Grid : Node2D
             {
                 Tiles[i, j] = new Tile();
                 AddChild(Tiles[i, j]);
-                Tiles[i, j].BuildTile(Type.Blank, TileSize, Offset, new Vector2(i, j));
+                Tiles[i, j].BuildTile(Type.Blank, TileSize, /* Offset, */ new Vector2(i, j));
             }
         }
     }

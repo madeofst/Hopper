@@ -40,13 +40,13 @@ public class World : Node2D
 
     private void NewGrid(Level level)
     {
-        Grid = new Grid(level, GetViewportRect().Size);
+        Grid = new Grid(level);
         AddChild(Grid);
     }
 
     public void GetChildReferences()
     {
-        TimeCounter = GetNode<Counter>("HUD/VSplitContainer/HBoxContainer/TimeCounter");
+        TimeCounter = GetNode<Counter>("HUD/VSplit1/HBoxContainer/TimeCounter");
     }
 
     public override void _Process(float delta)

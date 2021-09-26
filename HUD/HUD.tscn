@@ -6,88 +6,92 @@
 [node name="HUD" type="MarginContainer"]
 anchor_right = 1.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 0, 100 )
-custom_constants/margin_right = 60
-custom_constants/margin_top = 30
+rect_min_size = Vector2( 0, 60 )
+custom_constants/margin_right = 35
+custom_constants/margin_top = 10
 custom_constants/margin_left = 35
+custom_constants/margin_bottom = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSplitContainer" type="VSplitContainer" parent="."]
+[node name="VSplit1" type="VSplitContainer" parent="."]
 margin_left = 35.0
-margin_top = 30.0
-margin_right = 516.0
-margin_bottom = 100.0
+margin_top = 10.0
+margin_right = 541.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 40 )
+dragger_visibility = 2
 
-[node name="HopCounterBar" type="TextureRect" parent="VSplitContainer"]
-margin_right = 20.0
+[node name="HBoxContainer" type="HBoxContainer" parent="VSplit1"]
+margin_right = 506.0
 margin_bottom = 20.0
-size_flags_horizontal = 0
-texture = ExtResource( 2 )
-stretch_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VSplitContainer"]
-margin_top = 32.0
-margin_right = 481.0
-margin_bottom = 70.0
+size_flags_vertical = 3
 custom_constants/separation = 10
 
-[node name="HopCounterLabel" type="RichTextLabel" parent="VSplitContainer/HBoxContainer"]
+[node name="ScoreCounterLabel" type="RichTextLabel" parent="VSplit1/HBoxContainer"]
 margin_right = 60.0
-margin_bottom = 38.0
-rect_min_size = Vector2( 60, 0 )
-text = "Hops:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HopCounter" type="RichTextLabel" parent="VSplitContainer/HBoxContainer"]
-margin_left = 70.0
-margin_right = 110.0
-margin_bottom = 38.0
-rect_min_size = Vector2( 40, 0 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ScoreCounterLabel" type="RichTextLabel" parent="VSplitContainer/HBoxContainer"]
-margin_left = 120.0
-margin_right = 180.0
-margin_bottom = 38.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 60, 0 )
 text = "Score:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScoreCounter" type="RichTextLabel" parent="VSplitContainer/HBoxContainer"]
-margin_left = 190.0
-margin_right = 230.0
-margin_bottom = 38.0
+[node name="ScoreCounter" type="RichTextLabel" parent="VSplit1/HBoxContainer"]
+margin_left = 70.0
+margin_right = 110.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 40, 0 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeCounterLabel" type="RichTextLabel" parent="VSplitContainer/HBoxContainer"]
+[node name="HopCounterLabel" type="RichTextLabel" parent="VSplit1/HBoxContainer"]
+margin_left = 120.0
+margin_right = 180.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 60, 0 )
+text = "Hops:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HopCounter" type="RichTextLabel" parent="VSplit1/HBoxContainer"]
+margin_left = 190.0
+margin_right = 230.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 40, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeCounterLabel" type="RichTextLabel" parent="VSplit1/HBoxContainer"]
 margin_left = 240.0
 margin_right = 300.0
-margin_bottom = 38.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 60, 0 )
 text = "Time:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeCounter" type="RichTextLabel" parent="VSplitContainer/HBoxContainer"]
+[node name="TimeCounter" type="RichTextLabel" parent="VSplit1/HBoxContainer"]
 margin_left = 310.0
 margin_right = 350.0
-margin_bottom = 38.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 40, 0 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HopCounterBar" type="TextureRect" parent="VSplit1"]
+margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 40.0
+size_flags_horizontal = 2
+texture = ExtResource( 2 )
+stretch_mode = 2

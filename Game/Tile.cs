@@ -18,12 +18,15 @@ public class Tile : Node2D
             _type = value;
             if (_type == Type.Blank)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/BlackSquare.png");
+                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad1.png");
+                var rand = new RandomNumberGenerator();
+                rand.Randomize();
+                Sprite.Rotation = rand.RandfRange(0, (float)Math.PI*2);
                 PointValue = 0;
             }
             else if (_type == Type.Goal)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/WhiteSquare.png");
+                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad2.png");
                 PointValue = 50;
             }
             else if (_type == Type.Score)
@@ -41,7 +44,7 @@ public class Tile : Node2D
         set
         {
             _gridPosition = value;
-            Sprite.Position = (_gridPosition * Size) + GridOffset + (Size/2);
+            Sprite.Position = (_gridPosition * Size) /* + GridOffset */ + (Size/2);
         }
     }
     public Vector2 Size;
@@ -69,7 +72,7 @@ public class Tile : Node2D
 
     public Tile(){}   
 
-    public void BuildTile(Type type, Vector2 size, Vector2 offset, Vector2 gridPosition)
+    public void BuildTile(Type type, Vector2 size, Vector2 gridPosition)
     {
         Size = size;
         Label = new Counter(Size);
@@ -77,7 +80,7 @@ public class Tile : Node2D
         Sprite = new Sprite();
         Sprite.Scale = new Vector2(0.95f,0.95f);
 
-        GridOffset = offset;
+        //GridOffset = offset;
         Type = type;
         GridPosition = gridPosition;
 

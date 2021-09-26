@@ -23,7 +23,7 @@ public class Player : Sprite
         set
         {
             _GridPosition = value;
-            Position = _GridPosition * Grid.TileSize + Grid.Offset + Grid.TileSize/2;
+            Position = _GridPosition * Grid.TileSize + Grid.RectPosition + Grid.TileSize/2;
         } 
     }
 
@@ -44,10 +44,10 @@ public class Player : Sprite
         World = GetNode<World>("..");
         Grid = GetNode<Grid>("../Grid");
         
-        HopCounter = GetNode<Counter>("../HUD/VSplitContainer/HBoxContainer/HopCounter");
-        HopCounterBar = GetNode<TextureRect>("../HUD/VSplitContainer/HopCounterBar");
+        HopCounter = GetNode<Counter>("../HUD/VSplit1/HBoxContainer/HopCounter");
+        HopCounterBar = GetNode<TextureRect>("../HUD/VSplit1/HopCounterBar");
         
-        ScoreCounter = GetNode<Counter>("../HUD/VSplitContainer/HBoxContainer/ScoreCounter");
+        ScoreCounter = GetNode<Counter>("../HUD/VSplit1/HBoxContainer/ScoreCounter");
         Texture = GD.Load<Texture>("res://Game/Resources/frog.png");
 
         GridPosition = new Vector2(0, 0);
@@ -74,7 +74,6 @@ public class Player : Sprite
         }
         HopCounter.UpdateText(HopsRemaining);
         HopCounterBar.RectSize = new Vector2(20 * HopsRemaining, HopCounterBar.RectSize.y);
-
     }
 
     private void UpdateScore()
