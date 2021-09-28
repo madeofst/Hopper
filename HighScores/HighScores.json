@@ -4,6 +4,10 @@
     "Score": 2000000
   },
   {
+    "UserName": "New frog!",
+    "Score": 127500
+  },
+  {
     "UserName": "Mike!",
     "Score": 106000
   },
@@ -100,8 +104,16 @@
     "Score": 900
   },
   {
+    "UserName": "hh",
+    "Score": 900
+  },
+  {
     "UserName": "sdf",
     "Score": 800
+  },
+  {
+    "UserName": "",
+    "Score": 700
   },
   {
     "UserName": "Mike",
@@ -117,6 +129,10 @@
   },
   {
     "UserName": "",
+    "Score": 600
+  },
+  {
+    "UserName": "gg",
     "Score": 600
   },
   {
@@ -237,6 +253,14 @@
   },
   {
     "UserName": "2000Mike",
+    "Score": 0
+  },
+  {
+    "UserName": "",
+    "Score": 0
+  },
+  {
+    "UserName": "",
     "Score": 0
   },
   {

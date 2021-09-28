@@ -16,6 +16,7 @@
 // Potential additons
 * Add impassable tiles - will need pathfinding for automatic placement
 * make goals unlockable with a minimum score - this could allow for actual puzzle design.
+* missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
 
 // Possible additions
 * Enemies to dodge?
@@ -24,7 +25,16 @@
 * Add a splash screen
 * Design and add visual representation of timer and hops
 * Draw/find sprites for
-    - lily pad
-    - frog
-    - coin (points)
     - water
+* Animations
+    - frog still (eyes blinking)
+    - frog hop down
+    - frog hop side
+    - frog hop up
+* Sound FX
+    - coin
+    - goal
+* Music
+    - menu Music
+    - game Music
+    - end Music

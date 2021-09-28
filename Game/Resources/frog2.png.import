@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TitleWithFrog.png-72865a6fa07ccb353807a3de5f5ab206.stex"
+path="res://.import/frog2.png-8b322e002abdecf68434ee5676fa29ac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Menu/Design/TitleWithFrog.png"
-dest_files=[ "res://.import/TitleWithFrog.png-72865a6fa07ccb353807a3de5f5ab206.stex" ]
+source_file="res://Game/Resources/frog2.png"
+dest_files=[ "res://.import/frog2.png-8b322e002abdecf68434ee5676fa29ac.stex" ]
 
 [params]
 

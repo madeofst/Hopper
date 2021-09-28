@@ -48,7 +48,7 @@ public class Player : Sprite
         HopCounterBar = GetNode<TextureRect>("../HUD/VSplit1/HopCounterBar");
         
         ScoreCounter = GetNode<Counter>("../HUD/VSplit1/HBoxContainer/ScoreCounter");
-        Texture = GD.Load<Texture>("res://Game/Resources/frog.png");
+        Texture = GD.Load<Texture>("res://Game/Resources/frog2.png");
 
         GridPosition = new Vector2(0, 0);
         Scale = new Vector2(0.9f, 0.9f);
