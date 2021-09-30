@@ -31,7 +31,7 @@ public class World : Node2D
         Grid.Connect(nameof(Grid.NextLevel), this, "IncrementLevel");
 
         Timer = new milliTimer();
-        Timer.Start(1000);
+        Timer.Start(10);
     }
 
     private void NewPlayer()

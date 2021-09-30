@@ -64,7 +64,7 @@ public class Grid : Control
         RectSize = TileSize * CurrentLevel.GridSize;
         SetPosition(new Vector2(
             60 + ((7 - CurrentLevel.GridSize) * TileSize.x)/2, 
-            80 + ((7 - CurrentLevel.GridSize) * TileSize.y)/2
+            90 + ((7 - CurrentLevel.GridSize) * TileSize.y)/2
         ));
 
         GridWidth = GridHeight = CurrentLevel.GridSize;
@@ -130,7 +130,6 @@ public class Grid : Control
 
     private void AssignGoalTile(int maxStepsFromPlayer, int minStepsFromPlayer = 1)
     {
-        
         int TopMax = (int)Math.Max(Player.GridPosition.x, Player.GridPosition.y);
         int BottomMax = (int)Math.Max(GridWidth - 1 - Player.GridPosition.x, GridHeight - 1 - Player.GridPosition.y);
         int OverallMax = Math.Max(TopMax, BottomMax);
@@ -190,7 +189,8 @@ public class Grid : Control
                    ScoreGridPosition.x < 0 || 
                    ScoreGridPosition.x >= GridWidth ||
                    ScoreGridPosition.y < 0 || 
-                   ScoreGridPosition.y >= GridHeight);
+                   ScoreGridPosition.y >= GridHeight ||
+                   Tile(ScoreGridPosition).Type == Type.Score);
 
             Tile(ScoreGridPosition).Type = Type.Score;
             Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
@@ -200,12 +200,10 @@ public class Grid : Control
     public void IncrementGoalCount()
     {
         GoalCount += 1;
-        //GD.Print($"Goals reached = {GoalCount}");
         if (GoalCount % CurrentLevel.GoalsToNextLevel == 0)
         {
             GoalCount = 0;
             EmitSignal(nameof(NextLevel));
-            //GD.Print($"Level = {CurrentLevel.ID}");
         }
     }
 

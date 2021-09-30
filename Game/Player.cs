@@ -9,16 +9,12 @@ public class Player : Sprite
 
     //Player parameters
     public int HopsRemaining { get; set; } = 3;
-
-    internal object ScoreIncrease()
-    {
-        throw new NotImplementedException();
-    }
-
     public int Score { get; set; } = 0;
     private Vector2 _GridPosition;
+    private Tile _CurrentTile;
+
     public Vector2 GridPosition
-    { 
+    {
         get
         {
             return _GridPosition;
@@ -26,13 +22,18 @@ public class Player : Sprite
         set
         {
             _GridPosition = value;
-            Position = _GridPosition * Grid.TileSize + Grid.RectPosition + Grid.TileSize/2;
+            Position = _GridPosition * Grid.TileSize + Grid.RectPosition + Grid.TileSize / 2;
+        }
+    }
+    private Tile CurrentTile 
+    { 
+        get
+        {
+            return Grid.Tile(GridPosition);   
         } 
     }
 
     //Signals
-    [Signal]
-    public delegate void MovementCompleted();
     [Signal]
     public delegate void GoalReached();
     [Signal]
@@ -64,7 +65,6 @@ public class Player : Sprite
     private void AfterMovement()
     {
         UpdateHopsRemaining(-1);
-        EmitSignal(nameof(MovementCompleted));
         UpdateScore();  //to be outside player and triggered by signal
         CheckGoal();    //maybe this should be in grid
         CheckHopsRemaining();
@@ -73,7 +73,7 @@ public class Player : Sprite
     public void UpdateHopsRemaining(int addedHops)
     {
         HopsRemaining += addedHops;
-        if (HopsRemaining > Grid.CurrentLevel.MaxHops) 
+        if (HopsRemaining > Grid.CurrentLevel.MaxHops)
         {
             HopsRemaining = Grid.CurrentLevel.MaxHops;
         }
@@ -82,24 +82,18 @@ public class Player : Sprite
 
     public void UpdateScore()
     {
-        Tile currentTile = Grid.Tile(GridPosition);
-        Score += currentTile.PointValue;
-
-        GD.Print(GridPosition, " ", currentTile.Type, " ", currentTile.PointValue, " ", Score);
-
-        //TODO: this needs to come out of here
-        if (currentTile.Type == Type.Score)
+        Score += CurrentTile.PointValue;
+        //GD.Print(GridPosition, " ", CurrentTile.Type, " ", CurrentTile.PointValue, " ", Score);
+        if (CurrentTile.Type == Type.Score) //TODO: this needs to come out of here (probably)
         {
-            currentTile.Type = Type.Blank;
+            CurrentTile.Type = Type.Blank;
         }
-
         EmitSignal(nameof(ScoreUpdated), Score);
-
     }
 
     private void CheckGoal()
     {
-        if (Grid.Tile(GridPosition).Type == Type.Goal)
+        if (CurrentTile.Type == Type.Goal)
         {
             UpdateHopsRemaining(Grid.CurrentLevel.HopsToAdd);
             EmitSignal(nameof(GoalReached));
@@ -115,52 +109,52 @@ public class Player : Sprite
             World.GameOver = true;
         }
     }
-    
+
     public override void _Input(InputEvent @event)
     {
         if (World != null)
         {
-        if (!World.GameOver)
-        {
-            if (@event.IsActionPressed("ui_left"))
+            if (!World.GameOver)
             {
-                if(GridPosition.x > 0)
+                if (@event.IsActionPressed("ui_left"))
                 {
-                    GridPosition += new Vector2(-1, 0);
-                    AfterMovement();
+                    if (GridPosition.x > 0)
+                    {
+                        GridPosition += new Vector2(-1, 0);
+                        AfterMovement();
+                    }
                 }
-            }
-            else if (@event.IsActionPressed("ui_right"))
-            {
-                if(GridPosition.x < Grid.GridWidth - 1)
+                else if (@event.IsActionPressed("ui_right"))
                 {
-                    GridPosition += new Vector2(1, 0);
-                    AfterMovement();
+                    if (GridPosition.x < Grid.GridWidth - 1)
+                    {
+                        GridPosition += new Vector2(1, 0);
+                        AfterMovement();
+                    }
                 }
-            }
-            else if (@event.IsActionPressed("ui_up"))
-            {
-                if(GridPosition.y > 0)
+                else if (@event.IsActionPressed("ui_up"))
                 {
-                    GridPosition += new Vector2(0, -1);
-                    AfterMovement();
+                    if (GridPosition.y > 0)
+                    {
+                        GridPosition += new Vector2(0, -1);
+                        AfterMovement();
+                    }
                 }
-            }
-            else if (@event.IsActionPressed("ui_down"))
-            {
-                if(GridPosition.y < Grid.GridHeight - 1)
+                else if (@event.IsActionPressed("ui_down"))
                 {
-                    GridPosition += new Vector2(0, 1);
-                    AfterMovement();
+                    if (GridPosition.y < Grid.GridHeight - 1)
+                    {
+                        GridPosition += new Vector2(0, 1);
+                        AfterMovement();
+                    }
                 }
+
+                //FOR TESTING ONLY
+                /*             if (@event.IsActionPressed("ui_select"))
+                            {
+                                Grid.UpdateGrid();
+                            } */
             }
-            
-            //FOR TESTING ONLY
-/*             if (@event.IsActionPressed("ui_select"))
-            {
-                Grid.UpdateGrid();
-            } */
-        }
         }
     }
 

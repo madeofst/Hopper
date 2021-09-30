@@ -1,101 +1,148 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://HUD/TimeCounter.cs" type="Script" id=1]
 [ext_resource path="res://Game/Resources/frogFilled20.png" type="Texture" id=2]
 [ext_resource path="res://HUD/ScoreCounter.cs" type="Script" id=3]
 [ext_resource path="res://HUD/HopCounterBar.cs" type="Script" id=4]
 [ext_resource path="res://HUD/HopCounter.cs" type="Script" id=5]
+[ext_resource path="res://HUD/Resources/timerUnder.png" type="Texture" id=6]
+[ext_resource path="res://HUD/Resources/timerTop.png" type="Texture" id=7]
+[ext_resource path="res://HUD/Resources/timerOver.png" type="Texture" id=8]
+[ext_resource path="res://HUD/Stopwatch.cs" type="Script" id=9]
 
 [node name="HUD" type="MarginContainer"]
 anchor_right = 1.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 60 )
 custom_constants/margin_right = 60
-custom_constants/margin_top = 10
+custom_constants/margin_top = 0
 custom_constants/margin_left = 60
 custom_constants/margin_bottom = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 60.0
-margin_top = 10.0
 margin_right = 516.0
-margin_bottom = 50.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 456.0
-margin_bottom = 16.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+margin_right = 388.0
+margin_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/CenterContainer"]
+margin_top = 14.0
+margin_right = 388.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 388, 50 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer2"]
+margin_right = 388.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
 custom_constants/separation = 10
 
-[node name="ScoreCounterLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+[node name="ScoreCounterLabel" type="RichTextLabel" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 margin_right = 60.0
-margin_bottom = 16.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 60, 0 )
 text = "Score:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScoreCounter" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+[node name="ScoreCounter" type="RichTextLabel" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 margin_left = 70.0
 margin_right = 110.0
-margin_bottom = 16.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 40, 0 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HopCounterLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+[node name="HopCounterLabel" type="RichTextLabel" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 margin_left = 120.0
 margin_right = 180.0
-margin_bottom = 16.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 60, 0 )
 text = "Hops:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HopCounter" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+[node name="HopCounter" type="RichTextLabel" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 margin_left = 190.0
 margin_right = 230.0
-margin_bottom = 16.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 40, 0 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeCounterLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+[node name="TimeCounterLabel" type="RichTextLabel" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 margin_left = 240.0
 margin_right = 300.0
-margin_bottom = 16.0
+margin_bottom = 20.0
 rect_min_size = Vector2( 60, 0 )
 text = "Time:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimeCounter" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
-margin_left = 310.0
-margin_right = 350.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 40, 0 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HopCounterBar" type="TextureRect" parent="VBoxContainer"]
-margin_top = 20.0
+[node name="HopCounterBar" type="TextureRect" parent="HBoxContainer/CenterContainer/VBoxContainer2"]
+margin_top = 24.0
 margin_right = 20.0
-margin_bottom = 40.0
+margin_bottom = 44.0
 rect_min_size = Vector2( 20, 20 )
 size_flags_horizontal = 2
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
 script = ExtResource( 4 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 392.0
+margin_right = 456.0
+margin_bottom = 80.0
+size_flags_horizontal = 5
+size_flags_vertical = 3
+custom_constants/separation = -4
+alignment = 1
+
+[node name="Stopwatch" type="TextureProgress" parent="HBoxContainer/VBoxContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+max_value = 10.0
+value = 10.0
+texture_under = ExtResource( 6 )
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 8 )
+fill_mode = 4
+script = ExtResource( 9 )
+
+[node name="TimeCounter" type="RichTextLabel" parent="HBoxContainer/VBoxContainer"]
+margin_top = 60.0
+margin_right = 64.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 40, 20 )
+bbcode_enabled = true
+bbcode_text = "[center]10[/center]"
+text = "10"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

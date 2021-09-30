@@ -4,7 +4,6 @@ _________________________
 // Definites
 
     // Fixes
-    * Check that new coin tile location is not already a coin tile
     * Improve score assignment
     
     // Definite additions
