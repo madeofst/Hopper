@@ -6,12 +6,15 @@ public class Player : Sprite
     //References to existing nodes
     private World World;
     private Grid Grid;
-    private Counter HopCounter;
-    private TextureRect HopCounterBar;
-    private Counter ScoreCounter;
 
     //Player parameters
     public int HopsRemaining { get; set; } = 3;
+
+    internal object ScoreIncrease()
+    {
+        throw new NotImplementedException();
+    }
+
     public int Score { get; set; } = 0;
     private Vector2 _GridPosition;
     public Vector2 GridPosition
@@ -32,6 +35,10 @@ public class Player : Sprite
     public delegate void MovementCompleted();
     [Signal]
     public delegate void GoalReached();
+    [Signal]
+    public delegate void ScoreUpdated(int score);
+    [Signal]
+    public delegate void HopCompleted(int hopsRemaining);
 
     public override void _Ready()
     {
@@ -43,17 +50,15 @@ public class Player : Sprite
     {
         World = GetNode<World>("..");
         Grid = GetNode<Grid>("../Grid");
-        
-        HopCounter = GetNode<Counter>("../HUD/VSplit1/HBoxContainer/HopCounter");
-        HopCounterBar = GetNode<TextureRect>("../HUD/VSplit1/HopCounterBar");
-        
-        ScoreCounter = GetNode<Counter>("../HUD/VSplit1/HBoxContainer/ScoreCounter");
-        Texture = GD.Load<Texture>("res://Game/Resources/frog2.png");
 
+        //Initialize properties of player
+        Texture = GD.Load<Texture>("res://Game/Resources/frog2.png");
         GridPosition = new Vector2(0, 0);
-        Scale = new Vector2(0.9f, 0.9f);
 
         Grid.InitializeGrid();
+        EmitSignal(nameof(ScoreUpdated), Score);
+        EmitSignal(nameof(HopCompleted), HopsRemaining);
+        //Grid.PrintGrid(); //For debugging grid
     }
 
     private void AfterMovement()
@@ -72,20 +77,24 @@ public class Player : Sprite
         {
             HopsRemaining = Grid.CurrentLevel.MaxHops;
         }
-        HopCounter.UpdateText(HopsRemaining);
-        HopCounterBar.RectSize = new Vector2(20 * HopsRemaining, HopCounterBar.RectSize.y);
+        EmitSignal(nameof(HopCompleted), HopsRemaining);
     }
 
-    private void UpdateScore()
+    public void UpdateScore()
     {
         Tile currentTile = Grid.Tile(GridPosition);
         Score += currentTile.PointValue;
-        ScoreCounter.UpdateText(Score);
 
+        GD.Print(GridPosition, " ", currentTile.Type, " ", currentTile.PointValue, " ", Score);
+
+        //TODO: this needs to come out of here
         if (currentTile.Type == Type.Score)
         {
             currentTile.Type = Type.Blank;
         }
+
+        EmitSignal(nameof(ScoreUpdated), Score);
+
     }
 
     private void CheckGoal()
@@ -93,11 +102,8 @@ public class Player : Sprite
         if (Grid.Tile(GridPosition).Type == Type.Goal)
         {
             UpdateHopsRemaining(Grid.CurrentLevel.HopsToAdd);
-
             EmitSignal(nameof(GoalReached));
-
             Grid.UpdateGrid();
-
             World.Timer.Reset();
         }
     }
@@ -150,10 +156,10 @@ public class Player : Sprite
             }
             
             //FOR TESTING ONLY
-            if (@event.IsActionPressed("ui_select"))
+/*             if (@event.IsActionPressed("ui_select"))
             {
                 Grid.UpdateGrid();
-            }
+            } */
         }
         }
     }

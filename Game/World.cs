@@ -6,7 +6,6 @@ public class World : Node2D
     //References to existing nodes
     private Grid Grid { get; set; }
     private Player Player { get; set; }
-    private Counter TimeCounter { get; set; }
     
     //World parameters
     public bool GameOver = false;
@@ -20,16 +19,19 @@ public class World : Node2D
         new Level(5, 7, 10, 4) 
     };
 
+    //Signals
+    [Signal]
+    public delegate void TimeUpdate(float timeRemaining);
+
     public override void _Ready()
     {
         NewGrid(Levels[0]);
         NewPlayer();
-        CallDeferred("GetChildReferences");
 
         Grid.Connect(nameof(Grid.NextLevel), this, "IncrementLevel");
 
         Timer = new milliTimer();
-        Timer.Start(10);
+        Timer.Start(1000);
     }
 
     private void NewPlayer()
@@ -42,11 +44,6 @@ public class World : Node2D
     {
         Grid = new Grid(level);
         AddChild(Grid);
-    }
-
-    public void GetChildReferences()
-    {
-        TimeCounter = GetNode<Counter>("HUD/VSplit1/HBoxContainer/TimeCounter");
     }
 
     public override void _Process(float delta)
@@ -70,7 +67,7 @@ public class World : Node2D
 
     private void UpdateTimeRemaining()
     {
-        TimeCounter.UpdateText(Timer.Remaining());
+        EmitSignal(nameof(TimeUpdate), Timer.Remaining());
     }
 
     public void IncrementLevel()

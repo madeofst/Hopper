@@ -11,7 +11,7 @@ public class Level
     public int MaxHops;
     public int HopsToAdd;
 
-    //Sprite set or something to definte the look
+    //Sprite set or something to define the look
 
     public Level(int id, int gridSize, int maxHops, int scoreTileCount, int goalsToNextLevel = 10, int hopsToAdd = 0)
     {

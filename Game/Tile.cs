@@ -46,7 +46,7 @@ public class Tile : Node2D
         set
         {
             _gridPosition = value;
-            Sprite.Position = (_gridPosition * Size) /* + GridOffset */ + (Size/2);
+            Sprite.Position = (_gridPosition * Size) + (Size/2);
         }
     }
     public Vector2 Size;
@@ -59,10 +59,10 @@ public class Tile : Node2D
         get { return _PointValue; }
         set
         {
+            _PointValue = value;
             if (_type == Type.Score)
             {
-                _PointValue = value;
-                Label.Text = _PointValue.ToString();
+                Label.BbcodeText = $"[center]{_PointValue.ToString()}[/center]";
             }
             else
             {
@@ -78,9 +78,10 @@ public class Tile : Node2D
     {
         Size = size;
         Label = new Counter(Size);
+        Label.BbcodeEnabled = true;
 
         Sprite = new Sprite();
-        Sprite.Scale = new Vector2(0.95f,0.95f);
+        //Sprite.Scale = new Vector2(0.95f,0.95f);
 
         //GridOffset = offset;
         Type = type;
@@ -89,7 +90,7 @@ public class Tile : Node2D
         Grid = GetNode<Grid>("/root/World/Grid");
         AddChild(Sprite);
 
-        Label.RectPosition = Sprite.Position - Size/5;
+        Label.RectPosition = Sprite.Position + new Vector2(-Label.RectSize.x/2, Label.RectSize.y/10);
         AddChild(Label);
     }
 }

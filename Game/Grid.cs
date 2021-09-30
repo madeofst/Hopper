@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using GodotExtension;    
 
@@ -92,7 +93,7 @@ public class Grid : Control
             {
                 Tiles[i, j] = new Tile();
                 AddChild(Tiles[i, j]);
-                Tiles[i, j].BuildTile(Type.Blank, TileSize, /* Offset, */ new Vector2(i, j));
+                Tiles[i, j].BuildTile(Type.Blank, TileSize, new Vector2(i, j));
             }
         }
     }
@@ -206,5 +207,26 @@ public class Grid : Control
             EmitSignal(nameof(NextLevel));
             //GD.Print($"Level = {CurrentLevel.ID}");
         }
+    }
+
+    public void PrintGrid()
+    {
+        float row = 0;
+        string currentRowstring = "[ ";
+        for (int y = 0; y < GridWidth; y++)
+        {
+            for (int x = 0; x < GridHeight; x++)
+            {
+                if (Tiles[x, y].GridPosition.y > row)
+                {
+                    row += 1;
+                    GD.Print(currentRowstring + " ]");
+                    currentRowstring = "[ ";
+                }
+
+                currentRowstring += $"{Tiles[x, y].GridPosition} {Tiles[x, y].Type} {Tiles[x, y].PointValue}";
+            }
+        }
+        GD.Print(currentRowstring + " ]");
     }
 }
