@@ -1,40 +1,50 @@
-// Fixes
-* Check that new coin tile location is not already a coin tile
-* Improve score assignment
-* Investigate occasional crashing - seems to be when moving onto a goal tile
+// For game as-is
+_________________________
 
-//Possible process improvements
-* Maybe only introduce timer after Level 1 or 2
-* Transfer to path finding algorithm for coins?
-* Correct score values for unreachable coins (aka other side of goal)
+// Definites
 
-// Definite additions
-* Add jump tile
-* Add max hop limit increase tile
-* Add timer extension tile
+    // Fixes
+    * Check that new coin tile location is not already a coin tile
+    * Improve score assignment
+    
+    // Definite additions
+    * Timer reduces with each goal reached?
+    * Add jump tile
+    * Add max hop limit increase tile
+    * Add timer extension tile
+    * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
 
-// Potential additons
-* Add impassable tiles - will need pathfinding for automatic placement
-* make goals unlockable with a minimum score - this could allow for actual puzzle design.
-* missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
+    //Plan in steps
+    * Design and add visual representation of timer and hops
+    * Animate main menu
+    * Draw/find sprites for
+        - water
+    * Animations
+        - frog still (eyes blinking)
+        - frog hop down
+        - frog hop side
+        - frog hop up
+    * Sound FX
+        - coin
+        - goal
+    * Music
+        - menu Music
+        - game Music
+        - end Music
 
-// Possible additions
-* Enemies to dodge?
+//Maybes
+_________________________
 
-//Plan in steps
-* Add a splash screen
-* Design and add visual representation of timer and hops
-* Draw/find sprites for
-    - water
-* Animations
-    - frog still (eyes blinking)
-    - frog hop down
-    - frog hop side
-    - frog hop up
-* Sound FX
-    - coin
-    - goal
-* Music
-    - menu Music
-    - game Music
-    - end Music
+    //Pathfinding
+    * Transfer to path finding algorithm for coins?
+    * Correct score values for unreachable coins (aka other side of goal)
+    * Add impassable tiles - will need pathfinding for automatic placement
+
+
+// For more designable puzzle version
+_________________________
+
+    * make goals unlockable with a minimum score - this could allow for actual puzzle design.
+    * Enemies to dodge?
+    * missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
+
