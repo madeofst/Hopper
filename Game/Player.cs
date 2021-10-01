@@ -62,12 +62,18 @@ public class Player : Sprite
         //Grid.PrintGrid(); //For debugging grid
     }
 
-    private void AfterMovement()
+    private void AfterMovement(Vector2 movementDirection)
     {
+        Bounce();
         UpdateHopsRemaining(-1);
         UpdateScore();  //to be outside player and triggered by signal
         CheckGoal();    //maybe this should be in grid
         CheckHopsRemaining();
+    }
+
+    private void Bounce()
+    {
+        ;
     }
 
     public void UpdateHopsRemaining(int addedHops)
@@ -116,36 +122,38 @@ public class Player : Sprite
         {
             if (!World.GameOver)
             {
+                Vector2 MovementDirection;
+
                 if (@event.IsActionPressed("ui_left"))
                 {
                     if (GridPosition.x > 0)
                     {
-                        GridPosition += new Vector2(-1, 0);
-                        AfterMovement();
+                        GridPosition += MovementDirection = new Vector2(-1, 0);
+                        AfterMovement(MovementDirection);
                     }
                 }
                 else if (@event.IsActionPressed("ui_right"))
                 {
                     if (GridPosition.x < Grid.GridWidth - 1)
                     {
-                        GridPosition += new Vector2(1, 0);
-                        AfterMovement();
+                        GridPosition += MovementDirection = new Vector2(1, 0);
+                        AfterMovement(MovementDirection);
                     }
                 }
                 else if (@event.IsActionPressed("ui_up"))
                 {
                     if (GridPosition.y > 0)
                     {
-                        GridPosition += new Vector2(0, -1);
-                        AfterMovement();
+                        GridPosition += MovementDirection = new Vector2(0, -1);
+                        AfterMovement(MovementDirection);
                     }
                 }
                 else if (@event.IsActionPressed("ui_down"))
                 {
                     if (GridPosition.y < Grid.GridHeight - 1)
                     {
-                        GridPosition += new Vector2(0, 1);
-                        AfterMovement();
+                        GridPosition += MovementDirection = new Vector2(0, 1);
+                        AfterMovement(MovementDirection);
                     }
                 }
 

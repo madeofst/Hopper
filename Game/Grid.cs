@@ -118,6 +118,7 @@ public class Grid : Control
         ClearTypes();
         AssignGoalTile(CurrentLevel.HopsToAdd, 2);
         AssignScoreTiles(CurrentLevel.ScoreTileCount);
+        AssignJumpTile(CurrentLevel.HopsToAdd, 2);
     }
 
     private void ClearTypes()
@@ -163,6 +164,46 @@ public class Grid : Control
 
         GoalTile = Tiles[(int)absoluteGridPosition.x, (int)absoluteGridPosition.y];
         GoalTile.Type = Type.Goal;
+    }
+
+    private void AssignJumpTile(int maxStepsFromPlayer, int minStepsFromPlayer = 1)
+    {
+        if (rand.RandiRange(1, 3) == 3)
+        {
+        int TopMax = (int)Math.Max(Player.GridPosition.x, Player.GridPosition.y);
+        int BottomMax = (int)Math.Max(GridWidth - 1 - Player.GridPosition.x, GridHeight - 1 - Player.GridPosition.y);
+        int OverallMax = Math.Max(TopMax, BottomMax);
+        int limitedMaxStepsFromPlayer = maxStepsFromPlayer;
+        if (OverallMax < limitedMaxStepsFromPlayer) limitedMaxStepsFromPlayer = OverallMax;
+
+        int possibleSteps = rand.RandiRange(minStepsFromPlayer, limitedMaxStepsFromPlayer);
+        int x = rand.RandiRange(0, possibleSteps);
+        Vector2 relativeGridPosition = new Vector2(x, possibleSteps - x);
+        Vector2 absoluteGridPosition;
+
+        int limitCounter = 0;
+        do
+        {
+            int limit = rand.RandiRange(0, 3);
+            for (int i = 0; i <= limit; i++)
+            {
+                float tempY = relativeGridPosition.y;
+                relativeGridPosition.y = relativeGridPosition.x * - 1;
+                relativeGridPosition.x = tempY;
+            }
+            absoluteGridPosition = relativeGridPosition + Player.GridPosition;
+            limitCounter++;
+
+        } while ((absoluteGridPosition.x < 0 || 
+                  absoluteGridPosition.x >= GridWidth ||
+                  absoluteGridPosition.y < 0 || 
+                  absoluteGridPosition.y >= GridHeight ||
+                  Tile(absoluteGridPosition).Type != Type.Blank)
+                  && (limitCounter < 100)
+                  );
+        if (limitCounter < 100) Tile(absoluteGridPosition).Type = Type.Jump;
+        }
+        //GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
     }
 
     private void AssignScoreTiles(int Count)
