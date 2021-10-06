@@ -55,7 +55,7 @@ public class Player : Node2D
         PlayerSprite = GetNode<Sprite>("PlayerSprite");
 
         //Initialize properties of player
-        PlayerSprite.Texture = GD.Load<Texture>("res://Game/Resources/frog2.png");
+        PlayerSprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/Frog1_32x32_front.png");
         GridPosition = new Vector2(0, 0);
 
         Grid.InitializeGrid();

@@ -63,8 +63,8 @@ public class Grid : Control
         TileSize = new Vector2(32, 32);
         RectSize = TileSize * CurrentLevel.GridSize;
         SetPosition(new Vector2(
-            60 + ((7 - CurrentLevel.GridSize) * TileSize.x)/2, 
-            90 + ((7 - CurrentLevel.GridSize) * TileSize.y)/2
+            68 + ((7 - CurrentLevel.GridSize) * TileSize.x)/2, 
+            8 + ((7 - CurrentLevel.GridSize) * TileSize.y)/2
         ));
 
         GridWidth = GridHeight = CurrentLevel.GridSize;

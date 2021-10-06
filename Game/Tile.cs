@@ -19,31 +19,31 @@ public class Tile : Node2D
             _type = value;
             if (_type == Type.Blank)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad1.png");
+                LilySprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/LilyPad1_32x32.png");
                 var rand = new RandomNumberGenerator();
                 rand.Randomize();
-                Sprite.Rotation = rand.RandfRange(0, (float)Math.PI*2);
+                //Sprite.Rotation = rand.RandfRange(0, (float)Math.PI*2);
                 PointValue = 0;
                 JumpLength = 0;
             }
             else if (_type == Type.Goal)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad2.png");
-                Sprite.Rotation = 0;
+                LilySprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/LilyPad2_32x32.png");
+                LilySprite.Rotation = 0;
                 PointValue = 50;
                 JumpLength = 0;
             }
             else if (_type == Type.Score)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPadCoin.png");
-                Sprite.Rotation = 0;
+                LilySprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/LilyPad1_32x32.png");
+                LilySprite.Rotation = 0;
                 PointValue = 100;
                 JumpLength = 0;
             }
             else if (_type == Type.Jump)
             {
-                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad3.png");
-                Sprite.Rotation = 0;
+                LilySprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/LilyPad3_32x32.png");
+                LilySprite.Rotation = 0;
                 PointValue = 0;
                 JumpLength = 2;
             }
@@ -57,13 +57,14 @@ public class Tile : Node2D
         set
         {
             _gridPosition = value;
-            Sprite.Position = (_gridPosition * Size) + (Size/2);
+            LilySprite.Position = (_gridPosition * Size) + (Size/2);
         }
     }
     public Vector2 Size;
     public Vector2 GridOffset;
     public Grid Grid;
-    public Sprite Sprite;
+    public Sprite LilySprite;
+    public Sprite WaterSprite;
     private int _PointValue;
     public int PointValue
     {
@@ -91,15 +92,22 @@ public class Tile : Node2D
         Size = size;
         Label = new Counter(Size);
         Label.BbcodeEnabled = true;
-
-        Sprite = new Sprite();
+        
+        LilySprite = new Sprite();
         Type = type;
         GridPosition = gridPosition;
 
-        Grid = GetNode<Grid>("/root/World/Grid");
-        AddChild(Sprite);
+        WaterSprite = new Sprite();
+        WaterSprite.Position = LilySprite.Position;
+        WaterSprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/Water1_32x32.png");
+        AddChild(WaterSprite);
 
-        Label.RectPosition = Sprite.Position + new Vector2(-Label.RectSize.x/2, Label.RectSize.y/10);
+        Grid = GetNode<Grid>("/root/World/Grid");
+        AddChild(LilySprite);
+
+        Label.RectPosition = LilySprite.Position + new Vector2(-Label.RectSize.x/2, Label.RectSize.y/10);
         AddChild(Label);
+
+
     }
 }

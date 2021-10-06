@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Frog1_32x32_right.png-a1bb8ab7f1ed927873cf0e7aa7962d53.stex"
+path="res://.import/LilyPad2_32x32.png-fcad537cf56e99225f4c2655e570e300.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/Resources/32x32/Frog1_32x32_right.png"
-dest_files=[ "res://.import/Frog1_32x32_right.png-a1bb8ab7f1ed927873cf0e7aa7962d53.stex" ]
+source_file="res://Game/Resources/32x32/LilyPad2_32x32.png"
+dest_files=[ "res://.import/LilyPad2_32x32.png-fcad537cf56e99225f4c2655e570e300.stex" ]
 
 [params]
 
