@@ -5,7 +5,8 @@ public enum Type
 {
     Blank,
     Goal,
-    Score
+    Score,
+    Jump
 }
 
 public class Tile : Node2D
@@ -23,18 +24,28 @@ public class Tile : Node2D
                 rand.Randomize();
                 Sprite.Rotation = rand.RandfRange(0, (float)Math.PI*2);
                 PointValue = 0;
+                JumpLength = 0;
             }
             else if (_type == Type.Goal)
             {
                 Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad2.png");
                 Sprite.Rotation = 0;
                 PointValue = 50;
+                JumpLength = 0;
             }
             else if (_type == Type.Score)
             {
                 Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPadCoin.png");
                 Sprite.Rotation = 0;
                 PointValue = 100;
+                JumpLength = 0;
+            }
+            else if (_type == Type.Jump)
+            {
+                Sprite.Texture = GD.Load<Texture>("res://Game/Resources/LilyPad3.png");
+                Sprite.Rotation = 0;
+                PointValue = 0;
+                JumpLength = 2;
             }
         }
     }
@@ -71,19 +82,17 @@ public class Tile : Node2D
         }
     }
     public Counter Label;
+    public int JumpLength;
 
     public Tile(){}   
 
-    public void BuildTile(Type type, Vector2 size, Vector2 gridPosition)
+    public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition)
     {
         Size = size;
         Label = new Counter(Size);
         Label.BbcodeEnabled = true;
 
         Sprite = new Sprite();
-        //Sprite.Scale = new Vector2(0.95f,0.95f);
-
-        //GridOffset = offset;
         Type = type;
         GridPosition = gridPosition;
 
