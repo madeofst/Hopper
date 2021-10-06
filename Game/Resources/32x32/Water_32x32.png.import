@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Frog1_32x32_front.png-f0579b64dc891107a80a5f7eb9a892e6.stex"
+path="res://.import/Water_32x32.png-2f8370826f41bc31dba966e0f75e0b13.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/Resources/Frog1_32x32_front.png"
-dest_files=[ "res://.import/Frog1_32x32_front.png-f0579b64dc891107a80a5f7eb9a892e6.stex" ]
+source_file="res://Game/Resources/32x32/Water_32x32.png"
+dest_files=[ "res://.import/Water_32x32.png-2f8370826f41bc31dba966e0f75e0b13.stex" ]
 
 [params]
 

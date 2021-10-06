@@ -36,8 +36,11 @@ public class World : Node2D
 
     private void NewPlayer()
     {
-        Player = new Player();
+        Player = (Player)GD.Load<PackedScene>("res://Player/Player.tscn").Instance();
         AddChild(Player);
+
+        //Player = new Player();
+        //AddChild(Player);
     }
 
     private void NewGrid(Level level)

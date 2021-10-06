@@ -1,11 +1,12 @@
 using System;
 using Godot;
 
-public class Player : Sprite
+public class Player : Node2D
 {
     //References to existing nodes
     private World World;
     private Grid Grid;
+    private Sprite PlayerSprite;
 
     //Player parameters
     public int HopsRemaining { get; set; } = 3;
@@ -51,9 +52,10 @@ public class Player : Sprite
     {
         World = GetNode<World>("..");
         Grid = GetNode<Grid>("../Grid");
+        PlayerSprite = GetNode<Sprite>("PlayerSprite");
 
         //Initialize properties of player
-        Texture = GD.Load<Texture>("res://Game/Resources/frog2.png");
+        PlayerSprite.Texture = GD.Load<Texture>("res://Game/Resources/frog2.png");
         GridPosition = new Vector2(0, 0);
 
         Grid.InitializeGrid();
