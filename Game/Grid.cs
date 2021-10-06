@@ -60,7 +60,7 @@ public class Grid : Control
 
     private void DefineGridParameters()
     {
-        TileSize = new Vector2(64, 64);
+        TileSize = new Vector2(32, 32);
         RectSize = TileSize * CurrentLevel.GridSize;
         SetPosition(new Vector2(
             60 + ((7 - CurrentLevel.GridSize) * TileSize.x)/2, 
