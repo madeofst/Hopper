@@ -20,7 +20,7 @@ public class HopCounterBar : TextureRect
 
     public void UpdateBar(int HopsRemaining)
     {
-        RectSize = new Vector2(20 * HopsRemaining, RectSize.y);
+        RectSize = new Vector2(RectSize.x, 20 * HopsRemaining);
     }
 
     public virtual void MakeConnections()
