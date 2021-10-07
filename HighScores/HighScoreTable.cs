@@ -29,7 +29,7 @@ public class HighScoreTable : MarginContainer
 
         for (int i = 0; i < 10; i++)
         {
-            string labelPath = $"VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer{i+1}/";
+            string labelPath = $"VBoxContainer/VBoxContainer/HSplitContainer{i+1}/";
             string userNamePath = $"{labelPath}UserNameLabel{i+1}";
             
             RichTextLabel UserNameLabel = GetNode<RichTextLabel>($"{labelPath}UserNameLabel{i+1}");

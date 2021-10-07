@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class NewGameButton : Godot.Button
+public class NewGameButton : TextureButton
 {
     public override void _Ready()
     {
