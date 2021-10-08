@@ -11,9 +11,9 @@ public class Level
     public int MaxHops;
     public int HopsToAdd;
 
-    //Sprite set or something to define the look
-
-    public Level(int id, int gridSize, int maxHops, int scoreTileCount, int goalsToNextLevel = 10, int hopsToAdd = 0)
+    public Type[] Types; //TODO: to be populated by the constructor (or init method(s))
+    
+    public Level(int id, int gridSize, int maxHops, int scoreTileCount, int goalsToNextLevel = 10, int hopsToAdd = 0) //TODO: turn this into a Generate() method?
     {
         ID = id;
         GridSize = gridSize;
@@ -30,5 +30,9 @@ public class Level
         ScoreTileCount = scoreTileCount;
     }
 
+    public Level(Type[] Types) //TODO: the parameter will be in the form of a resource or possible just a json file with a list of types
+    {
+        //TODO: check resource is valid (e.g. square number of types, valid types etc.)
+    }
     
 }

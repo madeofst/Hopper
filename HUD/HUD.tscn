@@ -14,6 +14,7 @@
 margin_right = 360.0
 margin_bottom = 240.0
 rect_min_size = Vector2( 360, 240 )
+mouse_filter = 2
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
 custom_constants/margin_left = 0
@@ -25,11 +26,13 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 360.0
 margin_bottom = 240.0
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
 margin_right = 300.0
 margin_bottom = 240.0
 rect_min_size = Vector2( 300, 0 )
+mouse_filter = 2
 custom_constants/margin_right = 230
 custom_constants/margin_top = 15
 custom_constants/margin_left = 0
@@ -102,6 +105,7 @@ margin_left = 304.0
 margin_right = 344.0
 margin_bottom = 240.0
 rect_min_size = Vector2( 40, 0 )
+mouse_filter = 2
 
 [node name="HopCounter" type="RichTextLabel" parent="HBoxContainer/VBoxContainer2"]
 margin_right = 40.0

@@ -9,7 +9,7 @@ public enum Type
     Jump
 }
 
-public class Tile : Node2D
+public class Tile : Area2D
 {
     private Type _type;
     public Type Type
@@ -85,7 +85,14 @@ public class Tile : Node2D
     public Counter Label;
     public int JumpLength;
 
+    public CollisionShape2D CollisionShape;
+
     public Tile(){}   
+    
+    public Tile(string Name)
+    {
+        this.Name = Name;
+    }   
 
     public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition)
     {
@@ -101,13 +108,29 @@ public class Tile : Node2D
         WaterSprite.Position = LilySprite.Position;
         WaterSprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/Water1_32x32.png");
         AddChild(WaterSprite);
+        WaterSprite.Owner = this;
 
         Grid = GetNode<Grid>("/root/World/Grid");
         AddChild(LilySprite);
+        LilySprite.Owner = this;
 
         Label.RectPosition = LilySprite.Position + new Vector2(-Label.RectSize.x/2, Label.RectSize.y/10);
         AddChild(Label);
+        Label.MouseFilter = Control.MouseFilterEnum.Ignore;
+        Label.Owner = this;
+        
+        CollisionShape = new CollisionShape2D();
+        AddChild(CollisionShape);
+        CollisionShape.Shape = ResourceLoader.Load<RectangleShape2D>("res://Levels/Template/TileRectangle.tres");
+        CollisionShape.Position = LilySprite.Position;
+        CollisionShape.Owner = this;
+    }
 
-
+    public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
+    {
+        if (@event is InputEventMouseButton && @event.IsPressed())
+        {
+            GD.Print($"Clicked Tile {GridPosition}");
+        }
     }
 }

@@ -40,4 +40,11 @@ public class Menu : MarginContainer
             id ++;
         } */
     }
+
+    public void EditorPressed()
+    {
+        LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Template/LevelEditor.tscn").Instance();
+        GetTree().Root.AddChild(editor);
+        Hide();
+    }
 }

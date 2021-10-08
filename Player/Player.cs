@@ -61,6 +61,7 @@ public class Player : Node2D
         Grid.InitializeGrid();
         EmitSignal(nameof(ScoreUpdated), Score);
         EmitSignal(nameof(HopCompleted), HopsRemaining);
+        
         //Grid.PrintGrid(); //For debugging grid
     }
 
@@ -158,6 +159,16 @@ public class Player : Node2D
                         AfterMovement(MovementDirection);
                     }
                 }
+                else if (@event.IsActionPressed("export"))
+                {
+                    PackedScene exportedGrid = new PackedScene();
+                    exportedGrid.Pack(GetNode("/root/World/Grid"));
+                    ResourceSaver.Save("res://Levels/Template/TemplateScene.tscn", exportedGrid);
+                }
+
+
+
+
 
                 //FOR TESTING ONLY
                 /*             if (@event.IsActionPressed("ui_select"))

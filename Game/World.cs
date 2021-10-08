@@ -31,16 +31,13 @@ public class World : Node2D
         Grid.Connect(nameof(Grid.NextLevel), this, "IncrementLevel");
 
         Timer = new milliTimer();
-        Timer.Start(10);
+        Timer.Start(100);
     }
 
     private void NewPlayer()
     {
         Player = (Player)GD.Load<PackedScene>("res://Player/Player.tscn").Instance();
         AddChild(Player);
-
-        //Player = new Player();
-        //AddChild(Player);
     }
 
     private void NewGrid(Level level)

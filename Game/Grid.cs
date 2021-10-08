@@ -7,19 +7,22 @@ public class Grid : Control
 {
     public Player Player { get; set; }
 
+    //TODO: add editable property
+
+
     public int GridWidth;
-    public int GridHeight;
-    public int GoalCount;
+    public int GridHeight; 
+    public int GoalCount; //TODO: should live in level
     
-    private Vector2 ViewportSize;
+    //private Vector2 ViewportSize;
     public Vector2 Offset;
     public Vector2 Size;
     public Vector2 TileSize;
 
-    private Tile[,] Tiles;
+    public Tile[,] Tiles;
     public RandomNumberGenerator rand = new RandomNumberGenerator();
 
-    private Tile GoalTile;
+    public Tile GoalTile;
     private Level currentLevel;
     public Level CurrentLevel 
     {
@@ -40,11 +43,14 @@ public class Grid : Control
     [Signal]
     public delegate void NextLevel();
 
-    public Grid(){}
 
-    public Grid(Level level)
+    public Grid()
     {
         Name = "Grid";
+    }
+
+    public Grid(Level level) : this()
+    {
         CurrentLevel = level;
     }
 
@@ -58,7 +64,7 @@ public class Grid : Control
         rand.Randomize();
     }
 
-    private void DefineGridParameters()
+    public virtual void DefineGridParameters()
     {
         TileSize = new Vector2(32, 32);
         RectSize = TileSize * CurrentLevel.GridSize;
@@ -73,12 +79,13 @@ public class Grid : Control
 
     public void InitializeGrid()
     {
+        //TODO: Can I avoid calling player here?  The Goal stuff will be in the Level anyway I think
         Player = GetNode<Player>("../Player");
-        Player.Connect(nameof(Player.GoalReached), this, "IncrementGoalCount");
+        if (Player != null) Player.Connect(nameof(Player.GoalReached), this, "IncrementGoalCount");
         SetupGrid();
     }
 
-    private void SetupGrid()
+    public void SetupGrid()
     {
         InitializeTileArray();
         UpdateGrid();
@@ -91,9 +98,10 @@ public class Grid : Control
         {
             for (int j = 0; j < GridHeight; j++)
             {
-                Tiles[i, j] = new Tile();
+                Tiles[i, j] = new Tile($"Tile{i}-{j}");
                 AddChild(Tiles[i, j]);
                 Tiles[i, j].BuildTile(Type.Blank, TileSize, new Vector2(i, j));
+                Tiles[i, j].Owner = this;
             }
         }
     }
@@ -129,7 +137,7 @@ public class Grid : Control
         }
     }
 
-    private void AssignGoalTile(int maxStepsFromPlayer, int minStepsFromPlayer = 1)
+    private void AssignGoalTile(int maxStepsFromPlayer, int minStepsFromPlayer = 1)  //TODO: Maybe a separate GridGenerator class for this?
     {
         int TopMax = (int)Math.Max(Player.GridPosition.x, Player.GridPosition.y);
         int BottomMax = (int)Math.Max(GridWidth - 1 - Player.GridPosition.x, GridHeight - 1 - Player.GridPosition.y);
@@ -268,4 +276,5 @@ public class Grid : Control
         }
         GD.Print(currentRowstring + " ]");
     }
+
 }
