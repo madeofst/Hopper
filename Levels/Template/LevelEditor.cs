@@ -19,6 +19,12 @@ public class LevelEditor : Node2D
     
     private void InitializeBlankGrid()
     {
-        //Grid.InitializeGrid();
+        LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
+        levelData.TileType = new Type[2];
+        levelData.TileType[0] = Type.Goal;
+        levelData.TileType[1] = Type.Score;
+        ResourceSaver.Save("res://Levels/Template/Level_1_Data.tres", levelData);
+
+        LevelData levelData1 = ResourceLoader.Load<LevelData>("res://Levels/Template/Level_1_Data.tres");
     }
 }

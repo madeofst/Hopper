@@ -106,7 +106,7 @@ public class Grid : Control
         }
     }
 
-    private void ClearExistingChildren()
+    private void ClearExistingChildren()  //TODO: could be an extension method
     {
         Godot.Collections.Array children = GetChildren();
         foreach (Node2D child in children)
@@ -121,7 +121,7 @@ public class Grid : Control
         AssignTileTypes();
     }
 
-    private void AssignTileTypes()
+    private void AssignTileTypes()  //TODO: make a level function rather than a grid function
     {
         ClearTypes();
         AssignGoalTile(CurrentLevel.HopsToAdd, 2);
@@ -256,7 +256,7 @@ public class Grid : Control
         }
     }
 
-    public void PrintGrid()
+    public void PrintGrid()  //For debugging tile types etc.
     {
         float row = 0;
         string currentRowstring = "[ ";
