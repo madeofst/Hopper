@@ -10,7 +10,7 @@ script = ExtResource( 1 )
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 360.0
 margin_bottom = 240.0
-rect_min_size = Vector2( 360, 240 )
+rect_min_size = Vector2( 480, 270 )
 mouse_filter = 2
 texture = ExtResource( 3 )
 expand = true
