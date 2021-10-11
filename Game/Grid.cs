@@ -31,7 +31,7 @@ public class Grid : Control
         {
             currentLevel = value;
             int previousGridWidth = GridWidth;
-            DefineGridParameters();
+            DefineGrid(new Vector2(32, 32), CurrentLevel.GridSize);
             if (Player != null)
             {
                 SetupGrid();
@@ -63,20 +63,7 @@ public class Grid : Control
         rand.Randomize();
     }
 
-    public virtual void DefineGridParameters()
-    {
-        TileSize = new Vector2(32, 32);
-        RectSize = TileSize * CurrentLevel.GridSize;
-        SetPosition(new Vector2(
-            128 + ((7 - CurrentLevel.GridSize) * TileSize.x)/2, 
-            23 + ((7 - CurrentLevel.GridSize) * TileSize.y)/2
-        ));
-
-        GridWidth = GridHeight = CurrentLevel.GridSize;
-        Tiles = new Tile[GridWidth, GridHeight];
-    }
-
-    public virtual void NewDefineGridParameters(Vector2 tileSize, int gridSize)
+    public virtual void DefineGrid(Vector2 tileSize, int gridSize)
     {
         TileSize = tileSize;
         RectSize = TileSize * gridSize;
@@ -99,23 +86,9 @@ public class Grid : Control
 
     public void SetupGrid()
     {
-        InitializeTileArray();
-        UpdateGrid();
-    }
-
-    private void InitializeTileArray()
-    {
         ClearExistingChildren();
-        for (int i = 0; i < GridWidth; i++)
-        {
-            for (int j = 0; j < GridHeight; j++)
-            {
-                Tiles[i, j] = new Tile($"Tile{i}-{j}");
-                AddChild(Tiles[i, j]);
-                Tiles[i, j].BuildTile(Type.Blank, TileSize, new Vector2(i, j));
-                Tiles[i, j].Owner = this;
-            }
-        }
+        PopulateGrid();
+        UpdateGrid();
     }
 
     public void ClearExistingChildren()  //TODO: could be an extension method
@@ -126,6 +99,30 @@ public class Grid : Control
             RemoveChild(child);
             child.QueueFree();
         }
+    }
+
+    internal void PopulateGrid(LevelData levelData = null)
+    {
+        int i = 0;
+        for (int y = 0; y < GridHeight - 1; y++)
+        {
+            for (int x = 0; x < GridWidth - 1; x++)
+            {
+            Tiles[x, y] = new Tile($"Tile{x}-{y}");
+            AddChild(Tiles[x, y]);
+            if (levelData != null)
+            {
+                Tiles[x, y].BuildTile(levelData.TileType[i], TileSize, new Vector2(x, y));
+            }
+            else
+            {
+                Tiles[x, y].BuildTile(Type.Blank, TileSize, new Vector2(x, y));
+            }
+            Tiles[x, y].Owner = this;
+            i++;
+            }
+        }
+        i++;
     }
 
     public void UpdateGrid()

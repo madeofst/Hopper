@@ -3,7 +3,7 @@ using System;
 
 public class LevelEditor : Node2D
 {
-    private Grid Grid { get; set; }
+    private Level CurrentLevel { get; set; }
 
     public override void _Ready()
     {
@@ -11,14 +11,15 @@ public class LevelEditor : Node2D
 
     private void NewBlankLevel()
     {
-        NewLevel(7);
+        NewLevel(7).Editable = true;
+        //CurrentLevel.Grid.UpdateGrid();
     }
 
     private Level NewLevel(int size, int tileSize = 32, string name = null)
     {
         if (size > 7) return null;
-        Level level = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
-        AddChild(level);
+        CurrentLevel = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
+        AddChild(CurrentLevel);
         LevelData levelData;
         if (name == null)
         {
@@ -29,8 +30,8 @@ public class LevelEditor : Node2D
             levelData = LoadBlankLevelData(size); //TODO: pass the level name here
         }
         if (levelData == null) return null; //TODO: maybe also check if all types are valid here
-        level.BuildGrid(size, tileSize, levelData);
-        return level;
+        CurrentLevel.BuildGrid(size, tileSize, levelData);
+        return CurrentLevel;
     }
 
     private LevelData LoadBlankLevelData(int size) //TODO: make this load any level
@@ -43,16 +44,4 @@ public class LevelEditor : Node2D
         }
         return levelData;
     }
-
-/*     private void SaveLevelData(Level level, string levelName)
-    {
-        if 
-        ResourceSaver.Save("res://Levels/Template/Level_1_Data.tres", levelData);
-        LevelData levelData1 = ResourceLoader.Load<LevelData>($"res://Levels/Template/Level_Data_{levelName}.tres");
-    }
-
-    private LevelData ExtractLevelData(Level level)
-    {
-
-    } */
 }

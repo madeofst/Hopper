@@ -5,20 +5,20 @@ using GodotExtension;
 
 public class EditableGrid : Grid
 {
-    public EditableGrid()
+/*     public EditableGrid()
     {
-/*         Name = "EditableGrid";
+        Name = "EditableGrid";
         MouseFilter = MouseFilterEnum.Ignore;
         DefineGridParameters();
-        SetupGrid(); */
+        SetupGrid();
     }
 
-    public override void DefineGridParameters() 
+    public override void DefineGrid() 
     {
         GridWidth = 7;
         GridHeight = 7;
         //MaxHops = 10; //Make hops a property or attach a level. Or define it all in a level?
-/*         GoalsToNextLevel = goalsToNextLevel;
+         GoalsToNextLevel = goalsToNextLevel;
         if (hopsToAdd == 0)
         {
             HopsToAdd = (int)Math.Floor((decimal)MaxHops/2);
@@ -28,7 +28,7 @@ public class EditableGrid : Grid
             HopsToAdd = hopsToAdd;
         }
         ScoreTileCount = scoreTileCount;
-        base.DefineGridParameters(); */
-    }
+        base.DefineGridParameters(); 
+    }  */
 
 }

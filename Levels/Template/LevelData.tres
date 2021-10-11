@@ -6,4 +6,6 @@
 resource_name = "LevelData"
 script = ExtResource( 1 )
 Number = 1
-TileType = null
+MaximumHops = 0
+ScoreRequired = 0
+TileType = PoolIntArray(  )

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Godot;
 
 public class LevelData : Resource
@@ -10,4 +8,9 @@ public class LevelData : Resource
     [Export]
     public int Number { get; set; }
 
+    [Export]
+    public int MaximumHops { get; set; }
+
+    [Export]
+    public int ScoreRequired { get; set; }
 }
