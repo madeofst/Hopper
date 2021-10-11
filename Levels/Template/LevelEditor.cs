@@ -7,24 +7,52 @@ public class LevelEditor : Node2D
 
     public override void _Ready()
     {
-        NewGrid();
-        CallDeferred("InitializeBlankGrid");
     }
 
-    private void NewGrid()
+    private void NewBlankLevel()
     {
-/*         Grid = new EditableGrid();
-        AddChild(Grid); */
+        NewLevel(7);
     }
-    
-    private void InitializeBlankGrid()
+
+    private Level NewLevel(int size, int tileSize = 32, string name = null)
+    {
+        if (size > 7) return null;
+        Level level = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
+        AddChild(level);
+        LevelData levelData;
+        if (name == null)
+        {
+            levelData = LoadBlankLevelData(size);
+        }
+        else
+        {
+            levelData = LoadBlankLevelData(size); //TODO: pass the level name here
+        }
+        if (levelData == null) return null; //TODO: maybe also check if all types are valid here
+        level.BuildGrid(size, tileSize, levelData);
+        return level;
+    }
+
+    private LevelData LoadBlankLevelData(int size) //TODO: make this load any level
     {
         LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
-        levelData.TileType = new Type[2];
-        levelData.TileType[0] = Type.Goal;
-        levelData.TileType[1] = Type.Score;
-        ResourceSaver.Save("res://Levels/Template/Level_1_Data.tres", levelData);
-
-        LevelData levelData1 = ResourceLoader.Load<LevelData>("res://Levels/Template/Level_1_Data.tres");
+        levelData.TileType = new Type[size*size];
+        for (int i = 0; i < levelData.TileType.Length - 1; i++)
+        {
+            levelData.TileType[i] = Type.Blank;
+        }
+        return levelData;
     }
+
+/*     private void SaveLevelData(Level level, string levelName)
+    {
+        if 
+        ResourceSaver.Save("res://Levels/Template/Level_1_Data.tres", levelData);
+        LevelData levelData1 = ResourceLoader.Load<LevelData>($"res://Levels/Template/Level_Data_{levelName}.tres");
+    }
+
+    private LevelData ExtractLevelData(Level level)
+    {
+
+    } */
 }

@@ -43,7 +43,6 @@ public class Grid : Control
     [Signal]
     public delegate void NextLevel();
 
-
     public Grid()
     {
         Name = "Grid";
@@ -77,6 +76,19 @@ public class Grid : Control
         Tiles = new Tile[GridWidth, GridHeight];
     }
 
+    public virtual void NewDefineGridParameters(Vector2 tileSize, int gridSize)
+    {
+        TileSize = tileSize;
+        RectSize = TileSize * gridSize;
+        SetPosition(new Vector2(
+            128 + ((7 - gridSize) * TileSize.x)/2, 
+            23 + ((7 - gridSize) * TileSize.y)/2
+        ));
+
+        GridWidth = GridHeight = gridSize;
+        Tiles = new Tile[GridWidth, GridHeight];
+    }
+
     public void InitializeGrid()
     {
         //TODO: Can I avoid calling player here?  The Goal stuff will be in the Level anyway I think
@@ -106,7 +118,7 @@ public class Grid : Control
         }
     }
 
-    private void ClearExistingChildren()  //TODO: could be an extension method
+    public void ClearExistingChildren()  //TODO: could be an extension method
     {
         Godot.Collections.Array children = GetChildren();
         foreach (Node2D child in children)
