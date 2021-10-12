@@ -62,7 +62,7 @@ public class Tile : Area2D
     }
     public Vector2 Size;
     public Vector2 GridOffset;
-    public Grid Grid;
+    //public Grid Grid;
     public Sprite LilySprite;
     public Sprite WaterSprite;
     private int _PointValue;
@@ -110,7 +110,7 @@ public class Tile : Area2D
         AddChild(WaterSprite);
         WaterSprite.Owner = this;
 
-        Grid = GetNode<Grid>("/root/World/Grid");
+        //Grid = GetNode<Grid>("/root/World/Grid");
         AddChild(LilySprite);
         LilySprite.Owner = this;
 

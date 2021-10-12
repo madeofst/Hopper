@@ -11,15 +11,16 @@ public class LevelEditor : Node2D
 
     private void NewBlankLevel()
     {
-        NewLevel(7).Editable = true;
-        //CurrentLevel.Grid.UpdateGrid();
+        CurrentLevel = NewLevel(7);
+        CurrentLevel.Editable = true;
+        CurrentLevel.Grid.UpdateGrid();
     }
 
     private Level NewLevel(int size, int tileSize = 32, string name = null)
     {
         if (size > 7) return null;
-        CurrentLevel = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
-        AddChild(CurrentLevel);
+        Level level = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
+        AddChild(level);
         LevelData levelData;
         if (name == null)
         {
@@ -30,8 +31,8 @@ public class LevelEditor : Node2D
             levelData = LoadBlankLevelData(size); //TODO: pass the level name here
         }
         if (levelData == null) return null; //TODO: maybe also check if all types are valid here
-        CurrentLevel.BuildGrid(size, tileSize, levelData);
-        return CurrentLevel;
+        level.BuildGrid(size, tileSize, levelData);
+        return level;
     }
 
     private LevelData LoadBlankLevelData(int size) //TODO: make this load any level

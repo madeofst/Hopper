@@ -104,9 +104,9 @@ public class Grid : Control
     internal void PopulateGrid(LevelData levelData = null)
     {
         int i = 0;
-        for (int y = 0; y < GridHeight - 1; y++)
+        for (int y = 0; y < GridHeight; y++)
         {
-            for (int x = 0; x < GridWidth - 1; x++)
+            for (int x = 0; x < GridWidth; x++)
             {
             Tiles[x, y] = new Tile($"Tile{x}-{y}");
             AddChild(Tiles[x, y]);

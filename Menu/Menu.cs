@@ -5,46 +5,46 @@ using System.Linq;
 
 public class Menu : MarginContainer
 {
-    public override void _Ready()
-    {
-    }
+	public override void _Ready()
+	{
+	}
 
-    public void newGamePressed()
-    {
-        GD.Print("New game button pressed.");
-        World world = (World)GD.Load<PackedScene>("res://Game/World.tscn").Instance();
-        GetTree().Root.AddChild(world);
-        Hide();
-    }
+	public void newGamePressed()
+	{
+		GD.Print("New game button pressed.");
+		World world = (World)GD.Load<PackedScene>("res://Game/World.tscn").Instance();
+		GetTree().Root.AddChild(world);
+		Hide();
+	}
 
-    public void highScoresPressed()
-    {
-        GD.Print("High scores button pressed.");
-        HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
-        GetTree().Root.AddChild(table);
-        Hide();
+	public void highScoresPressed()
+	{
+		GD.Print("High scores button pressed.");
+		HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
+		GetTree().Root.AddChild(table);
+		Hide();
 
 /*         HighScoreData data = new HighScoreData();
-        
-        data.Init();
-        data.Add(new HighScore {
-            UserName = "Zo",
-            Score = 23000
-        });
+		
+		data.Init();
+		data.Add(new HighScore {
+			UserName = "Zo",
+			Score = 23000
+		});
 
-        List<HighScore> highScores = data.List;
-        int id = 1;
-        foreach (HighScore hs in highScores)
-        {
-            GD.Print($"{id}: {hs.UserName} - {hs.Score}.");
-            id ++;
-        } */
-    }
+		List<HighScore> highScores = data.List;
+		int id = 1;
+		foreach (HighScore hs in highScores)
+		{
+			GD.Print($"{id}: {hs.UserName} - {hs.Score}.");
+			id ++;
+		} */
+	}
 
-    public void EditorPressed()
-    {
-        LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Template/LevelEditor.tscn").Instance();
-        GetTree().Root.AddChild(editor);
-        Hide();
-    }
+	public void EditorPressed()
+	{
+		LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Template/LevelEditor.tscn").Instance();
+		GetTree().Root.AddChild(editor);
+		Hide();
+	}
 }
