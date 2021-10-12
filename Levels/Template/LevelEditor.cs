@@ -4,6 +4,7 @@ using System;
 public class LevelEditor : Node2D
 {
     private Level CurrentLevel { get; set; }
+    private string LevelName { get; set; }
 
     public override void _Ready()
     {
@@ -23,20 +24,13 @@ public class LevelEditor : Node2D
         Level level = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
         AddChild(level);
         LevelData levelData;
-        if (name == null)
-        {
-            levelData = LoadBlankLevelData(size);
-        }
-        else
-        {
-            levelData = LoadBlankLevelData(size); //TODO: pass the level name here
-        }
+        levelData = LoadBlankLevelData(size);
         if (levelData == null) return null; //TODO: maybe also check if all types are valid here
         level.BuildGrid(size, tileSize, levelData);
         return level;
     }
 
-    private LevelData LoadBlankLevelData(int size) //TODO: make this load any level
+    private LevelData LoadBlankLevelData(int size = 7) //TODO: make this load any level
     {
         LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
         levelData.TileType = new Type[size*size];
@@ -45,5 +39,46 @@ public class LevelEditor : Node2D
             levelData.TileType[i] = Type.Blank;
         }
         return levelData;
+    }
+
+    private void ShowSaveDialog()
+    {
+        AcceptDialog SaveDialog = GetNode<AcceptDialog>("Dialogs/SaveDialog");
+        SaveDialog.PopupCentered();
+    }
+
+    private void SaveCurrentLevel()
+    {
+        if (CurrentLevel != null)
+        {
+            Error error = CurrentLevel.SaveToFile(LevelName);
+            GD.PrintErr(error);
+        }
+    }
+
+    private void TextChanged(string newText)
+    {
+        LevelName = newText;
+    }
+
+    private void ShowLoadDialog()
+    {
+        FileDialog LoadDialog = GetNode<FileDialog>("Dialogs/LoadDialog");
+        LoadDialog.PopupCentered();
+    }
+
+    private void OnFileSelected(string path)
+    {
+        if (CurrentLevel != null) CurrentLevel.QueueFree();
+        CurrentLevel = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
+        AddChild(CurrentLevel);
+        LevelData levelData = ResourceLoader.Load<LevelData>(path);
+        CurrentLevel.BuildGrid((int)Math.Sqrt(levelData.TileType.Length), 32, levelData);
+        CurrentLevel.Editable = true;
+    }
+
+    private void LoadLevel()
+    {
+
     }
 }

@@ -8,10 +8,7 @@ public class Level : Node2D
     private bool editable = false;
     public bool Editable 
     { 
-        get
-        {
-            return editable;
-        } 
+        get => editable; 
         set
         {
             editable = value;
@@ -40,7 +37,26 @@ public class Level : Node2D
     }
 
 
+    public Error SaveToFile(string levelName)
+    {
+        LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
+        
+        levelData.TileType = new Type[Grid.GridWidth*Grid.GridHeight];   
+        int i = 0;
+        for (int y = 0; y < Grid.GridHeight; y++)
+        {
+            for (int x = 0; x < Grid.GridWidth; x++)
+            {
+                levelData.TileType[i] = Grid.Tiles[x, y].Type;
+                i++;
+            }
+        }
+        
+        levelData.MaximumHops = MaximumHops;
+        levelData.ScoreRequired = ScoreRequired;
 
+        return ResourceSaver.Save($"res://Levels/{levelName}_Data.tres", levelData);
+    }
 
 
 
@@ -70,11 +86,4 @@ public class Level : Node2D
         }
         ScoreTileCount = scoreTileCount;
     }
-/*     private void SaveLevelData(Level level, string levelName)
-    {
-        if 
-        ResourceSaver.Save("res://Levels/Template/Level_1_Data.tres", levelData);
-        LevelData levelData1 = ResourceLoader.Load<LevelData>($"res://Levels/Template/Level_Data_{levelName}.tres");
-    } */
-
 }

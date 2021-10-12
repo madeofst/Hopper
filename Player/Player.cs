@@ -159,16 +159,12 @@ public class Player : Node2D
                         AfterMovement(MovementDirection);
                     }
                 }
-                else if (@event.IsActionPressed("export"))
+/*                 else if (@event.IsActionPressed("export"))
                 {
                     PackedScene exportedGrid = new PackedScene();
                     exportedGrid.Pack(GetNode("/root/World/Grid"));
                     ResourceSaver.Save("res://Levels/Template/TemplateScene.tscn", exportedGrid);
-                }
-
-
-
-
+                } */
 
                 //FOR TESTING ONLY
                 /*             if (@event.IsActionPressed("ui_select"))

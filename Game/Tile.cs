@@ -83,7 +83,6 @@ public class Tile : Area2D
     public Vector2 Size;
     public int JumpLength;
 
-    //public Vector2 GridOffset;
     //Children in the tree
     public CollisionShape2D CollisionShape;
     public Sprite LilySprite;
@@ -135,30 +134,31 @@ public class Tile : Area2D
 
     public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
     {
-        if (@event is InputEventMouseButton)
+        InputEventMouseButton ev = null;
+        if (@event is InputEventMouseButton) ev = (InputEventMouseButton)@event;
+        if (ev != null && ev.IsPressed() && Editable)
         {
-            InputEventMouseButton ev = (InputEventMouseButton)@event;
-            if (ev.IsPressed() && Editable)
+            if (ev.ButtonIndex == (int)ButtonList.Left)
             {
-                if (ev.ButtonIndex == (int)ButtonList.Left)
-                {
-                    GD.Print(ev.AsText());
-                    GD.Print($"Clicked Tile {GridPosition}");
-                    if (Type == Type.Jump) //Max enum value
-                        Type = Type.Blank; //Min enum value
-                    else
-                        Type += 1;
-                }
-                if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
-                {
-                    GD.Print(ev.AsText());
-                }
-                if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
-                {
-                    GD.Print(ev.AsText());
-                }
+                GD.Print(ev.AsText());
+                GD.Print($"Clicked Tile {GridPosition}");
+                if (Type == Type.Jump) //Max enum value
+                    Type = Type.Blank; //Min enum value
+                else
+                    Type += 1;
             }
-        } 
+            if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
+            {
+                if (PointValue < 1000) PointValue += 100;
+                GD.Print(ev.AsText());
+            }
+            if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
+            {
+                if (PointValue > 0) PointValue -= 100;
+                GD.Print(ev.AsText());
+            }
+        }
+
     }
 
     public void OnMouseEnter()

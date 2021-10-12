@@ -137,7 +137,6 @@ public class Grid : Control
             i++;
             }
         }
-        i++;
     }
 
     public void UpdateGrid()
