@@ -60,11 +60,7 @@ public class Tile : Area2D
             LilySprite.Position = (_gridPosition * Size) + (Size/2);
         }
     }
-    public Vector2 Size;
-    public Vector2 GridOffset;
-    //public Grid Grid;
-    public Sprite LilySprite;
-    public Sprite WaterSprite;
+
     private int _PointValue;
     public int PointValue
     {
@@ -82,17 +78,29 @@ public class Tile : Area2D
             }
         }
     }
-    public Counter Label;
+
+    public bool Editable = false;
+    public Vector2 Size;
     public int JumpLength;
 
+    //public Vector2 GridOffset;
+    //Children in the tree
     public CollisionShape2D CollisionShape;
+    public Sprite LilySprite;
+    public Sprite WaterSprite;
+    public Counter Label;
 
     public Tile(){}   
     
     public Tile(string Name)
     {
         this.Name = Name;
-    }   
+    }
+
+    public override void _Ready()
+    {
+        Connect("mouse_entered", this, "OnMouseEnter");
+    }
 
     public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition)
     {
@@ -110,7 +118,6 @@ public class Tile : Area2D
         AddChild(WaterSprite);
         WaterSprite.Owner = this;
 
-        //Grid = GetNode<Grid>("/root/World/Grid");
         AddChild(LilySprite);
         LilySprite.Owner = this;
 
@@ -128,9 +135,35 @@ public class Tile : Area2D
 
     public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
     {
-        if (@event is InputEventMouseButton && @event.IsPressed())
+        if (@event is InputEventMouseButton)
         {
-            GD.Print($"Clicked Tile {GridPosition}");
-        }
+            InputEventMouseButton ev = (InputEventMouseButton)@event;
+            if (ev.IsPressed() && Editable)
+            {
+                if (ev.ButtonIndex == (int)ButtonList.Left)
+                {
+                    GD.Print(ev.AsText());
+                    GD.Print($"Clicked Tile {GridPosition}");
+                    if (Type == Type.Jump) //Max enum value
+                        Type = Type.Blank; //Min enum value
+                    else
+                        Type += 1;
+                }
+                if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
+                {
+                    GD.Print(ev.AsText());
+                }
+                if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
+                {
+                    GD.Print(ev.AsText());
+                }
+            }
+        } 
     }
+
+    public void OnMouseEnter()
+    {
+        if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.PointingHand);
+    }
+
 }

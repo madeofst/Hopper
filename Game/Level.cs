@@ -5,7 +5,19 @@ public class Level : Node2D
 {
     //New params
     public Grid Grid { get; set; }
-    public bool Editable { get; set; } = false;
+    private bool editable = false;
+    public bool Editable 
+    { 
+        get
+        {
+            return editable;
+        } 
+        set
+        {
+            editable = value;
+            Grid.Editable = value;
+        } 
+    }
 
     //New params which relate to save file
     public int MaximumHops { get; set; }

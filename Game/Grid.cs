@@ -8,7 +8,19 @@ public class Grid : Control
     public Player Player { get; set; }
 
     //TODO: add editable property
-
+    private bool editable = false;
+    public bool Editable
+    { 
+        get => editable; 
+        set
+        {
+            editable = value;
+            foreach (Tile t in Tiles)
+            {
+                t.Editable = value;
+            }
+        } 
+    }
 
     public int GridWidth;
     public int GridHeight; 
@@ -23,6 +35,8 @@ public class Grid : Control
     public RandomNumberGenerator rand = new RandomNumberGenerator();
 
     public Tile GoalTile;
+    public Tile PlayerTile;
+
     private Level currentLevel;
     public Level CurrentLevel 
     {
@@ -60,6 +74,7 @@ public class Grid : Control
 
     public override void _Ready()
     {
+        Connect("mouse_exited", this, "OnMouseExit");
         rand.Randomize();
     }
 
@@ -133,9 +148,14 @@ public class Grid : Control
     private void AssignTileTypes()  //TODO: make a level function rather than a grid function
     {
         ClearTypes();
-        AssignGoalTile(CurrentLevel.HopsToAdd, 2);
+/*         AssignGoalTile(CurrentLevel.HopsToAdd, 2);
         AssignScoreTiles(CurrentLevel.ScoreTileCount);
-        AssignJumpTile(CurrentLevel.HopsToAdd, 2);
+        AssignJumpTile(CurrentLevel.HopsToAdd, 2); */
+
+        AssignGoalTile(3, 2);
+        AssignScoreTiles(2);
+        AssignJumpTile(3, 2);
+
     }
 
     private void ClearTypes()
@@ -286,4 +306,8 @@ public class Grid : Control
         GD.Print(currentRowstring + " ]");
     }
 
+    public void OnMouseExit()
+    {
+        if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
+    }
 }

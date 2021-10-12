@@ -11,9 +11,10 @@ public class LevelEditor : Node2D
 
     private void NewBlankLevel()
     {
+        if (CurrentLevel != null) CurrentLevel.QueueFree();
         CurrentLevel = NewLevel(7);
         CurrentLevel.Editable = true;
-        CurrentLevel.Grid.UpdateGrid();
+        //CurrentLevel.Grid.UpdateGrid();
     }
 
     private Level NewLevel(int size, int tileSize = 32, string name = null)
