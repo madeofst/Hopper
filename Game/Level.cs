@@ -58,9 +58,6 @@ public class Level : Node2D
         return ResourceSaver.Save($"res://Levels/{levelName}_Data.tres", levelData);
     }
 
-
-
-
     //Old and auto params
     public int ID;
     public int GridSize;

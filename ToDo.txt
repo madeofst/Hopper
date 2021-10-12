@@ -47,3 +47,11 @@ _________________________
     * Enemies to dodge?
     * missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
 
+
+// Level Editor
+_________________________
+
+    * Add boxes for score to win
+                    max hops
+                    hops to add
+    * Add a way to select player start position
