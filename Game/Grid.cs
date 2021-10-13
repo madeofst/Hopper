@@ -127,7 +127,7 @@ public class Grid : Control
             AddChild(Tiles[x, y]);
             if (levelData != null)
             {
-                Tiles[x, y].BuildTile(levelData.TileType[i], TileSize, new Vector2(x, y));
+                Tiles[x, y].BuildTile(levelData.TileType[i], TileSize, new Vector2(x, y), levelData.Score[i]);
             }
             else
             {

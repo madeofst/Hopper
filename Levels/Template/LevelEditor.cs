@@ -23,8 +23,7 @@ public class LevelEditor : Node2D
         if (size > 7) return null;
         Level level = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
         AddChild(level);
-        LevelData levelData;
-        levelData = LoadBlankLevelData(size);
+        LevelData levelData = LoadBlankLevelData(size);
         if (levelData == null) return null; //TODO: maybe also check if all types are valid here
         level.BuildGrid(size, tileSize, levelData);
         return level;
@@ -33,10 +32,11 @@ public class LevelEditor : Node2D
     private LevelData LoadBlankLevelData(int size = 7) //TODO: make this load any level
     {
         LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
-        levelData.TileType = new Type[size*size];
+        levelData.Init(size*size);
         for (int i = 0; i < levelData.TileType.Length - 1; i++)
         {
             levelData.TileType[i] = Type.Blank;
+            levelData.Score[i] = 0;
         }
         return levelData;
     }
@@ -70,15 +70,16 @@ public class LevelEditor : Node2D
     private void OnFileSelected(string path)
     {
         if (CurrentLevel != null) CurrentLevel.QueueFree();
-        CurrentLevel = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
-        AddChild(CurrentLevel);
-        LevelData levelData = ResourceLoader.Load<LevelData>(path);
-        CurrentLevel.BuildGrid((int)Math.Sqrt(levelData.TileType.Length), 32, levelData);
-        CurrentLevel.Editable = true;
+        CurrentLevel = LoadLevel(path);
     }
 
-    private void LoadLevel()
+    private Level LoadLevel(string path)
     {
-
+        Level level = (Level)GD.Load<PackedScene>("res://Levels/Template/Level.tscn").Instance();
+        AddChild(level);
+        LevelData levelData = ResourceLoader.Load<LevelData>(path);
+        level.BuildGrid((int)Math.Sqrt(levelData.TileType.Length), 32, levelData);
+        level.Editable = true;
+        return level;
     }
 }

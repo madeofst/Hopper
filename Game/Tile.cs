@@ -20,9 +20,7 @@ public class Tile : Area2D
             if (_type == Type.Blank)
             {
                 LilySprite.Texture = GD.Load<Texture>("res://Game/Resources/32x32/LilyPad1_32x32.png");
-                var rand = new RandomNumberGenerator();
-                rand.Randomize();
-                //Sprite.Rotation = rand.RandfRange(0, (float)Math.PI*2);
+                LilySprite.Rotation = 0;
                 PointValue = 0;
                 JumpLength = 0;
             }
@@ -101,15 +99,16 @@ public class Tile : Area2D
         Connect("mouse_entered", this, "OnMouseEnter");
     }
 
-    public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition)
+    public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition, int score = 0)
     {
         Size = size;
         Label = new Counter(Size);
         Label.BbcodeEnabled = true;
-        
+                
         LilySprite = new Sprite();
         Type = type;
         GridPosition = gridPosition;
+        PointValue = score;
 
         WaterSprite = new Sprite();
         WaterSprite.Position = LilySprite.Position;

@@ -40,14 +40,14 @@ public class Level : Node2D
     public Error SaveToFile(string levelName)
     {
         LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
-        
-        levelData.TileType = new Type[Grid.GridWidth*Grid.GridHeight];   
+        levelData.Init(Grid.GridWidth*Grid.GridHeight);   
         int i = 0;
         for (int y = 0; y < Grid.GridHeight; y++)
         {
             for (int x = 0; x < Grid.GridWidth; x++)
             {
                 levelData.TileType[i] = Grid.Tiles[x, y].Type;
+                levelData.Score[i] = Grid.Tiles[x, y].PointValue;
                 i++;
             }
         }

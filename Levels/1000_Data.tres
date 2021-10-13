@@ -8,5 +8,5 @@ script = ExtResource( 1 )
 MaximumHops = 0
 ScoreRequired = 0
 PlayerStartPosition = Vector2( 0, 0 )
-TileType = PoolIntArray(  )
+TileType = null
 Score = null
