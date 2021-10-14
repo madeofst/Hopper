@@ -5,6 +5,6 @@ public class NewGameButton : TextureButton
 {
     public override void _Ready()
     {
-        GrabFocus();   
+        //GrabFocus();   
     }
 }

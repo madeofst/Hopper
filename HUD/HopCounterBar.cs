@@ -1,30 +1,33 @@
 using Godot;
 using System;
 
-public class HopCounterBar : TextureRect
+namespace Hopper
 {
-    public Player Player { get; set; }
-
-    public HopCounterBar(){}
-
-    public override void _Ready()
+    public class HopCounterBar : TextureRect
     {
-        CallDeferred("ConnectNodesAndSignals");
-    }
+        public Player Player { get; set; }
 
-    public void ConnectNodesAndSignals()
-    {
-        Player = GetNode<Player>("/root/World/Player");
-        MakeConnections();
-    }
+        public HopCounterBar(){}
 
-    public void UpdateBar(int HopsRemaining)
-    {
-        RectSize = new Vector2(RectSize.x, 20 * HopsRemaining);
-    }
+        public override void _Ready()
+        {
+            CallDeferred("ConnectNodesAndSignals");
+        }
 
-    public virtual void MakeConnections()
-    {
-        Player.Connect(nameof(Player.HopCompleted), this, "UpdateBar");
+        public void ConnectNodesAndSignals()
+        {
+            Player = GetNode<Player>("/root/World/Player");
+            MakeConnections();
+        }
+
+        public void UpdateBar(int HopsRemaining)
+        {
+            RectSize = new Vector2(RectSize.x, 20 * HopsRemaining);
+        }
+
+        public virtual void MakeConnections()
+        {
+            Player.Connect(nameof(Player.HopCompleted), this, "UpdateBar");
+        }
     }
 }

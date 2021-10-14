@@ -1,30 +1,33 @@
 using Godot;
 using System;
 
-public class Stopwatch : TextureProgress
+namespace Hopper
 {
-    public World World { get; set; }
-
-    public Stopwatch(){}
-
-    public override void _Ready()
+    public class Stopwatch : TextureProgress
     {
-        CallDeferred("ConnectNodesAndSignals");
-    }
+        public World World { get; set; }
 
-    public void ConnectNodesAndSignals()
-    {
-        World = GetNode<World>("/root/World");
-        MakeConnections();
-    }
+        public Stopwatch(){}
 
-    public void UpdateStopwatch(int SecsRemaining)
-    {
-        Value = SecsRemaining;
-    }
+        public override void _Ready()
+        {
+            CallDeferred("ConnectNodesAndSignals");
+        }
 
-    public virtual void MakeConnections()
-    {
-        World.Connect(nameof(World.TimeUpdate), this, "UpdateStopwatch");
+        public void ConnectNodesAndSignals()
+        {
+            World = GetNode<World>("/root/World");
+            MakeConnections();
+        }
+
+        public void UpdateStopwatch(int SecsRemaining)
+        {
+            Value = SecsRemaining;
+        }
+
+        public virtual void MakeConnections()
+        {
+            World.Connect(nameof(World.TimeUpdate), this, "UpdateStopwatch");
+        }
     }
 }
