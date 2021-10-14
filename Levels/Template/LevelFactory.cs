@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 namespace Hopper
 {
@@ -11,6 +12,7 @@ namespace Hopper
         const int defaultStartingHops = 3;
         const int defaultMaximumHops = 10;
         const int defaultScoreRequired = 0;
+        const int defaultScore = 100;
         const int defaultX = 0;
         const int defaultY = 0;
         Vector2 defaultPlayerStartPosition;
@@ -86,6 +88,7 @@ namespace Hopper
                               int height = defaultHeight, 
                               int tileSize = defaultTileSize, 
                               int startingHops = defaultStartingHops,
+                              int maximumHops = defaultMaximumHops,
                               int scoreRequired = defaultScoreRequired, 
                               int scoreTileCount = defaultScoreTileCount, 
                               int goalCount = defaultGoalCount,
@@ -94,33 +97,41 @@ namespace Hopper
         {
             LevelData levelData = NewBlankLevelData(width, height, tileSize);
             levelData.StartingHops = startingHops;
+            levelData.MaximumHops = defaultMaximumHops;
             levelData.ScoreRequired = scoreRequired;
 
-            Vector2 goalTilePosition = CalculateGoalTilePosition(rand, 
-                                                                 new Vector2(playerPositionX, playerPositionY),
-                                                                 width,
-                                                                 height,
-                                                                 startingHops, 
-                                                                 2);
-            levelData.UpdateTile(goalTilePosition, Type.Goal, 50);
-/* 
-            Vector2[] scoreTilePositions = CalculateScoreTilePosition(rand, 
-                                                                     new Vector2(playerPositionX, playerPositionY),
-                                                                     width,
-                                                                     height,
-                                                                     startingHops, 
-                                                                     2); */
+            Tile goalTile = CalculateGoalTilePosition(rand, 
+                                                      new Vector2(playerPositionX, playerPositionY),
+                                                      width,
+                                                      height,
+                                                      startingHops, 
+                                                      2);
+            levelData.UpdateTile(goalTile);
+
+            Tile[] tiles = CalculateScoreTilePosition(rand, 
+                                                      new Vector2(playerPositionX, playerPositionY),
+                                                      width,
+                                                      height,
+                                                      maximumHops,
+                                                      goalTile,
+                                                      4);
+
+            foreach (Tile t in tiles)
+            {
+                levelData.UpdateTile(t);
+            }
+             //Vector2[] scoreTilePositions 
             //AssignScoreTiles(rand, scoreTileCount);
             //AssignJumpTile(rand, startingHops, 2);
             return GetLevelScene(levelData);
         }
 
-        private Vector2 CalculateGoalTilePosition(RandomNumberGenerator rand, 
-                                                  Vector2 playerPosition, 
-                                                  int width,
-                                                  int height,
-                                                  int maxStepsFromPlayer, 
-                                                  int minStepsFromPlayer = 1)
+        private Tile CalculateGoalTilePosition(RandomNumberGenerator rand, 
+                                               Vector2 playerPosition, 
+                                               int width,
+                                               int height,
+                                               int maxStepsFromPlayer, 
+                                               int minStepsFromPlayer = 1)
         {
             int TopMax = (int)Math.Max(playerPosition.x, playerPosition.y);
             int BottomMax = (int)Math.Max(width - 1 - playerPosition.x, height - 1 - playerPosition.y);
@@ -151,44 +162,65 @@ namespace Hopper
                     &&
                     (limitCounter < 100));
 
-            GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
+            //GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
 
-            return new Vector2((int)absoluteGridPosition.x, (int)absoluteGridPosition.y);
-
+            return new Tile(Type.Goal, absoluteGridPosition);
         }
 
-/*         private Vector2[] CalculateScoreTilePosition(RandomNumberGenerator rand, int Count)
+        private Tile[] CalculateScoreTilePosition(RandomNumberGenerator rand,
+                                                  Vector2 playerPosition,
+                                                  int width,
+                                                  int height,
+                                                  int maximumHops,
+                                                  Tile goalTile, 
+                                                  int Count)
         {
-            Vector2[] scoreTiles = new Vector2[Count];
+            Tile[] tiles = new Tile[Count];
             Vector2 ScoreToGoal;
             Vector2 ScoreGridPosition;
-            for (int i = 1; i <= Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 float totalSteps;
                 Vector2 PlayerToScore;
+                Tile scoreTile;
                 do
                 {
-                    int possibleSteps = rand.RandiRange(-CurrentLevel.MaxHops, CurrentLevel.MaxHops);
+                    int possibleSteps = rand.RandiRange(-maximumHops, maximumHops);
                     int x = rand.RandiRange(-possibleSteps, possibleSteps);
                     PlayerToScore = new Vector2(x, possibleSteps - x);
-                    ScoreGridPosition = PlayerToScore + Player.GridPosition;
-                    ScoreToGoal = GoalTile.GridPosition - ScoreGridPosition;;
+                    ScoreGridPosition = PlayerToScore + playerPosition;
+                    ScoreToGoal = goalTile.GridPosition - ScoreGridPosition;;
                     totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
+                    scoreTile = new Tile(Type.Score, ScoreGridPosition,(defaultScore * (int)totalSteps));
                 } 
-                while (ScoreGridPosition == Player.GridPosition ||
-                    ScoreGridPosition == GoalTile.GridPosition ||
-                    totalSteps >= CurrentLevel.MaxHops || 
-                    totalSteps <= 0 ||
-                    ScoreGridPosition.x < 0 || 
-                    ScoreGridPosition.x >= GridWidth ||
-                    ScoreGridPosition.y < 0 || 
-                    ScoreGridPosition.y >= GridHeight ||
-                    Tile(ScoreGridPosition).Type == Type.Score);
-
-                Tile(ScoreGridPosition).Type = Type.Score;
-                Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
+                while (ScoreGridPosition == playerPosition ||
+                       ScoreGridPosition == goalTile.GridPosition ||
+                       totalSteps >= maximumHops || 
+                       totalSteps <= 0 ||
+                       ScoreGridPosition.x < 0 || 
+                       ScoreGridPosition.x >= width ||
+                       ScoreGridPosition.y < 0 || 
+                       ScoreGridPosition.y >= height);
+                
+                foreach (Tile t in tiles)
+                {
+                    if (t != null)
+                    {
+                        if (t.GridPosition == scoreTile.GridPosition)
+                        {
+                            i--;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        tiles[i] = scoreTile;
+                        break;
+                    }
+                } 
             }
-        } */
+            return tiles;
+        }
 
         private void AssignJumpTile(RandomNumberGenerator rand, int maxStepsFromPlayer, int minStepsFromPlayer = 1)
         {

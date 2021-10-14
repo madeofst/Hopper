@@ -13,29 +13,41 @@ namespace Hopper
                 _type = value;
                 if (_type == Type.Blank)
                 {
-                    LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
-                    LilySprite.Rotation = 0;
+                    if (LilySprite != null) 
+                    {
+                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
+                        LilySprite.Rotation = 0;
+                    }
                     PointValue = 0;
                     JumpLength = 0;
                 }
                 else if (_type == Type.Goal)
                 {
-                    LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad2_32x32.png");
-                    LilySprite.Rotation = 0;
+                    if (LilySprite != null) 
+                    {
+                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad2_32x32.png");
+                        LilySprite.Rotation = 0;
+                    }
                     PointValue = 50;
                     JumpLength = 0;
                 }
                 else if (_type == Type.Score)
                 {
-                    LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
-                    LilySprite.Rotation = 0;
+                    if (LilySprite != null) 
+                    {
+                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
+                        LilySprite.Rotation = 0;
+                    }
                     PointValue = 100;
                     JumpLength = 0;
                 }
                 else if (_type == Type.Jump)
                 {
-                    LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad3_32x32.png");
-                    LilySprite.Rotation = 0;
+                    if (LilySprite != null) 
+                    {
+                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad3_32x32.png");
+                        LilySprite.Rotation = 0;
+                    }
                     PointValue = 0;
                     JumpLength = 2;
                 }
@@ -49,7 +61,7 @@ namespace Hopper
             set
             {
                 _gridPosition = value;
-                LilySprite.Position = (_gridPosition * Size) + (Size/2);
+                if (LilySprite != null) LilySprite.Position = (_gridPosition * Size) + (Size/2);
             }
         }
 
@@ -62,11 +74,11 @@ namespace Hopper
                 _PointValue = value;
                 if (_type == Type.Score)
                 {
-                    Label.BbcodeText = $"[center]{_PointValue.ToString()}[/center]";
+                    if (Label != null) Label.BbcodeText = $"[center]{_PointValue.ToString()}[/center]";
                 }
                 else
                 {
-                    Label.Text = "";
+                    if (Label != null) Label.Text = "";
                 }
             }
         }
@@ -83,6 +95,24 @@ namespace Hopper
 
         public Tile(){}   
         
+        public Tile(Type type)
+        {
+            Type = type;
+        }
+
+        public Tile(Type type, Vector2 position)
+        {
+            Type = type;
+            GridPosition = position;
+        }
+
+        public Tile(Type type, Vector2 position, int pointValue)
+        {
+            Type = type;
+            GridPosition = position;
+            PointValue = pointValue;
+        }
+
         public Tile(string Name)
         {
             this.Name = Name;
