@@ -179,10 +179,13 @@ show_hidden_files = true
 current_dir = "res://Levels"
 current_file = "LevelData.tres"
 current_path = "res://Levels/LevelData.tres"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Controls/VBoxContainer/NewButton" to="." method="NewBlankLevel"]
 [connection signal="pressed" from="Controls/VBoxContainer/SaveButton" to="." method="ShowSaveDialog"]
 [connection signal="pressed" from="Controls/VBoxContainer/LoadButton" to="." method="ShowLoadDialog"]
 [connection signal="pressed" from="Controls/VBoxContainer/RandomizeButton" to="." method="NewRandomLevel"]
 [connection signal="confirmed" from="Dialogs/SaveDialog" to="." method="SaveCurrentLevel"]
 [connection signal="text_changed" from="Dialogs/SaveDialog/VBoxContainer/LineEdit" to="." method="TextChanged"]
-[connection signal="file_selected" from="Dialogs/LoadDialog" to="." method="OnFileSelected"]
+[connection signal="file_selected" from="Dialogs/LoadDialog" to="." method="LoadSelectedFile"]

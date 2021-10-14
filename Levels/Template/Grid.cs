@@ -46,7 +46,7 @@ namespace Hopper
             {
                 currentLevel = value;
                 int previousGridWidth = GridWidth;
-                DefineGrid(new Vector2(32, 32), CurrentLevel.GridSize);
+                DefineGrid(32, GridWidth, GridHeight); //FIXME: check this isn't an error, used to take from CurrentLevel
                 if (Player != null)
                 {
                     SetupGrid();
@@ -79,16 +79,18 @@ namespace Hopper
             rand.Randomize();
         }
 
-        public virtual void DefineGrid(Vector2 tileSize, int gridSize)
+        public virtual void DefineGrid(int tileSize, int gridWidth, int gridHeight)
         {
-            TileSize = tileSize;
-            RectSize = TileSize * gridSize;
+            GridWidth = gridWidth;
+            GridHeight = gridHeight;
+
+            TileSize = new Vector2(tileSize, tileSize);
+            RectSize = new Vector2(tileSize * GridWidth, tileSize * GridHeight);
             SetPosition(new Vector2(
-                128 + ((7 - gridSize) * TileSize.x)/2, 
-                23 + ((7 - gridSize) * TileSize.y)/2
+                128 + ((7 - GridWidth) * TileSize.x)/2, 
+                23 + ((7 - GridHeight) * TileSize.y)/2
             ));
 
-            GridWidth = GridHeight = gridSize;
             Tiles = new Tile[GridWidth, GridHeight];
         }
 
@@ -128,7 +130,7 @@ namespace Hopper
                 AddChild(Tiles[x, y]);
                 if (levelData != null)
                 {
-                    Tiles[x, y].BuildTile(levelData.TileType[i], TileSize, new Vector2(x, y), levelData.Score[i]);
+                    Tiles[x, y].BuildTile(levelData.TileType[i], TileSize, new Vector2(x, y), levelData.TilePointValue[i]);
                 }
                 else
                 {

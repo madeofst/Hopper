@@ -5,8 +5,9 @@ namespace Hopper
 {
     public class Level : Node2D
     {
-        //New params
+        public LevelData LevelData { get; set; }
         public Grid Grid { get; set; }
+
         private bool editable = false;
         public bool Editable 
         { 
@@ -19,9 +20,10 @@ namespace Hopper
         }
 
         //New params which relate to save file
+        public int StartingHops { get; set; }
         public int MaximumHops { get; set; }
         public int ScoreRequired { get; set; }
-
+        public Vector2 PlayerStartPosition { get; set; }
 
         public Level(){}
 
@@ -31,15 +33,41 @@ namespace Hopper
         }
         
         //Builds grid using levelData.TileType info (if provided) and using plain lily tiles if not
-        public void BuildGrid(int size, int tileSize, LevelData levelData = null)
+/*         public void BuildGrid(int size, int tileSize, LevelData levelData = null)
         {
-            Grid.DefineGrid(new Vector2(tileSize, tileSize), size);
+            Grid.DefineGrid(tileSize, levelData.Width, levelData.Height);
             Grid.ClearExistingChildren();
             Grid.PopulateGrid(levelData);
+        } */
+
+        public void Build()
+        {
+            Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
+            Grid.ClearExistingChildren();
+            Grid.PopulateGrid(LevelData);
         }
 
 
-        public Error SaveToFile(string levelName)
+        public void UpdateLevelData()
+        {
+            //levelData.Init(Grid.GridWidth*Grid.GridHeight);  //FIXME: levelData should alreacy by initialised
+            int i = 0;
+            for (int y = 0; y < Grid.GridHeight; y++)
+            {
+                for (int x = 0; x < Grid.GridWidth; x++)
+                {
+                    LevelData.TileType[i] = Grid.Tiles[x, y].Type;
+                    LevelData.TilePointValue[i] = Grid.Tiles[x, y].PointValue;
+                    i++;
+                }
+            }
+            LevelData.StartingHops = StartingHops;
+            LevelData.MaximumHops = MaximumHops;
+            LevelData.ScoreRequired = ScoreRequired;
+            LevelData.PlayerStartPosition = PlayerStartPosition;
+        }
+
+/*         public Error SaveToFile(string levelName)
         {
             LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
             levelData.Init(Grid.GridWidth*Grid.GridHeight);   
@@ -49,16 +77,15 @@ namespace Hopper
                 for (int x = 0; x < Grid.GridWidth; x++)
                 {
                     levelData.TileType[i] = Grid.Tiles[x, y].Type;
-                    levelData.Score[i] = Grid.Tiles[x, y].PointValue;
+                    levelData.TilePointValue[i] = Grid.Tiles[x, y].PointValue;
                     i++;
                 }
             }
-            
             levelData.MaximumHops = MaximumHops;
             levelData.ScoreRequired = ScoreRequired;
 
             return ResourceSaver.Save($"res://Levels/{levelName}_Data.tres", levelData);
-        }
+        } */
 
         //Old and auto params
         public int ID;
