@@ -38,5 +38,12 @@ namespace Hopper
             TileType = new Type[length];
             TilePointValue = new int[length];
         }
+
+        public void UpdateTile(Vector2 tilePosition, Type tileType, int tilePointValue)
+        {
+            int i = (int)((tilePosition.y * Width) + tilePosition.x);
+            TileType[i] = tileType;
+            TilePointValue[i] = tilePointValue;
+        }
     }
 }

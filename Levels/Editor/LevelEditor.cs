@@ -58,7 +58,11 @@ namespace Hopper
         //Randomize
         private void NewRandomLevel()
         {
-            NewBlankLevel();
+            if (CurrentLevel != null) CurrentLevel.QueueFree();
+            CurrentLevel = levelFactory.Generate();
+            AddChild(CurrentLevel);
+            CurrentLevel.Build(); //TODO: may be able to come out and run automatically
+            CurrentLevel.Editable = true;
         }
 
 

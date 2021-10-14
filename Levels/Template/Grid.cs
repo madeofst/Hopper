@@ -94,21 +94,6 @@ namespace Hopper
             Tiles = new Tile[GridWidth, GridHeight];
         }
 
-        public void InitializeGrid()
-        {
-            //TODO: Can I avoid calling player here?  The Goal stuff will be in the Level anyway I think
-            Player = GetNode<Player>("../Player");
-            if (Player != null) Player.Connect(nameof(Player.GoalReached), this, "IncrementGoalCount");
-            SetupGrid();
-        }
-
-        public void SetupGrid()
-        {
-            ClearExistingChildren();
-            PopulateGrid();
-            UpdateGrid();
-        }
-
         public void ClearExistingChildren()  //TODO: could be an extension method
         {
             Godot.Collections.Array children = GetChildren();
@@ -142,6 +127,29 @@ namespace Hopper
             }
         }
 
+
+
+
+
+
+        public void InitializeGrid()
+        {
+            //TODO: Can I avoid calling player here?  The Goal stuff will be in the Level anyway I think
+            Player = GetNode<Player>("../Player");
+            if (Player != null) Player.Connect(nameof(Player.GoalReached), this, "IncrementGoalCount");
+            SetupGrid();
+        }
+
+        public void SetupGrid()
+        {
+            ClearExistingChildren();
+            PopulateGrid();
+            UpdateGrid();
+        }
+
+
+
+
         public void UpdateGrid()
         {
             AssignTileTypes();
@@ -150,14 +158,9 @@ namespace Hopper
         private void AssignTileTypes()  //TODO: make a level function rather than a grid function
         {
             ClearTypes();
-            AssignGoalTile(CurrentLevel.HopsToAdd, 2);
-            AssignScoreTiles(CurrentLevel.ScoreTileCount);
-            AssignJumpTile(CurrentLevel.HopsToAdd, 2);
-
-    /*         AssignGoalTile(3, 2);
-            AssignScoreTiles(2);
-            AssignJumpTile(3, 2); */
-
+            AssignGoalTile(rand, CurrentLevel.HopsToAdd, 2);
+            AssignScoreTiles(rand, CurrentLevel.ScoreTileCount);
+            AssignJumpTile(rand, CurrentLevel.HopsToAdd, 2);
         }
 
         private void ClearTypes()
@@ -168,7 +171,7 @@ namespace Hopper
             }
         }
 
-        private void AssignGoalTile(int maxStepsFromPlayer, int minStepsFromPlayer = 1)  //TODO: Maybe a separate GridGenerator class for this?
+        private void AssignGoalTile(RandomNumberGenerator rand, int maxStepsFromPlayer, int minStepsFromPlayer = 1)  //TODO: Maybe a separate GridGenerator class for this?
         {
             int TopMax = (int)Math.Max(Player.GridPosition.x, Player.GridPosition.y);
             int BottomMax = (int)Math.Max(GridWidth - 1 - Player.GridPosition.x, GridHeight - 1 - Player.GridPosition.y);
@@ -205,7 +208,7 @@ namespace Hopper
             GoalTile.Type = Type.Goal;
         }
 
-        private void AssignJumpTile(int maxStepsFromPlayer, int minStepsFromPlayer = 1)
+        private void AssignJumpTile(RandomNumberGenerator rand, int maxStepsFromPlayer, int minStepsFromPlayer = 1)
         {
             if (rand.RandiRange(1, 3) == 3)
             {
@@ -245,7 +248,7 @@ namespace Hopper
             //GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
         }
 
-        private void AssignScoreTiles(int Count)
+        private void AssignScoreTiles(RandomNumberGenerator rand, int Count)
         {
             Vector2 ScoreToGoal;
             Vector2 ScoreGridPosition;
