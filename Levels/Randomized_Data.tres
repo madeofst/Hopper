@@ -5,12 +5,12 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-TilePointValue = PoolIntArray( 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-TileType = PoolIntArray( 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-PlayerStartPosition = Vector2( 0, 0 )
-Height = 7
+TileType = PoolIntArray( 0, 2, 0, 0, 0, 0, 0, 3, 1, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+TilePointValue = PoolIntArray( 0, 200, 0, 0, 0, 0, 0, 2, 50, 0, 600, 0, 0, 0, 0, 400, 0, 0, 0, 0, 0, 0, 600, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 MaximumHops = 0
-TileSize = 32
 ScoreRequired = 0
+TileSize = 32
+PlayerStartPosition = Vector2( 0, 0 )
 StartingHops = 0
+Height = 7
 Width = 7

@@ -108,21 +108,30 @@ namespace Hopper
                                                       2);
             levelData.UpdateTile(goalTile);
 
-            Tile[] tiles = CalculateScoreTilePosition(rand, 
+            Tile jumpTile = CalculateJumpTilePositions(rand, 
+                                                          new Vector2(playerPositionX, playerPositionY),
+                                                          width,
+                                                          height,
+                                                          startingHops,
+                                                          1,
+                                                          goalTile);
+            levelData.UpdateTile(jumpTile);
+
+            Tile[] scoreTiles = CalculateScoreTilePositions(rand, 
                                                       new Vector2(playerPositionX, playerPositionY),
                                                       width,
                                                       height,
                                                       maximumHops,
                                                       goalTile,
+                                                      jumpTile,
                                                       4);
 
-            foreach (Tile t in tiles)
+            foreach (Tile t in scoreTiles)
             {
                 levelData.UpdateTile(t);
             }
-             //Vector2[] scoreTilePositions 
-            //AssignScoreTiles(rand, scoreTileCount);
-            //AssignJumpTile(rand, startingHops, 2);
+
+
             return GetLevelScene(levelData);
         }
 
@@ -157,22 +166,73 @@ namespace Hopper
                 absoluteGridPosition = relativeGridPosition + playerPosition;
                 limitCounter++;
 
-            } while ((absoluteGridPosition.x < 0 || absoluteGridPosition.x >= width ||
-                    absoluteGridPosition.y < 0 || absoluteGridPosition.y >= height)
-                    &&
-                    (limitCounter < 100));
+            } while ((absoluteGridPosition.x < 0 ||
+                      absoluteGridPosition.x >= width ||
+                      absoluteGridPosition.y < 0 || 
+                      absoluteGridPosition.y >= height)
+                      && (limitCounter < 100));
 
             //GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
 
             return new Tile(Type.Goal, absoluteGridPosition);
         }
 
-        private Tile[] CalculateScoreTilePosition(RandomNumberGenerator rand,
+        private Tile CalculateJumpTilePositions(RandomNumberGenerator rand,
+                                                Vector2 playerPosition, 
+                                                int width,
+                                                int height, 
+                                                int maxStepsFromPlayer, 
+                                                int minStepsFromPlayer,
+                                                Tile goalTile)
+        {
+            if (rand.RandiRange(2, 2) == 2)
+            {
+                int TopMax = (int)Math.Max(playerPosition.x, playerPosition.y);
+                int BottomMax = (int)Math.Max(width - 1 - playerPosition.x, height - 1 - playerPosition.y);
+                int OverallMax = Math.Max(TopMax, BottomMax);
+                int limitedMaxStepsFromPlayer = maxStepsFromPlayer;
+                if (OverallMax < limitedMaxStepsFromPlayer) limitedMaxStepsFromPlayer = OverallMax;
+
+                Vector2 absoluteGridPosition;
+
+                int limitCounter = 0;
+                do
+                {
+                    int possibleSteps = rand.RandiRange(minStepsFromPlayer, limitedMaxStepsFromPlayer);
+                    int x = rand.RandiRange(0, possibleSteps);
+                    Vector2 relativeGridPosition = new Vector2(x, possibleSteps - x);
+
+                    int limit = rand.RandiRange(0, 3);
+                    for (int i = 0; i <= limit; i++)
+                    {
+                        float tempY = relativeGridPosition.y;
+                        relativeGridPosition.y = relativeGridPosition.x * - 1;
+                        relativeGridPosition.x = tempY;
+                    }
+                    absoluteGridPosition = relativeGridPosition + playerPosition;
+                    limitCounter++;
+
+                } 
+                while ((absoluteGridPosition.x < 0 || 
+                        absoluteGridPosition.x >= width ||
+                        absoluteGridPosition.y < 0 || 
+                        absoluteGridPosition.y >= height ||
+                        goalTile.GridPosition == absoluteGridPosition)
+                        && (limitCounter < 100));
+
+                GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
+                return new Tile(Type.Jump, absoluteGridPosition, 2);
+            } 
+            return null;
+        }
+
+        private Tile[] CalculateScoreTilePositions(RandomNumberGenerator rand,
                                                   Vector2 playerPosition,
                                                   int width,
                                                   int height,
                                                   int maximumHops,
-                                                  Tile goalTile, 
+                                                  Tile goalTile,
+                                                  Tile jumpTile, 
                                                   int Count)
         {
             Tile[] tiles = new Tile[Count];
@@ -193,14 +253,15 @@ namespace Hopper
                     totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
                     scoreTile = new Tile(Type.Score, ScoreGridPosition,(defaultScore * (int)totalSteps));
                 } 
-                while (ScoreGridPosition == playerPosition ||
-                       ScoreGridPosition == goalTile.GridPosition ||
+                while (scoreTile.GridPosition == playerPosition ||
+                       scoreTile.GridPosition == goalTile.GridPosition ||
+                       scoreTile.GridPosition == jumpTile.GridPosition ||
                        totalSteps >= maximumHops || 
                        totalSteps <= 0 ||
-                       ScoreGridPosition.x < 0 || 
-                       ScoreGridPosition.x >= width ||
-                       ScoreGridPosition.y < 0 || 
-                       ScoreGridPosition.y >= height);
+                       scoreTile.GridPosition.x < 0 || 
+                       scoreTile.GridPosition.x >= width ||
+                       scoreTile.GridPosition.y < 0 || 
+                       scoreTile.GridPosition.y >= height);
                 
                 foreach (Tile t in tiles)
                 {
@@ -217,53 +278,21 @@ namespace Hopper
                         tiles[i] = scoreTile;
                         break;
                     }
-                } 
+                }
             }
             return tiles;
         }
 
-        private void AssignJumpTile(RandomNumberGenerator rand, int maxStepsFromPlayer, int minStepsFromPlayer = 1)
+        private bool PositionIn(Vector2 position, Tile[] tiles)
         {
-   /*          if (rand.RandiRange(1, 3) == 3)
+            foreach (Tile t in tiles)
             {
-            int TopMax = (int)Math.Max(Player.GridPosition.x, Player.GridPosition.y);
-            int BottomMax = (int)Math.Max(GridWidth - 1 - Player.GridPosition.x, GridHeight - 1 - Player.GridPosition.y);
-            int OverallMax = Math.Max(TopMax, BottomMax);
-            int limitedMaxStepsFromPlayer = maxStepsFromPlayer;
-            if (OverallMax < limitedMaxStepsFromPlayer) limitedMaxStepsFromPlayer = OverallMax;
-
-            int possibleSteps = rand.RandiRange(minStepsFromPlayer, limitedMaxStepsFromPlayer);
-            int x = rand.RandiRange(0, possibleSteps);
-            Vector2 relativeGridPosition = new Vector2(x, possibleSteps - x);
-            Vector2 absoluteGridPosition;
-
-            int limitCounter = 0;
-            do
-            {
-                int limit = rand.RandiRange(0, 3);
-                for (int i = 0; i <= limit; i++)
+                if (t.GridPosition == position)
                 {
-                    float tempY = relativeGridPosition.y;
-                    relativeGridPosition.y = relativeGridPosition.x * - 1;
-                    relativeGridPosition.x = tempY;
+                    return true;
                 }
-                absoluteGridPosition = relativeGridPosition + Player.GridPosition;
-                limitCounter++;
-
-            } while ((absoluteGridPosition.x < 0 || 
-                    absoluteGridPosition.x >= GridWidth ||
-                    absoluteGridPosition.y < 0 || 
-                    absoluteGridPosition.y >= GridHeight ||
-                    Tile(absoluteGridPosition).Type != Type.Blank)
-                    && (limitCounter < 100)
-                    );
-            if (limitCounter < 100) Tile(absoluteGridPosition).Type = Type.Jump;
-            } */
-            //GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
+            }
+            return false;
         }
-
-
-
-
     }
 }
