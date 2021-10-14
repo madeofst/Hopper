@@ -11,11 +11,12 @@ namespace Hopper
             get { return _type; }
             set{
                 _type = value;
-                if (_type == Type.Blank)
+                if (_type == Type.Lily)
                 {
                     if (LilySprite != null) 
                     {
                         LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
+                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
                         LilySprite.Rotation = 0;
                     }
                     PointValue = 0;
@@ -26,6 +27,7 @@ namespace Hopper
                     if (LilySprite != null) 
                     {
                         LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad2_32x32.png");
+                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
                         LilySprite.Rotation = 0;
                     }
                     PointValue = 50;
@@ -36,9 +38,21 @@ namespace Hopper
                     if (LilySprite != null) 
                     {
                         LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
+                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
                         LilySprite.Rotation = 0;
                     }
                     PointValue = 100;
+                    JumpLength = 0;
+                }
+                else if (_type == Type.Rock)
+                {
+                    if (LilySprite != null) 
+                    {
+                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/Rock1_32x32.png");
+                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water2_32x32.png");
+                        LilySprite.Rotation = 0;
+                    }
+                    PointValue = 0;
                     JumpLength = 0;
                 }
                 else if (_type == Type.Jump)
@@ -46,6 +60,7 @@ namespace Hopper
                     if (LilySprite != null) 
                     {
                         LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad3_32x32.png");
+                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
                         LilySprite.Rotation = 0;
                     }
                     PointValue = 0;
@@ -130,11 +145,11 @@ namespace Hopper
             Label.BbcodeEnabled = true;
                     
             LilySprite = new Sprite();
+            WaterSprite = new Sprite();
             Type = type;
             GridPosition = gridPosition;
             PointValue = score;
 
-            WaterSprite = new Sprite();
             WaterSprite.Position = LilySprite.Position;
             WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
             AddChild(WaterSprite);
@@ -166,7 +181,7 @@ namespace Hopper
                     GD.Print(ev.AsText());
                     GD.Print($"Clicked Tile {GridPosition}");
                     if (Type == Type.Jump) //Max enum value
-                        Type = Type.Blank; //Min enum value
+                        Type = Type.Lily; //Min enum value
                     else
                         Type += 1;
                 }

@@ -2,9 +2,10 @@ namespace Hopper
 {
     public enum Type
     {
-        Blank,
+        Lily,
         Goal,
         Score,
+        Rock,
         Jump
     }
 }

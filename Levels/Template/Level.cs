@@ -24,11 +24,13 @@ namespace Hopper
         public int MaximumHops { get; set; }
         public int ScoreRequired { get; set; }
         public Vector2 PlayerStartPosition { get; set; }
+        public string LevelName { get; set; }
 
         public Level(){}
 
         public override void _Ready()
         {
+            Name = "Level";
             Grid = GetNode<Grid>("Grid");
         }
         
@@ -42,6 +44,10 @@ namespace Hopper
 
         public void Build()
         {
+            StartingHops = LevelData.StartingHops;
+            MaximumHops = LevelData.MaximumHops;
+            ScoreRequired = LevelData.ScoreRequired;
+            PlayerStartPosition = LevelData.PlayerStartPosition;
             Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
             Grid.ClearExistingChildren();
             Grid.PopulateGrid(LevelData);

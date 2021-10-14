@@ -38,7 +38,7 @@ namespace Hopper
         public Tile GoalTile;
         public Tile PlayerTile;
 
-        private Level currentLevel;
+/*         private Level currentLevel;
         public Level CurrentLevel 
         {
             get { return currentLevel; }
@@ -53,7 +53,7 @@ namespace Hopper
                     if (GridWidth != previousGridWidth) Player.GridPosition = new Vector2(0, 0);
                 }
             }
-        }
+        } */
 
         [Signal]
         public delegate void NextLevel();
@@ -63,10 +63,10 @@ namespace Hopper
             Name = "Grid";
         }
 
-        public Grid(Level level) : this()
+/*         public Grid(Level level) : this()
         {
             CurrentLevel = level;
-        }
+        } */
 
         public Tile Tile(Vector2 position)
         {
@@ -76,7 +76,7 @@ namespace Hopper
         public override void _Ready()
         {
             Connect("mouse_exited", this, "OnMouseExit");
-            rand.Randomize();
+            //rand.Randomize();
         }
 
         public virtual void DefineGrid(int tileSize, int gridWidth, int gridHeight)
@@ -119,7 +119,7 @@ namespace Hopper
                 }
                 else
                 {
-                    Tiles[x, y].BuildTile(Type.Blank, TileSize, new Vector2(x, y));
+                    Tiles[x, y].BuildTile(Type.Lily, TileSize, new Vector2(x, y));
                 }
                 Tiles[x, y].Owner = this;
                 i++;
@@ -132,7 +132,7 @@ namespace Hopper
 
 
 
-        public void InitializeGrid()
+        /* public void InitializeGrid()
         {
             //TODO: Can I avoid calling player here?  The Goal stuff will be in the Level anyway I think
             Player = GetNode<Player>("../Player");
@@ -152,7 +152,7 @@ namespace Hopper
 
         public void UpdateGrid()
         {
-            AssignTileTypes();
+            //AssignTileTypes();
         }
 
         private void AssignTileTypes()  //TODO: make a level function rather than a grid function
@@ -167,7 +167,7 @@ namespace Hopper
         {
             foreach (Tile t in Tiles)
             {
-                t.Type = Type.Blank;
+                t.Type = Type.Lily;
             }
         }
 
@@ -240,7 +240,7 @@ namespace Hopper
                     absoluteGridPosition.x >= GridWidth ||
                     absoluteGridPosition.y < 0 || 
                     absoluteGridPosition.y >= GridHeight ||
-                    Tile(absoluteGridPosition).Type != Type.Blank)
+                    Tile(absoluteGridPosition).Type != Type.Lily)
                     && (limitCounter < 100)
                     );
             if (limitCounter < 100) Tile(absoluteGridPosition).Type = Type.Jump;
@@ -278,16 +278,17 @@ namespace Hopper
                 Tile(ScoreGridPosition).Type = Type.Score;
                 Tile(ScoreGridPosition).PointValue *= (int)totalSteps;
             }
-        }
+        } */
 
         public void IncrementGoalCount()
         {
-            GoalCount += 1;
-            if (GoalCount % CurrentLevel.GoalsToNextLevel == 0)
+            EmitSignal(nameof(NextLevel));
+/*             GoalCount += 1;
+            if (GoalCount % 1 == 0)
             {
                 GoalCount = 0;
                 EmitSignal(nameof(NextLevel));
-            }
+            } */
         }
 
         public void PrintGrid()  //For debugging tile types etc.

@@ -62,7 +62,7 @@ namespace Hopper
             levelData.Init(width * height);
             for (int i = 0; i < levelData.TileType.Length - 1; i++)
             {
-                levelData.TileType[i] = Type.Blank;
+                levelData.TileType[i] = Type.Lily;
                 levelData.TilePointValue[i] = 0;
             }
             return levelData;
@@ -77,11 +77,11 @@ namespace Hopper
 
         public Error Save(Level level)
         {
-            if (level.Name == "") level.Name = "DefaultLevelName";
+            if (level.LevelName == "") level.LevelName = "DefaultLevelName";
             LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
             level.UpdateLevelData();
             levelData = level.LevelData;
-            return ResourceSaver.Save($"res://Levels/{level.Name}_Data.tres", levelData);
+            return ResourceSaver.Save($"res://Levels/{level.LevelName}_Data.tres", levelData);
         }
         
         public Level Generate(int width = defaultWidth, 
@@ -109,28 +109,26 @@ namespace Hopper
             levelData.UpdateTile(goalTile);
 
             Tile jumpTile = CalculateJumpTilePositions(rand, 
-                                                          new Vector2(playerPositionX, playerPositionY),
-                                                          width,
-                                                          height,
-                                                          startingHops,
-                                                          1,
-                                                          goalTile);
+                                                       new Vector2(playerPositionX, playerPositionY),
+                                                       width,
+                                                       height,
+                                                       startingHops,
+                                                       1,
+                                                       goalTile);
             levelData.UpdateTile(jumpTile);
 
             Tile[] scoreTiles = CalculateScoreTilePositions(rand, 
-                                                      new Vector2(playerPositionX, playerPositionY),
-                                                      width,
-                                                      height,
-                                                      maximumHops,
-                                                      goalTile,
-                                                      jumpTile,
-                                                      4);
-
+                                                            new Vector2(playerPositionX, playerPositionY),
+                                                            width,
+                                                            height,
+                                                            maximumHops,
+                                                            goalTile,
+                                                            jumpTile,
+                                                            4);
             foreach (Tile t in scoreTiles)
             {
                 levelData.UpdateTile(t);
             }
-
 
             return GetLevelScene(levelData);
         }
@@ -281,18 +279,6 @@ namespace Hopper
                 }
             }
             return tiles;
-        }
-
-        private bool PositionIn(Vector2 position, Tile[] tiles)
-        {
-            foreach (Tile t in tiles)
-            {
-                if (t.GridPosition == position)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

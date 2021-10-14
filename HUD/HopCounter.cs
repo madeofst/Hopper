@@ -13,7 +13,7 @@ namespace Hopper
 
         public override void MakeConnections()
         {
-            Player.Connect(nameof(Player.HopCompleted), this, "UpdateText");
+            //Player.Connect(nameof(Player.HopCompleted), this, "UpdateText");
         }
 
     }

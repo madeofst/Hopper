@@ -121,8 +121,9 @@ text = "Editor"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 1 )
-volume_db = -28.0
+volume_db = -30.4
 pitch_scale = 1.05
+autoplay = true
 attenuation = 0.196146
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton" to="." method="newGamePressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4/HighScoresButton" to="." method="highScoresPressed"]

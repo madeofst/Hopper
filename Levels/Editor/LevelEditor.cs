@@ -27,7 +27,7 @@ namespace Hopper
         
         private void TextChanged(string newText)
         {
-            CurrentLevel.Name = newText;
+            CurrentLevel.LevelName = newText;
         }
 
         private void SaveCurrentLevel()

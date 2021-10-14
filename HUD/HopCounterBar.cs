@@ -27,7 +27,7 @@ namespace Hopper
 
         public virtual void MakeConnections()
         {
-            Player.Connect(nameof(Player.HopCompleted), this, "UpdateBar");
+            //Player.Connect(nameof(Player.HopCompleted), this, "UpdateBar");
         }
     }
 }

@@ -13,6 +13,15 @@ namespace Hopper
         public Counter(Vector2 size)
         {
             RectSize = size;
+
+/*             DynamicFont dynamicFont = new DynamicFont();
+            dynamicFont.FontData = GD.Load<DynamicFontData>("res://Fonts/rainyhearts.ttf");
+            dynamicFont.OutlineColor = Colors.Firebrick;
+            dynamicFont.OutlineSize = 1;
+            dynamicFont.Size = 16;
+            AddFontOverride("font",dynamicFont); */
+            //var fontdata = Get("custom_fonts/normal_font/font_data") ;
+            //
         }
 
         public override void _Ready()
@@ -24,7 +33,7 @@ namespace Hopper
         {
             World = GetNode<World>("/root/World");
             Player = GetNode<Player>("/root/World/Player");
-            MakeConnections();
+            //MakeConnections();
         }
 
         public void UpdateText(string text)

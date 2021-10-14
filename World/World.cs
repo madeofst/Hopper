@@ -8,7 +8,7 @@ namespace Hopper
         private LevelFactory levelFactory { get; set; } = new LevelFactory();
         
         //References to existing nodes
-        private Level CurrentLevel { get; set; }
+        public Level CurrentLevel { get; set; }
         private Grid Grid { get; set; }
         private Player Player { get; set; }
         
@@ -17,14 +17,14 @@ namespace Hopper
         public milliTimer Timer;
 
         //List of levels FIXME: needs to be updated
-        public Level[] Levels { get; set; } = new Level[] 
+/*         public Level[] Levels { get; set; } = new Level[] 
         {
             new Level(1, 5, 7, 1, 5),
             new Level(2, 7, 8, 2, 5),
             new Level(3, 7, 10, 2),
             new Level(4, 7, 10, 3),
             new Level(5, 7, 10, 4) 
-        };
+        }; */
 
         //Signals
         [Signal]
@@ -32,25 +32,34 @@ namespace Hopper
 
         public override void _Ready()
         {
-            NewGrid(Levels[0]);
-            NewPlayer();
+            CallDeferred("Init");
+        }
+
+        private void Init()
+        {
+            NewLevel(new Vector2(0, 0));            
+            NewPlayer();           
 
             Grid.Connect(nameof(Grid.NextLevel), this, "IncrementLevel");
-
+            Player.Connect(nameof(Player.GoalReached), this, "IncrementLevel");
             Timer = new milliTimer();
             Timer.Start(100);
+        }
+
+        private void NewLevel(Vector2 playerPosition)
+        {
+            if (CurrentLevel != null) CurrentLevel.QueueFree();
+            CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
+                                                 playerPositionY: (int)playerPosition.y);
+            AddChild(CurrentLevel);
+            CurrentLevel.Build();
+            Grid = CurrentLevel.Grid;
         }
 
         private void NewPlayer()
         {
             Player = (Player)GD.Load<PackedScene>("res://Player/Player.tscn").Instance();
             AddChild(Player);
-        }
-
-        private void NewGrid(Level level)
-        {
-            Grid = new Grid(level);
-            AddChild(Grid);
         }
 
         public override void _Process(float delta)
@@ -79,11 +88,10 @@ namespace Hopper
 
         public void IncrementLevel()
         {
-            int nextLevelElementID = Grid.CurrentLevel.ID - 1 + 1;
-            if (nextLevelElementID <= Levels.Length - 1)
-            {
-                Grid.CurrentLevel = Levels[nextLevelElementID];
-            }
+            NewLevel(Player.GridPosition); //TODO: also need to pass hops remaining
+            MoveChild(Player, 4);
+            Player.CurrentLevel = CurrentLevel;
+            Player.Grid = CurrentLevel.Grid;
         }
     }
 }

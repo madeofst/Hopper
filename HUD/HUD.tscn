@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://HUD/TimeCounter.cs" type="Script" id=1]
 [ext_resource path="res://World/Resources/frogFilled20.png" type="Texture" id=2]
@@ -9,7 +9,12 @@
 [ext_resource path="res://HUD/Resources/timerTop.png" type="Texture" id=7]
 [ext_resource path="res://HUD/Resources/timerOver.png" type="Texture" id=8]
 [ext_resource path="res://HUD/Stopwatch.cs" type="Script" id=9]
+[ext_resource path="res://Fonts/rainyhearts.ttf" type="DynamicFontData" id=10]
 
+[sub_resource type="DynamicFont" id=1]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
 
 [node name="HUD" type="MarginContainer"]
 margin_right = 360.0
@@ -68,6 +73,7 @@ margin_bottom = 88.0
 rect_min_size = Vector2( 60, 20 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
+custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 bbcode_text = "[center]10[/center]"
 text = "10"

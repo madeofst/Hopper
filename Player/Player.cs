@@ -7,7 +7,8 @@ namespace Hopper
     {
         //References to existing nodes
         private World World;
-        private Grid Grid;
+        public Level CurrentLevel;
+        public Grid Grid;
         private Sprite PlayerSprite;
 
         //Player parameters
@@ -53,14 +54,15 @@ namespace Hopper
         private void SetupPlayer()
         {
             World = GetNode<World>("..");
-            Grid = GetNode<Grid>("../Grid");
+            CurrentLevel = World.CurrentLevel;
+            Grid = CurrentLevel.Grid;
             PlayerSprite = GetNode<Sprite>("PlayerSprite");
 
             //Initialize properties of player
             PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
             GridPosition = new Vector2(0, 0);
 
-            Grid.InitializeGrid();
+            //Grid.InitializeGrid();
             EmitSignal(nameof(ScoreUpdated), Score);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
             
@@ -84,9 +86,9 @@ namespace Hopper
         public void UpdateHopsRemaining(int addedHops)
         {
             HopsRemaining += addedHops;
-            if (HopsRemaining > Grid.CurrentLevel.MaxHops)
+            if (HopsRemaining > CurrentLevel.MaximumHops)
             {
-                HopsRemaining = Grid.CurrentLevel.MaxHops;
+                HopsRemaining = CurrentLevel.MaximumHops;
             }
             EmitSignal(nameof(HopCompleted), HopsRemaining);
         }
@@ -97,7 +99,7 @@ namespace Hopper
             //GD.Print(GridPosition, " ", CurrentTile.Type, " ", CurrentTile.PointValue, " ", Score);
             if (CurrentTile.Type == Type.Score) //TODO: this needs to come out of here (probably)
             {
-                CurrentTile.Type = Type.Blank;
+                CurrentTile.Type = Type.Lily;
             }
             EmitSignal(nameof(ScoreUpdated), Score);
         }
@@ -106,9 +108,9 @@ namespace Hopper
         {
             if (CurrentTile.Type == Type.Goal)
             {
-                UpdateHopsRemaining(Grid.CurrentLevel.HopsToAdd);
+                UpdateHopsRemaining(CurrentLevel.StartingHops); //Hops to add here is not obvious
                 EmitSignal(nameof(GoalReached));
-                Grid.UpdateGrid();
+                
                 World.Timer.Reset();
             }
         }
