@@ -10,6 +10,4 @@ public class ClickableArea : Area2D
             GD.Print("Clicked");
         }
     }
-
-
 }
