@@ -43,7 +43,14 @@ _________________________
 // For more designable puzzle version
 _________________________
 
-    * make goals unlockable with a minimum score - this could allow for actual puzzle design.
-    * Enemies to dodge?
+    * make goals unlockable with a minimum score - this could allow for actual (basic) puzzle design.
+    * collect coins with tongue (change movement to jump with a jump button and directional pointing)
+      This will allow for more than a few basic puzzles.
     * missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
+    * sucking up and spitting out lilypads to rearrange the grid
+
+// Probably not
+_________________________
+
+    * Enemies to dodge?
 
