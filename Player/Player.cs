@@ -69,18 +69,24 @@ namespace Hopper
             EmitSignal(nameof(HopCompleted), HopsRemaining);
         }
 
-        private void AfterMovement(Vector2 movementDirection)
+        private void CheckMovement(Vector2 MovementDirection)
         {
-            Bounce();
-            UpdateHopsRemaining(-1);
-            UpdateScore();  //to be outside player and triggered by signal
-            CheckGoal();    //maybe this should be in grid
-            CheckHopsRemaining();
+            if (Grid.Tile(GridPosition + MovementDirection).Type != Type.Rock)
+            {
+                UpdateHopsRemaining(-1);
+                UpdateScore();
+                CheckGoal();   
+                CheckHopsRemaining();
+            }
         }
 
-        private void Bounce()
+        private void ExtraJump(Vector2 movementDirection)
         {
-            ;
+            if (CurrentTile.Type == Type.Jump)
+            {
+                movementDirection += (movementDirection * CurrentTile.JumpLength);
+            };
+            GridPosition += movementDirection;
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -96,8 +102,7 @@ namespace Hopper
         public void UpdateScore()
         {
             Score += CurrentTile.PointValue;
-            //GD.Print(GridPosition, " ", CurrentTile.Type, " ", CurrentTile.PointValue, " ", Score);
-            if (CurrentTile.Type == Type.Score) //TODO: this needs to come out of here (probably)
+            if (CurrentTile.Type == Type.Score) 
             {
                 CurrentTile.Type = Type.Lily;
             }
@@ -123,48 +128,25 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if (World != null)
+            if (World != null && !World.GameOver)
             {
-                if (!World.GameOver)
+                if (@event.IsActionPressed("ui_left") && GridPosition.x > 0)
                 {
-                    Vector2 MovementDirection;
-
-                    if (@event.IsActionPressed("ui_left"))
-                    {
-                        if (GridPosition.x > 0)
-                        {
-                            GridPosition += MovementDirection = new Vector2(-1, 0);
-                            AfterMovement(MovementDirection);
-                        }
-                    }
-                    else if (@event.IsActionPressed("ui_right"))
-                    {
-                        if (GridPosition.x < Grid.GridWidth - 1)
-                        {
-                            GridPosition += MovementDirection = new Vector2(1, 0);
-                            AfterMovement(MovementDirection);
-                        }
-                    }
-                    else if (@event.IsActionPressed("ui_up"))
-                    {
-                        if (GridPosition.y > 0)
-                        {
-                            GridPosition += MovementDirection = new Vector2(0, -1);
-                            AfterMovement(MovementDirection);
-                        }
-                    }
-                    else if (@event.IsActionPressed("ui_down"))
-                    {
-                        if (GridPosition.y < Grid.GridHeight - 1)
-                        {
-                            GridPosition += MovementDirection = new Vector2(0, 1);
-                            AfterMovement(MovementDirection);
-                        }
-                    }
+                    CheckMovement(new Vector2(-1, 0)); //TODO: work out how to pass the grid position condition into the function?
+                }
+                else if (@event.IsActionPressed("ui_right") && GridPosition.x < Grid.GridWidth - 1)
+                {
+                    CheckMovement(new Vector2(1, 0));
+                }
+                else if (@event.IsActionPressed("ui_up") && GridPosition.y > 0)
+                {
+                    CheckMovement(new Vector2(0, -1));
+                }
+                else if (@event.IsActionPressed("ui_down") && GridPosition.y < Grid.GridHeight - 1)
+                {
+                    CheckMovement(new Vector2(0, 1));
                 }
             }
         }
-
-
     }
 }

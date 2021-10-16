@@ -8,7 +8,9 @@ _________________________
 
     // Definite additions
     * Timer reduces with each goal reached?
-    * Add jump tile
+    * Add jump tile - 2 kinds
+        - auto bounce
+        - stand on it and then jump extra
     * Add max hop limit increase tile
     * Add timer extension tile
     * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
@@ -38,6 +40,9 @@ _________________________
     * Transfer to path finding algorithm for coins?
     * Correct score values for unreachable coins (aka other side of goal)
     * Add impassable tiles - will need pathfinding for automatic placement
+
+    //Tiles
+    * Permanent/semi-permanent change of jump length
 
 
 // For more designable puzzle version
