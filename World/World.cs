@@ -26,8 +26,8 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-            "RedRing",
-            "BlueLine"
+            //"RedRing",
+            //"BlueLine"
         };
         public bool Temp { get; set; } = false;
 
@@ -81,7 +81,7 @@ namespace Hopper
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
-                                                    playerPositionY: (int)playerPosition.y);
+                                                 playerPositionY: (int)playerPosition.y);
             BuildLevel();
         }
 
@@ -100,6 +100,7 @@ namespace Hopper
             Grid = CurrentLevel.Grid;
             MoveChild(Player, 4);
             Player.Init();
+            if (Timer != null) Timer.Reset();
             //HopCounter.UpdateText(CurrentLevel.StartingHops);
             //HopCounterBar.UpdateBar(CurrentLevel.StartingHops);
         }
@@ -153,8 +154,8 @@ namespace Hopper
                 {
                     NewLevel(Levels[iLevel]);
                 }
-                Player.CurrentLevel = CurrentLevel;
-                Player.Grid = CurrentLevel.Grid;
+                //Player.CurrentLevel = CurrentLevel;
+                //Player.Grid = CurrentLevel.Grid;
             }
         }
     }

@@ -117,9 +117,10 @@ namespace Hopper
             levelData.StartingHops = startingHops;
             levelData.MaximumHops = defaultMaximumHops;
             levelData.ScoreRequired = scoreRequired;
+            levelData.PlayerStartPosition = new Vector2(playerPositionX, playerPositionY);
 
             Tile goalTile = CalculateGoalTilePosition(rand, 
-                                                      new Vector2(playerPositionX, playerPositionY),
+                                                      levelData.PlayerStartPosition,
                                                       width,
                                                       height,
                                                       startingHops, 
@@ -127,7 +128,7 @@ namespace Hopper
             levelData.UpdateTile(goalTile);
 
             Tile jumpTile = CalculateJumpTilePositions(rand, 
-                                                       new Vector2(playerPositionX, playerPositionY),
+                                                       levelData.PlayerStartPosition,
                                                        width,
                                                        height,
                                                        startingHops,
@@ -136,7 +137,7 @@ namespace Hopper
             levelData.UpdateTile(jumpTile);
 
             Tile[] scoreTiles = CalculateScoreTilePositions(rand, 
-                                                            new Vector2(playerPositionX, playerPositionY),
+                                                            levelData.PlayerStartPosition,
                                                             width,
                                                             height,
                                                             maximumHops,

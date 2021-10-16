@@ -108,10 +108,8 @@ namespace Hopper
         {
             if (CurrentTile.Type == Type.Goal)
             {
-                UpdateHopsRemaining(CurrentLevel.StartingHops); //Hops to add here is not obvious
                 EmitSignal(nameof(GoalReached));
-                
-                if (World.Timer != null) World.Timer.Reset();
+                UpdateHopsRemaining(CurrentLevel.StartingHops); //FIXME: Hops added should come from next level
             }
         }
 
