@@ -22,6 +22,8 @@ namespace Hopper
         private void ShowSaveDialog()
         {
             AcceptDialog SaveDialog = GetNode<AcceptDialog>("Dialogs/SaveDialog");
+            LineEdit SaveName = SaveDialog.GetNode<LineEdit>("VBoxContainer/LineEdit");
+            SaveName.Text = CurrentLevel.LevelName;
             SaveDialog.PopupCentered();
         }
         

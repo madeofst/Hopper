@@ -36,6 +36,7 @@ namespace Hopper
         
         public void Build()
         {
+            LevelName = LevelData.Name;
             StartingHops = LevelData.StartingHops;
             MaximumHops = LevelData.MaximumHops;
             ScoreRequired = LevelData.ScoreRequired;
@@ -57,6 +58,7 @@ namespace Hopper
                     i++;
                 }
             }
+            LevelData.Name = LevelName;
             LevelData.StartingHops = StartingHops;
             LevelData.MaximumHops = MaximumHops;
             LevelData.ScoreRequired = ScoreRequired;

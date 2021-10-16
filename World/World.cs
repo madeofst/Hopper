@@ -11,7 +11,13 @@ namespace Hopper
         public Level CurrentLevel { get; set; }
         private Grid Grid { get; set; }
         private Player Player { get; set; }
-        
+
+        private HopCounter HopCounter { get; set; }
+        private HopCounterBar HopCounterBar { get; set; }
+        private ScoreCounter ScoreCounter { get; set; }
+        private TimeCounter TimeCounter { get; set; }
+        private Stopwatch Stopwatch { get; set; }
+
         //World parameters
         public bool GameOver = false;
         public milliTimer Timer;
@@ -37,11 +43,23 @@ namespace Hopper
 
         private void Init()
         {
-            NewLevel(new Vector2(0, 0));            
-            NewPlayer();           
+            HopCounter = GetNode<HopCounter>("HUD/HBoxContainer/VBoxContainer2/HopCounter");
+            HopCounterBar = GetNode<HopCounterBar>("HUD/HBoxContainer/VBoxContainer2/HopCounterBar");
+            ScoreCounter = GetNode<ScoreCounter>("HUD/HBoxContainer/MarginContainer/VBoxContainer/ScoreCounter");
+            TimeCounter = GetNode<TimeCounter>("HUD/HBoxContainer/MarginContainer/VBoxContainer/TimeCounter");
+            Stopwatch = GetNode<Stopwatch>("HUD/HBoxContainer/MarginContainer/VBoxContainer/Stopwatch");
 
-            Grid.Connect(nameof(Grid.NextLevel), this, "IncrementLevel");
+            Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
+            Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
+
+
+            NewPlayer();           
             Player.Connect(nameof(Player.GoalReached), this, "IncrementLevel");
+            Player.Connect(nameof(Player.HopCompleted), HopCounter, "UpdateText");
+            Player.Connect(nameof(Player.HopCompleted), HopCounterBar, "UpdateBar");
+            Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, "UpdateText");
+
+            NewLevel(new Vector2(0, 0));            
             Timer = new milliTimer();
             Timer.Start(100);
         }
@@ -54,6 +72,7 @@ namespace Hopper
             AddChild(CurrentLevel);
             CurrentLevel.Build();
             Grid = CurrentLevel.Grid;
+            MoveChild(Player, 4);
         }
 
         private void NewPlayer()
@@ -88,8 +107,7 @@ namespace Hopper
 
         public void IncrementLevel()
         {
-            NewLevel(Player.GridPosition); //TODO: also need to pass hops remaining
-            MoveChild(Player, 4);
+            NewLevel(Player.GridPosition);
             Player.CurrentLevel = CurrentLevel;
             Player.Grid = CurrentLevel.Grid;
         }

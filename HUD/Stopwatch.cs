@@ -27,7 +27,7 @@ namespace Hopper
 
         public virtual void MakeConnections()
         {
-            World.Connect(nameof(World.TimeUpdate), this, "UpdateStopwatch");
+            //World.Connect(nameof(World.TimeUpdate), this, "UpdateStopwatch");
         }
     }
 }

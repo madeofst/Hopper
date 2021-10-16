@@ -133,6 +133,7 @@ __meta__ = {
 [node name="Dialogs" type="Node2D" parent="."]
 
 [node name="SaveDialog" type="AcceptDialog" parent="Dialogs"]
+visible = true
 margin_left = 135.775
 margin_top = 84.0511
 margin_right = 340.775
@@ -151,8 +152,8 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Dialogs/SaveDialog/VBoxContainer"]
-margin_right = 204.0
-margin_bottom = 29.0
+margin_right = 189.0
+margin_bottom = 19.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/mono_font = SubResource( 7 )
@@ -163,9 +164,9 @@ __meta__ = {
 }
 
 [node name="LineEdit" type="LineEdit" parent="Dialogs/SaveDialog/VBoxContainer"]
-margin_top = 33.0
-margin_right = 204.0
-margin_bottom = 57.0
+margin_top = 23.0
+margin_right = 189.0
+margin_bottom = 47.0
 
 [node name="LoadDialog" type="FileDialog" parent="Dialogs"]
 margin_left = 5.0
@@ -182,6 +183,7 @@ current_path = "res://Levels/LevelData.tres"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="Controls/VBoxContainer/NewButton" to="." method="NewBlankLevel"]
 [connection signal="pressed" from="Controls/VBoxContainer/SaveButton" to="." method="ShowSaveDialog"]
 [connection signal="pressed" from="Controls/VBoxContainer/LoadButton" to="." method="ShowLoadDialog"]

@@ -6,6 +6,8 @@ namespace Hopper
 {
     public class LevelFactory
     {
+        const string defaultLevelSaveFolder = "res://Levels/";
+        const string defaultLevelSaveSuffix = "_Data.tres";
         const int defaultWidth = 7;
         const int defaultHeight = 7;
         const int defaultTileSize = 32;
@@ -70,6 +72,14 @@ namespace Hopper
 
         public Level Load(string path)
         {
+            LevelData levelData = ResourceLoader.Load<LevelData>(path);
+            if (levelData == null) return null;
+            return GetLevelScene(levelData);
+        }
+
+        public Level Load(string name, bool buildPath = true)
+        {
+            string path = defaultLevelSaveFolder + name + defaultLevelSaveSuffix; 
             LevelData levelData = ResourceLoader.Load<LevelData>(path);
             if (levelData == null) return null;
             return GetLevelScene(levelData);

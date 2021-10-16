@@ -5,6 +5,9 @@ namespace Hopper
     public class LevelData : Resource
     {
         [Export]
+        public string Name { get; set; }
+        
+        [Export]
         public int Width { get; set; }
 
         [Export]

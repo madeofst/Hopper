@@ -13,7 +13,7 @@ namespace Hopper
 
         public override void MakeConnections()
         {
-            World.Connect(nameof(World.TimeUpdate), this, "UpdateText");
+            //World.Connect(nameof(World.TimeUpdate), this, "UpdateText");
         }
 
     }

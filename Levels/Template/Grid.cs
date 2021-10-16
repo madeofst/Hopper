@@ -6,7 +6,7 @@ namespace Hopper
 {
     public class Grid : Control
     {
-        public Player Player { get; set; }
+        //public Player Player { get; set; }
 
         //TODO: add editable property
         private bool editable = false;
@@ -33,7 +33,6 @@ namespace Hopper
         public Vector2 TileSize;
 
         public Tile[,] Tiles;
-        public RandomNumberGenerator rand = new RandomNumberGenerator();
 
         public Tile GoalTile;
         public Tile PlayerTile;
@@ -76,7 +75,6 @@ namespace Hopper
         public override void _Ready()
         {
             Connect("mouse_exited", this, "OnMouseExit");
-            //rand.Randomize();
         }
 
         public virtual void DefineGrid(int tileSize, int gridWidth, int gridHeight)
