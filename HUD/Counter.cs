@@ -5,8 +5,8 @@ namespace Hopper
 {
     public class Counter : RichTextLabel
     {
-        public World World { get; private set; }
-        public Player Player { get; set; }
+        //public World World { get; private set; }
+        //public Player Player { get; set; }
 
         public Counter(){}
 
@@ -26,13 +26,13 @@ namespace Hopper
 
         public override void _Ready()
         {
-            CallDeferred("ConnectNodesAndSignals");
+            //CallDeferred("ConnectNodesAndSignals");
         }
 
         public void ConnectNodesAndSignals()
         {
-            World = GetNode<World>("/root/World");
-            Player = GetNode<Player>("/root/World/Player");
+            //World = GetNode<World>("/root/World");
+            //Player = GetNode<Player>("/root/World/Player");
             //MakeConnections();
         }
 

@@ -23,14 +23,13 @@ namespace Hopper
         public milliTimer Timer;
 
         //List of levels FIXME: needs to be updated
-/*         public Level[] Levels { get; set; } = new Level[] 
+        public int iLevel { get; set; } = 0;
+        public string[] Levels { get; set; } = new string[] 
         {
-            new Level(1, 5, 7, 1, 5),
-            new Level(2, 7, 8, 2, 5),
-            new Level(3, 7, 10, 2),
-            new Level(4, 7, 10, 3),
-            new Level(5, 7, 10, 4) 
-        }; */
+            "RedRing",
+            "BlueLine"
+        };
+        public bool Temp { get; set; } = false;
 
         //Signals
         [Signal]
@@ -38,10 +37,10 @@ namespace Hopper
 
         public override void _Ready()
         {
-            CallDeferred("Init");
+            //CallDeferred("Init");
         }
 
-        private void Init()
+        public void Init(bool temp = false, string levelName = "")
         {
             HopCounter = GetNode<HopCounter>("HUD/HBoxContainer/VBoxContainer2/HopCounter");
             HopCounterBar = GetNode<HopCounterBar>("HUD/HBoxContainer/VBoxContainer2/HopCounterBar");
@@ -52,27 +51,57 @@ namespace Hopper
             Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
-
             NewPlayer();           
             Player.Connect(nameof(Player.GoalReached), this, "IncrementLevel");
             Player.Connect(nameof(Player.HopCompleted), HopCounter, "UpdateText");
             Player.Connect(nameof(Player.HopCompleted), HopCounterBar, "UpdateBar");
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, "UpdateText");
 
-            NewLevel(new Vector2(0, 0));            
-            Timer = new milliTimer();
-            Timer.Start(100);
+            if (temp)
+            {
+                Temp = true;
+                NewLevel(levelName);
+            }
+            else
+            {
+                if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
+                {
+                    NewLevel(Player.GridPosition);
+                    Timer = new milliTimer();
+                    Timer.Start(100);
+                }
+                else
+                {
+                    NewLevel(Levels[iLevel]);
+                }
+            }
         }
 
         private void NewLevel(Vector2 playerPosition)
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
-                                                 playerPositionY: (int)playerPosition.y);
+                                                    playerPositionY: (int)playerPosition.y);
+            BuildLevel();
+        }
+
+        private void NewLevel(string levelName)
+        {
+            if (CurrentLevel != null) CurrentLevel.QueueFree();
+            CurrentLevel = levelFactory.Load(levelName, true);
+            BuildLevel();
+
+        }
+
+        private void BuildLevel()
+        {
             AddChild(CurrentLevel);
             CurrentLevel.Build();
             Grid = CurrentLevel.Grid;
             MoveChild(Player, 4);
+            Player.Init();
+            //HopCounter.UpdateText(CurrentLevel.StartingHops);
+            //HopCounterBar.UpdateBar(CurrentLevel.StartingHops);
         }
 
         private void NewPlayer()
@@ -85,9 +114,9 @@ namespace Hopper
         {
             UpdateTimeRemaining();
 
-            if (Timer.Finished())
+            if (Timer != null)
             {
-                GameOver = true;
+                if (Timer.Finished()) GameOver = true;
             }
 
             if (GameOver)
@@ -102,14 +131,31 @@ namespace Hopper
 
         private void UpdateTimeRemaining()
         {
-            EmitSignal(nameof(TimeUpdate), Timer.Remaining());
+            if (Timer != null) EmitSignal(nameof(TimeUpdate), Timer.Remaining());
         }
 
         public void IncrementLevel()
         {
-            NewLevel(Player.GridPosition);
-            Player.CurrentLevel = CurrentLevel;
-            Player.Grid = CurrentLevel.Grid;
+            iLevel++;
+            if (Temp)
+            {
+                GD.Print("Level complete.");
+                QueueFree();
+            }
+            else
+            {
+                if (iLevel >= Levels.Length || Levels[iLevel] == null)
+                {
+                    NewLevel(Player.GridPosition);
+                    
+                }
+                else
+                {
+                    NewLevel(Levels[iLevel]);
+                }
+                Player.CurrentLevel = CurrentLevel;
+                Player.Grid = CurrentLevel.Grid;
+            }
         }
     }
 }

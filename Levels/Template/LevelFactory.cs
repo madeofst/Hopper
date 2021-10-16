@@ -70,16 +70,24 @@ namespace Hopper
             return levelData;
         }
 
-        public Level Load(string path)
+/*         public Level Load(string path)
         {
             LevelData levelData = ResourceLoader.Load<LevelData>(path);
             if (levelData == null) return null;
             return GetLevelScene(levelData);
-        }
+        } */
 
-        public Level Load(string name, bool buildPath = true)
+        public Level Load(string name, bool buildPath = false) //the 'name' parameter can hold either just the name or the full path
         {
-            string path = defaultLevelSaveFolder + name + defaultLevelSaveSuffix; 
+            string path;
+            if (buildPath == true)
+            {
+                path = defaultLevelSaveFolder + name + defaultLevelSaveSuffix; 
+            }
+            else
+            {
+                path = name;
+            }
             LevelData levelData = ResourceLoader.Load<LevelData>(path);
             if (levelData == null) return null;
             return GetLevelScene(levelData);

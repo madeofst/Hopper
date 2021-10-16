@@ -178,8 +178,8 @@ namespace Hopper
             {
                 if (ev.ButtonIndex == (int)ButtonList.Left)
                 {
-                    GD.Print(ev.AsText());
-                    GD.Print($"Clicked Tile {GridPosition}");
+                    //GD.Print(ev.AsText());
+                    //GD.Print($"Clicked Tile {GridPosition}");
                     if (Type == Type.Jump) //Max enum value
                         Type = Type.Lily; //Min enum value
                     else
@@ -188,12 +188,12 @@ namespace Hopper
                 if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
                 {
                     if (PointValue < 1000) PointValue += 100;
-                    GD.Print(ev.AsText());
+                    //GD.Print(ev.AsText());
                 }
                 if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
                 {
                     if (PointValue > 0) PointValue -= 100;
-                    GD.Print(ev.AsText());
+                    //GD.Print(ev.AsText());
                 }
             }
 

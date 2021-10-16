@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Width = 7
-StartingHops = 0
-TileSize = 32
-ScoreRequired = 0
-Name = "RedRing"
-PlayerStartPosition = Vector2( 0, 0 )
+ScoreRequired = 500
+StartingHops = 5
+MaximumHops = 10
 TileType = PoolIntArray( 0, 2, 0, 3, 0, 2, 0, 2, 0, 1, 1, 1, 0, 2, 2, 0, 1, 2, 1, 0, 2, 2, 0, 1, 1, 1, 0, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+TilePointValue = PoolIntArray( 0, 100, 0, 0, 0, 100, 0, 100, 0, 50, 50, 50, 0, 100, 100, 0, 50, 100, 50, 0, 100, 100, 0, 50, 50, 50, 0, 100, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 Height = 7
-TilePointValue = PoolIntArray( 0, 100, 0, 0, 0, 100, 0, 100, 0, 50, 50, 50, 0, 100, 100, 0, 50, 900, 50, 0, 100, 100, 0, 50, 50, 50, 0, 100, 0, 100, 0, 0, 0, 100, 0, 0, 0, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-MaximumHops = 0
+TileSize = 32
+Name = "RedRing"
+Width = 7
+PlayerStartPosition = Vector2( 6, 6 )

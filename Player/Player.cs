@@ -48,10 +48,10 @@ namespace Hopper
         public override void _Ready()
         {
             Name = "Player";
-            CallDeferred("SetupPlayer");
+            //CallDeferred("Init");
         }
 
-        private void SetupPlayer()
+        public void Init()
         {
             World = GetNode<World>("..");
             CurrentLevel = World.CurrentLevel;
@@ -60,13 +60,13 @@ namespace Hopper
 
             //Initialize properties of player
             PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
-            GridPosition = new Vector2(0, 0);
+            //GridPosition = new Vector2(0, 0);
+            
+            GridPosition = CurrentLevel.PlayerStartPosition;
+            HopsRemaining = CurrentLevel.StartingHops;
 
-            //Grid.InitializeGrid();
             EmitSignal(nameof(ScoreUpdated), Score);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
-            
-            //Grid.PrintGrid(); //For debugging grid
         }
 
         private void AfterMovement(Vector2 movementDirection)
@@ -111,7 +111,7 @@ namespace Hopper
                 UpdateHopsRemaining(CurrentLevel.StartingHops); //Hops to add here is not obvious
                 EmitSignal(nameof(GoalReached));
                 
-                World.Timer.Reset();
+                if (World.Timer != null) World.Timer.Reset();
             }
         }
 

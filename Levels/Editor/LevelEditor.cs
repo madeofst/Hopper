@@ -7,6 +7,28 @@ namespace Hopper
     {
         private LevelFactory levelFactory { get; set; } = new LevelFactory();
         private Level CurrentLevel { get; set; }
+        private World TestWorld { get; set; }
+
+        //Parameter edit boxes
+        private LineEdit PlayerStartX { get; set; }
+        private LineEdit PlayerStartY { get; set; }
+        private LineEdit StartingHops { get; set; }
+        private LineEdit MaximumHops { get; set; }
+        private LineEdit ScoreRequired { get; set; }
+
+        public override void _Ready()
+        {
+            CallDeferred("Init");
+        }
+
+        private void Init()
+        {
+            PlayerStartX = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer/PlayerStartX");
+            PlayerStartY = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer/PlayerStartY");
+            StartingHops = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer2/StartingHops");
+            MaximumHops = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer2/MaximumHops");
+            ScoreRequired = GetNode<LineEdit>("Controls/VBoxContainer/VBoxContainer/ScoreRequired");
+        }
 
         //New
         private void NewBlankLevel()
@@ -15,6 +37,7 @@ namespace Hopper
             CurrentLevel = levelFactory.New();
             AddChild(CurrentLevel);
             CurrentLevel.Build(); //TODO: may be able to come out and run automatically
+            PopulateParameterValues();
             CurrentLevel.Editable = true;
         }
 
@@ -32,10 +55,19 @@ namespace Hopper
             CurrentLevel.LevelName = newText;
         }
 
+        private void SaveAndPlayLevel()
+        {
+            SaveCurrentLevel();
+			World TestWorld = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
+			GetTree().Root.AddChild(TestWorld);
+            TestWorld.Init(true, CurrentLevel.LevelName);
+        }
+
         private void SaveCurrentLevel()
         {
             if (CurrentLevel != null)
             {
+                WriteParameterValues();
                 Error error = levelFactory.Save(CurrentLevel);
                 GD.PrintErr(error);
             }
@@ -54,7 +86,27 @@ namespace Hopper
             CurrentLevel = levelFactory.Load(path);
             AddChild(CurrentLevel);
             CurrentLevel.Build(); //TODO: may be able to come out and run automatically
+            PopulateParameterValues();
             CurrentLevel.Editable = true;
+        }
+
+        private void PopulateParameterValues()
+        {
+            PlayerStartX.Text = CurrentLevel.PlayerStartPosition.x.ToString();
+            PlayerStartY.Text = CurrentLevel.PlayerStartPosition.y.ToString();
+            StartingHops.Text = CurrentLevel.StartingHops.ToString();
+            MaximumHops.Text = CurrentLevel.MaximumHops.ToString();
+            ScoreRequired.Text = CurrentLevel.ScoreRequired.ToString();
+        }
+
+        private void WriteParameterValues()
+        {
+            CurrentLevel.PlayerStartPosition = new Vector2(
+                Int16.Parse(PlayerStartX.Text), 
+                Int16.Parse(PlayerStartY.Text));
+            CurrentLevel.StartingHops = Int16.Parse(StartingHops.Text);
+            CurrentLevel.MaximumHops = Int16.Parse(MaximumHops.Text);
+            CurrentLevel.ScoreRequired = Int16.Parse(ScoreRequired.Text);
         }
 
         //Randomize
@@ -64,11 +116,8 @@ namespace Hopper
             CurrentLevel = levelFactory.Generate();
             AddChild(CurrentLevel);
             CurrentLevel.Build(); //TODO: may be able to come out and run automatically
+            PopulateParameterValues();
             CurrentLevel.Editable = true;
         }
-
-
-
-
     }
 }

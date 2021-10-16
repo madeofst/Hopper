@@ -1,8 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Fonts/DigitalDisco-Thin.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Levels/Resources/Water_32x32.png" type="Texture" id=2]
 [ext_resource path="res://Levels/Editor/LevelEditor.cs" type="Script" id=3]
+[ext_resource path="res://Fonts/rainyhearts.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://RainyHeartsLabels.tres" type="Theme" id=5]
+[ext_resource path="res://DigitalDiscoOutline.tres" type="Theme" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -14,8 +17,11 @@
 
 [sub_resource type="StyleBoxEmpty" id=5]
 
-[sub_resource type="DynamicFont" id=6]
-font_data = ExtResource( 1 )
+[sub_resource type="DynamicFont" id=11]
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=12]
+default_font = SubResource( 11 )
 
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 1 )
@@ -27,9 +33,11 @@ font_data = ExtResource( 1 )
 script = ExtResource( 3 )
 
 [node name="Background" type="TextureRect" parent="."]
-margin_right = 360.0
-margin_bottom = 240.0
-rect_min_size = Vector2( 480, 270 )
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 476.0
+margin_bottom = 264.0
+rect_min_size = Vector2( 472, 260 )
 mouse_filter = 2
 texture = ExtResource( 2 )
 expand = true
@@ -38,9 +46,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_top = 6.0
+margin_right = 480.0
+margin_bottom = 16.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="Button" parent="MarginContainer"]
+margin_left = 224.0
+margin_right = 255.0
+margin_bottom = 16.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource( 6 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Play"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Controls" type="MarginContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 95.0
+margin_bottom = 135.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 __meta__ = {
@@ -50,43 +89,42 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Controls"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 87.0
-margin_bottom = 86.0
-size_flags_horizontal = 0
+margin_right = 105.0
+margin_bottom = 228.0
 size_flags_vertical = 0
 
 [node name="NewButton" type="Button" parent="Controls/VBoxContainer"]
-margin_right = 30.0
+margin_right = 31.0
 margin_bottom = 16.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme = ExtResource( 6 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-custom_fonts/font = SubResource( 6 )
 text = "New"
 align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SaveButton" type="Button" parent="Controls/VBoxContainer"]
+[node name="RandomizeButton" type="Button" parent="Controls/VBoxContainer"]
 margin_top = 20.0
-margin_right = 36.0
+margin_right = 79.0
 margin_bottom = 36.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme = ExtResource( 6 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-custom_fonts/font = SubResource( 6 )
-text = "Save"
+text = "Randomize"
 align = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -94,50 +132,212 @@ __meta__ = {
 
 [node name="LoadButton" type="Button" parent="Controls/VBoxContainer"]
 margin_top = 40.0
-margin_right = 32.0
+margin_right = 33.0
 margin_bottom = 56.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme = ExtResource( 6 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-custom_fonts/font = SubResource( 6 )
 text = "Load"
 align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RandomizeButton" type="Button" parent="Controls/VBoxContainer"]
+[node name="SaveButton" type="Button" parent="Controls/VBoxContainer"]
 margin_top = 60.0
-margin_right = 77.0
+margin_right = 36.0
 margin_bottom = 76.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme = ExtResource( 6 )
 custom_styles/hover = SubResource( 1 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-custom_fonts/font = SubResource( 6 )
-text = "Randomize"
+text = "Save"
 align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PlayerStartHeading" type="RichTextLabel" parent="Controls/VBoxContainer"]
+margin_top = 79.0
+margin_right = 95.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 10, 12 )
+size_flags_vertical = 4
+theme = ExtResource( 5 )
+text = "Player Start:"
+scroll_active = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Controls/VBoxContainer"]
+margin_top = 96.0
+margin_right = 66.0
+margin_bottom = 122.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerStartLabelX" type="RichTextLabel" parent="Controls/VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 10.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 10, 16 )
+size_flags_vertical = 4
+theme = ExtResource( 5 )
+text = "X:"
+scroll_active = false
+
+[node name="PlayerStartX" type="LineEdit" parent="Controls/VBoxContainer/HBoxContainer"]
+margin_left = 14.0
+margin_right = 30.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 0, 5 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 5 )
+custom_constants/minimum_spaces = 3
+text = "0"
+max_length = 1
+placeholder_alpha = 1.0
+
+[node name="PlayerStartLabelY" type="RichTextLabel" parent="Controls/VBoxContainer/HBoxContainer"]
+margin_left = 34.0
+margin_top = 5.0
+margin_right = 46.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 12, 16 )
+size_flags_vertical = 4
+theme = ExtResource( 5 )
+text = "Y:"
+scroll_active = false
+
+[node name="PlayerStartY" type="LineEdit" parent="Controls/VBoxContainer/HBoxContainer"]
+margin_left = 50.0
+margin_right = 66.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 0, 10 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 5 )
+custom_constants/minimum_spaces = 3
+text = "0"
+max_length = 1
+placeholder_alpha = 1.0
+
+[node name="HopsHeading" type="RichTextLabel" parent="Controls/VBoxContainer"]
+margin_top = 125.0
+margin_right = 95.0
+margin_bottom = 137.0
+rect_min_size = Vector2( 10, 12 )
+size_flags_vertical = 4
+theme = ExtResource( 5 )
+text = "Hops:"
+scroll_active = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Controls/VBoxContainer"]
+margin_top = 142.0
+margin_right = 95.0
+margin_bottom = 168.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = SubResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartingHopsLabel" type="RichTextLabel" parent="Controls/VBoxContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 22.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 22, 15 )
+size_flags_vertical = 4
+theme = ExtResource( 5 )
+text = "Min:"
+scroll_active = false
+
+[node name="StartingHops" type="LineEdit" parent="Controls/VBoxContainer/HBoxContainer2"]
+margin_left = 26.0
+margin_right = 42.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 0, 10 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 5 )
+custom_constants/minimum_spaces = 3
+text = "3"
+max_length = 1
+placeholder_alpha = 1.0
+
+[node name="MaximumHopsLabel" type="RichTextLabel" parent="Controls/VBoxContainer/HBoxContainer2"]
+margin_left = 46.0
+margin_top = 5.0
+margin_right = 71.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 25, 16 )
+size_flags_vertical = 4
+theme = ExtResource( 5 )
+text = "Max:"
+scroll_active = false
+
+[node name="MaximumHops" type="LineEdit" parent="Controls/VBoxContainer/HBoxContainer2"]
+margin_left = 75.0
+margin_right = 95.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 0, 10 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 5 )
+custom_constants/minimum_spaces = 5
+text = "10"
+max_length = 2
+placeholder_alpha = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Controls/VBoxContainer"]
+margin_top = 172.0
+margin_right = 95.0
+margin_bottom = 218.0
+
+[node name="ScoreRequiredLabel" type="RichTextLabel" parent="Controls/VBoxContainer/VBoxContainer"]
+margin_right = 95.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 25, 16 )
+size_flags_vertical = 4
+theme = ExtResource( 5 )
+text = "Score required:"
+scroll_active = false
+
+[node name="ScoreRequired" type="LineEdit" parent="Controls/VBoxContainer/VBoxContainer"]
+margin_top = 20.0
+margin_right = 60.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 0, 10 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 5 )
+custom_constants/minimum_spaces = 25
+text = "100"
+max_length = 6
+placeholder_alpha = 1.0
+
 [node name="Dialogs" type="Node2D" parent="."]
 
 [node name="SaveDialog" type="AcceptDialog" parent="Dialogs"]
-visible = true
 margin_left = 135.775
 margin_top = 84.0511
 margin_right = 340.775
 margin_bottom = 176.051
+window_title = "Save Level"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -173,7 +373,7 @@ margin_left = 5.0
 margin_top = 22.0
 margin_right = 477.0
 margin_bottom = 265.0
-window_title = "Open a File"
+window_title = "Open a Level File"
 mode = 0
 filters = PoolStringArray( "*.tres" )
 show_hidden_files = true
@@ -183,11 +383,11 @@ current_path = "res://Levels/LevelData.tres"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
+[connection signal="pressed" from="MarginContainer/Play" to="." method="SaveAndPlayLevel"]
 [connection signal="pressed" from="Controls/VBoxContainer/NewButton" to="." method="NewBlankLevel"]
-[connection signal="pressed" from="Controls/VBoxContainer/SaveButton" to="." method="ShowSaveDialog"]
-[connection signal="pressed" from="Controls/VBoxContainer/LoadButton" to="." method="ShowLoadDialog"]
 [connection signal="pressed" from="Controls/VBoxContainer/RandomizeButton" to="." method="NewRandomLevel"]
+[connection signal="pressed" from="Controls/VBoxContainer/LoadButton" to="." method="ShowLoadDialog"]
+[connection signal="pressed" from="Controls/VBoxContainer/SaveButton" to="." method="ShowSaveDialog"]
 [connection signal="confirmed" from="Dialogs/SaveDialog" to="." method="SaveCurrentLevel"]
 [connection signal="text_changed" from="Dialogs/SaveDialog/VBoxContainer/LineEdit" to="." method="TextChanged"]
 [connection signal="file_selected" from="Dialogs/LoadDialog" to="." method="LoadSelectedFile"]
