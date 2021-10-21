@@ -59,4 +59,3 @@ _________________________
     * Add boxes for score to win
                     max hops
                     hops to add
-    * Add a way to select player start position

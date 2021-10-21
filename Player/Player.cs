@@ -99,12 +99,6 @@ namespace Hopper
             return movementDirection;
         }
 
-        public bool CheckLeft(Vector2 GridPosition)
-        {
-            if (GridPosition.x < Grid.GridWidth - 1) return true;
-            return false;
-        }
-
         public void UpdateHopsRemaining(int addedHops)
         {
             HopsRemaining += addedHops;
