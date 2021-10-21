@@ -211,7 +211,7 @@ namespace Hopper
                 {
                     //GD.Print(ev.AsText());
                     //GD.Print($"Clicked Tile {GridPosition}");
-                    if (Type == Type.Jump) //Max enum value
+                    if (Type == Type.Jump) //Max enum value //TODO: this needs writing for new tile loading
                         Type = Type.Lily; //Min enum value
                     else
                         Type += 1;
