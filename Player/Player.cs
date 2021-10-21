@@ -69,10 +69,12 @@ namespace Hopper
             EmitSignal(nameof(HopCompleted), HopsRemaining);
         }
 
-        private void CheckMovement(Vector2 MovementDirection)
+        private void CheckMovement(Vector2 Movement)
         {
-            if (Grid.Tile(GridPosition + MovementDirection).Type != Type.Rock)
+            Vector2 NewPosition = LimitToBounds(GridPosition + ExtraJump(Movement));
+            if (Grid.Tile(NewPosition).Type != Type.Rock)
             {
+                GridPosition = NewPosition;
                 UpdateHopsRemaining(-1);
                 UpdateScore();
                 CheckGoal();   
@@ -80,13 +82,27 @@ namespace Hopper
             }
         }
 
-        private void ExtraJump(Vector2 movementDirection)
+        private Vector2 LimitToBounds(Vector2 Position)
+        {
+            return new Vector2(
+                Mathf.Clamp(Position.x, 0, Grid.GridWidth - 1),
+                Mathf.Clamp(Position.y, 0, Grid.GridHeight - 1)
+            );
+        }
+
+        private Vector2 ExtraJump(Vector2 movementDirection)
         {
             if (CurrentTile.Type == Type.Jump)
             {
-                movementDirection += (movementDirection * CurrentTile.JumpLength);
+                movementDirection = movementDirection * CurrentTile.JumpLength;
             };
-            GridPosition += movementDirection;
+            return movementDirection;
+        }
+
+        public bool CheckLeft(Vector2 GridPosition)
+        {
+            if (GridPosition.x < Grid.GridWidth - 1) return true;
+            return false;
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -130,22 +146,14 @@ namespace Hopper
         {
             if (World != null && !World.GameOver)
             {
-                if (@event.IsActionPressed("ui_left") && GridPosition.x > 0)
-                {
-                    CheckMovement(new Vector2(-1, 0)); //TODO: work out how to pass the grid position condition into the function?
-                }
-                else if (@event.IsActionPressed("ui_right") && GridPosition.x < Grid.GridWidth - 1)
-                {
+                if (@event.IsActionPressed("ui_left")) 
+                    CheckMovement(new Vector2(-1, 0));
+                else if (@event.IsActionPressed("ui_right")) 
                     CheckMovement(new Vector2(1, 0));
-                }
-                else if (@event.IsActionPressed("ui_up") && GridPosition.y > 0)
-                {
+                else if (@event.IsActionPressed("ui_up")) 
                     CheckMovement(new Vector2(0, -1));
-                }
-                else if (@event.IsActionPressed("ui_down") && GridPosition.y < Grid.GridHeight - 1)
-                {
+                else if (@event.IsActionPressed("ui_down"))
                     CheckMovement(new Vector2(0, 1));
-                }
             }
         }
     }
