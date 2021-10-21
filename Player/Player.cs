@@ -44,6 +44,8 @@ namespace Hopper
         public delegate void ScoreUpdated(int score);
         [Signal]
         public delegate void HopCompleted(int hopsRemaining);
+        [Signal]
+        public delegate void TileChanged(Type NewType);
 
         public override void _Ready()
         {
@@ -114,7 +116,7 @@ namespace Hopper
             Score += CurrentTile.PointValue;
             if (CurrentTile.Type == Type.Score) 
             {
-                CurrentTile.Type = Type.Lily;
+                EmitSignal(nameof(TileChanged), Type.Lily);
             }
             EmitSignal(nameof(ScoreUpdated), Score);
         }

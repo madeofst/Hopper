@@ -5,7 +5,8 @@ namespace Hopper
 {
     public class World : Node2D
     {
-        private LevelFactory levelFactory { get; set; } = new LevelFactory();
+        private ResourceRepository Resources { get; set; }
+        private LevelFactory levelFactory { get; set; }
         
         //References to existing nodes
         public Level CurrentLevel { get; set; }
@@ -37,6 +38,8 @@ namespace Hopper
 
         public override void _Ready()
         {
+            Resources = new ResourceRepository();
+            levelFactory = new LevelFactory(Resources);
             //CallDeferred("Init");
         }
 
@@ -56,6 +59,8 @@ namespace Hopper
             Player.Connect(nameof(Player.HopCompleted), HopCounter, "UpdateText");
             Player.Connect(nameof(Player.HopCompleted), HopCounterBar, "UpdateBar");
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, "UpdateText");
+            Player.Connect(nameof(Player.ScoreUpdated), this, "UpdateGoalState");
+            Player.Connect(nameof(Player.TileChanged), this, "UpdateTile");
 
             if (temp)
             {
@@ -96,7 +101,7 @@ namespace Hopper
         private void BuildLevel()
         {
             AddChild(CurrentLevel);
-            CurrentLevel.Build();
+            CurrentLevel.Build(Resources);
             Grid = CurrentLevel.Grid;
             MoveChild(Player, 4);
             Player.Init();
@@ -154,9 +159,18 @@ namespace Hopper
                 {
                     NewLevel(Levels[iLevel]);
                 }
-                //Player.CurrentLevel = CurrentLevel;
-                //Player.Grid = CurrentLevel.Grid;
             }
+        }
+
+        public void UpdateTile(Type NewType)
+        {
+            Tile NewTile = Resources.LoadByType(NewType).Instance() as Tile;
+            CurrentLevel.Grid.ReplaceTile(Player.GridPosition, NewTile);
+        }
+
+        public void UpdateGoalState(int currentScore)
+        {
+            CurrentLevel.UpdateGoalState(currentScore, Resources.GoalOnScene.Instance() as Tile);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Hopper
             Grid = GetNode<Grid>("Grid");
         }
         
-        public void Build()
+        public void Build(ResourceRepository resources)
         {
             LevelName = LevelData.Name;
             StartingHops = LevelData.StartingHops;
@@ -43,7 +43,7 @@ namespace Hopper
             PlayerStartPosition = LevelData.PlayerStartPosition;
             Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
             Grid.ClearExistingChildren();
-            Grid.PopulateGrid(LevelData);
+            Grid.PopulateGrid(resources, LevelData);
         }
 
         public void UpdateLevelData()
@@ -63,6 +63,14 @@ namespace Hopper
             LevelData.MaximumHops = MaximumHops;
             LevelData.ScoreRequired = ScoreRequired;
             LevelData.PlayerStartPosition = PlayerStartPosition;
+        }
+
+        public void UpdateGoalState(int currentScore, Tile newTile)
+        {
+            if (currentScore >= ScoreRequired && !Grid.GoalTile.Activated)
+            {
+                Grid.ReplaceTile(Grid.GoalTile.GridPosition, newTile);
+            }
         }
     }
 }

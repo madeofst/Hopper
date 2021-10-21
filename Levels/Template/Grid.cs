@@ -34,25 +34,18 @@ namespace Hopper
 
         public Tile[,] Tiles;
 
-        public Tile GoalTile;
-        public Tile PlayerTile;
-
-/*         private Level currentLevel;
-        public Level CurrentLevel 
+        public Tile GoalTile
         {
-            get { return currentLevel; }
-            set
+            get
             {
-                currentLevel = value;
-                int previousGridWidth = GridWidth;
-                DefineGrid(32, GridWidth, GridHeight); //FIXME: check this isn't an error, used to take from CurrentLevel
-                if (Player != null)
+                foreach (Tile t in Tiles)
                 {
-                    SetupGrid();
-                    if (GridWidth != previousGridWidth) Player.GridPosition = new Vector2(0, 0);
+                    if (t.Type == Type.Goal) return t;
                 }
+                return null;
             }
-        } */
+        }
+        //public Tile PlayerTile;
 
         [Signal]
         public delegate void NextLevel();
@@ -61,11 +54,6 @@ namespace Hopper
         {
             Name = "Grid";
         }
-
-/*         public Grid(Level level) : this()
-        {
-            CurrentLevel = level;
-        } */
 
         public Tile Tile(Vector2 position)
         {
@@ -102,25 +90,27 @@ namespace Hopper
             }
         }
 
-        internal void PopulateGrid(LevelData levelData = null)
+        internal void PopulateGrid(ResourceRepository resources, LevelData levelData = null)
         {
             int i = 0;
             for (int y = 0; y < GridHeight; y++)
             {
                 for (int x = 0; x < GridWidth; x++)
                 {
-                Tiles[x, y] = new Tile($"Tile{x}-{y}");
-                AddChild(Tiles[x, y]);
-                if (levelData != null)
-                {
-                    Tiles[x, y].BuildTile(levelData.TileType[i], TileSize, new Vector2(x, y), levelData.TilePointValue[i]);
-                }
-                else
-                {
-                    Tiles[x, y].BuildTile(Type.Lily, TileSize, new Vector2(x, y));
-                }
-                Tiles[x, y].Owner = this;
-                i++;
+                    if (levelData != null)
+                    {
+                        Tiles[x, y] = resources.LoadByType(levelData.TileType[i]).Instance() as Tile;
+                    }
+                    else
+                    {
+                        Tiles[x, y] = resources.LilyScene.Instance() as Tile;
+                    }
+                    Tiles[x, y].PointValue = levelData.TilePointValue[i];
+                    Tiles[x, y].GridPosition = new Vector2(x, y);
+                    Tiles[x, y].Name = $"Tile{x}-{y}";
+                    AddChild(Tiles[x, y]);
+                    Tiles[x, y].Owner = this;
+                    i++;
                 }
             }
         }
@@ -154,6 +144,15 @@ namespace Hopper
         public void OnMouseExit()
         {
             if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
+        }
+
+        internal void ReplaceTile(Vector2 gridPosition, Tile newTile)
+        {
+            newTile.GridPosition = gridPosition;
+            newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
+            Tile(gridPosition).QueueFree();
+            Tiles[(int)gridPosition.x, (int)gridPosition.y] = newTile;
+            AddChild(newTile);
         }
     }
 }

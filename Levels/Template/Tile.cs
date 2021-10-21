@@ -5,9 +5,9 @@ namespace Hopper
 {
     public class Tile : Area2D
     {
-        private Type _type;
-        public Type Type
-        {
+        [Export]
+        public Type Type { get; set; }
+        /* {
             get { return _type; }
             set{
                 _type = value;
@@ -26,7 +26,14 @@ namespace Hopper
                 {
                     if (LilySprite != null) 
                     {
-                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad2_32x32.png");
+                        if (Activated)
+                        {
+                            LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad_Goal_On.png");
+                        }
+                        else
+                        {
+                            LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad_Goal_Off.png");
+                        }
                         WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
                         LilySprite.Rotation = 0;
                     }
@@ -67,8 +74,9 @@ namespace Hopper
                     JumpLength = 2;
                 }
             }
-        }
-        
+        } */
+
+        [Export]
         private Vector2 _gridPosition;
         public Vector2 GridPosition
         { 
@@ -76,18 +84,20 @@ namespace Hopper
             set
             {
                 _gridPosition = value;
-                if (LilySprite != null) LilySprite.Position = (_gridPosition * Size) + (Size/2);
+                Position = (_gridPosition * Size);
             }
         }
 
-        private int _PointValue;
-        public int PointValue
-        {
+        
+        //private int _PointValue;
+        [Export]
+        public int PointValue { get; set; }
+/*         {
             get { return _PointValue; }
             set
             {
                 _PointValue = value;
-                if (_type == Type.Score)
+                 if (Type == Type.Score)
                 {
                     if (Label != null) Label.BbcodeText = $"[center]{_PointValue.ToString()}[/center]";
                 }
@@ -96,10 +106,15 @@ namespace Hopper
                     if (Label != null) Label.Text = "";
                 }
             }
-        }
+        } 
+        */
 
-        public bool Editable = false;
-        public Vector2 Size;
+        [Export]
+        public bool Editable { get; set; } = false;
+        [Export]
+        public bool Activated { get; set; } = false;
+        public Vector2 Size = new Vector2(32, 32);
+        [Export]
         public int JumpLength;
 
         //Children in the tree
@@ -110,7 +125,7 @@ namespace Hopper
 
         public Tile(){}   
         
-        public Tile(Type type)
+/*         public Tile(Type type)
         {
             Type = type;
         }
@@ -127,18 +142,34 @@ namespace Hopper
             GridPosition = position;
             PointValue = pointValue;
         }
-
-        public Tile(string Name)
+ */
+/*         public Tile(string Name)
         {
             this.Name = Name;
-        }
+        } */
 
         public override void _Ready()
         {
+            CollisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+            LilySprite = GetNode<Sprite>("LilySprite");
+            WaterSprite = GetNode<Sprite>("WaterSprite");
+            Label = GetNode<Counter>("Label");
+            
+            if (Type == Type.Score) Label.BbcodeText = $"[center]{PointValue.ToString()}[/center]";
+
+            CallDeferred("Init");
             Connect("mouse_entered", this, "OnMouseEnter");
+            
+            AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
+            LilySpriteAnimator.Play("Lights");
         }
 
-        public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition, int score = 0)
+        public void Init()
+        {
+            
+        }
+
+        /* public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition, int score = 0)
         {
             Size = size;
             Label = new Counter(Size);
@@ -168,7 +199,7 @@ namespace Hopper
             CollisionShape.Shape = ResourceLoader.Load<RectangleShape2D>("res://Levels/Template/TileRectangle.tres");
             CollisionShape.Position = LilySprite.Position;
             CollisionShape.Owner = this;
-        }
+        } */
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
         {

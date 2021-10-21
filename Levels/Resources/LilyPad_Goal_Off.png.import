@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Rock1_32x32.png-4a6ce8797de93ab010770bf56da8e7b5.stex"
+path="res://.import/LilyPad_Goal_Off.png-189cb2fb5ac30940d0e10dd9e989ec65.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/Resources/Rock1_32x32.png"
-dest_files=[ "res://.import/Rock1_32x32.png-4a6ce8797de93ab010770bf56da8e7b5.stex" ]
+source_file="res://Levels/Resources/LilyPad_Goal_Off.png"
+dest_files=[ "res://.import/LilyPad_Goal_Off.png-189cb2fb5ac30940d0e10dd9e989ec65.stex" ]
 
 [params]
 

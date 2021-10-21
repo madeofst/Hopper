@@ -5,7 +5,8 @@ namespace Hopper
 {
     public class LevelEditor : Node2D
     {
-        private LevelFactory levelFactory { get; set; } = new LevelFactory();
+        private ResourceRepository Resources { get; set; }
+        private LevelFactory levelFactory { get; set; }
         private Level CurrentLevel { get; set; }
         private World TestWorld { get; set; }
 
@@ -18,6 +19,8 @@ namespace Hopper
 
         public override void _Ready()
         {
+            Resources = new ResourceRepository();
+            levelFactory = new LevelFactory(Resources);
             CallDeferred("Init");
         }
 
@@ -36,7 +39,7 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.New();
             AddChild(CurrentLevel);
-            CurrentLevel.Build(); //TODO: may be able to come out and run automatically
+            CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();
             CurrentLevel.Editable = true;
         }
@@ -85,7 +88,7 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Load(path);
             AddChild(CurrentLevel);
-            CurrentLevel.Build(); //TODO: may be able to come out and run automatically
+            CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();
             CurrentLevel.Editable = true;
         }
@@ -115,7 +118,7 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate();
             AddChild(CurrentLevel);
-            CurrentLevel.Build(); //TODO: may be able to come out and run automatically
+            CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();
             CurrentLevel.Editable = true;
         }

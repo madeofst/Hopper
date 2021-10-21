@@ -22,9 +22,11 @@ namespace Hopper
         const int defaultScoreTileCount = 3;
         const int defaultGoalCount = 1;
         private RandomNumberGenerator rand = new RandomNumberGenerator();
+        ResourceRepository Resources;
 
-        public LevelFactory()
+        public LevelFactory(ResourceRepository resources)
         {
+            Resources = resources;
             defaultPlayerStartPosition = new Vector2(defaultX, defaultY);
             rand.Randomize();
         }
@@ -191,7 +193,10 @@ namespace Hopper
 
             //GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
 
-            return new Tile(Type.Goal, absoluteGridPosition);
+            var tile = Resources.GoalOffScene.Instance() as Tile;
+            tile.GridPosition = absoluteGridPosition;
+            return tile;
+            //return new Tile(Type.Goal, absoluteGridPosition);
         }
 
         private Tile CalculateJumpTilePositions(RandomNumberGenerator rand,
@@ -238,7 +243,12 @@ namespace Hopper
                         && (limitCounter < 100));
 
                 GD.Print($"Limit: {limitCounter}"); //TODO: ERROR CHECK HERE
-                return new Tile(Type.Jump, absoluteGridPosition, 2);
+
+                Tile tile = Resources.JumpScene.Instance() as Tile;
+                tile.GridPosition = absoluteGridPosition;
+                tile.JumpLength = 2;
+                return tile;
+                //return new Tile(Type.Jump, absoluteGridPosition, 2);
             } 
             return null;
         }
@@ -268,7 +278,12 @@ namespace Hopper
                     ScoreGridPosition = PlayerToScore + playerPosition;
                     ScoreToGoal = goalTile.GridPosition - ScoreGridPosition;;
                     totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
-                    scoreTile = new Tile(Type.Score, ScoreGridPosition,(defaultScore * (int)totalSteps));
+                    
+                    scoreTile = Resources.ScoreScene.Instance() as Tile;
+                    scoreTile.GridPosition = ScoreGridPosition;
+                    scoreTile.PointValue = defaultScore * (int)totalSteps;
+
+                    //scoreTile = new Tile(Type.Score, ScoreGridPosition,(defaultScore * (int)totalSteps));
                 } 
                 while (scoreTile.GridPosition == playerPosition ||
                        scoreTile.GridPosition == goalTile.GridPosition ||
