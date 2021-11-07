@@ -67,8 +67,8 @@ namespace Hopper
             GridPosition = CurrentLevel.PlayerStartPosition;
             HopsRemaining = CurrentLevel.StartingHops;
 
-            EmitSignal(nameof(ScoreUpdated), Score);
-            EmitSignal(nameof(HopCompleted), HopsRemaining);
+            //EmitSignal(nameof(ScoreUpdated), Score);
+            //EmitSignal(nameof(HopCompleted), HopsRemaining);
         }
 
         private void CheckMovement(Vector2 Movement)
@@ -78,7 +78,7 @@ namespace Hopper
             {
                 GridPosition = NewPosition;
                 UpdateHopsRemaining(-1);
-                UpdateScore();
+                UpdateScore(); //8 orphan nodes created each time
                 CheckGoal();   
                 CheckHopsRemaining();
             }
@@ -113,17 +113,20 @@ namespace Hopper
 
         public void UpdateScore()
         {
-            Score += CurrentTile.PointValue;
-            if (CurrentTile.Type == Type.Score) 
+            if (CurrentTile.PointValue > 0)
             {
-                EmitSignal(nameof(TileChanged), Type.Lily);
+                Score += CurrentTile.PointValue;
+                if (CurrentTile.Type == Type.Score) 
+                {
+                    EmitSignal(nameof(TileChanged), Type.Lily);
+                }
+                EmitSignal(nameof(ScoreUpdated), Score);
             }
-            EmitSignal(nameof(ScoreUpdated), Score);
         }
 
         private void CheckGoal()
         {
-            if (CurrentTile.Type == Type.Goal)
+            if (CurrentTile.Type == Type.Goal && CurrentTile.Activated)
             {
                 EmitSignal(nameof(GoalReached));
                 UpdateHopsRemaining(CurrentLevel.StartingHops); //FIXME: Hops added should come from next level

@@ -150,7 +150,7 @@ namespace Hopper
         {
             newTile.GridPosition = gridPosition;
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
-            Tile(gridPosition).QueueFree();
+            Tiles[(int)gridPosition.x, (int)gridPosition.y].QueueFree();
             Tiles[(int)gridPosition.x, (int)gridPosition.y] = newTile;
             AddChild(newTile);
         }

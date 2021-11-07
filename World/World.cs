@@ -85,9 +85,15 @@ namespace Hopper
         private void NewLevel(Vector2 playerPosition)
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
+            //GD.Print("Before Level Generated");
+            //PrintStrayNodes();
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
+            //GD.Print("After Level Generated");
+            //PrintStrayNodes();
             BuildLevel();
+            //GD.Print("After Level Built");
+            //PrintStrayNodes();
         }
 
         private void NewLevel(string levelName)
@@ -118,20 +124,23 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            UpdateTimeRemaining();
-
-            if (Timer != null)
+            if (CurrentLevel != null)
             {
-                if (Timer.Finished()) GameOver = true;
-            }
+                UpdateTimeRemaining();
 
-            if (GameOver)
-            {
-                GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
-                GetTree().Root.AddChild(GameOver);
-                GameOver.Score = Player.Score;
-                GameOver.ScoreLabel.Text = GameOver.Score.ToString();
-                QueueFree();
+                if (Timer != null)
+                {
+                    if (Timer.Finished()) GameOver = true;
+                }
+
+                if (GameOver)
+                {
+                    GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
+                    GetTree().Root.AddChild(GameOver);
+                    GameOver.Score = Player.Score;
+                    GameOver.ScoreLabel.Text = GameOver.Score.ToString();
+                    QueueFree();
+                }
             }
         }
 

@@ -128,6 +128,7 @@ namespace Hopper
                                                       startingHops, 
                                                       2);
             levelData.UpdateTile(goalTile);
+            goalTile.QueueFree();           
 
             Tile jumpTile = CalculateJumpTilePositions(rand, 
                                                        levelData.PlayerStartPosition,
@@ -137,6 +138,7 @@ namespace Hopper
                                                        1,
                                                        goalTile);
             levelData.UpdateTile(jumpTile);
+            jumpTile.QueueFree();
 
             Tile[] scoreTiles = CalculateScoreTilePositions(rand, 
                                                             levelData.PlayerStartPosition,
@@ -149,6 +151,7 @@ namespace Hopper
             foreach (Tile t in scoreTiles)
             {
                 levelData.UpdateTile(t);
+                t.QueueFree();
             }
 
             return GetLevelScene(levelData);
@@ -269,9 +272,10 @@ namespace Hopper
             {
                 float totalSteps;
                 Vector2 PlayerToScore;
-                Tile scoreTile;
+                Tile scoreTile = null;
                 do
                 {
+                    if (scoreTile != null) scoreTile.QueueFree();
                     int possibleSteps = rand.RandiRange(-maximumHops, maximumHops);
                     int x = rand.RandiRange(-possibleSteps, possibleSteps);
                     PlayerToScore = new Vector2(x, possibleSteps - x);
@@ -301,6 +305,7 @@ namespace Hopper
                     {
                         if (t.GridPosition == scoreTile.GridPosition)
                         {
+                            scoreTile.QueueFree();
                             i--;
                             break;
                         }

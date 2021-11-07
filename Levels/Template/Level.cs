@@ -71,6 +71,10 @@ namespace Hopper
             {
                 Grid.ReplaceTile(Grid.GoalTile.GridPosition, newTile);
             }
+            else
+            {
+                newTile.QueueFree();
+            }
         }
     }
 }
