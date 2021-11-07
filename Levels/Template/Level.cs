@@ -41,9 +41,10 @@ namespace Hopper
             MaximumHops = LevelData.MaximumHops;
             ScoreRequired = LevelData.ScoreRequired;
             PlayerStartPosition = LevelData.PlayerStartPosition;
+            Grid.Resources = resources;
             Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
             Grid.ClearExistingChildren();
-            Grid.PopulateGrid(resources, LevelData);
+            Grid.PopulateGrid(LevelData);
         }
 
         public void UpdateLevelData()

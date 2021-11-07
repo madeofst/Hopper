@@ -33,7 +33,7 @@ namespace Hopper
         { 
             get
             {
-                return Grid.Tile(GridPosition);   
+                return Grid.GetTile(GridPosition);   
             } 
         }
 
@@ -67,14 +67,14 @@ namespace Hopper
             GridPosition = CurrentLevel.PlayerStartPosition;
             HopsRemaining = CurrentLevel.StartingHops;
 
-            //EmitSignal(nameof(ScoreUpdated), Score);
-            //EmitSignal(nameof(HopCompleted), HopsRemaining);
+            EmitSignal(nameof(ScoreUpdated), Score);
+            EmitSignal(nameof(HopCompleted), HopsRemaining);
         }
 
         private void CheckMovement(Vector2 Movement)
         {
             Vector2 NewPosition = LimitToBounds(GridPosition + ExtraJump(Movement));
-            if (Grid.Tile(NewPosition).Type != Type.Rock)
+            if (Grid.GetTile(NewPosition).Type != Type.Rock)
             {
                 GridPosition = NewPosition;
                 UpdateHopsRemaining(-1);

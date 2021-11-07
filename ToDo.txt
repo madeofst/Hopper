@@ -5,6 +5,7 @@ _________________________
 
     // Fixes
     * Improve score assignment
+    * Level score needs to be separate from total score
 
     // Definite additions
     * Timer reduces with each goal reached?
@@ -48,7 +49,6 @@ _________________________
 // For more designable puzzle version
 _________________________
 
-    * make goals unlockable with a minimum score - this could allow for actual puzzle design.
     * Enemies to dodge?
     * missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
 

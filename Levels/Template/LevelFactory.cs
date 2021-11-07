@@ -13,7 +13,7 @@ namespace Hopper
         const int defaultTileSize = 32;
         const int defaultStartingHops = 6;
         const int defaultMaximumHops = 10;
-        const int defaultScoreRequired = 0;
+        const int defaultScoreRequired = 100;
         const int defaultScore = 100;
         const int defaultX = 0;
         const int defaultY = 0;
@@ -117,7 +117,7 @@ namespace Hopper
         {
             LevelData levelData = NewBlankLevelData(width, height, tileSize);
             levelData.StartingHops = startingHops;
-            levelData.MaximumHops = defaultMaximumHops;
+            levelData.MaximumHops = maximumHops;
             levelData.ScoreRequired = scoreRequired;
             levelData.PlayerStartPosition = new Vector2(playerPositionX, playerPositionY);
 
