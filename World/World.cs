@@ -27,8 +27,8 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-            //"RedRing",
-            //"BlueLine"
+            "ArtAndSoul",
+            "WaterTest"
         };
         public bool Temp { get; set; } = false;
 
@@ -40,7 +40,6 @@ namespace Hopper
         {
             Resources = new ResourceRepository();
             levelFactory = new LevelFactory(Resources);
-            //CallDeferred("Init");
         }
 
         public void Init(bool temp = false, string levelName = "")

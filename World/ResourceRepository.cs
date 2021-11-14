@@ -10,6 +10,7 @@ namespace Hopper
         public PackedScene GoalOnScene { get; private set; }
         public PackedScene ScoreScene { get; private set; }
         public PackedScene RockScene { get; private set; }
+        public PackedScene WaterScene { get; private set; }
         public PackedScene JumpScene { get; private set; }
 
         public ResourceRepository()
@@ -19,6 +20,7 @@ namespace Hopper
             GoalOnScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Goal_On.tscn");
             ScoreScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Score.tscn");
             RockScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Rock.tscn");
+            WaterScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Water.tscn");
             JumpScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Jump_Ready.tscn");
         }
 
@@ -34,6 +36,8 @@ namespace Hopper
                     return ScoreScene;
                 case Type.Rock:
                     return RockScene;
+                case Type.Water:
+                    return WaterScene;
                 case Type.Jump:
                     return JumpScene;
             }

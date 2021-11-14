@@ -74,23 +74,20 @@ namespace Hopper
 
         private void CheckMovement(Vector2 Movement)
         {
-            Vector2 NewPosition = LimitToBounds(GridPosition + ExtraJump(Movement));
-            if (Grid.GetTile(NewPosition).Type != Type.Rock)
+            Tile newTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + ExtraJump(Movement)));
+            while (newTile.Type == Type.Water)
             {
-                GridPosition = NewPosition;
+                newTile = Grid.GetTile(Grid.DetermineWaterExit(newTile, Movement));
+            }
+
+            if (newTile.GridPosition != GridPosition && newTile.Type != Type.Rock)
+            {
+                GridPosition = newTile.GridPosition;
                 UpdateHopsRemaining(-1);
-                UpdateScore(); //8 orphan nodes created each time
+                UpdateScore();
                 CheckGoal();   
                 CheckHopsRemaining();
             }
-        }
-
-        private Vector2 LimitToBounds(Vector2 Position)
-        {
-            return new Vector2(
-                Mathf.Clamp(Position.x, 0, Grid.GridWidth - 1),
-                Mathf.Clamp(Position.y, 0, Grid.GridHeight - 1)
-            );
         }
 
         private Vector2 ExtraJump(Vector2 movementDirection)

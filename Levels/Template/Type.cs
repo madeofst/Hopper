@@ -6,6 +6,7 @@ namespace Hopper
         Goal,
         Score,
         Rock,
+        Water,
         Jump
     }
 }

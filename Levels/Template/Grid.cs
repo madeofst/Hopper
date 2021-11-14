@@ -118,6 +118,57 @@ namespace Hopper
             }
         }
 
+        public Vector2 LimitToBounds(Vector2 Position)
+        {
+            return new Vector2(
+                Mathf.Clamp(Position.x, 0, GridWidth - 1),
+                Mathf.Clamp(Position.y, 0, GridHeight - 1)
+            );
+        }
+
+        public Vector2 DetermineWaterExit(Tile newTile, Vector2 movement)
+        {
+            Vector2 CheckPosition = newTile.GridPosition + movement;
+            while (WithinGrid(CheckPosition))
+            {
+                if (GetTile(CheckPosition).Type == Type.Rock) break;
+                if (GetTile(CheckPosition).Type == Type.Water)
+                {
+                    if (ViableLandingPoint(CheckPosition + movement)) return CheckPosition + movement;
+                }
+                CheckPosition += movement;
+            }
+            CheckPosition = newTile.GridPosition;
+            if (ViableLandingPoint(CheckPosition + movement))
+            {
+                return newTile.GridPosition + movement;
+            } 
+            else
+            {
+                return newTile.GridPosition - movement;
+            }
+        }
+
+        private bool ViableLandingPoint(Vector2 position)
+        {
+            if (!WithinGrid(position)) return false;
+            if (GetTile(position).Type == Type.Water) return false;
+            if (GetTile(position).Type == Type.Rock) return false;
+            return true;
+        }
+
+        public bool WithinGrid(Vector2 position)
+        {
+            if (position.x < GridWidth && 
+                position.y < GridHeight &&
+                position.x >= 0 &&
+                position.y >= 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void IncrementGoalCount()
         {
             EmitSignal(nameof(NextLevel));

@@ -97,11 +97,9 @@ namespace Hopper
 
         public Error Save(Level level)
         {
-            if (level.LevelName == "") level.LevelName = "DefaultLevelName";
-            LevelData levelData = ResourceLoader.Load<LevelData>("res://Levels/Template/LevelData.tres");
+            if (level.LevelName == null) level.LevelName = "DefaultLevelName";
             level.UpdateLevelData();
-            levelData = level.LevelData;
-            return ResourceSaver.Save($"res://Levels/{level.LevelName}_Data.tres", levelData);
+            return ResourceSaver.Save($"res://Levels/{level.LevelName}_Data.tres", level.LevelData);
         }
         
         public Level Generate(int width = defaultWidth, 

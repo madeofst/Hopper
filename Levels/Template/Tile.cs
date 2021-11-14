@@ -233,7 +233,6 @@ namespace Hopper
                     //GD.Print(ev.AsText());
                 }
             }
-
         }
 
         public void OnMouseEnter()

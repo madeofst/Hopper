@@ -4,7 +4,7 @@
 [ext_resource path="res://Levels/Resources/LilyPad_Jump_Ready.png" type="Texture" id=2]
 
 [node name="Tile" instance=ExtResource( 1 )]
-Type = 4
+Type = 5
 JumpLength = 2
 
 [node name="LilySprite" parent="." index="2"]

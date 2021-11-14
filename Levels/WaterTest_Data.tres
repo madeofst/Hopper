@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+ScoreRequired = 100
+StartingHops = 20
+MaximumHops = 20
+Width = 7
+Name = "WaterTest"
+Height = 7
+PlayerStartPosition = Vector2( 0, 0 )
+TileSize = 32
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+TileType = PoolIntArray( 0, 0, 4, 0, 0, 2, 0, 0, 0, 4, 0, 4, 2, 1, 0, 0, 4, 3, 0, 0, 0, 0, 0, 4, 0, 4, 3, 0, 0, 0, 4, 0, 3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )

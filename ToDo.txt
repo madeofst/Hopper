@@ -5,10 +5,9 @@ _________________________
 
     // Fixes
     * Improve score assignment
-    * Level score needs to be separate from total score
     * Level editor - saving after a change
     * Check on how autosave works
-    * Don't do the high score thing at the end
+    * Don't do the high score thing at the end in editor mode
 
     // Definite additions
     * Timer reduces with each goal reached?
