@@ -282,36 +282,32 @@ namespace Hopper
                     ScoreGridPosition = PlayerToScore + playerPosition;
                     ScoreToGoal = goalTile.GridPosition - ScoreGridPosition;;
                     totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
-                    
-                    scoreTile = Resources.ScoreScene.Instance() as Tile;
-                    scoreTile.GridPosition = ScoreGridPosition;
-                    scoreTile.PointValue = defaultScore * (int)totalSteps;
-
-                    //scoreTile = new Tile(Type.Score, ScoreGridPosition,(defaultScore * (int)totalSteps));
                 } 
-                while (scoreTile.GridPosition == playerPosition ||
-                       scoreTile.GridPosition == goalTile.GridPosition ||
-                       scoreTile.GridPosition == jumpTile.GridPosition ||
+                while (ScoreGridPosition == playerPosition ||
+                       ScoreGridPosition == goalTile.GridPosition ||
+                       ScoreGridPosition == jumpTile.GridPosition ||
                        totalSteps >= maximumHops || 
                        totalSteps <= 0 ||
-                       scoreTile.GridPosition.x < 0 || 
-                       scoreTile.GridPosition.x >= width ||
-                       scoreTile.GridPosition.y < 0 || 
-                       scoreTile.GridPosition.y >= height);
+                       ScoreGridPosition.x < 0 || 
+                       ScoreGridPosition.x >= width ||
+                       ScoreGridPosition.y < 0 || 
+                       ScoreGridPosition.y >= height);
                 
                 foreach (Tile t in tiles)
                 {
                     if (t != null)
                     {
-                        if (t.GridPosition == scoreTile.GridPosition)
+                        if (t.GridPosition == ScoreGridPosition)
                         {
-                            scoreTile.QueueFree();
                             i--;
                             break;
                         }
                     }
                     else
                     {
+                        scoreTile = Resources.ScoreScene.Instance() as Tile;
+                        scoreTile.GridPosition = ScoreGridPosition;
+                        scoreTile.PointValue = defaultScore * (int)totalSteps;
                         tiles[i] = scoreTile;
                         break;
                     }
