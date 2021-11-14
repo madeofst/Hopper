@@ -7,75 +7,6 @@ namespace Hopper
     {
         [Export]
         public Type Type { get; set; }
-        /* {
-            get { return _type; }
-            set{
-                _type = value;
-                if (_type == Type.Lily)
-                {
-                    if (LilySprite != null) 
-                    {
-                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
-                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
-                        LilySprite.Rotation = 0;
-                    }
-                    PointValue = 0;
-                    JumpLength = 0;
-                }
-                else if (_type == Type.Goal)
-                {
-                    if (LilySprite != null) 
-                    {
-                        if (Activated)
-                        {
-                            LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad_Goal_On.png");
-                        }
-                        else
-                        {
-                            LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad_Goal_Off.png");
-                        }
-                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
-                        LilySprite.Rotation = 0;
-                    }
-                    PointValue = 50;
-                    JumpLength = 0;
-                }
-                else if (_type == Type.Score)
-                {
-                    if (LilySprite != null) 
-                    {
-                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad1_32x32.png");
-                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
-                        LilySprite.Rotation = 0;
-                    }
-                    PointValue = 100;
-                    JumpLength = 0;
-                }
-                else if (_type == Type.Rock)
-                {
-                    if (LilySprite != null) 
-                    {
-                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/Rock1_32x32.png");
-                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water2_32x32.png");
-                        LilySprite.Rotation = 0;
-                    }
-                    PointValue = 0;
-                    JumpLength = 0;
-                }
-                else if (_type == Type.Jump)
-                {
-                    if (LilySprite != null) 
-                    {
-                        LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/LilyPad3_32x32.png");
-                        WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
-                        LilySprite.Rotation = 0;
-                    }
-                    PointValue = 0;
-                    JumpLength = 2;
-                }
-            }
-        } */
-
         [Export]
         private Vector2 _gridPosition;
         public Vector2 GridPosition
@@ -87,28 +18,8 @@ namespace Hopper
                 Position = (_gridPosition * Size);
             }
         }
-
-        
-        //private int _PointValue;
         [Export]
         public int PointValue { get; set; }
-/*         {
-            get { return _PointValue; }
-            set
-            {
-                _PointValue = value;
-                 if (Type == Type.Score)
-                {
-                    if (Label != null) Label.BbcodeText = $"[center]{_PointValue.ToString()}[/center]";
-                }
-                else
-                {
-                    if (Label != null) Label.Text = "";
-                }
-            }
-        } 
-        */
-
         [Export]
         public bool Editable { get; set; } = false;
         [Export]

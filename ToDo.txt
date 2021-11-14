@@ -50,7 +50,6 @@ _________________________
 _________________________
 
     * Enemies to dodge?
-    * missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
 
 
 // Level Editor

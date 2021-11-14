@@ -27,6 +27,7 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
+            "StartingOut",
             "ArtAndSoul",
             "WaterTest"
         };
@@ -71,8 +72,6 @@ namespace Hopper
                 if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
                 {
                     NewLevel(Player.GridPosition);
-                    Timer = new milliTimer();
-                    Timer.Start(100);
                 }
                 else
                 {
@@ -84,15 +83,14 @@ namespace Hopper
         private void NewLevel(Vector2 playerPosition)
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
-            //GD.Print("Before Level Generated");
-            //PrintStrayNodes();
+            if (Timer is null)
+            {
+                Timer = new milliTimer();
+                Timer.Start(10);
+            }
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
-            //GD.Print("After Level Generated");
-            //PrintStrayNodes();
             BuildLevel();
-            //GD.Print("After Level Built");
-            //PrintStrayNodes();
         }
 
         private void NewLevel(string levelName)
@@ -100,7 +98,6 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Load(levelName, true);
             BuildLevel();
-
         }
 
         private void BuildLevel()

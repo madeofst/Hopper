@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+StartingHops = 4
+MaximumHops = 4
+ScoreRequired = 100
+Width = 7
+PlayerStartPosition = Vector2( 1, 3 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+TileSize = 32
+Name = "StartingOut"
+TileType = PoolIntArray( 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 4, 0, 0, 2, 0, 1, 4, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 )
+Height = 7

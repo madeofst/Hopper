@@ -67,15 +67,15 @@ namespace Hopper
             LevelData.PlayerStartPosition = PlayerStartPosition;
         }
 
-        public void UpdateGoalState(int currentScore, Tile newTile)
+        public void UpdateGoalState(int currentScore, Tile activatedGoalTile)
         {
             if (currentScore >= ScoreRequired && !Grid.GoalTile.Activated)
             {
-                Grid.ReplaceTile(Grid.GoalTile.GridPosition, newTile);
+                Grid.ReplaceTile(Grid.GoalTile.GridPosition, activatedGoalTile);
             }
             else
             {
-                newTile.QueueFree();
+                activatedGoalTile.QueueFree();
             }
         }
     }

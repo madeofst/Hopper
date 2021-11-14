@@ -90,7 +90,7 @@ __meta__ = {
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 113.0
-margin_bottom = 228.0
+margin_bottom = 248.0
 size_flags_vertical = 0
 
 [node name="NewButton" type="Button" parent="Controls/VBoxContainer"]
@@ -332,6 +332,25 @@ text = "100"
 max_length = 6
 placeholder_alpha = 1.0
 
+[node name="Home" type="Button" parent="Controls/VBoxContainer"]
+margin_top = 222.0
+margin_right = 40.0
+margin_bottom = 238.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 6 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Home"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Dialogs" type="Node2D" parent="."]
 
 [node name="SaveDialog" type="AcceptDialog" parent="Dialogs"]
@@ -390,6 +409,7 @@ __meta__ = {
 [connection signal="pressed" from="Controls/VBoxContainer/RandomizeButton" to="." method="NewRandomLevel"]
 [connection signal="pressed" from="Controls/VBoxContainer/LoadButton" to="." method="ShowLoadDialog"]
 [connection signal="pressed" from="Controls/VBoxContainer/SaveButton" to="." method="ShowSaveDialog"]
+[connection signal="pressed" from="Controls/VBoxContainer/Home" to="." method="GoHome"]
 [connection signal="confirmed" from="Dialogs/SaveDialog" to="." method="SaveCurrentLevel"]
 [connection signal="text_changed" from="Dialogs/SaveDialog/VBoxContainer/LineEdit" to="." method="TextChanged"]
 [connection signal="file_selected" from="Dialogs/LoadDialog" to="." method="LoadSelectedFile"]

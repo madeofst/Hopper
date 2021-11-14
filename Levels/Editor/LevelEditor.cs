@@ -5,6 +5,8 @@ namespace Hopper
 {
     public class LevelEditor : Node2D
     {
+        private Menu Menu { get; set; }
+
         private ResourceRepository Resources { get; set; }
         private LevelFactory levelFactory { get; set; }
         private Level CurrentLevel { get; set; }
@@ -21,6 +23,7 @@ namespace Hopper
         {
             Resources = new ResourceRepository();
             levelFactory = new LevelFactory(Resources);
+            Menu = GetNode<Menu>("/root/Menu");
             CallDeferred("Init");
         }
 
@@ -121,6 +124,12 @@ namespace Hopper
             CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();
             CurrentLevel.Editable = true;
+        }
+
+        public void GoHome()
+        {
+            Menu.Show();
+            QueueFree();
         }
     }
 }
