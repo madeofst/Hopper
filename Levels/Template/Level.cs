@@ -45,6 +45,7 @@ namespace Hopper
             Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
             Grid.ClearExistingChildren();
             Grid.PopulateGrid(LevelData);
+            //EmitSignal(nameof(LevelBuilt));
         }
 
         public void UpdateLevelData()

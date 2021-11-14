@@ -137,7 +137,7 @@ namespace Hopper
                 {
                     GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
                     GetTree().Root.AddChild(GameOver);
-                    GameOver.Score = Player.Score;
+                    GameOver.Score = Player.TotalScore;
                     GameOver.ScoreLabel.Text = GameOver.Score.ToString();
                     QueueFree();
                 }
@@ -177,9 +177,9 @@ namespace Hopper
             CurrentLevel.Grid.ReplaceTile(Player.GridPosition, NewTile);
         }
 
-        public void UpdateGoalState(int currentScore)
+        public void UpdateGoalState(int currentScore, int currentLevelScore)
         {
-            CurrentLevel.UpdateGoalState(currentScore, Resources.GoalOnScene.Instance() as Tile);
+            CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
         }
     }
 }

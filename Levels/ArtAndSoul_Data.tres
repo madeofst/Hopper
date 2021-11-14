@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-ScoreRequired = 700
-StartingHops = 9
 MaximumHops = 13
-TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 300, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 50, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0 )
+StartingHops = 13
+ScoreRequired = 700
 PlayerStartPosition = Vector2( 1, 4 )
+TileSize = 32
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 300, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 50, 200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0 )
+Name = "ArtAndSoul"
 Height = 7
 Width = 7
-TileSize = 32
-TileType = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 3, 3, 0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0 )
-Name = "ArtAndSoul"
+TileType = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 2, 0, 3, 3, 0, 0, 0, 0, 1, 2, 3, 4, 0, 0, 0, 3, 3, 3, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0 )

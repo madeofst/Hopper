@@ -41,7 +41,7 @@ namespace Hopper
             Text = text;
         }
 
-        public void UpdateText(int number)
+        public void UpdateText(int number, int currentLevelScore)
         {
             Text = number.ToString();
         }

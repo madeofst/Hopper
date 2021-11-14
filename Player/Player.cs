@@ -13,7 +13,8 @@ namespace Hopper
 
         //Player parameters
         public int HopsRemaining { get; set; } = 3;
-        public int Score { get; set; } = 0;
+        public int TotalScore { get; set; } = 0;
+        public int LevelScore { get; set; } = 0;
         private Vector2 _GridPosition;
         private Tile _CurrentTile;
 
@@ -41,7 +42,7 @@ namespace Hopper
         [Signal]
         public delegate void GoalReached();
         [Signal]
-        public delegate void ScoreUpdated(int score);
+        public delegate void ScoreUpdated(int totalScore, int levelScore = 0);
         [Signal]
         public delegate void HopCompleted(int hopsRemaining);
         [Signal]
@@ -53,21 +54,21 @@ namespace Hopper
             //CallDeferred("Init");
         }
 
-        public void Init()
+        public void Init() //Called each time a new level starts
         {
-            World = GetNode<World>("..");
+            if (World is null)
+            {
+                World = GetNode<World>("..");
+                PlayerSprite = GetNode<Sprite>("PlayerSprite");
+                PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
+            }
             CurrentLevel = World.CurrentLevel;
-            Grid = CurrentLevel.Grid;
-            PlayerSprite = GetNode<Sprite>("PlayerSprite");
-
-            //Initialize properties of player
-            PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
-            //GridPosition = new Vector2(0, 0);
-            
+            Grid = CurrentLevel.Grid;            
             GridPosition = CurrentLevel.PlayerStartPosition;
             HopsRemaining = CurrentLevel.StartingHops;
+            LevelScore = 0;
 
-            EmitSignal(nameof(ScoreUpdated), Score);
+            EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
         }
 
@@ -115,12 +116,13 @@ namespace Hopper
         {
             if (CurrentTile.PointValue > 0)
             {
-                Score += CurrentTile.PointValue;
+                LevelScore += CurrentTile.PointValue;
+                TotalScore += CurrentTile.PointValue;
                 if (CurrentTile.Type == Type.Score) 
                 {
                     EmitSignal(nameof(TileChanged), Type.Lily);
                 }
-                EmitSignal(nameof(ScoreUpdated), Score);
+                EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore);
             }
         }
 
