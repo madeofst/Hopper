@@ -164,7 +164,7 @@ namespace Hopper
             Connect("mouse_entered", this, "OnMouseEnter");
             
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
-            LilySpriteAnimator.Play("Lights");
+            if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Lights");
         }
 
         public void Init()
