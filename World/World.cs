@@ -83,11 +83,6 @@ namespace Hopper
         private void NewLevel(Vector2 playerPosition)
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
-            if (Timer is null)
-            {
-                Timer = new milliTimer();
-                Timer.Start(10);
-            }
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
             BuildLevel();
@@ -107,9 +102,15 @@ namespace Hopper
             Grid = CurrentLevel.Grid;
             MoveChild(Player, 4);
             Player.Init();
-            if (Timer != null) Timer.Reset();
-            //HopCounter.UpdateText(CurrentLevel.StartingHops);
-            //HopCounterBar.UpdateBar(CurrentLevel.StartingHops);
+            if (Timer is null)
+            {
+                Timer = new milliTimer();
+                Timer.Start(10);
+            }
+            else
+            {
+                Timer.Reset();
+            }
         }
 
         private void NewPlayer()
