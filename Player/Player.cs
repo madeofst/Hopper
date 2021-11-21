@@ -94,8 +94,14 @@ namespace Hopper
         {
             if (CurrentTile.Type == Type.Jump)
             {
-                movementDirection = movementDirection * CurrentTile.JumpLength;
-            };
+                Vector2 jumpMovement = movementDirection * CurrentTile.JumpLength;
+                while (Grid.GetTile(GridPosition + jumpMovement).Type == Type.Rock &&
+                       jumpMovement >= Vector2.Zero)
+                {
+                    jumpMovement -= movementDirection;
+                }
+                return jumpMovement;
+            }
             return movementDirection;
         }
 

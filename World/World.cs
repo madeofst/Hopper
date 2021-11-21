@@ -28,8 +28,9 @@ namespace Hopper
         public string[] Levels { get; set; } = new string[] 
         {
             "StartingOut",
+            "MovingOn",
             "ArtAndSoul",
-            "WaterTest"
+            "DoubleJump"
         };
         public bool Temp { get; set; } = false;
 
