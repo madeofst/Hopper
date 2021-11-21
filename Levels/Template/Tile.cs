@@ -30,6 +30,8 @@ namespace Hopper
 
         [Signal]
         public delegate void TileUpdated(Vector2 gridPosition, Type type, int Score);
+        [Signal]
+        public delegate void PlayerStartUpdated(Vector2 gridPosition);
 
         //Children in the tree
         public CollisionShape2D CollisionShape;
@@ -38,29 +40,6 @@ namespace Hopper
         public Counter Label;
 
         public Tile(){}   
-        
-/*         public Tile(Type type)
-        {
-            Type = type;
-        }
-
-        public Tile(Type type, Vector2 position)
-        {
-            Type = type;
-            GridPosition = position;
-        }
-
-        public Tile(Type type, Vector2 position, int pointValue)
-        {
-            Type = type;
-            GridPosition = position;
-            PointValue = pointValue;
-        }
- */
-/*         public Tile(string Name)
-        {
-            this.Name = Name;
-        } */
 
         public override void _Ready()
         {
@@ -83,38 +62,6 @@ namespace Hopper
             
         }
 
-        /* public virtual void BuildTile(Type type, Vector2 size, Vector2 gridPosition, int score = 0)
-        {
-            Size = size;
-            Label = new Counter(Size);
-            Label.BbcodeEnabled = true;
-                    
-            LilySprite = new Sprite();
-            WaterSprite = new Sprite();
-            Type = type;
-            GridPosition = gridPosition;
-            PointValue = score;
-
-            WaterSprite.Position = LilySprite.Position;
-            WaterSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Water1_32x32.png");
-            AddChild(WaterSprite);
-            WaterSprite.Owner = this;
-
-            AddChild(LilySprite);
-            LilySprite.Owner = this;
-
-            Label.RectPosition = LilySprite.Position + new Vector2(-Label.RectSize.x/2, Label.RectSize.y/10);
-            AddChild(Label);
-            Label.MouseFilter = Control.MouseFilterEnum.Ignore;
-            Label.Owner = this;
-            
-            CollisionShape = new CollisionShape2D();
-            AddChild(CollisionShape);
-            CollisionShape.Shape = ResourceLoader.Load<RectangleShape2D>("res://Levels/Template/TileRectangle.tres");
-            CollisionShape.Position = LilySprite.Position;
-            CollisionShape.Owner = this;
-        } */
-
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
         {
             InputEventMouseButton ev = null;
@@ -133,15 +80,17 @@ namespace Hopper
                         EmitSignal("TileUpdated", GridPosition, Type, PointValue);
                     }
                 }
-                if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
+                else if (ev.ButtonIndex == (int)ButtonList.Right)
+                {
+                    EmitSignal("PlayerStartUpdated", GridPosition);
+                }
+                else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
                 {
                     if (PointValue < 1000) EmitSignal("TileUpdated", GridPosition, Type, PointValue + 100);
-                    //GD.Print(ev.AsText());
                 }
-                if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
+                else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
                 {
                     if (PointValue > 100)  EmitSignal("TileUpdated", GridPosition, Type, PointValue - 100);
-                    //GD.Print(ev.AsText());
                 }
             }
         }

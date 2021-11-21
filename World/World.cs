@@ -30,7 +30,8 @@ namespace Hopper
             "StartingOut",
             "MovingOn",
             "ArtAndSoul",
-            "DoubleJump"
+            "DoubleJump",
+            "SideWind"
         };
         public bool Temp { get; set; } = false;
 
@@ -56,12 +57,12 @@ namespace Hopper
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
             NewPlayer();           
-            Player.Connect(nameof(Player.GoalReached), this, "IncrementLevel");
-            Player.Connect(nameof(Player.HopCompleted), HopCounter, "UpdateText");
-            Player.Connect(nameof(Player.HopCompleted), HopCounterBar, "UpdateBar");
-            Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, "UpdateText");
-            Player.Connect(nameof(Player.ScoreUpdated), this, "UpdateGoalState");
-            Player.Connect(nameof(Player.TileChanged), this, "UpdateTile");
+            Player.Connect(nameof(Player.GoalReached), this, nameof(IncrementLevel));
+            Player.Connect(nameof(Player.HopCompleted), HopCounter, nameof(HopCounter.UpdateText));
+            Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateBar));
+            Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
+            Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalState));
+            Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
 
             if (temp)
             {
@@ -106,7 +107,7 @@ namespace Hopper
             if (Timer is null)
             {
                 Timer = new milliTimer();
-                Timer.Start(10);
+                Timer.Start(100);
             }
             else
             {

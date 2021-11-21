@@ -44,6 +44,7 @@ namespace Hopper
             AddChild(CurrentLevel);
             CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();
+            CurrentLevel.Connect(nameof(Level.LevelParametersUpdated), this, nameof(PopulateParameterValues));
             CurrentLevel.Editable = true;
         }
 
@@ -93,6 +94,7 @@ namespace Hopper
             AddChild(CurrentLevel);
             CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();
+            CurrentLevel.Connect(nameof(Level.LevelParametersUpdated), this, nameof(PopulateParameterValues));
             CurrentLevel.Editable = true;
         }
 
@@ -123,6 +125,7 @@ namespace Hopper
             AddChild(CurrentLevel);
             CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();
+            CurrentLevel.Connect(nameof(Level.LevelParametersUpdated), this, nameof(PopulateParameterValues));
             CurrentLevel.Editable = true;
         }
 

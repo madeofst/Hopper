@@ -26,6 +26,9 @@ namespace Hopper
         public Vector2 PlayerStartPosition { get; set; }
         public string LevelName { get; set; }
 
+        [Signal]
+        public delegate void LevelParametersUpdated();
+
         public Level(){}
 
         public override void _Ready()
@@ -45,8 +48,19 @@ namespace Hopper
             Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
             Grid.ClearExistingChildren();
             Grid.PopulateGrid(LevelData);
+            ConnectTiles();
             //EmitSignal(nameof(LevelBuilt));
         }
+
+        private void ConnectTiles()
+        {
+            foreach (Tile t in Grid.Tiles)
+            {
+                Grid.ConnectTile(t);
+                t.Connect(nameof(Tile.PlayerStartUpdated), this, "UpdatePlayerStart");
+            }
+        }
+
 
         public void UpdateLevelData()
         {
@@ -77,6 +91,12 @@ namespace Hopper
             {
                 activatedGoalTile.QueueFree();
             }
+        }
+
+        private void UpdatePlayerStart(Vector2 gridPosition)
+        {
+            PlayerStartPosition = gridPosition;
+            EmitSignal(nameof(LevelParametersUpdated));
         }
     }
 }

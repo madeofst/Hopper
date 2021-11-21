@@ -110,12 +110,18 @@ namespace Hopper
                     Tiles[x, y].PointValue = levelData.TilePointValue[i];
                     Tiles[x, y].GridPosition = new Vector2(x, y);
                     Tiles[x, y].Name = $"Tile{x}-{y}";
-                    Tiles[x, y].Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
+                    //Tiles[x, y].Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
+                    //Tiles[x, y].Connect(nameof(Tile.PlayerStartUpdated), this, "UpdatePlayerStart");
                     AddChild(Tiles[x, y]);
                     Tiles[x, y].Owner = this;
                     i++;
                 }
             }
+        }
+
+        public void ConnectTile(Tile tile)
+        {
+            tile.Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
         }
 
         public Vector2 LimitToBounds(Vector2 Position)
@@ -200,12 +206,14 @@ namespace Hopper
             if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
         }
 
+        //For updating a tile in the editor (called by signal in Tile)
         internal void UpdateTile(Vector2 gridPosition, Type type, int score)
         {
             Tile newTile = Resources.LoadByType(type).Instance() as Tile;
             if (newTile.Type == Type.Score) newTile.PointValue = score;
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
-            newTile.Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
+            //newTile.Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
+            ConnectTile(newTile);
             newTile.Editable = true;
             ReplaceTile(gridPosition, newTile);
         }
