@@ -27,12 +27,17 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
+            //Basic
             "StartingOut",
-            "MovingOn",
             "ArtAndSoul",
+            //Introducing jumping
+            "MovingOn",
+            "MovingOn2",
             "DoubleJump",
+            //Introducing water
             "SideWind"
         };
+
         public bool Temp { get; set; } = false;
 
         //Signals
