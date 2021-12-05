@@ -1,20 +1,21 @@
 using Godot;
 using System;
 
-namespace Hopper
+public class HopCounter : Control
 {
-    public class HopCounter : Counter
+    [Export]
+    public int MaxHops = 3;
+    [Export]
+    public int RemainingHops = 3;
+
+    public override void _Ready()
     {
-        public HopCounter(){}
         
-        public HopCounter(Vector2 size) : base(size)
-        {
-        }
-
-        public override void MakeConnections()
-        {
-            //Player.Connect(nameof(Player.HopCompleted), this, "UpdateText");
-        }
-
     }
+
+//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+//  public override void _Process(float delta)
+//  {
+//      
+//  }
 }

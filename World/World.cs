@@ -13,7 +13,7 @@ namespace Hopper
         private Grid Grid { get; set; }
         private Player Player { get; set; }
 
-        private HopCounter HopCounter { get; set; }
+        private HopCounterLabel HopCounterLabel { get; set; }
         private HopCounterBar HopCounterBar { get; set; }
         private ScoreCounter ScoreCounter { get; set; }
         private TimeCounter TimeCounter { get; set; }
@@ -52,18 +52,18 @@ namespace Hopper
 
         public void Init(bool temp = false, string levelName = "")
         {
-            HopCounter = GetNode<HopCounter>("HUD/HBoxContainer/VBoxContainer2/HopCounter");
-            HopCounterBar = GetNode<HopCounterBar>("HUD/HBoxContainer/VBoxContainer2/HopCounterBar");
-            ScoreCounter = GetNode<ScoreCounter>("HUD/HBoxContainer/MarginContainer/VBoxContainer/ScoreCounter");
-            TimeCounter = GetNode<TimeCounter>("HUD/HBoxContainer/MarginContainer/VBoxContainer/TimeCounter");
-            Stopwatch = GetNode<Stopwatch>("HUD/HBoxContainer/MarginContainer/VBoxContainer/Stopwatch");
+            HopCounterLabel = GetNode<HopCounterLabel>("HUD/HopCounterSimple/HopCounterLabel");
+            HopCounterBar = GetNode<HopCounterBar>("HUD/HopCounterSimple/HopCounterBar");
+            ScoreCounter = GetNode<ScoreCounter>("HUD/TimeAndScoreSimple/VBoxContainer/ScoreCounter");
+            TimeCounter = GetNode<TimeCounter>("HUD/TimeAndScoreSimple/VBoxContainer/TimeCounter");
+            Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
 
             Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
             NewPlayer();           
             Player.Connect(nameof(Player.GoalReached), this, nameof(IncrementLevel));
-            Player.Connect(nameof(Player.HopCompleted), HopCounter, nameof(HopCounter.UpdateText));
+            Player.Connect(nameof(Player.HopCompleted), HopCounterLabel, nameof(HopCounterLabel.UpdateText));
             Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateBar));
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
             Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalState));
