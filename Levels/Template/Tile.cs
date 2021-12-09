@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using System.Linq;
 
 namespace Hopper
 {
@@ -161,7 +162,7 @@ namespace Hopper
             Connect("mouse_entered", this, "OnMouseEnter");
             
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
-            LilySpriteAnimator.Play("Lights");
+            if (LilySpriteAnimator.GetAnimationList().Contains("Lights")) LilySpriteAnimator.Play("Lights");
         }
 
         public void Init()

@@ -82,6 +82,7 @@ namespace Hopper
                 CheckGoal();   
                 CheckHopsRemaining();
             }
+            //PrintStrayNodes();
         }
 
         private Vector2 LimitToBounds(Vector2 Position)

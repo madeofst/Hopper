@@ -128,6 +128,7 @@ namespace Hopper
                                                       startingHops, 
                                                       2);
             levelData.UpdateTile(goalTile);
+            goalTile.QueueFree();
 
             Tile jumpTile = CalculateJumpTilePositions(rand, 
                                                        levelData.PlayerStartPosition,
@@ -137,6 +138,7 @@ namespace Hopper
                                                        1,
                                                        goalTile);
             levelData.UpdateTile(jumpTile);
+            jumpTile.QueueFree();
 
             Tile[] scoreTiles = CalculateScoreTilePositions(rand, 
                                                             levelData.PlayerStartPosition,
@@ -149,6 +151,7 @@ namespace Hopper
             foreach (Tile t in scoreTiles)
             {
                 levelData.UpdateTile(t);
+                t.QueueFree();
             }
 
             return GetLevelScene(levelData);
