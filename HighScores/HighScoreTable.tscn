@@ -1,243 +1,274 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://HighScores/HighScoreTable.cs" type="Script" id=1]
 [ext_resource path="res://HighScores/BackButton.cs" type="Script" id=2]
+[ext_resource path="res://Fonts/DigitalDisco.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/rainyhearts.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 4 )
 
 [node name="HighScoreTable" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 50
-custom_constants/margin_top = 50
+custom_constants/margin_top = 20
 custom_constants/margin_left = 50
-custom_constants/margin_bottom = 50
+custom_constants/margin_bottom = 0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VSplitContainer2" type="VSplitContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 50.0
-margin_top = 50.0
-margin_right = 526.0
-margin_bottom = 526.0
+margin_top = 20.0
+margin_right = 430.0
+margin_bottom = 270.0
 
-[node name="VSplitContainer" type="VSplitContainer" parent="VSplitContainer2"]
-margin_right = 476.0
-margin_bottom = 302.0
-
-[node name="CenterContainer" type="CenterContainer" parent="VSplitContainer2/VSplitContainer"]
-margin_right = 476.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 0, 50 )
-
-[node name="RichTextLabel" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/CenterContainer"]
-margin_left = 198.0
-margin_top = 15.0
-margin_right = 278.0
-margin_bottom = 35.0
-rect_min_size = Vector2( 80, 20 )
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+margin_right = 380.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 80, 18 )
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]High Scores[/center]"
 text = "High Scores"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VSplitContainer2/VSplitContainer"]
-margin_top = 62.0
-margin_right = 476.0
-margin_bottom = 302.0
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 22.0
+margin_right = 380.0
+margin_bottom = 191.0
+custom_constants/separation = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_right = 476.0
+[node name="HSplitContainer1" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_right = 380.0
+margin_bottom = 16.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="HSplitContainer1" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 4.0
-margin_right = 476.0
-margin_bottom = 24.0
-
-[node name="UserNameLabel1" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer1"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel1" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer1"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel1" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer1"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel1" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer1"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer2" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 28.0
-margin_right = 476.0
-margin_bottom = 48.0
+[node name="HSplitContainer2" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 17.0
+margin_right = 380.0
+margin_bottom = 33.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel2" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer2"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel2" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer2"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel2" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer2"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel2" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer2"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer3" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 52.0
-margin_right = 476.0
-margin_bottom = 72.0
+[node name="HSplitContainer3" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 34.0
+margin_right = 380.0
+margin_bottom = 50.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel3" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer3"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel3" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer3"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel3" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer3"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel3" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer3"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer4" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 76.0
-margin_right = 476.0
-margin_bottom = 96.0
+[node name="HSplitContainer4" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 51.0
+margin_right = 380.0
+margin_bottom = 67.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel4" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer4"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel4" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer4"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel4" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer4"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel4" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer4"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer5" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 100.0
-margin_right = 476.0
-margin_bottom = 120.0
+[node name="HSplitContainer5" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 68.0
+margin_right = 380.0
+margin_bottom = 84.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel5" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer5"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel5" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer5"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel5" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer5"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel5" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer5"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer6" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 124.0
-margin_right = 476.0
-margin_bottom = 144.0
+[node name="HSplitContainer6" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 85.0
+margin_right = 380.0
+margin_bottom = 101.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel6" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer6"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel6" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer6"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel6" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer6"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel6" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer6"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer7" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 148.0
-margin_right = 476.0
-margin_bottom = 168.0
+[node name="HSplitContainer7" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 102.0
+margin_right = 380.0
+margin_bottom = 118.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel7" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer7"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel7" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer7"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel7" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer7"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel7" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer7"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer8" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 172.0
-margin_right = 476.0
-margin_bottom = 192.0
+[node name="HSplitContainer8" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 119.0
+margin_right = 380.0
+margin_bottom = 135.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel8" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer8"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel8" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer8"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel8" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer8"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel8" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer8"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer9" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 196.0
-margin_right = 476.0
-margin_bottom = 216.0
+[node name="HSplitContainer9" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 136.0
+margin_right = 380.0
+margin_bottom = 152.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel9" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer9"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel9" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer9"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel9" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer9"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel9" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer9"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="HSplitContainer10" type="HSplitContainer" parent="VSplitContainer2/VSplitContainer/VBoxContainer"]
-margin_top = 220.0
-margin_right = 476.0
-margin_bottom = 240.0
+[node name="HSplitContainer10" type="HSplitContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 153.0
+margin_right = 380.0
+margin_bottom = 169.0
+collapsed = true
+dragger_visibility = 2
 
-[node name="UserNameLabel10" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer10"]
-margin_right = 250.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 250, 20 )
+[node name="UserNameLabel10" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer10"]
+margin_right = 260.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 260, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "UserName"
 
-[node name="ScoreLabel10" type="RichTextLabel" parent="VSplitContainer2/VSplitContainer/VBoxContainer/HSplitContainer10"]
-margin_left = 262.0
-margin_right = 476.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+[node name="ScoreLabel10" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HSplitContainer10"]
+margin_left = 260.0
+margin_right = 380.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Score"
 
-[node name="CenterContainer" type="CenterContainer" parent="VSplitContainer2"]
-margin_top = 314.0
-margin_right = 476.0
-margin_bottom = 476.0
-
-[node name="BackButton" type="Button" parent="VSplitContainer2/CenterContainer"]
-margin_left = 203.0
-margin_top = 66.0
-margin_right = 273.0
-margin_bottom = 96.0
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+margin_top = 195.0
+margin_right = 380.0
+margin_bottom = 225.0
 rect_min_size = Vector2( 70, 30 )
 mouse_default_cursor_shape = 2
 text = "Back"
 script = ExtResource( 2 )
-[connection signal="pressed" from="VSplitContainer2/CenterContainer/BackButton" to="." method="OnBackButtonPressed"]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="OnBackButtonPressed"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Hopper1.ogg-514874e6b32bfdda4c10be8c3ab79d82.oggstr"
+
+[deps]
+
+source_file="res://Music/Hopper1.ogg"
+dest_files=[ "res://.import/Hopper1.ogg-514874e6b32bfdda4c10be8c3ab79d82.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

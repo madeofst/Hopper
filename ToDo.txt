@@ -1,30 +1,58 @@
-// Fixes
-* Check that new coin tile location is not already a coin tile
-* Improve score assignment
-* Investigate occasional crashing - seems to be when moving onto a goal tile
+// For game as-is
+_________________________
 
-//Possible process improvements
-* Maybe only introduce timer after Level 1 or 2
-* Transfer to path finding algorithm for coins?
-* Correct score values for unreachable coins (aka other side of goal)
+// Definites
 
-// Definite additions
-* Add jump tile
-* Add max hop limit increase tile
-* Add timer extension tile
+    // Fixes
+    * Improve score assignment
+    * Level editor - saving after a change
+    * Check on how autosave works
+    * Don't do the high score thing at the end in editor mode
 
-// Potential additons
-* Add impassable tiles - will need pathfinding for automatic placement
-* make goals unlockable with a minimum score - this could allow for actual puzzle design.
+    // Definite additions
+    * Timer reduces with each goal reached?
+    * Add max hop limit increase tile
+    * Add timer extension tile
+    * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
 
-// Possible additions
-* Enemies to dodge?
+    //Plan in steps
+    * Design and add visual representation of timer and hops
+    * Animate main menu
+    * Draw/find sprites for
+        - water
+    * Animations
+        - frog still (eyes blinking)
+        - frog hop down
+        - frog hop side
+        - frog hop up
+    * Sound FX
+        - coin
+        - goal
+    * Music
+        - menu Music
+        - game Music
+        - end Music
 
-//Plan in steps
-* Add a splash screen
-* Design and add visual representation of timer and hops
-* Draw/find sprites for
-    - lily pad
-    - frog
-    - coin (points)
-    - water
+//Maybes
+_________________________
+
+    //Pathfinding
+    * Transfer to path finding algorithm for coins?
+    * Correct score values for unreachable coins (aka other side of goal)
+    * Add impassable tiles - will need pathfinding for automatic placement
+
+    //Tiles
+    * Permanent/semi-permanent change of jump length
+    * Add bounce tile? - auto bounce
+
+
+// For more designable puzzle version
+_________________________
+
+    * Enemies to dodge?
+
+
+// Level Editor
+_________________________
+
+    * Add boxes for hops to add
