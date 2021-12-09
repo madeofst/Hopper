@@ -37,7 +37,7 @@ namespace Hopper
             "SideWind"
         };
 
-        public bool Temp { get; set; } = false;
+        public bool TempForTesting { get; set; } = false;
 
         //Signals
         [Signal]
@@ -49,7 +49,7 @@ namespace Hopper
             levelFactory = new LevelFactory(Resources);
         }
 
-        public void Init(bool temp = false, string levelName = "")
+        public void Init(bool tempWorldForTesting = false, string levelName = "")
         {
             HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
             ScoreCounter = GetNode<ScoreCounter>("HUD/TimeAndScoreSimple/VBoxContainer/ScoreCounter");
@@ -62,13 +62,14 @@ namespace Hopper
             NewPlayer();           
             Player.Connect(nameof(Player.GoalReached), this, nameof(IncrementLevel));
             Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateHop));
+            Player.Connect(nameof(Player.HopsExhausted), this, nameof(OnHopsExhausted));
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
             Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalState));
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
 
-            if (temp)
+            if (tempWorldForTesting)
             {
-                Temp = true;
+                TempForTesting = true;
                 NewLevel(levelName);
             }
             else
@@ -81,9 +82,7 @@ namespace Hopper
                 {
                     NewLevel(Levels[iLevel]);
                 }
-            }
-
-            
+            }            
         }
 
         private void NewLevel(Vector2 playerPosition)
@@ -108,7 +107,7 @@ namespace Hopper
             CurrentLevel.Build(Resources);
             Grid = CurrentLevel.Grid;
             MoveChild(Player, 4);
-            Player.Init();
+            Player.Init(CurrentLevel);
             if (Timer is null)
             {
                 Timer = new milliTimer();
@@ -156,7 +155,7 @@ namespace Hopper
         public void IncrementLevel()
         {
             iLevel++;
-            if (Temp)
+            if (TempForTesting)
             {
                 GD.Print("Level complete.");
                 QueueFree();
@@ -184,6 +183,18 @@ namespace Hopper
         public void UpdateGoalState(int currentScore, int currentLevelScore)
         {
             CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
+        }
+
+        public void OnHopsExhausted()
+        {
+            if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
+            {
+                GameOver = true;
+            }
+            else
+            {
+                NewLevel(Levels[iLevel]);
+            }
         }
     }
 }
