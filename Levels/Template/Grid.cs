@@ -26,6 +26,8 @@ namespace Hopper
         public int GridWidth;
         public int GridHeight; 
         public int GoalCount; //TODO: should live in level
+
+        public ResourceRepository Resources { get; set; }
         
         //private Vector2 ViewportSize;
         public Vector2 Offset;
@@ -55,7 +57,7 @@ namespace Hopper
             Name = "Grid";
         }
 
-        public Tile Tile(Vector2 position)
+        public Tile GetTile(Vector2 position)
         {
             return Tiles[(int)position.x, (int)position.y];
         }
@@ -90,7 +92,7 @@ namespace Hopper
             }
         }
 
-        internal void PopulateGrid(ResourceRepository resources, LevelData levelData = null)
+        internal void PopulateGrid(LevelData levelData = null)
         {
             int i = 0;
             for (int y = 0; y < GridHeight; y++)
@@ -99,15 +101,16 @@ namespace Hopper
                 {
                     if (levelData != null)
                     {
-                        Tiles[x, y] = resources.LoadByType(levelData.TileType[i]).Instance() as Tile;
+                        Tiles[x, y] = Resources.LoadByType(levelData.TileType[i]).Instance() as Tile;
                     }
                     else
                     {
-                        Tiles[x, y] = resources.LilyScene.Instance() as Tile;
+                        Tiles[x, y] = Resources.LilyScene.Instance() as Tile;
                     }
                     Tiles[x, y].PointValue = levelData.TilePointValue[i];
                     Tiles[x, y].GridPosition = new Vector2(x, y);
                     Tiles[x, y].Name = $"Tile{x}-{y}";
+                    Tiles[x, y].Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
                     AddChild(Tiles[x, y]);
                     Tiles[x, y].Owner = this;
                     i++;
@@ -146,11 +149,21 @@ namespace Hopper
             if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
         }
 
+        internal void UpdateTile(Vector2 gridPosition, Type type, int score)
+        {
+            Tile newTile = Resources.LoadByType(type).Instance() as Tile;
+            if (newTile.Type == Type.Score) newTile.PointValue = score;
+            newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
+            newTile.Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
+            newTile.Editable = true;
+            ReplaceTile(gridPosition, newTile);
+        }
+
         internal void ReplaceTile(Vector2 gridPosition, Tile newTile)
         {
             newTile.GridPosition = gridPosition;
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
-            Tile(gridPosition).QueueFree();
+            Tiles[(int)gridPosition.x, (int)gridPosition.y].QueueFree();
             Tiles[(int)gridPosition.x, (int)gridPosition.y] = newTile;
             AddChild(newTile);
         }

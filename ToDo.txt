@@ -5,12 +5,13 @@ _________________________
 
     // Fixes
     * Improve score assignment
+    * Level score needs to be separate from total score
+    * Level editor - saving after a change
+    * Check on how autosave works
+    * Don't do the high score thing at the end
 
     // Definite additions
     * Timer reduces with each goal reached?
-    * Add jump tile - 2 kinds
-        - auto bounce
-        - stand on it and then jump extra
     * Add max hop limit increase tile
     * Add timer extension tile
     * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
@@ -43,12 +44,12 @@ _________________________
 
     //Tiles
     * Permanent/semi-permanent change of jump length
+    * Add bounce tile? - auto bounce
 
 
 // For more designable puzzle version
 _________________________
 
-    * make goals unlockable with a minimum score - this could allow for actual puzzle design.
     * Enemies to dodge?
     * missing lilypads - frog can dive in and swim under to the next opening at a cost of only one hop
 
@@ -56,6 +57,4 @@ _________________________
 // Level Editor
 _________________________
 
-    * Add boxes for score to win
-                    max hops
-                    hops to add
+    * Add boxes for hops to add

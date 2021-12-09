@@ -118,6 +118,9 @@ namespace Hopper
         [Export]
         public int JumpLength;
 
+        [Signal]
+        public delegate void TileUpdated(Vector2 gridPosition, Type type, int Score);
+
         //Children in the tree
         public CollisionShape2D CollisionShape;
         public Sprite LilySprite;
@@ -162,7 +165,7 @@ namespace Hopper
             Connect("mouse_entered", this, "OnMouseEnter");
             
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
-            if (LilySpriteAnimator.GetAnimationList().Contains("Lights")) LilySpriteAnimator.Play("Lights");
+            if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Lights");
         }
 
         public void Init()
@@ -210,21 +213,24 @@ namespace Hopper
             {
                 if (ev.ButtonIndex == (int)ButtonList.Left)
                 {
-                    //GD.Print(ev.AsText());
-                    //GD.Print($"Clicked Tile {GridPosition}");
                     if (Type == Type.Jump) //Max enum value //TODO: this needs writing for new tile loading
-                        Type = Type.Lily; //Min enum value
+                    {
+                        EmitSignal("TileUpdated", GridPosition, Type.Lily, PointValue);
+                    }    //Type = Type.Lily; //Min enum value
                     else
+                    {
                         Type += 1;
+                        EmitSignal("TileUpdated", GridPosition, Type, PointValue);
+                    }
                 }
                 if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
                 {
-                    if (PointValue < 1000) PointValue += 100;
+                    if (PointValue < 1000) EmitSignal("TileUpdated", GridPosition, Type, PointValue + 100);
                     //GD.Print(ev.AsText());
                 }
                 if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
                 {
-                    if (PointValue > 0) PointValue -= 100;
+                    if (PointValue > 100)  EmitSignal("TileUpdated", GridPosition, Type, PointValue - 100);
                     //GD.Print(ev.AsText());
                 }
             }

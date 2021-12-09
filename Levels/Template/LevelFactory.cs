@@ -13,7 +13,7 @@ namespace Hopper
         const int defaultTileSize = 32;
         const int defaultStartingHops = 6;
         const int defaultMaximumHops = 10;
-        const int defaultScoreRequired = 0;
+        const int defaultScoreRequired = 100;
         const int defaultScore = 100;
         const int defaultX = 0;
         const int defaultY = 0;
@@ -117,7 +117,7 @@ namespace Hopper
         {
             LevelData levelData = NewBlankLevelData(width, height, tileSize);
             levelData.StartingHops = startingHops;
-            levelData.MaximumHops = defaultMaximumHops;
+            levelData.MaximumHops = maximumHops;
             levelData.ScoreRequired = scoreRequired;
             levelData.PlayerStartPosition = new Vector2(playerPositionX, playerPositionY);
 
@@ -272,37 +272,32 @@ namespace Hopper
             {
                 float totalSteps;
                 Vector2 PlayerToScore;
-                Tile scoreTile;
+                Tile scoreTile = null;
                 do
                 {
+                    if (scoreTile != null) scoreTile.QueueFree();
                     int possibleSteps = rand.RandiRange(-maximumHops, maximumHops);
                     int x = rand.RandiRange(-possibleSteps, possibleSteps);
                     PlayerToScore = new Vector2(x, possibleSteps - x);
                     ScoreGridPosition = PlayerToScore + playerPosition;
                     ScoreToGoal = goalTile.GridPosition - ScoreGridPosition;;
                     totalSteps = PlayerToScore.PathLength() + ScoreToGoal.PathLength();
-                    
-                    scoreTile = Resources.ScoreScene.Instance() as Tile;
-                    scoreTile.GridPosition = ScoreGridPosition;
-                    scoreTile.PointValue = defaultScore * (int)totalSteps;
-
-                    //scoreTile = new Tile(Type.Score, ScoreGridPosition,(defaultScore * (int)totalSteps));
                 } 
-                while (scoreTile.GridPosition == playerPosition ||
-                       scoreTile.GridPosition == goalTile.GridPosition ||
-                       scoreTile.GridPosition == jumpTile.GridPosition ||
+                while (ScoreGridPosition == playerPosition ||
+                       ScoreGridPosition == goalTile.GridPosition ||
+                       ScoreGridPosition == jumpTile.GridPosition ||
                        totalSteps >= maximumHops || 
                        totalSteps <= 0 ||
-                       scoreTile.GridPosition.x < 0 || 
-                       scoreTile.GridPosition.x >= width ||
-                       scoreTile.GridPosition.y < 0 || 
-                       scoreTile.GridPosition.y >= height);
+                       ScoreGridPosition.x < 0 || 
+                       ScoreGridPosition.x >= width ||
+                       ScoreGridPosition.y < 0 || 
+                       ScoreGridPosition.y >= height);
                 
                 foreach (Tile t in tiles)
                 {
                     if (t != null)
                     {
-                        if (t.GridPosition == scoreTile.GridPosition)
+                        if (t.GridPosition == ScoreGridPosition)
                         {
                             i--;
                             break;
@@ -310,6 +305,9 @@ namespace Hopper
                     }
                     else
                     {
+                        scoreTile = Resources.ScoreScene.Instance() as Tile;
+                        scoreTile.GridPosition = ScoreGridPosition;
+                        scoreTile.PointValue = defaultScore * (int)totalSteps;
                         tiles[i] = scoreTile;
                         break;
                     }
