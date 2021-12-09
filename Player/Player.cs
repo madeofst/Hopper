@@ -89,8 +89,10 @@ namespace Hopper
                 GridPosition = newTile.GridPosition;
                 UpdateHopsRemaining(-1);
                 UpdateScore();
-                CheckGoal();   
-                CheckHopsRemaining();
+                if (!CheckGoal())
+                {
+                    CheckHopsRemaining();
+                }
             }
         }
 
@@ -100,7 +102,7 @@ namespace Hopper
             {
                 Vector2 jumpMovement = movementDirection * CurrentTile.JumpLength;
                 while (Grid.GetTile(Grid.LimitToBounds(GridPosition + jumpMovement)).Type == Type.Rock &&
-                       jumpMovement >= Vector2.Zero)
+                       jumpMovement.Abs() >= Vector2.Zero)
                 {
                     jumpMovement -= movementDirection;
                 }
@@ -133,13 +135,15 @@ namespace Hopper
             }
         }
 
-        private void CheckGoal()
+        private bool CheckGoal()
         {
             if (CurrentTile.Type == Type.Goal && CurrentTile.Activated)
             {
                 EmitSignal(nameof(GoalReached));
                 UpdateHopsRemaining(CurrentLevel.StartingHops); //FIXME: Hops added should come from next level
+                return true;
             }
+            return false;
         }
 
         private void CheckHopsRemaining()

@@ -29,11 +29,12 @@ namespace Hopper
             //Basic
             "StartingOut",
             "ArtAndSoul",
-            //Introducing jumping
+            //Jumping
             "MovingOn",
             "MovingOn2",
             "DoubleJump",
-            //Introducing water
+            "Jumpington",
+            //Water
             "SideWind"
         };
 
@@ -187,7 +188,12 @@ namespace Hopper
 
         public void OnHopsExhausted()
         {
-            if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
+            if (TempForTesting)
+            {
+                GD.Print("Hops exhausted.");
+                QueueFree();
+            }
+            else if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
             {
                 GameOver = true;
             }
