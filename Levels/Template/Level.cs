@@ -29,6 +29,9 @@ namespace Hopper
         [Signal]
         public delegate void LevelParametersUpdated();
 
+        [Signal]
+        public delegate void LevelBuilt(int maxHops);
+
         public Level(){}
 
         public override void _Ready()
@@ -49,7 +52,7 @@ namespace Hopper
             Grid.ClearExistingChildren();
             Grid.PopulateGrid(LevelData);
             ConnectTiles();
-            //EmitSignal(nameof(LevelBuilt));
+            EmitSignal(nameof(LevelBuilt), MaximumHops);
         }
 
         private void ConnectTiles()
@@ -57,7 +60,7 @@ namespace Hopper
             foreach (Tile t in Grid.Tiles)
             {
                 Grid.ConnectTile(t);
-                t.Connect(nameof(Tile.PlayerStartUpdated), this, "UpdatePlayerStart");
+                t.Connect(nameof(Tile.PlayerStartUpdated), this, nameof(UpdatePlayerStart));
             }
         }
 
@@ -97,6 +100,7 @@ namespace Hopper
         {
             PlayerStartPosition = gridPosition;
             EmitSignal(nameof(LevelParametersUpdated));
+            GD.Print("LevelParametersUpdated");
         }
     }
 }

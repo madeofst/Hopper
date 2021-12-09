@@ -12,9 +12,8 @@ namespace Hopper
         public Level CurrentLevel { get; set; }
         private Grid Grid { get; set; }
         private Player Player { get; set; }
-
-        private HopCounterLabel HopCounterLabel { get; set; }
-        private HopCounterBar HopCounterBar { get; set; }
+    
+        private HopCounter HopCounterBar { get; set; }
         private ScoreCounter ScoreCounter { get; set; }
         private TimeCounter TimeCounter { get; set; }
         private Stopwatch Stopwatch { get; set; }
@@ -52,19 +51,17 @@ namespace Hopper
 
         public void Init(bool temp = false, string levelName = "")
         {
-            HopCounterLabel = GetNode<HopCounterLabel>("HUD/HopCounterSimple/HopCounterLabel");
-            HopCounterBar = GetNode<HopCounterBar>("HUD/HopCounterSimple/HopCounterBar");
+            HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
             ScoreCounter = GetNode<ScoreCounter>("HUD/TimeAndScoreSimple/VBoxContainer/ScoreCounter");
             TimeCounter = GetNode<TimeCounter>("HUD/TimeAndScoreSimple/VBoxContainer/TimeCounter");
             Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
 
             Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
-
+            
             NewPlayer();           
             Player.Connect(nameof(Player.GoalReached), this, nameof(IncrementLevel));
-            Player.Connect(nameof(Player.HopCompleted), HopCounterLabel, nameof(HopCounterLabel.UpdateText));
-            Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateBar));
+            Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateHop));
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
             Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalState));
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
@@ -85,6 +82,8 @@ namespace Hopper
                     NewLevel(Levels[iLevel]);
                 }
             }
+
+            
         }
 
         private void NewLevel(Vector2 playerPosition)
@@ -105,6 +104,7 @@ namespace Hopper
         private void BuildLevel()
         {
             AddChild(CurrentLevel);
+            CurrentLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
             CurrentLevel.Build(Resources);
             Grid = CurrentLevel.Grid;
             MoveChild(Player, 4);

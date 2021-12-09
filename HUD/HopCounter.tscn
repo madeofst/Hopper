@@ -30,6 +30,8 @@ public class HopCounter : Control
 [node name="HopCounter" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -448.0
+margin_bottom = -78.0
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -40,3 +42,95 @@ margin_right = 0.0
 margin_bottom = 0.0
 
 [node name="SingleHopCount2" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 8.0
+margin_bottom = 8.0
+
+[node name="SingleHopCount3" parent="." instance=ExtResource( 1 )]
+margin_top = 16.0
+margin_right = 0.0
+
+[node name="SingleHopCount4" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 24.0
+margin_bottom = 24.0
+
+[node name="SingleHopCount5" parent="." instance=ExtResource( 1 )]
+margin_top = 32.0
+margin_right = 0.0
+margin_bottom = 32.0
+
+[node name="SingleHopCount6" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 48.0
+margin_bottom = 48.0
+
+[node name="SingleHopCount7" parent="." instance=ExtResource( 1 )]
+margin_top = 56.0
+margin_right = 0.0
+margin_bottom = 56.0
+
+[node name="SingleHopCount8" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 64.0
+margin_bottom = 64.0
+
+[node name="SingleHopCount9" parent="." instance=ExtResource( 1 )]
+margin_top = 72.0
+margin_right = 0.0
+margin_bottom = 72.0
+
+[node name="SingleHopCount10" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 80.0
+margin_bottom = 80.0
+
+[node name="SingleHopCount11" parent="." instance=ExtResource( 1 )]
+margin_top = 96.0
+margin_right = 0.0
+margin_bottom = 96.0
+
+[node name="SingleHopCount12" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 104.0
+margin_bottom = 104.0
+
+[node name="SingleHopCount13" parent="." instance=ExtResource( 1 )]
+margin_top = 112.0
+margin_right = 0.0
+margin_bottom = 112.0
+
+[node name="SingleHopCount14" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 120.0
+margin_bottom = 120.0
+
+[node name="SingleHopCount15" parent="." instance=ExtResource( 1 )]
+margin_top = 128.0
+margin_right = 0.0
+margin_bottom = 128.0
+
+[node name="SingleHopCount16" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 144.0
+margin_bottom = 144.0
+
+[node name="SingleHopCount17" parent="." instance=ExtResource( 1 )]
+margin_top = 152.0
+margin_right = 0.0
+margin_bottom = 152.0
+
+[node name="SingleHopCount18" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 160.0
+margin_bottom = 160.0
+
+[node name="SingleHopCount19" parent="." instance=ExtResource( 1 )]
+margin_top = 168.0
+margin_right = 0.0
+margin_bottom = 168.0
+
+[node name="SingleHopCount20" parent="." instance=ExtResource( 1 )]
+margin_left = 16.0
+margin_top = 176.0
+margin_bottom = 176.0

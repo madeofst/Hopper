@@ -50,17 +50,17 @@ namespace Hopper
             
             if (Type == Type.Score) Label.BbcodeText = $"[center]{PointValue.ToString()}[/center]";
 
-            CallDeferred("Init");
+            //CallDeferred("Init");
             Connect("mouse_entered", this, "OnMouseEnter");
             
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
             if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Lights");
         }
 
-        public void Init()
+        /* public void Init()
         {
             
-        }
+        } */
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
         {
@@ -72,25 +72,25 @@ namespace Hopper
                 {
                     if (Type == Type.Jump) //Max enum value //TODO: this needs writing for new tile loading
                     {
-                        EmitSignal("TileUpdated", GridPosition, Type.Lily, PointValue);
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue);
                     }    //Type = Type.Lily; //Min enum value
                     else
                     {
                         Type += 1;
-                        EmitSignal("TileUpdated", GridPosition, Type, PointValue);
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue);
                     }
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.Right)
                 {
-                    EmitSignal("PlayerStartUpdated", GridPosition);
+                    EmitSignal(nameof(PlayerStartUpdated), GridPosition);
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
                 {
-                    if (PointValue < 1000) EmitSignal("TileUpdated", GridPosition, Type, PointValue + 100);
+                    if (PointValue < 1000) EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue + 100);
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
                 {
-                    if (PointValue > 100)  EmitSignal("TileUpdated", GridPosition, Type, PointValue - 100);
+                    if (PointValue > 100)  EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue - 100);
                 }
             }
         }

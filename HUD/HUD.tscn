@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://HUD/TimeCounter.cs" type="Script" id=1]
 [ext_resource path="res://HUD/HopCounterSimple.tscn" type="PackedScene" id=2]
 [ext_resource path="res://HUD/ScoreCounter.cs" type="Script" id=3]
+[ext_resource path="res://HUD/HopCounter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HUD/Resources/timerUnder.png" type="Texture" id=6]
 [ext_resource path="res://HUD/Resources/timerTop.png" type="Texture" id=7]
 [ext_resource path="res://HUD/Resources/timerOver.png" type="Texture" id=8]
@@ -17,8 +18,12 @@ font_data = ExtResource( 10 )
 [node name="HUD" type="Control"]
 margin_right = 480.0
 margin_bottom = 270.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TimeAndScoreSimple" type="MarginContainer" parent="."]
+visible = false
 margin_right = 480.0
 margin_bottom = 270.0
 rect_min_size = Vector2( 420, 0 )
@@ -104,5 +109,12 @@ __meta__ = {
 }
 
 [node name="HopCounterSimple" parent="." instance=ExtResource( 2 )]
+visible = false
 margin_left = 400.0
 margin_right = 440.0
+
+[node name="HopCounter" parent="." instance=ExtResource( 4 )]
+margin_left = 400.0
+margin_top = 38.0
+margin_right = -48.0
+margin_bottom = -40.0

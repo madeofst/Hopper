@@ -22,8 +22,8 @@ run/main_scene="res://Menu/Menu.tscn"
 
 window/size/width=480
 window/size/height=270
-window/size/test_width=480
-window/size/test_height=270
+window/size/test_width=1200
+window/size/test_height=675
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

@@ -121,7 +121,7 @@ namespace Hopper
 
         public void ConnectTile(Tile tile)
         {
-            tile.Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
+            tile.Connect(nameof(Tile.TileUpdated), this, nameof(UpdateTile));
         }
 
         public Vector2 LimitToBounds(Vector2 Position)
