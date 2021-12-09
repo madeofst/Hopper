@@ -6,7 +6,7 @@ namespace Hopper
     public class Player : Node2D
     {
         //References to existing nodes
-        private World World;
+        //private World World;
         public Level CurrentLevel;
         public Grid Grid;
         private Sprite PlayerSprite;
@@ -17,6 +17,7 @@ namespace Hopper
         public int LevelScore { get; set; } = 0;
         private Vector2 _GridPosition;
         private Tile _CurrentTile;
+        private bool Active = false;
 
         public Vector2 GridPosition
         {
@@ -47,6 +48,8 @@ namespace Hopper
         public delegate void HopCompleted(int hopsRemaining);
         [Signal]
         public delegate void TileChanged(Type NewType);
+        [Signal]
+        public delegate void HopsExhausted();
 
         public override void _Ready()
         {
@@ -54,15 +57,15 @@ namespace Hopper
             //CallDeferred("Init");
         }
 
-        public void Init() //Called each time a new level starts
+        public void Init(Level currentLevel) //Called each time a new level starts
         {
-            if (World is null)
-            {
-                World = GetNode<World>("..");
+            //if (World is null)
+            //{
+                //World = GetNode<World>("..");
                 PlayerSprite = GetNode<Sprite>("PlayerSprite");
-                PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
-            }
-            CurrentLevel = World.CurrentLevel;
+                //PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
+            //}
+            CurrentLevel = currentLevel;
             Grid = CurrentLevel.Grid;            
             GridPosition = CurrentLevel.PlayerStartPosition;
             HopsRemaining = CurrentLevel.StartingHops;
@@ -70,6 +73,7 @@ namespace Hopper
 
             EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
+            Active = true;
         }
 
         private void CheckMovement(Vector2 Movement)
@@ -142,13 +146,14 @@ namespace Hopper
         {
             if (HopsRemaining <= 0)
             {
-                World.GameOver = true;
+                EmitSignal(nameof(HopsExhausted));
+                //Active = false;
             }
         }
 
         public override void _Input(InputEvent @event)
         {
-            if (World != null && !World.GameOver)
+            if (Active) //FIXME: world is not null??
             {
                 if (@event.IsActionPressed("ui_left")) 
                     CheckMovement(new Vector2(-1, 0));
