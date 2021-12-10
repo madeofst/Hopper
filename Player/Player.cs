@@ -6,7 +6,6 @@ namespace Hopper
     public class Player : Node2D
     {
         //References to existing nodes
-        //private World World;
         public Level CurrentLevel;
         public Grid Grid;
         private Sprite PlayerSprite;
@@ -60,13 +59,9 @@ namespace Hopper
 
         public void Init(Level currentLevel) //Called each time a new level starts
         {
-            //if (World is null)
-            //{
-                //World = GetNode<World>("..");
             PlayerSprite = GetNode<Sprite>("PlayerSprite");
             AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-                //PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
-            //}
+
             CurrentLevel = currentLevel;
             Grid = CurrentLevel.Grid;            
             GridPosition = CurrentLevel.PlayerStartPosition;
@@ -75,6 +70,8 @@ namespace Hopper
 
             EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
+            
+            ResetAnimation();
             Active = true;
         }
 
