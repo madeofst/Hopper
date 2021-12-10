@@ -7,10 +7,6 @@ namespace Hopper
 {
 	public class Menu : MarginContainer
 	{
-		public override void _Ready()
-		{
-		}
-
 		public void newGamePressed()
 		{
 			GD.Print("New game button pressed.");

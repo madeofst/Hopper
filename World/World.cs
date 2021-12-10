@@ -109,6 +109,7 @@ namespace Hopper
             Grid = CurrentLevel.Grid;
             MoveChild(Player, 4);
             Player.Init(CurrentLevel);
+            Player.ResetAnimation();
             if (Timer is null)
             {
                 Timer = new milliTimer();
@@ -166,7 +167,6 @@ namespace Hopper
                 if (iLevel >= Levels.Length || Levels[iLevel] == null)
                 {
                     NewLevel(Player.GridPosition);
-                    
                 }
                 else
                 {

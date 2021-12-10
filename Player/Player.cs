@@ -10,6 +10,7 @@ namespace Hopper
         public Level CurrentLevel;
         public Grid Grid;
         private Sprite PlayerSprite;
+        private AnimationPlayer AnimationPlayer;
 
         //Player parameters
         public int HopsRemaining { get; set; } = 3;
@@ -62,7 +63,8 @@ namespace Hopper
             //if (World is null)
             //{
                 //World = GetNode<World>("..");
-                PlayerSprite = GetNode<Sprite>("PlayerSprite");
+            PlayerSprite = GetNode<Sprite>("PlayerSprite");
+            AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
                 //PlayerSprite.Texture = GD.Load<Texture>("res://Player/Resources/Frog1_32x32_front.png");
             //}
             CurrentLevel = currentLevel;
@@ -155,18 +157,35 @@ namespace Hopper
             }
         }
 
+        public void ResetAnimation()
+        {
+            AnimationPlayer.Play("IdleDown");
+        }
+
         public override void _Input(InputEvent @event)
         {
             if (Active) //FIXME: world is not null??
             {
-                if (@event.IsActionPressed("ui_left")) 
+                if (@event.IsActionPressed("ui_left"))
+                {
+                    AnimationPlayer.Play("IdleLeft");
                     CheckMovement(new Vector2(-1, 0));
+                }
                 else if (@event.IsActionPressed("ui_right")) 
+                {
+                    AnimationPlayer.Play("IdleRight");
                     CheckMovement(new Vector2(1, 0));
-                else if (@event.IsActionPressed("ui_up")) 
+                }
+                else if (@event.IsActionPressed("ui_up"))
+                { 
+                    AnimationPlayer.Play("IdleUp");
                     CheckMovement(new Vector2(0, -1));
+                }
                 else if (@event.IsActionPressed("ui_down"))
+                {
+                    AnimationPlayer.Play("IdleDown");
                     CheckMovement(new Vector2(0, 1));
+                }
             }
         }
     }

@@ -1,7 +1,40 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Player/Resources/Frog1_32x32_front.png" type="Texture" id=1]
+[ext_resource path="res://Player/Resources/Frog1_32x32_combined.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
+[ext_resource path="res://Player/Resources/IdleDown.tres" type="Animation" id=3]
+[ext_resource path="res://Player/Resources/IdleRight.tres" type="Animation" id=4]
+[ext_resource path="res://Player/Resources/IdleLeft.tres" type="Animation" id=5]
+[ext_resource path="res://Player/Resources/IdleUp.tres" type="Animation" id=6]
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "IdleDown"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "IdleLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "IdleRight"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "IdleUp"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+
+[sub_resource type="AnimationNodeStateMachine" id=1]
+states/IdleDown/node = SubResource( 3 )
+states/IdleDown/position = Vector2( 496, 187 )
+states/IdleLeft/node = SubResource( 4 )
+states/IdleLeft/position = Vector2( 780, 172 )
+states/IdleRight/node = SubResource( 5 )
+states/IdleRight/position = Vector2( 996, 172 )
+states/IdleUp/node = SubResource( 6 )
+states/IdleUp/position = Vector2( 496, 74 )
+transitions = [ "IdleDown", "IdleUp", SubResource( 7 ), "IdleUp", "IdleDown", SubResource( 8 ) ]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
@@ -9,3 +42,16 @@ script = ExtResource( 2 )
 [node name="PlayerSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 offset = Vector2( 0, -10 )
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/IdleDown = ExtResource( 3 )
+anims/IdleLeft = ExtResource( 5 )
+anims/IdleRight = ExtResource( 4 )
+anims/IdleUp = ExtResource( 6 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 1 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 9 )
