@@ -119,6 +119,11 @@ namespace Hopper
             }
         }
 
+        internal Vector2 DetermineWaterExit(Vector2 movement)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ConnectTile(Tile tile)
         {
             tile.Connect(nameof(Tile.TileUpdated), this, nameof(UpdateTile));

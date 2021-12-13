@@ -17,6 +17,7 @@ namespace Hopper
         public int LevelScore { get; set; } = 0;
         private Vector2 _GridPosition;
         private Tile _CurrentTile;
+        private Tile NewTile;
         private bool Active = false;
 
         public Vector2 GridPosition
@@ -28,7 +29,7 @@ namespace Hopper
             set
             {
                 _GridPosition = value;
-                Position = _GridPosition * Grid.TileSize + Grid.RectPosition + Grid.TileSize / 2;
+                Position = _GridPosition * Grid.TileSize + Grid.RectPosition;// + Grid.TileSize / 2;
             }
         }
         private Tile CurrentTile 
@@ -38,6 +39,11 @@ namespace Hopper
                 return Grid.GetTile(GridPosition);   
             } 
         }
+
+        public bool Animating { get; private set; } = false;
+        public float AnimationTimeElapsed = 0;
+        [Export]
+        public Curve jumpCurve;
 
         //Signals
         [Signal]
@@ -77,21 +83,53 @@ namespace Hopper
 
         private void CheckMovement(Vector2 Movement)
         {
-            Tile newTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + ExtraJump(Movement)));
-            while (newTile.Type == Type.Water)
+            NewTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + ExtraJump(Movement)));
+            while (NewTile.Type == Type.Water)
             {
-                newTile = Grid.GetTile(Grid.DetermineWaterExit(newTile, Movement));
+                NewTile = Grid.GetTile(Grid.DetermineWaterExit(NewTile, Movement));
             }
 
-            if (newTile.GridPosition != GridPosition && newTile.Type != Type.Rock)
+            if (NewTile.GridPosition != GridPosition && NewTile.Type != Type.Rock)
             {
-                GridPosition = newTile.GridPosition;
+                Animate(Movement);
+            }
+        }
+
+        private void Animate(Vector2 movement)
+        {
+            Animating = true;
+            if (movement == Vector2.Left)
+            {
+                AnimationPlayer.Play("JumpLeft");
+            }
+            else if (movement == Vector2.Right) 
+            {
+                AnimationPlayer.Play("JumpRight");
+            }
+            else if (movement == Vector2.Up)
+            { 
+                AnimationPlayer.Play("JumpUp");
+            }
+            else if (movement == Vector2.Down)
+            {
+                AnimationPlayer.Play("JumpDown");
+            }
+        }
+
+        public void AfterAnimation(string animationName)
+        {
+            GD.Print($"Animation {animationName} finished");
+            AnimationTimeElapsed = 0;
+            if (animationName.BeginsWith("Jump"))
+            {
+                GridPosition = NewTile.GridPosition;
                 UpdateHopsRemaining(-1);
                 UpdateScore();
                 if (!CheckGoal())
                 {
                     CheckHopsRemaining();
                 }
+                Animating = false;
             }
         }
 
@@ -159,30 +197,30 @@ namespace Hopper
             AnimationPlayer.Play("IdleDown");
         }
 
+        public override void _PhysicsProcess(float delta)
+        {
+            if (Animating)
+            {
+                AnimationTimeElapsed += delta;
+                float animationLength = AnimationPlayer.GetAnimation("JumpLeft").Length;
+                float totalDistance = (NewTile.GridPosition - GridPosition).Length() * NewTile.Size.x;
+                float distanceTravelled = totalDistance - (NewTile.GlobalPosition - GlobalPosition).Length();
+                float timeRatio = AnimationTimeElapsed/animationLength;
+                float pixelsToMove = totalDistance * jumpCurve.Interpolate(timeRatio) - distanceTravelled;
+                GlobalPosition = GlobalPosition.MoveToward(NewTile.GlobalPosition, pixelsToMove);
+            }
+        }
+
         public override void _Input(InputEvent @event)
         {
-            if (Active) //FIXME: world is not null??
+            //TODO: Maybe add inputs to an event queue and trigger it in physics process
+
+            if (Active && !Animating) //FIXME: world is not null??
             {
-                if (@event.IsActionPressed("ui_left"))
-                {
-                    AnimationPlayer.Play("IdleLeft");
-                    CheckMovement(new Vector2(-1, 0));
-                }
-                else if (@event.IsActionPressed("ui_right")) 
-                {
-                    AnimationPlayer.Play("IdleRight");
-                    CheckMovement(new Vector2(1, 0));
-                }
-                else if (@event.IsActionPressed("ui_up"))
-                { 
-                    AnimationPlayer.Play("IdleUp");
-                    CheckMovement(new Vector2(0, -1));
-                }
-                else if (@event.IsActionPressed("ui_down"))
-                {
-                    AnimationPlayer.Play("IdleDown");
-                    CheckMovement(new Vector2(0, 1));
-                }
+                if (@event.IsActionPressed("ui_left")) CheckMovement(Vector2.Left);
+                else if (@event.IsActionPressed("ui_right")) CheckMovement(Vector2.Right);
+                else if (@event.IsActionPressed("ui_up")) CheckMovement(Vector2.Up);
+                else if (@event.IsActionPressed("ui_down")) CheckMovement(Vector2.Down);
             }
         }
     }
