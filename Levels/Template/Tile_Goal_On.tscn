@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Levels/Template/Tile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Resources/LilyPad_Goal_On.png" type="Texture" id=2]
+[ext_resource path="res://Levels/Resources/Water_32x32_combined.png" type="Texture" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Lights"
@@ -23,6 +24,11 @@ tracks/0/keys = {
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 1
 Activated = true
+
+[node name="WaterSprite" parent="." index="1"]
+texture = ExtResource( 3 )
+hframes = 9
+frame = 1
 
 [node name="LilySprite" parent="." index="2"]
 texture = ExtResource( 2 )

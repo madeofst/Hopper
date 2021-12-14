@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-StartingHops = 6
-MaximumHops = 10
-ScoreRequired = 100
-TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-TileType = PoolIntArray( 0, 0, 0, 0, 4, 4, 3, 0, 0, 5, 5, 5, 1, 4, 0, 0, 5, 5, 5, 5, 0, 0, 0, 5, 5, 5, 5, 0, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-PlayerStartPosition = Vector2( 1, 5 )
 Name = "DefaultLevelName"
-Width = 7
 TileSize = 32
+ScoreRequired = 0
+MaximumHops = 20
+TilePointValue = PoolIntArray( 0, 0, 700, 900, 0, 0, 0, 0, 0, 0, 900, 0, 0, 0, 300, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+PlayerStartPosition = Vector2( 0, 0 )
+Width = 7
+StartingHops = 20
+TileType = PoolIntArray( 0, 0, 2, 2, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 Height = 7

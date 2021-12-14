@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using System.Collections.Generic;
 
 namespace Hopper
 {
@@ -40,10 +41,12 @@ namespace Hopper
             } 
         }
 
+        //Animation parameters
         public bool Animating { get; private set; } = false;
         public float AnimationTimeElapsed = 0;
         [Export]
         public Curve jumpCurve;
+        public Queue<Vector2> MoveInputQueue;
 
         //Signals
         [Signal]
@@ -74,6 +77,8 @@ namespace Hopper
             HopsRemaining = CurrentLevel.StartingHops;
             LevelScore = 0;
 
+            MoveInputQueue = new Queue<Vector2>();
+
             EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
             
@@ -93,42 +98,8 @@ namespace Hopper
             {
                 Animate(Movement);
             }
-        }
-
-        private void Animate(Vector2 movement)
-        {
-            Animating = true;
-            if (movement == Vector2.Left)
+            else
             {
-                AnimationPlayer.Play("JumpLeft");
-            }
-            else if (movement == Vector2.Right) 
-            {
-                AnimationPlayer.Play("JumpRight");
-            }
-            else if (movement == Vector2.Up)
-            { 
-                AnimationPlayer.Play("JumpUp");
-            }
-            else if (movement == Vector2.Down)
-            {
-                AnimationPlayer.Play("JumpDown");
-            }
-        }
-
-        public void AfterAnimation(string animationName)
-        {
-            GD.Print($"Animation {animationName} finished");
-            AnimationTimeElapsed = 0;
-            if (animationName.BeginsWith("Jump"))
-            {
-                GridPosition = NewTile.GridPosition;
-                UpdateHopsRemaining(-1);
-                UpdateScore();
-                if (!CheckGoal())
-                {
-                    CheckHopsRemaining();
-                }
                 Animating = false;
             }
         }
@@ -146,6 +117,31 @@ namespace Hopper
                 return jumpMovement;
             }
             return movementDirection;
+        }
+
+        private void Animate(Vector2 movement)
+        {
+            if      (movement == Vector2.Left)   AnimationPlayer.Play("JumpLeft");
+            else if (movement == Vector2.Right)  AnimationPlayer.Play("JumpRight");
+            else if (movement == Vector2.Up)     AnimationPlayer.Play("JumpUp");
+            else if (movement == Vector2.Down)   AnimationPlayer.Play("JumpDown");
+        }
+
+        public void AfterAnimation(string animationName)
+        {
+            //GD.Print($"Animation {animationName} finished");
+            AnimationTimeElapsed = 0;
+            if (animationName.BeginsWith("Jump"))
+            {
+                GridPosition = NewTile.GridPosition;
+                UpdateHopsRemaining(-1);
+                UpdateScore();
+                if (!CheckGoal())
+                {
+                    CheckHopsRemaining();
+                }
+            }
+            Animating = false;
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -188,13 +184,21 @@ namespace Hopper
             if (HopsRemaining <= 0)
             {
                 EmitSignal(nameof(HopsExhausted));
-                //Active = false;
             }
         }
 
         public void ResetAnimation()
         {
             AnimationPlayer.Play("IdleDown");
+        }
+
+        public override void _Process(float delta)
+        {
+            if(!Animating && MoveInputQueue.Count > 0)
+            {
+                Animating = true;
+                CheckMovement(MoveInputQueue.Dequeue());
+            }
         }
 
         public override void _PhysicsProcess(float delta)
@@ -213,14 +217,12 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            //TODO: Maybe add inputs to an event queue and trigger it in physics process
-
-            if (Active && !Animating) //FIXME: world is not null??
+            if (Active) //FIXME: world is not null??
             {
-                if (@event.IsActionPressed("ui_left")) CheckMovement(Vector2.Left);
-                else if (@event.IsActionPressed("ui_right")) CheckMovement(Vector2.Right);
-                else if (@event.IsActionPressed("ui_up")) CheckMovement(Vector2.Up);
-                else if (@event.IsActionPressed("ui_down")) CheckMovement(Vector2.Down);
+                if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);
+                else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);
+                else if (@event.IsActionPressed("ui_up")) MoveInputQueue.Enqueue(Vector2.Up);
+                else if (@event.IsActionPressed("ui_down")) MoveInputQueue.Enqueue(Vector2.Down);
             }
         }
     }

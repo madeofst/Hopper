@@ -55,12 +55,21 @@ namespace Hopper
             
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
             if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Lights");
-        }
 
-        /* public void Init()
-        {
-            
-        } */
+            Random rand = new Random();
+            if (Type == Type.Water)
+            {
+                WaterSprite.Frame = 0;
+            }
+            else if (Type == Type.Rock)
+            {
+                WaterSprite.Frame = rand.Next(5, 9);
+            }
+            else
+            {
+                WaterSprite.Frame = rand.Next(1, 4);
+            }
+        }
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
         {

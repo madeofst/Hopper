@@ -7,12 +7,12 @@
 [ext_resource path="res://Player/Resources/IdleLeft.tres" type="Animation" id=5]
 [ext_resource path="res://Player/Resources/IdleUp.tres" type="Animation" id=6]
 
-[sub_resource type="Curve" id=26]
+[sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 0 ), 0.0, 0.280861, 0, 1, Vector2( 0.258944, 0.0727272 ), 1.01645, 1.01645, 0, 0, Vector2( 0.715503, 0.954545 ), 0.78093, 0.78093, 0, 0, Vector2( 1, 1 ), 0.159772, 0.0, 1, 0 ]
 
-[sub_resource type="Animation" id=21]
-resource_name = "JumpDown"
-length = 0.6
+[sub_resource type="Animation" id=2]
+length = 0.42
+step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
@@ -20,15 +20,15 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[sub_resource type="Animation" id=22]
-resource_name = "JumpLeft"
-length = 0.6
+[sub_resource type="Animation" id=3]
+length = 0.42
+step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
@@ -36,15 +36,15 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 18, 19, 20, 21, 22, 23 ]
 }
 
-[sub_resource type="Animation" id=23]
-resource_name = "JumpRight"
-length = 0.6
+[sub_resource type="Animation" id=4]
+length = 0.42
+step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
@@ -52,15 +52,15 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 12, 13, 14, 15, 16, 17 ]
 }
 
-[sub_resource type="Animation" id=24]
-resource_name = "JumpUp"
-length = 0.6
+[sub_resource type="Animation" id=5]
+length = 0.42
+step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
 tracks/0/interp = 1
@@ -68,99 +68,99 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 6, 7, 8, 9, 10, 11 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=1]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "IdleDown"
 
-[sub_resource type="AnimationNodeAnimation" id=2]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "IdleLeft"
 
-[sub_resource type="AnimationNodeAnimation" id=3]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "IdleRight"
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "IdleUp"
 
-[sub_resource type="AnimationNodeAnimation" id=13]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "JumpDown"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "JumpLeft"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "JumpRight"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=13]
 animation = "JumpUp"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachine" id=7]
-states/IdleDown/node = SubResource( 1 )
+[sub_resource type="AnimationNodeStateMachine" id=18]
+states/IdleDown/node = SubResource( 6 )
 states/IdleDown/position = Vector2( 1024, 322 )
-states/IdleLeft/node = SubResource( 2 )
+states/IdleLeft/node = SubResource( 7 )
 states/IdleLeft/position = Vector2( 1024, 168 )
-states/IdleRight/node = SubResource( 3 )
+states/IdleRight/node = SubResource( 8 )
 states/IdleRight/position = Vector2( 1024, 97 )
-states/IdleUp/node = SubResource( 4 )
+states/IdleUp/node = SubResource( 9 )
 states/IdleUp/position = Vector2( 1024, 249 )
-states/JumpDown/node = SubResource( 13 )
+states/JumpDown/node = SubResource( 10 )
 states/JumpDown/position = Vector2( 815, 322 )
-states/JumpLeft/node = SubResource( 14 )
+states/JumpLeft/node = SubResource( 11 )
 states/JumpLeft/position = Vector2( 815, 168 )
-states/JumpRight/node = SubResource( 15 )
+states/JumpRight/node = SubResource( 12 )
 states/JumpRight/position = Vector2( 815, 97 )
-states/JumpUp/node = SubResource( 16 )
+states/JumpUp/node = SubResource( 13 )
 states/JumpUp/position = Vector2( 815, 249 )
-transitions = [ "JumpRight", "IdleRight", SubResource( 17 ), "JumpUp", "IdleUp", SubResource( 18 ), "JumpDown", "IdleDown", SubResource( 19 ), "JumpLeft", "IdleLeft", SubResource( 20 ) ]
+transitions = [ "JumpRight", "IdleRight", SubResource( 14 ), "JumpUp", "IdleUp", SubResource( 15 ), "JumpDown", "IdleDown", SubResource( 16 ), "JumpLeft", "IdleLeft", SubResource( 17 ) ]
 graph_offset = Vector2( 603.31, 0 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=25]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
 [node name="Player" type="Node2D"]
 position = Vector2( -1, 0 )
 script = ExtResource( 2 )
-jumpCurve = SubResource( 26 )
+jumpCurve = SubResource( 1 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )
 hframes = 24
-frame = 17
+frame = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/IdleDown = ExtResource( 3 )
 anims/IdleLeft = ExtResource( 5 )
 anims/IdleRight = ExtResource( 4 )
 anims/IdleUp = ExtResource( 6 )
-anims/JumpDown = SubResource( 21 )
-anims/JumpLeft = SubResource( 22 )
-anims/JumpRight = SubResource( 23 )
-anims/JumpUp = SubResource( 24 )
+anims/JumpDown = SubResource( 2 )
+anims/JumpLeft = SubResource( 3 )
+anims/JumpRight = SubResource( 4 )
+anims/JumpUp = SubResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 7 )
+tree_root = SubResource( 18 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 25 )
+parameters/playback = SubResource( 19 )
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="AfterAnimation"]
