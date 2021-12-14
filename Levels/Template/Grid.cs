@@ -6,8 +6,6 @@ namespace Hopper
 {
     public class Grid : Control
     {
-        //public Player Player { get; set; }
-
         //TODO: add editable property
         private bool editable = false;
         public bool Editable
