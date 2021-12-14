@@ -12,6 +12,7 @@ namespace Hopper
         public Level CurrentLevel { get; set; }
         private Grid Grid { get; set; }
         private Player Player { get; set; }
+        public AudioStreamPlayer2D Music { get; set; }
     
         private HopCounter HopCounterBar { get; set; }
         private ScoreCounter ScoreCounter { get; set; }
@@ -46,6 +47,7 @@ namespace Hopper
 
         public override void _Ready()
         {
+            Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
             Resources = new ResourceRepository();
             levelFactory = new LevelFactory(Resources);
         }
@@ -83,7 +85,9 @@ namespace Hopper
                 {
                     NewLevel(Levels[iLevel]);
                 }
-            }            
+            }
+
+            Music.Play();
         }
 
         private void NewLevel(Vector2 playerPosition)
@@ -107,7 +111,7 @@ namespace Hopper
             CurrentLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
             CurrentLevel.Build(Resources);
             Grid = CurrentLevel.Grid;
-            MoveChild(Player, 4);
+            MoveChild(Player, GetChildCount());
             Player.Init(CurrentLevel);
             if (Timer is null)
             {
@@ -139,6 +143,7 @@ namespace Hopper
 
                 if (GameOver)
                 {
+                    Music.Stop();
                     GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
                     GetTree().Root.AddChild(GameOver);
                     GameOver.Score = Player.TotalScore;

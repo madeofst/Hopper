@@ -1,14 +1,13 @@
-// For game as-is
-_________________________
 
 // Definites
+_________________________
 
     // Fixes
-    * Improve score assignment
     * Level editor - saving after a change
-    * Check on how autosave works
-    * Don't do the high score thing at the end in editor mode
-
+    * Level editor - autosaving and updates
+    * Bug when clicking play in editor with no level selected
+    * timing of hop counter (possibly)
+    
     // Definite additions
     * Timer reduces with each goal reached?
     * Add max hop limit increase tile
@@ -16,21 +15,23 @@ _________________________
     * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
 
     //Plan in steps
-    * Design and add visual representation of timer and hops
-    * Animate main menu
-    * Draw/find sprites for
-        - water
+    * Redesign timer
+    * Design score target/value HUD
     * Animations
         - frog still (eyes blinking)
-        - frog hop down
-        - frog hop side
-        - frog hop up
+        - diving into and jumping out of water
+        - complete level (open up portal and jump in?)
+        - eat bug
+        - start level (maybe) (open up portal and jump out?)
     * Sound FX
-        - coin
-        - goal
+        - hop
+        - double jump
+        - bug
+        - goal unlocked
+        - goal reached
+        - level restart
+        - game over
     * Music
-        - menu Music
-        - game Music
         - end Music
 
 //Maybes
@@ -43,16 +44,8 @@ _________________________
 
     //Tiles
     * Permanent/semi-permanent change of jump length
-    * Add bounce tile? - auto bounce
+    * Add bounce tile? - auto bounce - would need a new animation
 
-
-// For more designable puzzle version
-_________________________
-
-    * Enemies to dodge?
-
-
-// Level Editor
-_________________________
-
-    * Add boxes for hops to add
+    //Presentational
+    * Animate main menu
+    * Improve score assignment

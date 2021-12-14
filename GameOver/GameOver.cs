@@ -8,6 +8,7 @@ namespace Hopper
     {
         private LineEdit TextInput;
         private HighScoreData Data = new HighScoreData();
+        public AudioStreamPlayer2D Music { get; set; }
         
         public string userName { get; set; }
         public int Score { get; set; }
@@ -16,6 +17,7 @@ namespace Hopper
 
         public override void _Ready()
         {
+            Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
             ScoreLabel = GetNode<RichTextLabel>("VBoxContainer/HBoxContainer1/ScoreLabel");        
         }
 

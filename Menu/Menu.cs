@@ -7,11 +7,18 @@ namespace Hopper
 {
 	public class Menu : MarginContainer
 	{
+		public AudioStreamPlayer2D Music;
+		public override void _Ready()
+		{
+			Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+		}
+
 		public void newGamePressed()
 		{
 			GD.Print("New game button pressed.");
 			World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
 			GetTree().Root.AddChild(world);
+			Music.Stop();
 			world.Init();
 			Hide();
 		}

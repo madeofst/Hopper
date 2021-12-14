@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://GameOver/GameOver.cs" type="Script" id=1]
 [ext_resource path="res://GameOver/UserNameEntry.cs" type="Script" id=2]
 [ext_resource path="res://Fonts/DigitalDisco.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Fonts/rainyhearts.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Music/Menu_short.ogg" type="AudioStream" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 4 )
@@ -92,4 +93,8 @@ rect_min_size = Vector2( 100, 0 )
 mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 3 )
 text = "Save Score"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+attenuation = 0.366021
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/SubmitButton" to="." method="onSubmitButtonPressed"]

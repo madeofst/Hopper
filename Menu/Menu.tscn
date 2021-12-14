@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Music/Hopper1.ogg" type="AudioStream" id=1]
+[ext_resource path="res://Music/Menu_short.ogg" type="AudioStream" id=1]
 [ext_resource path="res://HighScores/Resources/HighScoresButton_clicked.png" type="Texture" id=2]
 [ext_resource path="res://Menu/Menu.cs" type="Script" id=3]
 [ext_resource path="res://Fonts/DigitalDisco-Thin.ttf" type="DynamicFontData" id=4]
@@ -119,6 +119,7 @@ text = "Editor"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 1 )
+autoplay = true
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton" to="." method="newGamePressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4/HighScoresButton" to="." method="highScoresPressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="." method="EditorPressed"]
