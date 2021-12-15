@@ -7,11 +7,11 @@
 [ext_resource path="res://Player/Resources/IdleLeft.tres" type="Animation" id=5]
 [ext_resource path="res://Player/Resources/IdleUp.tres" type="Animation" id=6]
 
-[sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 0 ), 0.0, 0.280861, 0, 1, Vector2( 0.258944, 0.0727272 ), 1.01645, 1.01645, 0, 0, Vector2( 0.715503, 0.954545 ), 0.78093, 0.78093, 0, 0, Vector2( 1, 1 ), 0.159772, 0.0, 1, 0 ]
+[sub_resource type="Curve" id=19]
+_data = [ Vector2( 0, 0 ), 0.0, 0.784848, 0, 1, Vector2( 0.185328, 0.145455 ), 1.01645, 1.01645, 0, 0, Vector2( 0.478764, 0.7 ), 2.35455, 2.35455, 0, 0, Vector2( 0.694981, 0.981818 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0596089, 0.0, 1, 0 ]
 
-[sub_resource type="Animation" id=2]
-length = 0.42
+[sub_resource type="Animation" id=20]
+length = 0.49
 step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
@@ -20,14 +20,28 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5 ]
+"values": [ 0, 1, 2, 3, 4, 5, 6 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.28 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
 }
 
-[sub_resource type="Animation" id=3]
-length = 0.42
+[sub_resource type="Animation" id=21]
+length = 0.49
 step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
@@ -36,14 +50,28 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 18, 19, 20, 21, 22, 23 ]
+"values": [ 21, 22, 23, 24, 25, 26, 27 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.28 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
 }
 
-[sub_resource type="Animation" id=4]
-length = 0.42
+[sub_resource type="Animation" id=22]
+length = 0.49
 step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
@@ -52,14 +80,28 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 12, 13, 14, 15, 16, 17 ]
+"values": [ 14, 15, 16, 17, 18, 19, 20 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.28 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
 }
 
-[sub_resource type="Animation" id=5]
-length = 0.42
+[sub_resource type="Animation" id=23]
+length = 0.49
 step = 0.07
 tracks/0/type = "value"
 tracks/0/path = NodePath("PlayerSprite:frame")
@@ -68,10 +110,24 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 6, 7, 8, 9, 10, 11 ]
+"values": [ 7, 8, 9, 10, 11, 12, 13 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.28 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=6]
@@ -132,35 +188,36 @@ states/JumpRight/position = Vector2( 815, 97 )
 states/JumpUp/node = SubResource( 13 )
 states/JumpUp/position = Vector2( 815, 249 )
 transitions = [ "JumpRight", "IdleRight", SubResource( 14 ), "JumpUp", "IdleUp", SubResource( 15 ), "JumpDown", "IdleDown", SubResource( 16 ), "JumpLeft", "IdleLeft", SubResource( 17 ) ]
-graph_offset = Vector2( 603.31, 0 )
+graph_offset = Vector2( 578.31, 64 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=24]
 
 [node name="Player" type="Node2D"]
 position = Vector2( -1, 0 )
 script = ExtResource( 2 )
-jumpCurve = SubResource( 1 )
+jumpCurve = SubResource( 19 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )
-hframes = 24
+hframes = 28
 frame = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+method_call_mode = 1
 anims/IdleDown = ExtResource( 3 )
 anims/IdleLeft = ExtResource( 5 )
 anims/IdleRight = ExtResource( 4 )
 anims/IdleUp = ExtResource( 6 )
-anims/JumpDown = SubResource( 2 )
-anims/JumpLeft = SubResource( 3 )
-anims/JumpRight = SubResource( 4 )
-anims/JumpUp = SubResource( 5 )
+anims/JumpDown = SubResource( 20 )
+anims/JumpLeft = SubResource( 21 )
+anims/JumpRight = SubResource( 22 )
+anims/JumpUp = SubResource( 23 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 18 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 19 )
+parameters/playback = SubResource( 24 )
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="AfterAnimation"]

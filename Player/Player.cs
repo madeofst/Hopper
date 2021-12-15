@@ -121,10 +121,18 @@ namespace Hopper
 
         private void Animate(Vector2 movement)
         {
-            if      (movement == Vector2.Left)   AnimationPlayer.Play("JumpLeft");
+            if (movement == Vector2.Left)        AnimationPlayer.Play("JumpLeft");  
             else if (movement == Vector2.Right)  AnimationPlayer.Play("JumpRight");
             else if (movement == Vector2.Up)     AnimationPlayer.Play("JumpUp");
             else if (movement == Vector2.Down)   AnimationPlayer.Play("JumpDown");
+            CurrentTile.SplashAnimation.Play("Jump");   
+            CurrentTile.LilyAnimation.Play("Jump");
+        }
+
+        public void TriggerLandAnimation()
+        {
+            NewTile.SplashAnimation.Play("Land");
+            NewTile.LilyAnimation.Play("Land");
         }
 
         public void AfterAnimation(string animationName)

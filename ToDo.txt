@@ -49,3 +49,6 @@ _________________________
     //Presentational
     * Animate main menu
     * Improve score assignment
+
+
+1200 * 675

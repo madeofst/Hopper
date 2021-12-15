@@ -37,7 +37,11 @@ namespace Hopper
         public CollisionShape2D CollisionShape;
         public Sprite LilySprite;
         public Sprite WaterSprite;
+        public Sprite BugSprite;
         public Counter Label;
+        public AnimationPlayer LilyAnimation;
+        public AnimationPlayer SplashAnimation;
+        public AnimationPlayer BugAnimation;
 
         public Tile(){}   
 
@@ -46,9 +50,19 @@ namespace Hopper
             CollisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
             LilySprite = GetNode<Sprite>("LilySprite");
             WaterSprite = GetNode<Sprite>("WaterSprite");
+            BugSprite = GetNode<Sprite>("BugSprite");
             Label = GetNode<Counter>("Label");
+            LilyAnimation = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
+            SplashAnimation = GetNode<AnimationPlayer>("SplashSprite/AnimationPlayer");
+            BugAnimation = GetNode<AnimationPlayer>("BugSprite/AnimationPlayer");
             
-            if (Type == Type.Score) Label.BbcodeText = $"[center]{PointValue.ToString()}[/center]";
+            Random rand = new Random();
+            if (Type == Type.Score)
+            {
+                Label.BbcodeText = $"[center]{PointValue.ToString()}[/center]";
+                BugAnimation.Play($"Hover{rand.Next(1, 3)}");
+                BugSprite.Modulate = ModulatePalette.Colors[(PointValue/100)-1];
+            }
 
             //CallDeferred("Init");
             Connect("mouse_entered", this, "OnMouseEnter");
@@ -56,19 +70,7 @@ namespace Hopper
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
             if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Lights");
 
-            Random rand = new Random();
-            if (Type == Type.Water)
-            {
-                WaterSprite.Frame = 0;
-            }
-            else if (Type == Type.Rock)
-            {
-                WaterSprite.Frame = rand.Next(5, 9);
-            }
-            else
-            {
-                WaterSprite.Frame = rand.Next(1, 4);
-            }
+            WaterSprite.Frame = 0;
         }
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
