@@ -84,16 +84,18 @@ namespace Hopper
             LevelData.PlayerStartPosition = PlayerStartPosition;
         }
 
-        public void UpdateGoalState(int currentScore, Tile activatedGoalTile)
+        public bool UpdateGoalState(int currentScore, Tile activatedGoalTile)
         {
             if (currentScore >= ScoreRequired && !Grid.GoalTile.Activated)
             {
                 Grid.ReplaceTile(Grid.GoalTile.GridPosition, activatedGoalTile);
+                return true;
             }
             else
             {
                 activatedGoalTile.QueueFree();
             }
+            return false;
         }
 
         private void UpdatePlayerStart(Vector2 gridPosition)

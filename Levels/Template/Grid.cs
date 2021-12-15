@@ -74,7 +74,7 @@ namespace Hopper
             RectSize = new Vector2(tileSize * GridWidth, tileSize * GridHeight);
             SetPosition(new Vector2(
                 128 + ((7 - GridWidth) * TileSize.x)/2, 
-                23 + ((7 - GridHeight) * TileSize.y)/2
+                40 + ((7 - GridHeight) * TileSize.y)/2
             ));
 
             Tiles = new Tile[GridWidth, GridHeight];

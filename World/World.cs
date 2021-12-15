@@ -18,6 +18,7 @@ namespace Hopper
         private ScoreCounter ScoreCounter { get; set; }
         private TimeCounter TimeCounter { get; set; }
         private Stopwatch Stopwatch { get; set; }
+        private ScoreBox ScoreBox  { get; set; }
 
         //World parameters
         public bool GameOver = false;
@@ -29,11 +30,11 @@ namespace Hopper
         {
             //Basic
             "StartingOut",
-            "ArtAndSoul",
+            //"ArtAndSoul",
             //Jumping
-            "MovingOn",
-            "MovingOn2",
-            "DoubleJump",
+            //"MovingOn",
+            //"MovingOn2",
+            //"DoubleJump",
             "Jumpington",
             //Water
             "SideWind"
@@ -58,6 +59,7 @@ namespace Hopper
             ScoreCounter = GetNode<ScoreCounter>("HUD/TimeAndScoreSimple/VBoxContainer/ScoreCounter");
             TimeCounter = GetNode<TimeCounter>("HUD/TimeAndScoreSimple/VBoxContainer/TimeCounter");
             Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
+            ScoreBox = GetNode<ScoreBox>("HUD/ScoreBox");
 
             Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
@@ -113,6 +115,8 @@ namespace Hopper
             Grid = CurrentLevel.Grid;
             MoveChild(Player, GetChildCount());
             Player.Init(CurrentLevel);
+            ScoreBox.LevelMinScore.BbcodeText = CurrentLevel.ScoreRequired.ToString();
+
             if (Timer is null)
             {
                 Timer = new milliTimer();
@@ -187,7 +191,12 @@ namespace Hopper
 
         public void UpdateGoalState(int currentScore, int currentLevelScore)
         {
-            CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
+            ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore);
+            if (!CurrentLevel.Grid.GoalTile.Activated)
+            {
+                bool MinScoreReached = CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
+                if (MinScoreReached && currentLevelScore != 0) ScoreBox.Animate();
+            }
         }
 
         public void OnHopsExhausted()

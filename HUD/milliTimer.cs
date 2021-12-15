@@ -17,15 +17,15 @@ public class milliTimer
         }
     }
 
-    public void Start(ulong lengthSecs)
+    public void Start(float lengthSecs)
     {
-        TimerLength = lengthSecs * 1000;
+        TimerLength = (ulong)(lengthSecs * 1000);
         TimerEnd = OS.GetSystemTimeMsecs() + TimerLength;
     }
 
     public bool Finished()
     {
-        if (OS.GetSystemTimeMsecs() >= TimerEnd)
+        if (OS.GetSystemTimeMsecs() >= TimerEnd && TimerEnd != 0)
         {
             return true;
         }

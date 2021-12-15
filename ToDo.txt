@@ -7,6 +7,7 @@ _________________________
     * Level editor - autosaving and updates
     * Bug when clicking play in editor with no level selected
     * timing of hop counter (possibly)
+    * bug with timer on shaky score text
     
     // Definite additions
     * Timer reduces with each goal reached?

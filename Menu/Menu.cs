@@ -28,6 +28,7 @@ namespace Hopper
 			GD.Print("High scores button pressed.");
 			HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
 			GetTree().Root.AddChild(table);
+			Music.Stop();
 			Hide();
 		}
 
@@ -35,6 +36,7 @@ namespace Hopper
 		{
 			LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Editor/LevelEditor.tscn").Instance();
 			GetTree().Root.AddChild(editor);
+			Music.Stop();
 			Hide();
 		}
 	}
