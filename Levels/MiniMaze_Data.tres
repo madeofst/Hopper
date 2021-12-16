@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+ScoreRequired = 200
+StartingHops = 12
+MaximumHops = 12
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 100, 0 )
+TileType = PoolIntArray( 0, 0, 0, 0, 2, 0, 0, 0, 3, 5, 4, 0, 5, 4, 0, 5, 3, 3, 3, 3, 3, 0, 0, 4, 2, 3, 1, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 4, 5, 3, 0, 0, 0, 2, 0, 3, 0, 2, 0 )
+PlayerStartPosition = Vector2( 0, 0 )
+Height = 7
+Width = 7
+TileSize = 32
+Name = "MiniMaze"

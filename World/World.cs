@@ -38,7 +38,8 @@ namespace Hopper
             "Jumpington",
             //Water
             "Retrace",
-            "SideWind"
+            "SideWind",
+            "MiniMaze"
         };
 
         public bool TempForTesting { get; set; } = false;
