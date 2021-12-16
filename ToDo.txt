@@ -8,6 +8,7 @@ _________________________
     * Bug when clicking play in editor with no level selected
     * timing of hop counter (possibly)
     * bug with timer on shaky score text
+    * bug when trying to jump into water towards a rock/edge of map
     
     // Definite additions
     * Timer reduces with each goal reached?
