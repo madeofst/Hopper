@@ -18,7 +18,7 @@ namespace Hopper
         public int LevelScore { get; set; } = 0;
         private Vector2 _GridPosition;
         private Tile _CurrentTile;
-        private Tile NewTile;
+        private Tile LandTile, SplashTile, ExitTile;
         private bool Active = false;
 
         public Vector2 GridPosition
@@ -93,29 +93,35 @@ namespace Hopper
 
         private void CheckMovement(Vector2 Movement)
         {
-            NewTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + ExtraJump(Movement)));
+            LandTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + ExtraJump(Movement)));
 
-            string jumpType = "Jump";
+            string jumpPrefix = "Jump";
+            string jumpSuffix = "";
             currentJumpCurve = JumpCurve;
-            if ((NewTile.GridPosition - GridPosition).Length() > 1) 
+            if ((LandTile.GridPosition - GridPosition).Length() > 1) 
             {
-                jumpType = "DoubleJump";
+                jumpPrefix = "DoubleJump";
                 currentJumpCurve = DoubleJumpCurve;
             }
 
-            while (NewTile.Type == Type.Water)
+            if (LandTile.Type == Type.Water) SplashTile = LandTile;
+
+            while (LandTile.Type == Type.Water)
             {
-                NewTile = Grid.GetTile(Grid.DetermineWaterExit(NewTile, Movement));
+                LandTile = Grid.GetTile(Grid.DetermineWaterExit(LandTile, Movement));
+                ExitTile = Grid.GetTile(LandTile.GridPosition - Movement);
             }
 
-            if (NewTile.GridPosition != GridPosition && NewTile.Type != Type.Rock)
+            if (SplashTile != null) jumpSuffix = "Splash";
+
+            if (LandTile.GridPosition != GridPosition && LandTile.Type != Type.Rock)
             {
-                Animate(Movement, jumpType);
+                Animate(Movement, jumpPrefix, jumpSuffix);
             }
             else
             {
+                LandTile = CurrentTile;
                 CurrentAnimation = null;
-                //nimating = false;
             }
         }
 
@@ -134,12 +140,21 @@ namespace Hopper
             return movementDirection;
         }
 
-        private void Animate(Vector2 movement, string jumpType)
+        public void ExitAnimation()
         {
-            if (movement == Vector2.Left)        CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Left");  
-            else if (movement == Vector2.Right)  CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Right");
-            else if (movement == Vector2.Up)     CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Up");
-            else if (movement == Vector2.Down)   CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Down");
+            CurrentAnimation = null;
+            SplashTile = null;
+            GlobalPosition = ExitTile.GlobalPosition;
+            GridPosition = ExitTile.GridPosition;
+            Animate((LandTile.GridPosition - ExitTile.GridPosition), "Jump", "Exit");
+        }
+
+        private void Animate(Vector2 movement, string jumpPrefix, string jumpSuffix = "")
+        {
+            if      (movement == Vector2.Left)   CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpPrefix}Left{jumpSuffix}");  
+            else if (movement == Vector2.Right)  CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpPrefix}Right{jumpSuffix}");
+            else if (movement == Vector2.Up)     CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpPrefix}Up{jumpSuffix}");
+            else if (movement == Vector2.Down)   CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpPrefix}Down{jumpSuffix}");
             AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimation));
             CurrentTile.SplashAnimation.Play("Jump");   
             CurrentTile.LilyAnimation.Play("Jump");
@@ -147,25 +162,42 @@ namespace Hopper
 
         public void TriggerLandAnimation()
         {
-            NewTile.SplashAnimation.Play("Land");
-            NewTile.LilyAnimation.Play("Land");
+            LandTile.SplashAnimation.Play("Land");
+            if (LandTile.Type != Type.Water) LandTile.LilyAnimation.Play("Land");
+        }
+
+        public void TriggerSplashAnimation()
+        {
+            if (SplashTile != null) SplashTile.SplashAnimation.Play("Splash");
+        }
+
+        public void TriggerExitSplashAnimation()
+        {
+            if (ExitTile != null) ExitTile.SplashAnimation.Play("Splash");
         }
 
         public void AfterAnimation(string animationName)
         {
             AnimationTimeElapsed = 0;
-            if (animationName.BeginsWith("Jump") || animationName.BeginsWith("DoubleJump"))
+            if (animationName.Right(animationName.Length - 6) == "Splash")
             {
-                GridPosition = NewTile.GridPosition;
-                UpdateHopsRemaining(-1);
-                UpdateScore();
-                if (!CheckGoal())
-                {
-                    CheckHopsRemaining();
-                }
+                ExitAnimation();
             }
-            CurrentAnimation = null;
-            //Animating = false;
+            else
+            {
+                if (animationName.BeginsWith("Jump") || animationName.BeginsWith("DoubleJump"))
+                {
+                    GridPosition = LandTile.GridPosition;
+                    UpdateHopsRemaining(-1);
+                    UpdateScore();
+                    if (!CheckGoal())
+                    {
+                        CheckHopsRemaining();
+                    }
+                }
+                CurrentAnimation = null;
+                LandTile = null;
+            }
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -220,7 +252,6 @@ namespace Hopper
         {
             if(CurrentAnimation == null && MoveInputQueue.Count > 0)
             {
-                //CurrentAnimation = MoveInputQueue.Dequeue();
                 CheckMovement(MoveInputQueue.Dequeue());
             }
         }
@@ -229,13 +260,16 @@ namespace Hopper
         {
             if (CurrentAnimation != null)
             {
+                //GD.Print(GlobalPosition);
+                Tile endTile = LandTile;
+                if (SplashTile != null) endTile = SplashTile;
                 AnimationTimeElapsed += delta;
                 float animationLength = CurrentAnimation.Length;
-                float totalDistance = (NewTile.GridPosition - GridPosition).Length() * NewTile.Size.x;
-                float distanceTravelled = totalDistance - (NewTile.GlobalPosition - GlobalPosition).Length();
+                float totalDistance = (endTile.GridPosition - GridPosition).Length() * endTile.Size.x;
+                float distanceTravelled = totalDistance - (endTile.GlobalPosition - GlobalPosition).Length();
                 float timeRatio = AnimationTimeElapsed/animationLength;
                 float pixelsToMove = totalDistance * currentJumpCurve.Interpolate(timeRatio) - distanceTravelled;
-                GlobalPosition = GlobalPosition.MoveToward(NewTile.GlobalPosition, pixelsToMove);
+                GlobalPosition = GlobalPosition.MoveToward(endTile.GlobalPosition, pixelsToMove);
             }
         }
 

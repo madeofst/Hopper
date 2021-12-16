@@ -30,13 +30,14 @@ namespace Hopper
         {
             //Basic
             "StartingOut",
-            //"ArtAndSoul",
+            "ArtAndSoul",
             //Jumping
-            //"MovingOn",
-            //"MovingOn2",
-            //"DoubleJump",
+            "MovingOn",
+            "MovingOn2",
+            "DoubleJump",
             "Jumpington",
             //Water
+            "Retrace",
             "SideWind"
         };
 

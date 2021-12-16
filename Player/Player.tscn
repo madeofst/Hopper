@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Player/Resources/Frog1_32x32_AllJumpsCombined.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Player/Resources/IdleUp.tres" type="Animation" id=6]
 [ext_resource path="res://Player/Resources/DoubleJumpCurve.tres" type="Curve" id=7]
 [ext_resource path="res://Player/Resources/JumpCurve.tres" type="Curve" id=8]
+[ext_resource path="res://Player/Resources/PlayerJumpUpSplash.tres" type="Animation" id=9]
+[ext_resource path="res://Player/Resources/PlayerJumpLeftSplash.tres" type="Animation" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "DoubleJumpDown"
@@ -41,7 +43,37 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "DoubleJumpLeft"
+resource_name = "DoubleJumpDownSplash"
+length = 0.63
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 108, 109, 110, 111, 112, 113, 114, 115, 116 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.42 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerSplashAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=3]
 length = 0.63
 step = 0.07
 tracks/0/type = "value"
@@ -71,8 +103,38 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "DoubleJumpRight"
+[sub_resource type="Animation" id=4]
+resource_name = "DoubleJumpLeftSplash"
+length = 0.63
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 135, 136, 137, 138, 139, 140, 141, 142, 143 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.42 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerSplashAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=5]
 length = 0.63
 step = 0.07
 tracks/0/type = "value"
@@ -102,8 +164,38 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "DoubleJumpUp"
+[sub_resource type="Animation" id=6]
+resource_name = "DoubleJumpRightSplash"
+length = 0.63
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 126, 127, 128, 129, 130, 131, 132, 133, 134 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.42 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerSplashAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
 length = 0.63
 step = 0.07
 tracks/0/type = "value"
@@ -133,7 +225,39 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=8]
+resource_name = "DoubleJumpUpSplash"
+length = 0.63
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 117, 118, 119, 120, 121, 122, 123, 124, 125 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.42 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerSplashAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "JumpDownExit"
 length = 0.49
 step = 0.07
 tracks/0/type = "value"
@@ -146,7 +270,41 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 6 ]
+"values": [ 144, 145, 146, 147, 148, 149, 150 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.28 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerExitSplashAnimation"
+}, {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "JumpDownSplash"
+length = 0.49
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 72, 73, 74, 75, 76, 77, 78 ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -159,11 +317,11 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "TriggerLandAnimation"
+"method": "TriggerSplashAnimation"
 } ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=11]
 length = 0.49
 step = 0.07
 tracks/0/type = "value"
@@ -193,7 +351,41 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=12]
+resource_name = "JumpLeftExit"
+length = 0.49
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 165, 166, 167, 168, 169, 170, 171 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.28 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerExitSplashAnimation"
+}, {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=13]
 length = 0.49
 step = 0.07
 tracks/0/type = "value"
@@ -223,7 +415,72 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=14]
+resource_name = "JumpRightExit"
+length = 0.49
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 158, 159, 160, 161, 162, 163, 164 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.28 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerExitSplashAnimation"
+}, {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "JumpRightSplash"
+length = 0.49
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 86, 87, 88, 89, 90, 91, 92 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.28 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerSplashAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=16]
 length = 0.49
 step = 0.07
 tracks/0/type = "value"
@@ -253,70 +510,134 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="Animation" id=17]
+resource_name = "JumpUpExit"
+length = 0.49
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 151, 152, 153, 154, 155, 156, 157 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.28 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerExitSplashAnimation"
+}, {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "JumpUpSplash"
+length = 0.49
+step = 0.07
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 79, 80, 81, 82, 83, 84, 85 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.28 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerSplashAnimation"
+} ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=19]
 animation = "IdleDown"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=20]
 animation = "IdleLeft"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=21]
 animation = "IdleRight"
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "IdleUp"
 
-[sub_resource type="AnimationNodeAnimation" id=13]
+[sub_resource type="AnimationNodeAnimation" id=23]
 animation = "JumpDown"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=24]
 animation = "JumpLeft"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=25]
 animation = "JumpRight"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=26]
 animation = "JumpUp"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=21]
-states/IdleDown/node = SubResource( 9 )
+[sub_resource type="AnimationNodeStateMachine" id=31]
+states/IdleDown/node = SubResource( 19 )
 states/IdleDown/position = Vector2( 1024, 322 )
-states/IdleLeft/node = SubResource( 10 )
+states/IdleLeft/node = SubResource( 20 )
 states/IdleLeft/position = Vector2( 1024, 168 )
-states/IdleRight/node = SubResource( 11 )
+states/IdleRight/node = SubResource( 21 )
 states/IdleRight/position = Vector2( 1024, 97 )
-states/IdleUp/node = SubResource( 12 )
+states/IdleUp/node = SubResource( 22 )
 states/IdleUp/position = Vector2( 1024, 249 )
-states/JumpDown/node = SubResource( 13 )
+states/JumpDown/node = SubResource( 23 )
 states/JumpDown/position = Vector2( 815, 322 )
-states/JumpLeft/node = SubResource( 14 )
+states/JumpLeft/node = SubResource( 24 )
 states/JumpLeft/position = Vector2( 815, 168 )
-states/JumpRight/node = SubResource( 15 )
+states/JumpRight/node = SubResource( 25 )
 states/JumpRight/position = Vector2( 815, 97 )
-states/JumpUp/node = SubResource( 16 )
+states/JumpUp/node = SubResource( 26 )
 states/JumpUp/position = Vector2( 815, 249 )
-transitions = [ "JumpRight", "IdleRight", SubResource( 17 ), "JumpUp", "IdleUp", SubResource( 18 ), "JumpDown", "IdleDown", SubResource( 19 ), "JumpLeft", "IdleLeft", SubResource( 20 ) ]
+transitions = [ "JumpRight", "IdleRight", SubResource( 27 ), "JumpUp", "IdleUp", SubResource( 28 ), "JumpDown", "IdleDown", SubResource( 29 ), "JumpLeft", "IdleLeft", SubResource( 30 ) ]
 graph_offset = Vector2( 578.31, 64 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=32]
 
 [node name="Player" type="Node2D"]
-position = Vector2( -1, 0 )
 script = ExtResource( 2 )
 JumpCurve = ExtResource( 8 )
 DoubleJumpCurve = ExtResource( 7 )
@@ -325,28 +646,40 @@ DoubleJumpCurve = ExtResource( 7 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )
-vframes = 2
+vframes = 5
 hframes = 36
-frame = 51
+frame = 40
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 method_call_mode = 1
 anims/DoubleJumpDown = SubResource( 1 )
-anims/DoubleJumpLeft = SubResource( 2 )
-anims/DoubleJumpRight = SubResource( 3 )
-anims/DoubleJumpUp = SubResource( 4 )
+anims/DoubleJumpDownSplash = SubResource( 2 )
+anims/DoubleJumpLeft = SubResource( 3 )
+anims/DoubleJumpLeftSplash = SubResource( 4 )
+anims/DoubleJumpRight = SubResource( 5 )
+anims/DoubleJumpRightSplash = SubResource( 6 )
+anims/DoubleJumpUp = SubResource( 7 )
+anims/DoubleJumpUpSplash = SubResource( 8 )
 anims/IdleDown = ExtResource( 3 )
 anims/IdleLeft = ExtResource( 5 )
 anims/IdleRight = ExtResource( 4 )
 anims/IdleUp = ExtResource( 6 )
-anims/JumpDown = SubResource( 5 )
-anims/JumpLeft = SubResource( 6 )
-anims/JumpRight = SubResource( 7 )
-anims/JumpUp = SubResource( 8 )
+anims/JumpDown = ExtResource( 9 )
+anims/JumpDownExit = SubResource( 9 )
+anims/JumpDownSplash = SubResource( 10 )
+anims/JumpLeft = SubResource( 11 )
+anims/JumpLeftExit = SubResource( 12 )
+anims/JumpLeftSplash = ExtResource( 10 )
+anims/JumpRight = SubResource( 13 )
+anims/JumpRightExit = SubResource( 14 )
+anims/JumpRightSplash = SubResource( 15 )
+anims/JumpUp = SubResource( 16 )
+anims/JumpUpExit = SubResource( 17 )
+anims/JumpUpSplash = SubResource( 18 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 21 )
+tree_root = SubResource( 31 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 22 )
+parameters/playback = SubResource( 32 )
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="AfterAnimation"]

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+ScoreRequired = 600
+MaximumHops = 10
+StartingHops = 6
+Name = "Retrace"
+PlayerStartPosition = Vector2( 2, 3 )
+Height = 7
+TileType = PoolIntArray( 3, 3, 3, 0, 0, 1, 4, 3, 3, 0, 2, 2, 0, 0, 3, 2, 0, 0, 0, 2, 0, 0, 4, 0, 2, 0, 4, 2, 4, 0, 0, 2, 0, 0, 0, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, 0, 0, 0, 500, 0, 0, 0, 100, 0, 0, 0, 0, 200, 0, 0, 500, 0, 0, 0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+Width = 7
+TileSize = 32
