@@ -42,11 +42,16 @@ namespace Hopper
         }
 
         //Animation parameters
-        public bool Animating { get; private set; } = false;
+        //public bool Animating { get; private set; } = false;
+        public Queue<Vector2> MoveInputQueue;
+        public Animation CurrentAnimation;
         public float AnimationTimeElapsed = 0;
         [Export]
-        public Curve jumpCurve;
-        public Queue<Vector2> MoveInputQueue;
+        public Curve JumpCurve;
+        [Export]
+        public Curve DoubleJumpCurve;
+        private Curve currentJumpCurve;
+        
 
         //Signals
         [Signal]
@@ -89,6 +94,15 @@ namespace Hopper
         private void CheckMovement(Vector2 Movement)
         {
             NewTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + ExtraJump(Movement)));
+
+            string jumpType = "Jump";
+            currentJumpCurve = JumpCurve;
+            if ((NewTile.GridPosition - GridPosition).Length() > 1) 
+            {
+                jumpType = "DoubleJump";
+                currentJumpCurve = DoubleJumpCurve;
+            }
+
             while (NewTile.Type == Type.Water)
             {
                 NewTile = Grid.GetTile(Grid.DetermineWaterExit(NewTile, Movement));
@@ -96,11 +110,12 @@ namespace Hopper
 
             if (NewTile.GridPosition != GridPosition && NewTile.Type != Type.Rock)
             {
-                Animate(Movement);
+                Animate(Movement, jumpType);
             }
             else
             {
-                Animating = false;
+                CurrentAnimation = null;
+                //nimating = false;
             }
         }
 
@@ -119,12 +134,13 @@ namespace Hopper
             return movementDirection;
         }
 
-        private void Animate(Vector2 movement)
+        private void Animate(Vector2 movement, string jumpType)
         {
-            if (movement == Vector2.Left)        AnimationPlayer.Play("JumpLeft");  
-            else if (movement == Vector2.Right)  AnimationPlayer.Play("JumpRight");
-            else if (movement == Vector2.Up)     AnimationPlayer.Play("JumpUp");
-            else if (movement == Vector2.Down)   AnimationPlayer.Play("JumpDown");
+            if (movement == Vector2.Left)        CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Left");  
+            else if (movement == Vector2.Right)  CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Right");
+            else if (movement == Vector2.Up)     CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Up");
+            else if (movement == Vector2.Down)   CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpType}Down");
+            AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimation));
             CurrentTile.SplashAnimation.Play("Jump");   
             CurrentTile.LilyAnimation.Play("Jump");
         }
@@ -137,9 +153,8 @@ namespace Hopper
 
         public void AfterAnimation(string animationName)
         {
-            //GD.Print($"Animation {animationName} finished");
             AnimationTimeElapsed = 0;
-            if (animationName.BeginsWith("Jump"))
+            if (animationName.BeginsWith("Jump") || animationName.BeginsWith("DoubleJump"))
             {
                 GridPosition = NewTile.GridPosition;
                 UpdateHopsRemaining(-1);
@@ -149,7 +164,8 @@ namespace Hopper
                     CheckHopsRemaining();
                 }
             }
-            Animating = false;
+            CurrentAnimation = null;
+            //Animating = false;
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -202,23 +218,23 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            if(!Animating && MoveInputQueue.Count > 0)
+            if(CurrentAnimation == null && MoveInputQueue.Count > 0)
             {
-                Animating = true;
+                //CurrentAnimation = MoveInputQueue.Dequeue();
                 CheckMovement(MoveInputQueue.Dequeue());
             }
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            if (Animating)
+            if (CurrentAnimation != null)
             {
                 AnimationTimeElapsed += delta;
-                float animationLength = AnimationPlayer.GetAnimation("JumpLeft").Length;
+                float animationLength = CurrentAnimation.Length;
                 float totalDistance = (NewTile.GridPosition - GridPosition).Length() * NewTile.Size.x;
                 float distanceTravelled = totalDistance - (NewTile.GlobalPosition - GlobalPosition).Length();
                 float timeRatio = AnimationTimeElapsed/animationLength;
-                float pixelsToMove = totalDistance * jumpCurve.Interpolate(timeRatio) - distanceTravelled;
+                float pixelsToMove = totalDistance * currentJumpCurve.Interpolate(timeRatio) - distanceTravelled;
                 GlobalPosition = GlobalPosition.MoveToward(NewTile.GlobalPosition, pixelsToMove);
             }
         }

@@ -61,7 +61,7 @@ namespace Hopper
             {
                 Label.BbcodeText = $"[center]{PointValue.ToString()}[/center]";
                 BugAnimation.Play($"Hover{rand.Next(1, 3)}");
-                BugSprite.Modulate = ModulatePalette.Colors[(PointValue/100)-1];
+                if (PointValue > 0) BugSprite.Modulate = ModulatePalette.Colors[(PointValue/100)-1];
             }
 
             //CallDeferred("Init");
