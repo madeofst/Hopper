@@ -17,23 +17,14 @@ _________________________
 
     //Plan in steps
     * Redesign timer
-    * Design score target/value HUD
     * Animations
         - frog still (eyes blinking)
-        - diving into and jumping out of water
         - complete level (open up portal and jump in?)
         - eat bug
         - start level (maybe) (open up portal and jump out?)
     * Sound FX
-        - hop
-        - double jump
-        - bug
-        - goal unlocked
-        - goal reached
-        - level restart
         - game over
-    * Music
-        - end Music
+        - eat bug
 
 //Maybes
 _________________________
