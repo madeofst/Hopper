@@ -18,7 +18,8 @@ namespace Hopper
         public override void _Ready()
         {
             Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
-            ScoreLabel = GetNode<RichTextLabel>("VBoxContainer/HBoxContainer1/ScoreLabel");        
+            ScoreLabel = GetNode<RichTextLabel>("VBoxContainer/HBoxContainer1/ScoreLabel");
+            Music.Play();        
         }
 
         public void onSubmitButtonPressed()

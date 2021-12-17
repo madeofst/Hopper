@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Player/Resources/Frog1_32x32_AllJumpsCombined.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
@@ -575,6 +575,32 @@ tracks/1/keys = {
 } ]
 }
 
+[sub_resource type="Animation" id=33]
+resource_name = "LevelComplete"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+
 [sub_resource type="AnimationNodeAnimation" id=19]
 animation = "IdleDown"
 
@@ -648,7 +674,7 @@ centered = false
 offset = Vector2( -16, -42 )
 vframes = 5
 hframes = 36
-frame = 108
+frame = 116
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 method_call_mode = 1
@@ -676,6 +702,7 @@ anims/JumpRightSplash = SubResource( 15 )
 anims/JumpUp = SubResource( 16 )
 anims/JumpUpExit = SubResource( 17 )
 anims/JumpUpSplash = SubResource( 18 )
+anims/LevelComplete = SubResource( 33 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 31 )

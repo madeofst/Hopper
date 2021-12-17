@@ -10,7 +10,7 @@ namespace Hopper
         public Level CurrentLevel;
         public Grid Grid;
         private Sprite PlayerSprite;
-        private AnimationPlayer AnimationPlayer;
+        public AnimationPlayer AnimationPlayer;
 
         //Player parameters
         public int HopsRemaining { get; set; } = 3;
@@ -19,7 +19,7 @@ namespace Hopper
         private Vector2 _GridPosition;
         private Tile _CurrentTile;
         private Tile LandTile, SplashTile, ExitTile;
-        private bool Active = false;
+        public bool Active = false;
 
         public Vector2 GridPosition
         {
@@ -57,6 +57,8 @@ namespace Hopper
         [Signal]
         public delegate void GoalReached();
         [Signal]
+        public delegate void IncrementLevel();
+        [Signal]
         public delegate void ScoreUpdated(int totalScore, int levelScore = 0);
         [Signal]
         public delegate void HopCompleted(int hopsRemaining);
@@ -64,6 +66,8 @@ namespace Hopper
         public delegate void TileChanged(Type NewType);
         [Signal]
         public delegate void HopsExhausted();
+        [Signal]
+        public delegate void QuitToMenu();
 
         public override void _Ready()
         {
@@ -109,7 +113,7 @@ namespace Hopper
             while (LandTile.Type == Type.Water)
             {
                 LandTile = Grid.GetTile(Grid.DetermineWaterExit(LandTile, Movement));
-                ExitTile = Grid.GetTile(LandTile.GridPosition - Movement);
+                ExitTile = Grid.GetTile(Grid.LimitToBounds(LandTile.GridPosition - Movement));
             }
 
             if (SplashTile != null) jumpSuffix = "Splash";
@@ -121,6 +125,8 @@ namespace Hopper
             else
             {
                 LandTile = CurrentTile;
+                SplashTile = null;
+                ExitTile = null;
                 CurrentAnimation = null;
             }
         }
@@ -183,15 +189,14 @@ namespace Hopper
             if (ExitTile != null) ExitTile.SplashAnimation.Play("Exit");
         }
 
-        public void TriggerJumpSpringAnimation()
-        {
-            
-        }
-
         public void AfterAnimation(string animationName)
         {
             AnimationTimeElapsed = 0;
-            if (animationName.Right(animationName.Length - 6) == "Splash")
+            if (animationName == "LevelComplete")
+            {
+                EmitSignal(nameof(IncrementLevel));
+            }
+            else if (animationName.Right(animationName.Length - 6) == "Splash")
             {
                 ExitAnimation();
             }
@@ -241,7 +246,7 @@ namespace Hopper
             if (CurrentTile.Type == Type.Goal && CurrentTile.Activated)
             {
                 EmitSignal(nameof(GoalReached));
-                UpdateHopsRemaining(CurrentLevel.StartingHops); //FIXME: Hops added should come from next level
+                //UpdateHopsRemaining(CurrentLevel.StartingHops); //FIXME: Hops added should come from next level
                 return true;
             }
             return false;
@@ -262,7 +267,9 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            if(CurrentAnimation == null && MoveInputQueue.Count > 0)
+            if(CurrentAnimation == null && 
+               MoveInputQueue.Count > 0 &&
+               Active)
             {
                 CheckMovement(MoveInputQueue.Dequeue());
             }
@@ -287,6 +294,11 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
+            if (@event.IsActionPressed("ui_cancel"))
+            {   
+                EmitSignal(nameof(QuitToMenu));
+            }
+
             if (Active) //FIXME: world is not null??
             {
                 if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);

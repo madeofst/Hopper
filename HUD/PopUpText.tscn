@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Fonts/DigitalDiscoOutline.tres" type="Theme" id=1]
+
+[node name="PopUpText" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 3.05176e-05
+margin_bottom = -252.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 480.0
+margin_bottom = 18.0
+rect_clip_content = false
+theme = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Try again![/center]"
+text = "Try again!"
+__meta__ = {
+"_edit_use_anchors_": false
+}

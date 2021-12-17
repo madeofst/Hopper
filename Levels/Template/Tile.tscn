@@ -310,3 +310,4 @@ volume_db = -6.0
 
 [node name="Spring" type="AudioStreamPlayer2D" parent="TileAudioFX"]
 stream = ExtResource( 11 )
+volume_db = -6.0

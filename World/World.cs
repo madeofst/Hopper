@@ -12,7 +12,9 @@ namespace Hopper
         public Level CurrentLevel { get; set; }
         private Grid Grid { get; set; }
         private Player Player { get; set; }
-
+        private HUD HUD { get; set; }
+        private AnimationPlayer PopUp { get; set; }
+        
         public AudioStreamPlayer2D Music { get; set; }
         public AudioStreamPlayer2D FailLevel { get; private set; }
         public AudioStreamPlayer2D SucceedLevel { get; private set; }
@@ -27,6 +29,19 @@ namespace Hopper
         //World parameters
         public bool GameOver = false;
         public milliTimer Timer;
+        private bool _PuzzleMode = true;
+        public bool PuzzleMode
+        {
+            get
+            {
+                if (Levels == null || Levels.Length <= 0) return false;
+                return true;
+            }
+            set
+            {
+                _PuzzleMode = value;
+            }
+        }
 
         //List of levels
         public int iLevel { get; set; } = 0;
@@ -34,16 +49,16 @@ namespace Hopper
         {
             //"water_test_1",
             //Basic
-            "StartingOut",
-            "ArtAndSoul",
+            //"StartingOut",
+            //"ArtAndSoul",
             //Jumping
-            "MovingOn",
-            "MovingOn2",
-            "DoubleJump",
-            "Jumpington",
+            //"MovingOn",
+            //"MovingOn2",
+            //"DoubleJump",
+            //"Jumpington",
             //Water
-            "Retrace",
-            "SideWind",
+            //"Retrace",
+            //"SideWind",
             "MiniMaze"
         };
 
@@ -57,7 +72,9 @@ namespace Hopper
         {
             Resources = new ResourceRepository();
             levelFactory = new LevelFactory(Resources);
-
+            
+            HUD = GetNode<HUD>("HUD");
+            
             Music = GetNode<AudioStreamPlayer2D>("Music");
             FailLevel = GetNode<AudioStreamPlayer2D>("FailLevel");
             SucceedLevel = GetNode<AudioStreamPlayer2D>("SucceedLevel");
@@ -76,7 +93,9 @@ namespace Hopper
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
             
             NewPlayer();           
-            Player.Connect(nameof(Player.GoalReached), this, nameof(IncrementLevel));
+            Player.Connect(nameof(Player.QuitToMenu), this, nameof(QuitToMenu));
+            Player.Connect(nameof(Player.GoalReached), this, nameof(GoalReached));
+            Player.Connect(nameof(Player.IncrementLevel), this, nameof(IncrementLevel));
             Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateHop));
             Player.Connect(nameof(Player.HopsExhausted), this, nameof(OnHopsExhausted));
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
@@ -90,13 +109,13 @@ namespace Hopper
             }
             else
             {
-                if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
+                if (PuzzleMode)
                 {
-                    NewLevel(Player.GridPosition);
+                    NewLevel(Levels[iLevel]);
                 }
                 else
                 {
-                    NewLevel(Levels[iLevel]);
+                    NewLevel(Player.GridPosition);
                 }
             }
         }
@@ -120,20 +139,24 @@ namespace Hopper
         {
             AddChild(CurrentLevel);
             CurrentLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
-            CurrentLevel.Build(Resources);
+            CurrentLevel.Build(Resources);           
             Grid = CurrentLevel.Grid;
+            MoveChild(HUD, GetChildCount());
             MoveChild(Player, GetChildCount());
             Player.Init(CurrentLevel);
             ScoreBox.LevelMinScore.BbcodeText = CurrentLevel.ScoreRequired.ToString();
 
-            if (Timer is null)
+            if (!PuzzleMode)
             {
-                Timer = new milliTimer();
-                Timer.Start(100);
-            }
-            else
-            {
-                Timer.Reset();
+                if (Timer is null)
+                {
+                    Timer = new milliTimer();
+                    Timer.Start(100);
+                }
+                else
+                {
+                    Timer.Reset();
+                }
             }
             Music.Play();
         }
@@ -172,10 +195,33 @@ namespace Hopper
             if (Timer != null) EmitSignal(nameof(TimeUpdate), Timer.Remaining());
         }
 
-        public void IncrementLevel()
+
+        public void GoalReached()
         {
             Music.Stop();
-            SucceedLevel.Play();
+            Player.Active = false;
+            Player.MoveInputQueue.Clear();
+            Player.AnimationPlayer.Play("LevelComplete");
+
+            if (iLevel >= Levels.Length - 1)
+            {
+                HUD.ShowPopUp("Game Complete");
+            }
+            else
+            {
+                HUD.ShowPopUp("Level complete!");
+                SucceedLevel.Play();
+            }
+        }
+
+        public void QuitToMenu()
+        {
+            QueueFree();
+            GetNode<Menu>("/root/Menu").Show();
+        }
+
+        public void IncrementLevel()
+        {
             iLevel++;
             if (TempForTesting)
             {
@@ -184,13 +230,20 @@ namespace Hopper
             }
             else
             {
-                if (iLevel >= Levels.Length || Levels[iLevel] == null)
+                if (PuzzleMode)
                 {
-                    NewLevel(Player.GridPosition);
+                    if (iLevel >= Levels.Length)
+                    {
+                        QuitToMenu();
+                    }
+                    else 
+                    {
+                        NewLevel(Levels[iLevel]);
+                    }
                 }
                 else
                 {
-                    NewLevel(Levels[iLevel]);
+                    NewLevel(Player.GridPosition);
                 }
             }
         }
@@ -229,6 +282,7 @@ namespace Hopper
             else
             {
                 FailLevel.Play();
+                HUD.ShowPopUp("Try again!");
                 NewLevel(Levels[iLevel]);
             }
         }
