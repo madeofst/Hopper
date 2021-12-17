@@ -648,7 +648,7 @@ centered = false
 offset = Vector2( -16, -42 )
 vframes = 5
 hframes = 36
-frame = 40
+frame = 108
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 method_call_mode = 1

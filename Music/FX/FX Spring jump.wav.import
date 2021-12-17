@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FX Spring jump.wav-8d54264392cc76759bb9c56471165386.sample"
+
+[deps]
+
+source_file="res://Music/FX/FX Spring jump.wav"
+dest_files=[ "res://.import/FX Spring jump.wav-8d54264392cc76759bb9c56471165386.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

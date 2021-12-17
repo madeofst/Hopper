@@ -155,9 +155,16 @@ namespace Hopper
             else if (movement == Vector2.Right)  CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpPrefix}Right{jumpSuffix}");
             else if (movement == Vector2.Up)     CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpPrefix}Up{jumpSuffix}");
             else if (movement == Vector2.Down)   CurrentAnimation = AnimationPlayer.GetAnimation($"{jumpPrefix}Down{jumpSuffix}");
+            if (CurrentTile.Type == Type.Jump)
+            {
+                CurrentTile.LilyAnimation.Play("Spring");
+            }
+            else
+            {
+                CurrentTile.LilyAnimation.Play("Jump");
+            }
+            CurrentTile.SplashAnimation.Play("Jump");
             AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimation));
-            CurrentTile.SplashAnimation.Play("Jump");   
-            CurrentTile.LilyAnimation.Play("Jump");
         }
 
         public void TriggerLandAnimation()
@@ -173,7 +180,12 @@ namespace Hopper
 
         public void TriggerExitSplashAnimation()
         {
-            if (ExitTile != null) ExitTile.SplashAnimation.Play("Splash");
+            if (ExitTile != null) ExitTile.SplashAnimation.Play("Exit");
+        }
+
+        public void TriggerJumpSpringAnimation()
+        {
+            
         }
 
         public void AfterAnimation(string animationName)

@@ -12,8 +12,12 @@ namespace Hopper
         public Level CurrentLevel { get; set; }
         private Grid Grid { get; set; }
         private Player Player { get; set; }
+
         public AudioStreamPlayer2D Music { get; set; }
-    
+        public AudioStreamPlayer2D FailLevel { get; private set; }
+        public AudioStreamPlayer2D SucceedLevel { get; private set; }
+        public AudioStreamPlayer2D GoalActivate { get; private set; }
+
         private HopCounter HopCounterBar { get; set; }
         private ScoreCounter ScoreCounter { get; set; }
         private TimeCounter TimeCounter { get; set; }
@@ -24,10 +28,11 @@ namespace Hopper
         public bool GameOver = false;
         public milliTimer Timer;
 
-        //List of levels FIXME: needs to be updated
+        //List of levels
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
+            //"water_test_1",
             //Basic
             "StartingOut",
             "ArtAndSoul",
@@ -50,9 +55,13 @@ namespace Hopper
 
         public override void _Ready()
         {
-            Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
             Resources = new ResourceRepository();
             levelFactory = new LevelFactory(Resources);
+
+            Music = GetNode<AudioStreamPlayer2D>("Music");
+            FailLevel = GetNode<AudioStreamPlayer2D>("FailLevel");
+            SucceedLevel = GetNode<AudioStreamPlayer2D>("SucceedLevel");
+            GoalActivate = GetNode<AudioStreamPlayer2D>("GoalActivate");
         }
 
         public void Init(bool tempWorldForTesting = false, string levelName = "")
@@ -90,8 +99,6 @@ namespace Hopper
                     NewLevel(Levels[iLevel]);
                 }
             }
-
-            Music.Play();
         }
 
         private void NewLevel(Vector2 playerPosition)
@@ -128,6 +135,7 @@ namespace Hopper
             {
                 Timer.Reset();
             }
+            Music.Play();
         }
 
         private void NewPlayer()
@@ -166,6 +174,8 @@ namespace Hopper
 
         public void IncrementLevel()
         {
+            Music.Stop();
+            SucceedLevel.Play();
             iLevel++;
             if (TempForTesting)
             {
@@ -197,7 +207,11 @@ namespace Hopper
             if (!CurrentLevel.Grid.GoalTile.Activated)
             {
                 bool MinScoreReached = CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
-                if (MinScoreReached && currentLevelScore != 0) ScoreBox.Animate();
+                if (MinScoreReached && currentLevelScore != 0)
+                {
+                    GoalActivate.Play();
+                    ScoreBox.Animate();
+                }
             }
         }
 
@@ -214,6 +228,7 @@ namespace Hopper
             }
             else
             {
+                FailLevel.Play();
                 NewLevel(Levels[iLevel]);
             }
         }
