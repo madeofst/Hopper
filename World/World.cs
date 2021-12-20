@@ -49,16 +49,16 @@ namespace Hopper
         {
             //"water_test_1",
             //Basic
-            //"StartingOut",
-            //"ArtAndSoul",
+            "StartingOut",
+            "ArtAndSoul",
             //Jumping
-            //"MovingOn",
-            //"MovingOn2",
-            //"DoubleJump",
-            //"Jumpington",
+            "MovingOn",
+            "MovingOn2",
+            "DoubleJump",
+            "Jumpington",
             //Water
-            //"Retrace",
-            //"SideWind",
+            "Retrace",
+            "SideWind",
             "MiniMaze"
         };
 
@@ -137,6 +137,7 @@ namespace Hopper
 
         private void BuildLevel()
         {
+            //FIXME: somewhere in here is the HTML5 crash problem
             AddChild(CurrentLevel);
             CurrentLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
             CurrentLevel.Build(Resources);           
@@ -145,7 +146,7 @@ namespace Hopper
             MoveChild(Player, GetChildCount());
             Player.Init(CurrentLevel);
             ScoreBox.LevelMinScore.BbcodeText = CurrentLevel.ScoreRequired.ToString();
-
+            //End
             if (!PuzzleMode)
             {
                 if (Timer is null)
@@ -158,6 +159,7 @@ namespace Hopper
                     Timer.Reset();
                 }
             }
+  
             Music.Play();
         }
 
@@ -225,7 +227,7 @@ namespace Hopper
             iLevel++;
             if (TempForTesting)
             {
-                GD.Print("Level complete.");
+                //GD.Print("Level complete.");
                 QueueFree();
             }
             else
@@ -272,7 +274,7 @@ namespace Hopper
         {
             if (TempForTesting)
             {
-                GD.Print("Hops exhausted.");
+                //GD.Print("Hops exhausted.");
                 QueueFree();
             }
             else if (Levels.Length <= 0 || iLevel > Levels.Length - 1)

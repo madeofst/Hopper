@@ -194,14 +194,14 @@ namespace Hopper
                     if (Tiles[x, y].GridPosition.y > row)
                     {
                         row += 1;
-                        GD.Print(currentRowstring + " ]");
+                        //GD.Print(currentRowstring + " ]");
                         currentRowstring = "[ ";
                     }
 
                     currentRowstring += $"{Tiles[x, y].GridPosition} {Tiles[x, y].Type} {Tiles[x, y].PointValue}";
                 }
             }
-            GD.Print(currentRowstring + " ]");
+            //GD.Print(currentRowstring + " ]");
         }
 
         public void OnMouseExit()

@@ -24,7 +24,7 @@ namespace Hopper
 
         public void onSubmitButtonPressed()
         {
-            GD.Print("Submit button pressed");
+            //GD.Print("Submit button pressed");
             TextInput = GetNode<LineEdit>("VBoxContainer/HBoxContainer/UserNameEntry");
             userName = TextInput.Text;
 

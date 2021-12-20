@@ -7,7 +7,7 @@ public class ClickableArea : Area2D
     {
         if (@event is InputEventMouseButton && @event.IsPressed())
         {
-            GD.Print("Clicked");
+            //GD.Print("Clicked");
         }
     }
 }

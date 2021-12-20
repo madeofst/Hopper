@@ -15,7 +15,7 @@ namespace Hopper
 
 		public void newGamePressed()
 		{
-			GD.Print("New game button pressed.");
+			//GD.Print("New game button pressed.");
 			World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
 			GetTree().Root.AddChild(world);
 			Music.Stop();
@@ -25,7 +25,7 @@ namespace Hopper
 
 		public void highScoresPressed()
 		{
-			GD.Print("High scores button pressed.");
+			//GD.Print("High scores button pressed.");
 			HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
 			GetTree().Root.AddChild(table);
 			Music.Stop();

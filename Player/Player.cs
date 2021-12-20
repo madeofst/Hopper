@@ -44,7 +44,7 @@ namespace Hopper
         //Animation parameters
         //public bool Animating { get; private set; } = false;
         public Queue<Vector2> MoveInputQueue;
-        public Animation CurrentAnimation;
+        public Animation CurrentAnimation = null;
         public float AnimationTimeElapsed = 0;
         [Export]
         public Curve JumpCurve;
@@ -267,11 +267,13 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            if(CurrentAnimation == null && 
-               MoveInputQueue.Count > 0 &&
-               Active)
+            if (Active)
             {
-                CheckMovement(MoveInputQueue.Dequeue());
+                if(CurrentAnimation == null && 
+                MoveInputQueue.Count > 0)
+                {
+                    CheckMovement(MoveInputQueue.Dequeue());
+                }
             }
         }
 

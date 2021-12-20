@@ -102,7 +102,7 @@ namespace Hopper
         {
             PlayerStartPosition = gridPosition;
             EmitSignal(nameof(LevelParametersUpdated));
-            GD.Print("LevelParametersUpdated");
+            //GD.Print("LevelParametersUpdated");
         }
     }
 }
