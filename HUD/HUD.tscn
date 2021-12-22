@@ -35,6 +35,7 @@ tracks/0/keys = {
 [node name="HUD" type="Control"]
 margin_right = 480.0
 margin_bottom = 270.0
+mouse_filter = 1
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false

@@ -21,7 +21,7 @@ namespace Hopper
 
         public override void _Ready()
         {
-            Resources = new ResourceRepository();
+            Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
             levelFactory = new LevelFactory(Resources);
             Menu = GetNode<Menu>("/root/Menu");
             CallDeferred("Init");

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/FX Goal activated.ogg-0d0e6309436880de1c72fe4e0aaf2a
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

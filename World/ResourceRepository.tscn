@@ -1,0 +1,20 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://World/ResourceRepository.cs" type="Script" id=1]
+[ext_resource path="res://Levels/Template/Tile_Goal_Off.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Levels/Template/Tile_Lily.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Levels/Template/Tile_Rock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Levels/Template/Tile_Score.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Levels/Template/Tile_Goal_On.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Levels/Template/Tile_Water.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Levels/Template/Tile_Jump_Ready.tscn" type="PackedScene" id=8]
+
+[node name="ResourceRepository" type="Node2D"]
+script = ExtResource( 1 )
+LilyScene = ExtResource( 3 )
+GoalOffScene = ExtResource( 2 )
+GoalOnScene = ExtResource( 6 )
+ScoreScene = ExtResource( 5 )
+RockScene = ExtResource( 4 )
+WaterScene = ExtResource( 7 )
+JumpScene = ExtResource( 8 )

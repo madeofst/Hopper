@@ -11,5 +11,5 @@ dest_files=[ "res://.import/FX Simple jump.ogg-4d482058a93edf38c61108127d248352.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

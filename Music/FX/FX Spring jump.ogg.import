@@ -11,5 +11,5 @@ dest_files=[ "res://.import/FX Spring jump.ogg-07cec8cca3ddccd02c5623eadd2f80e7.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

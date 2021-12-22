@@ -11,5 +11,5 @@ dest_files=[ "res://.import/FX End level (fail).ogg-afe49e6f2bae16233ff9010ec7d3
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

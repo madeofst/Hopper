@@ -3,25 +3,30 @@ using Godot;
 
 namespace Hopper
 {
-    public class ResourceRepository
+    public class ResourceRepository : Node2D
     {
+        [Export]
         public PackedScene LilyScene { get; set; }
+        [Export]
         public PackedScene GoalOffScene { get; private set; }
+        [Export]
         public PackedScene GoalOnScene { get; private set; }
+        [Export]
         public PackedScene ScoreScene { get; private set; }
+        [Export]
         public PackedScene RockScene { get; private set; }
+        [Export]
         public PackedScene WaterScene { get; private set; }
+        [Export]
         public PackedScene JumpScene { get; private set; }
 
         public ResourceRepository()
         {
-            LilyScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Lily.tscn");
-            GoalOffScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Goal_Off.tscn");
-            GoalOnScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Goal_On.tscn");
-            ScoreScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Score.tscn");
-            RockScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Rock.tscn");
-            WaterScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Water.tscn");
-            JumpScene = ResourceLoader.Load<PackedScene>("res://Levels/Template/Tile_Jump_Ready.tscn");
+            
+        }
+
+        public override void _Ready()
+        {
         }
 
         internal PackedScene LoadByType(Type type)

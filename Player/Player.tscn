@@ -672,8 +672,8 @@ DoubleJumpCurve = ExtResource( 7 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )
-vframes = 5
 hframes = 36
+vframes = 5
 frame = 116
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -709,4 +709,5 @@ tree_root = SubResource( 31 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 32 )
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="AfterAnimation"]

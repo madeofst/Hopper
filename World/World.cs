@@ -70,11 +70,11 @@ namespace Hopper
 
         public override void _Ready()
         {
-            Resources = new ResourceRepository();
+            Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
             levelFactory = new LevelFactory(Resources);
             
             HUD = GetNode<HUD>("HUD");
-            
+
             Music = GetNode<AudioStreamPlayer2D>("Music");
             FailLevel = GetNode<AudioStreamPlayer2D>("FailLevel");
             SucceedLevel = GetNode<AudioStreamPlayer2D>("SucceedLevel");
@@ -137,7 +137,6 @@ namespace Hopper
 
         private void BuildLevel()
         {
-            //FIXME: somewhere in here is the HTML5 crash problem
             AddChild(CurrentLevel);
             CurrentLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
             CurrentLevel.Build(Resources);           
@@ -146,7 +145,6 @@ namespace Hopper
             MoveChild(Player, GetChildCount());
             Player.Init(CurrentLevel);
             ScoreBox.LevelMinScore.BbcodeText = CurrentLevel.ScoreRequired.ToString();
-            //End
             if (!PuzzleMode)
             {
                 if (Timer is null)

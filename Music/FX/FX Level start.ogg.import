@@ -11,5 +11,5 @@ dest_files=[ "res://.import/FX Level start.ogg-1e5902e97937eb466087a3858ee39df6.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/FX Land on pad.ogg-bf919a5c017b75573fa84ea0650f6e49.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

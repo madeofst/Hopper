@@ -11,5 +11,5 @@ dest_files=[ "res://.import/FX Splash.ogg-1f66061ae8a41d19d8e3651c70f04bb1.oggst
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
