@@ -47,19 +47,31 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-            //"water_test_1",
-            //Basic
-            "StartingOut",
-            "ArtAndSoul",
-            //Jumping
-            "MovingOn",
-            "MovingOn2",
-            "DoubleJump",
-            "Jumpington",
-            //Water
-            "Retrace",
-            "SideWind",
-            "MiniMaze"
+            //Basic (no special tiles)
+                //Instructional
+                "StartingOut",
+                "SecondOfLy",
+                //Challenge
+                "PointsPointsPoints6",
+                "ArtAndSoul2",
+            //Jumping (jump tile only)
+                //Instructional
+                "MovingOn",
+                "MovingOn2",
+                //Challenge
+                "DoubleJump",
+                "WeirdMirror1",
+                "Jumpington",
+            //Water (jump + water tile)
+                //Instructional
+                "WaterIsIt1",
+                "WaterIsIt2",
+                "WaterIsIt3",
+                "WaterIsIt4",
+                //Challenge
+                "Retrace",
+                "SideWind",
+                "MiniMaze"
         };
 
         public bool TempForTesting { get; set; } = false;
@@ -225,7 +237,6 @@ namespace Hopper
             iLevel++;
             if (TempForTesting)
             {
-                //GD.Print("Level complete.");
                 QueueFree();
             }
             else
@@ -272,7 +283,6 @@ namespace Hopper
         {
             if (TempForTesting)
             {
-                //GD.Print("Hops exhausted.");
                 QueueFree();
             }
             else if (Levels.Length <= 0 || iLevel > Levels.Length - 1)

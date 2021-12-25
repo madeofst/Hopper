@@ -92,23 +92,21 @@ namespace Hopper
 
         internal void PopulateGrid(LevelData levelData = null)
         {
-            HintTooltip = "Start populate.";
             int i = 0;
             for (int y = 0; y < GridHeight; y++)
             {
                 for (int x = 0; x < GridWidth; x++)
                 {
+                    Tile tempTile;
                     if (levelData != null)
                     {
-                        //FIXME: issue with HTML5 export is here
-                        Tile tempTile = Resources.LoadByType(levelData.TileType[i]).Instance() as Tile;
-                        Tiles[x, y] = tempTile;
+                        tempTile = Resources.LoadByType(levelData.TileType[i]).Instance() as Tile;
                     }
                     else
                     {
-                        Tile tempTile = Resources.LilyScene.Instance() as Tile;
-                        Tiles[x, y] = tempTile;
+                        tempTile = Resources.LilyScene.Instance() as Tile;
                     }
+                    Tiles[x, y] = tempTile;
                     Tiles[x, y].PointValue = levelData.TilePointValue[i];
                     Tiles[x, y].GridPosition = new Vector2(x, y);
                     Tiles[x, y].Name = $"Tile{x}-{y}";
