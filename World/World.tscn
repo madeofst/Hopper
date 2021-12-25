@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://World/World.cs" type="Script" id=1]
 [ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Music/FX/FX End level (fail).ogg" type="AudioStream" id=5]
 [ext_resource path="res://Music/FX/FX Goal activated.ogg" type="AudioStream" id=6]
 [ext_resource path="res://Music/FX/FX End level (success).ogg" type="AudioStream" id=7]
+[ext_resource path="res://Levels/Template/LevelTitleScreen.tscn" type="PackedScene" id=8]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -41,3 +42,5 @@ bus = "FX"
 [node name="GoalActivate" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
 bus = "FX"
+
+[node name="LevelTitleScreen" parent="." instance=ExtResource( 8 )]

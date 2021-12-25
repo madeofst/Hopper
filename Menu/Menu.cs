@@ -18,8 +18,8 @@ namespace Hopper
 			World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
 			GetTree().Root.AddChild(world);
 			Music.Stop();
-			world.Init();
 			Hide();
+			world.Init();
 		}
 
 		public void highScoresPressed()

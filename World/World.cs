@@ -14,6 +14,7 @@ namespace Hopper
         private Player Player { get; set; }
         private HUD HUD { get; set; }
         private AnimationPlayer PopUp { get; set; }
+        public LevelTitleScreen LevelTitleScreen { get; private set; }
         
         public AudioStreamPlayer2D Music { get; set; }
         public AudioStreamPlayer2D FailLevel { get; private set; }
@@ -86,6 +87,7 @@ namespace Hopper
             levelFactory = new LevelFactory(Resources);
             
             HUD = GetNode<HUD>("HUD");
+            LevelTitleScreen = GetNode<LevelTitleScreen>("LevelTitleScreen");
 
             Music = GetNode<AudioStreamPlayer2D>("Music");
             FailLevel = GetNode<AudioStreamPlayer2D>("FailLevel");
@@ -155,6 +157,7 @@ namespace Hopper
             Grid = CurrentLevel.Grid;
             MoveChild(HUD, GetChildCount());
             MoveChild(Player, GetChildCount());
+            MoveChild(LevelTitleScreen, GetChildCount());
             Player.Init(CurrentLevel);
             ScoreBox.LevelMinScore.BbcodeText = CurrentLevel.ScoreRequired.ToString();
             if (!PuzzleMode)
@@ -171,6 +174,8 @@ namespace Hopper
             }
   
             Music.Play();
+            LevelTitleScreen.Init(iLevel + 1, CurrentLevel.MaximumHops, CurrentLevel.ScoreRequired);
+            LevelTitleScreen.Animate();
         }
 
         private void NewPlayer()

@@ -4,16 +4,16 @@ using System;
 public class milliTimer
 {
     private ulong TimerLength;
-    private ulong TimerLengthSecs
+    private float TimerLengthSecs
     {
-        get { return TimerLength / 1000; }
+        get { return (float)TimerLength / 1000; }
     }
     private ulong TimerEnd;
-    public ulong TimeAdjustment
+    public float TimeAdjustment
     {
         set
         {
-            TimerLength += value * 1000;
+            TimerLength += (ulong)(value * 1000);
         }
     }
 
