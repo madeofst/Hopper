@@ -7,8 +7,6 @@
 [ext_resource path="res://Fonts/RainyHeartsLabels.tres" type="Theme" id=5]
 [ext_resource path="res://Fonts/DigitalDiscoOutline.tres" type="Theme" id=6]
 
-
-
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [sub_resource type="StyleBoxEmpty" id=2]
@@ -95,8 +93,12 @@ margin_right = 113.0
 margin_bottom = 248.0
 size_flags_vertical = 0
 
-[node name="NewButton" type="Button" parent="Controls/VBoxContainer"]
-margin_right = 31.0
+[node name="NewButtons" type="HBoxContainer" parent="Controls/VBoxContainer"]
+margin_right = 103.0
+margin_bottom = 16.0
+
+[node name="Lilies" type="Button" parent="Controls/VBoxContainer/NewButtons"]
+margin_right = 35.0
 margin_bottom = 16.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
@@ -107,7 +109,26 @@ custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
-text = "New"
+text = "Lilies"
+align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Water" type="Button" parent="Controls/VBoxContainer/NewButtons"]
+margin_left = 39.0
+margin_right = 81.0
+margin_bottom = 16.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 6 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Water"
 align = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -396,6 +417,7 @@ margin_left = 5.0
 margin_top = 22.0
 margin_right = 477.0
 margin_bottom = 265.0
+rect_min_size = Vector2( 150, 52.5 )
 window_title = "Open a File"
 mode = 0
 filters = PoolStringArray( "*.tres" )
@@ -406,8 +428,10 @@ current_path = "res://Levels/LevelData.tres"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="MarginContainer/Play" to="." method="SaveAndPlayLevel"]
-[connection signal="pressed" from="Controls/VBoxContainer/NewButton" to="." method="NewBlankLevel"]
+[connection signal="pressed" from="Controls/VBoxContainer/NewButtons/Lilies" to="." method="NewBlankLevel" binds= [ 0 ]]
+[connection signal="pressed" from="Controls/VBoxContainer/NewButtons/Water" to="." method="NewBlankLevel" binds= [ 4 ]]
 [connection signal="pressed" from="Controls/VBoxContainer/RandomizeButton" to="." method="NewRandomLevel"]
 [connection signal="pressed" from="Controls/VBoxContainer/LoadButton" to="." method="ShowLoadDialog"]
 [connection signal="pressed" from="Controls/VBoxContainer/SaveButton" to="." method="ShowSaveDialog"]

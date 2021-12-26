@@ -72,7 +72,8 @@ namespace Hopper
                 //Challenge
                 "Retrace",
                 "SideWind",
-                "MiniMaze"
+                "MiniMaze",
+                "GettingAbout9",
         };
 
         public bool TempForTesting { get; set; } = false;
@@ -142,14 +143,14 @@ namespace Hopper
             BuildLevel();
         }
 
-        private void NewLevel(string levelName)
+        private void NewLevel(string levelName, bool replay = false)
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Load(levelName, true);
-            BuildLevel();
+            BuildLevel(replay);
         }
 
-        private void BuildLevel()
+        private void BuildLevel(bool replay = false)
         {
             AddChild(CurrentLevel);
             CurrentLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
@@ -173,9 +174,12 @@ namespace Hopper
                 }
             }
   
+            if (!replay)
+            {
+                LevelTitleScreen.Init(iLevel + 1, CurrentLevel.MaximumHops, CurrentLevel.ScoreRequired);
+                LevelTitleScreen.Animate();
+            }
             Music.Play();
-            LevelTitleScreen.Init(iLevel + 1, CurrentLevel.MaximumHops, CurrentLevel.ScoreRequired);
-            LevelTitleScreen.Animate();
         }
 
         private void NewPlayer()
@@ -298,7 +302,7 @@ namespace Hopper
             {
                 FailLevel.Play();
                 HUD.ShowPopUp("Try again!");
-                NewLevel(Levels[iLevel]);
+                NewLevel(Levels[iLevel], true);
             }
         }
     }

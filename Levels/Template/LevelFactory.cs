@@ -31,13 +31,14 @@ namespace Hopper
             rand.Randomize();
         }
 
-        public Level New(int width = defaultWidth, 
+        public Level New(Type tileType = Type.Lily,
+                         int width = defaultWidth, 
                          int height = defaultHeight, 
                          int tileSize = defaultTileSize)
         {
             if (height > 7 || width > 7) return null;
             
-            LevelData levelData = NewBlankLevelData(width, height, tileSize);
+            LevelData levelData = NewBlankLevelData(tileType, width, height, tileSize);
             return GetLevelScene(levelData);
         }
 
@@ -49,7 +50,8 @@ namespace Hopper
             return level;
         }
 
-        public LevelData NewBlankLevelData(int width = defaultWidth, 
+        public LevelData NewBlankLevelData(Type tileType = Type.Lily,
+                                           int width = defaultWidth, 
                                            int height = defaultHeight, 
                                            int tileSize = defaultTileSize)
         {
@@ -64,9 +66,9 @@ namespace Hopper
             levelData.ScoreRequired = defaultScoreRequired;
             levelData.PlayerStartPosition = defaultPlayerStartPosition;
             levelData.Init(width * height);
-            for (int i = 0; i < levelData.TileType.Length - 1; i++)
+            for (int i = 0; i < levelData.TileType.Length; i++)
             {
-                levelData.TileType[i] = Type.Lily;
+                levelData.TileType[i] = tileType;
                 levelData.TilePointValue[i] = 0;
             }
             return levelData;
@@ -113,7 +115,7 @@ namespace Hopper
                               int playerPositionX = defaultX,
                               int playerPositionY = defaultY)
         {
-            LevelData levelData = NewBlankLevelData(width, height, tileSize);
+            LevelData levelData = NewBlankLevelData(Type.Lily, width, height, tileSize);
             levelData.StartingHops = startingHops;
             levelData.MaximumHops = maximumHops;
             levelData.ScoreRequired = scoreRequired;

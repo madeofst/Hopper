@@ -37,10 +37,10 @@ namespace Hopper
         }
 
         //New
-        private void NewBlankLevel()
-        {
+        private void NewBlankLevel(int FillWith = 0)
+        {   
             if (CurrentLevel != null) CurrentLevel.QueueFree();
-            CurrentLevel = levelFactory.New();
+            CurrentLevel = levelFactory.New((Type)FillWith);
             AddChild(CurrentLevel);
             CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
             PopulateParameterValues();

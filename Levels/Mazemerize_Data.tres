@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "WaterIsIt4"
+Name = "Mazemerize"
 Width = 7
 Height = 7
 TileSize = 32
-StartingHops = 3
-MaximumHops = 3
-ScoreRequired = 0
+StartingHops = 20
+MaximumHops = 20
+ScoreRequired = 100
 PlayerStartPosition = Vector2( 0, 3 )
-TileType = PoolIntArray( 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 4, 3, 4, 4, 4, 4, 4, 0, 0, 4, 0, 4, 0, 1, 4, 4, 4, 4, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 )
+TileType = PoolIntArray( 3, 4, 5, 4, 0, 4, 5, 0, 0, 4, 5, 4, 4, 0, 0, 3, 0, 4, 4, 0, 3, 0, 3, 4, 5, 3, 4, 0, 0, 0, 4, 4, 0, 4, 4, 3, 0, 4, 5, 3, 3, 4, 1, 4, 4, 4, 0, 3, 5 )
 TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
