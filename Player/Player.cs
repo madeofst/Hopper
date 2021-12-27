@@ -75,7 +75,7 @@ namespace Hopper
             //CallDeferred("Init");
         }
 
-        public void Init(Level currentLevel) //Called each time a new level starts
+        public void Init(Level currentLevel, bool replay) //Called each time a new level starts
         {
             PlayerSprite = GetNode<Sprite>("PlayerSprite");
             AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -92,7 +92,15 @@ namespace Hopper
             EmitSignal(nameof(HopCompleted), HopsRemaining);
             
             ResetAnimation();
-            Active = true;
+            
+            if (replay)
+            {
+                Active = true;
+            }
+            else
+            {
+                Active = false;
+            }
         }
 
         private void CheckMovement(Vector2 Movement)
@@ -308,6 +316,16 @@ namespace Hopper
                 else if (@event.IsActionPressed("ui_up")) MoveInputQueue.Enqueue(Vector2.Up);
                 else if (@event.IsActionPressed("ui_down")) MoveInputQueue.Enqueue(Vector2.Down);
             }
+        }
+
+        public void Deactivate()
+        {
+            Active = false;
+        }
+
+        public void Activate()
+        {
+            Active = true;
         }
     }
 }

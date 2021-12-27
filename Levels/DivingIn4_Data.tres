@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+Name = "DivingIn4"
+Width = 7
+Height = 7
+TileSize = 32
+StartingHops = 6
+MaximumHops = 6
+ScoreRequired = 300
+PlayerStartPosition = Vector2( 1, 3 )
+TileType = PoolIntArray( 4, 5, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 4, 4, 2, 4, 4, 2, 4, 0, 4, 4, 4, 4, 1, 4, 4, 4, 4, 4, 4, 0, 4, 2, 4, 2, 4, 4, 2, 4, 5, 4, 5, 4, 4, 4 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 100, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0 )

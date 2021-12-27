@@ -5,71 +5,81 @@ using System.Collections.Generic;
 public class LevelTitleScreen : Control
 {
     private int levelID;
-    private int LevelID 
+    private int LevelIDLabel 
     { 
         get => levelID; 
         set
         {
             levelID = value;
-            LevelIDLabel.BbcodeText = value.ToString();
+            _LevelIDLabel.BbcodeText = value.ToString();
         }
     }
     private int maximumHops;
-    private int MaximumHops
+    private int MaximumHopsLabel
     {
         get => maximumHops; 
         set
         {
             maximumHops = value;
-            MaximumHopsLabel.BbcodeText = value.ToString();
+            _MaximumHopsLabel.BbcodeText = value.ToString();
         }
     }
     private int requiredScore;
-    private int RequiredScore
+    private int RequiredScoreLabel
     {
         get => requiredScore; 
         set
         {
             requiredScore = value;
-            RequiredScoreLabel.BbcodeText = value.ToString();
+            _RequiredScoreLabel.BbcodeText = value.ToString();
         }
     }
 
     public bool AnimationActive { get; private set; }
 
-    private RichTextLabel LevelIDLabel;
-    private RichTextLabel MaximumHopsLabel;
-    private RichTextLabel RequiredScoreLabel;
+    private HBoxContainer LevelID;
+    private HBoxContainer MaximumHops;
+    private HBoxContainer RequiredScore;
 
-    private List<RichTextLabel> Labels;
+    private RichTextLabel _LevelIDLabel;
+    private RichTextLabel _MaximumHopsLabel;
+    private RichTextLabel _RequiredScoreLabel;
+
+    private List<HBoxContainer> Containers;
     private int i = 0;
 
     private milliTimer timer = new milliTimer();
 
+    [Signal]
+    public delegate void ActivatePlayer();
+
     public override void _Ready()
     {
-        LevelIDLabel = GetNode<RichTextLabel>("LevelTitle/Text/MarginContainer/LevelID/Value");
-        MaximumHopsLabel = GetNode<RichTextLabel>("LevelTitle/Text/MaximumHops/Value");
-        RequiredScoreLabel = GetNode<RichTextLabel>("LevelTitle/Text/ScoreTarget/Value");
+        LevelID = GetNode<HBoxContainer>("LevelTitle/AllContainers/LevelID/LevelID");
+        _LevelIDLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/LevelID/LevelID/Value");
+        MaximumHops = GetNode<HBoxContainer>("LevelTitle/AllContainers/Text/MaximumHops");
+        _MaximumHopsLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/MaximumHops/Value");
+        RequiredScore = GetNode<HBoxContainer>("LevelTitle/AllContainers/Text/ScoreTarget");
+        _RequiredScoreLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/ScoreTarget/Value");
     }
 
     public void Init(int levelID, int maxHops, int reqScore)
     {
         Visible = true;
-        LevelID = levelID;
-        MaximumHops = maxHops;
-        RequiredScore = reqScore;
+        LevelIDLabel = levelID;
+        MaximumHopsLabel = maxHops;
+        RequiredScoreLabel = reqScore;
     }
 
     public void Animate()
     {
-        Labels = new List<RichTextLabel>() 
+        Containers = new List<HBoxContainer>() 
         {
-            LevelIDLabel,
-            MaximumHopsLabel,
-            RequiredScoreLabel
+            //LevelID,
+            MaximumHops,
+            RequiredScore
         };
-        foreach (RichTextLabel l in Labels) l.Visible = false;
+        foreach (HBoxContainer c in Containers) c.Visible = false;
         AnimationActive = true;
         timer.Start(0.3f);
     }
@@ -78,26 +88,32 @@ public class LevelTitleScreen : Control
     {
         if (timer.Finished() && AnimationActive)
         {
-            if (i >= Labels.Count)
+            if (i >= Containers.Count)
             {
-                if (i > Labels.Count + 4)
-                {
-                    i = 0;
-                    AnimationActive = false;
-                    Visible = false;
-                }
-                else
-                {
-                    timer.Reset();
-                    i++;
-                }
+                i = 0;
+                AnimationActive = false;
             }
-            else
+
+            if (i < Containers.Count)
             {
-                Labels[i].Visible = true;
+                Containers[i].Visible = true;
                 i++;
                 timer.Reset();
             }
         }
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("ui_accept"))
+        {
+            EmitSignal(nameof(ActivatePlayer));
+            FadeAndHide();
+        }
+    }
+
+    private void FadeAndHide()
+    {
+        Visible = false;
     }
 }

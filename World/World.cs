@@ -48,7 +48,7 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-            //Basic (no special tiles)
+             //Basic (no special tiles)
                 //Instructional
                 "StartingOut",
                 "SecondOfLy",
@@ -70,6 +70,9 @@ namespace Hopper
                 "WaterIsIt3",
                 "WaterIsIt4",
                 //Challenge
+                //TODO: need some easier ones
+                "DivingIn6",
+                "DivingInEfficiently1",
                 "Retrace",
                 "SideWind",
                 "MiniMaze",
@@ -106,6 +109,8 @@ namespace Hopper
 
             Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
+
+            HUD.Quit.Connect("pressed", this, "QuitToMenu");
             
             NewPlayer();           
             Player.Connect(nameof(Player.QuitToMenu), this, nameof(QuitToMenu));
@@ -116,6 +121,8 @@ namespace Hopper
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
             Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalState));
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
+
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Activate));
 
             if (tempWorldForTesting)
             {
@@ -148,6 +155,13 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Load(levelName, true);
             BuildLevel(replay);
+            ConnectRestartButton();
+        }
+
+        private void ConnectRestartButton()
+        {
+            if (HUD.Restart.IsConnected("pressed", this, "NewLevel")) HUD.Restart.Disconnect("pressed", this, "NewLevel");
+            HUD.Restart.Connect("pressed", this, "NewLevel", new Godot.Collections.Array() { Levels[iLevel], true } );
         }
 
         private void BuildLevel(bool replay = false)
@@ -159,7 +173,7 @@ namespace Hopper
             MoveChild(HUD, GetChildCount());
             MoveChild(Player, GetChildCount());
             MoveChild(LevelTitleScreen, GetChildCount());
-            Player.Init(CurrentLevel);
+            Player.Init(CurrentLevel, replay);
             ScoreBox.LevelMinScore.BbcodeText = CurrentLevel.ScoreRequired.ToString();
             if (!PuzzleMode)
             {

@@ -1,4 +1,18 @@
 
+//  Changes to make following Zoe's first test
+_________________________
+
+    * introduce the rock on a simpler one
+    * redo level with two vertical walls of rocks
+    * make it clearer how many hops you need on the water teaching ones
+    * jump over a pad into the water - need to teach
+    * make the beat quieter
+    * more the same, slower progression
+    * make the goal tile more obvious
+    * are you sure you want to quit
+    * fix jump issue when you jump over a pad into the water at the edge of the map
+
+
 // Definites
 _________________________
 
@@ -45,3 +59,4 @@ _________________________
 
 
 1200 * 675
+
