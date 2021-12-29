@@ -105,11 +105,13 @@ namespace Hopper
 
         private void CheckMovement(Vector2 Movement)
         {
-            LandTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + ExtraJump(Movement)));
+            Vector2 AdjustedMovement = ExtraJump(Movement);
+            LandTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + AdjustedMovement));
 
             string jumpPrefix = "Jump";
             string jumpSuffix = "";
             currentJumpCurve = JumpCurve;
+            
             if ((LandTile.GridPosition - GridPosition).Length() > 1) 
             {
                 jumpPrefix = "DoubleJump";
@@ -120,7 +122,7 @@ namespace Hopper
 
             while (LandTile.Type == Type.Water)
             {
-                LandTile = Grid.GetTile(Grid.DetermineWaterExit(LandTile, Movement));
+                LandTile = Grid.GetTile(Grid.DetermineWaterExit(LandTile, AdjustedMovement));
                 ExitTile = Grid.GetTile(Grid.LimitToBounds(LandTile.GridPosition - Movement));
             }
 

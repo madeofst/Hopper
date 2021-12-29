@@ -44,3 +44,4 @@ stream = ExtResource( 6 )
 bus = "FX"
 
 [node name="LevelTitleScreen" parent="." instance=ExtResource( 8 )]
+visible = false

@@ -11,6 +11,7 @@ _________________________
     * make the goal tile more obvious
     * are you sure you want to quit
     * fix jump issue when you jump over a pad into the water at the edge of the map
+    * add water shadows in
 
 
 // Definites

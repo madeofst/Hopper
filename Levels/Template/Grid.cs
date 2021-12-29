@@ -135,26 +135,26 @@ namespace Hopper
             );
         }
 
-        public Vector2 DetermineWaterExit(Tile newTile, Vector2 movement)
+        public Vector2 DetermineWaterExit(Tile newTile, Vector2 adjustedMovement)
         {
-            Vector2 CheckPosition = newTile.GridPosition + movement;
+            Vector2 CheckPosition = newTile.GridPosition + adjustedMovement.Normalized();
             while (WithinGrid(CheckPosition))
             {
                 if (GetTile(CheckPosition).Type == Type.Rock) break;
                 if (GetTile(CheckPosition).Type == Type.Water)
                 {
-                    if (ViableLandingPoint(CheckPosition + movement)) return CheckPosition + movement;
+                    if (ViableLandingPoint(CheckPosition + adjustedMovement.Normalized())) return CheckPosition + adjustedMovement.Normalized();
                 }
-                CheckPosition += movement;
+                CheckPosition += adjustedMovement.Normalized();
             }
-            CheckPosition = newTile.GridPosition;
-            if (ViableLandingPoint(CheckPosition + movement))
+            //if you reach the edge of the grid or a rock?
+            if (ViableLandingPoint(newTile.GridPosition + adjustedMovement.Normalized()))
             {
-                return newTile.GridPosition + movement;
+                return newTile.GridPosition + adjustedMovement.Normalized();
             } 
             else
             {
-                return newTile.GridPosition - movement;
+                return newTile.GridPosition - adjustedMovement;
             }
         }
 

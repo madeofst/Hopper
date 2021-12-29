@@ -48,7 +48,7 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-             //Basic (no special tiles)
+/*              //Basic (no special tiles)
                 //Instructional
                 "StartingOut",
                 "SecondOfLy",
@@ -68,12 +68,13 @@ namespace Hopper
                 "WaterIsIt1",
                 "WaterIsIt2",
                 "WaterIsIt3",
-                "WaterIsIt4",
+                "WaterIsIt4", */
                 //Challenge
                 //TODO: need some easier ones
                 "DivingIn6",
-                "DivingInEfficiently1",
                 "Retrace",
+                "DivingInEfficiently2",
+                "DivingInEfficiently1",
                 "SideWind",
                 "MiniMaze",
                 "GettingAbout9",
@@ -127,7 +128,7 @@ namespace Hopper
             if (tempWorldForTesting)
             {
                 TempForTesting = true;
-                NewLevel(levelName);
+                NewLevel(levelName, true);
             }
             else
             {
