@@ -48,7 +48,7 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-/*              //Basic (no special tiles)
+             //Basic (no special tiles)
                 //Instructional
                 "StartingOut",
                 "SecondOfLy",
@@ -65,17 +65,17 @@ namespace Hopper
                 "Jumpington",
             //Water (jump + water tile)
                 //Instructional
-                "WaterIsIt1",
+                "WaterIsIt1",   //FIXME: need to revisit these
                 "WaterIsIt2",
                 "WaterIsIt3",
-                "WaterIsIt4", */
+                "WaterIsIt4",
                 //Challenge
                 //TODO: need some easier ones
                 "DivingIn6",
-                "Retrace",
+                "Retrace",      //FIXME: will need rewriting
                 "DivingInEfficiently2",
                 "DivingInEfficiently1",
-                "SideWind",
+                "SideWind",     //FIXME: slight change required to first jump
                 "MiniMaze",
                 "GettingAbout9",
         };

@@ -10,8 +10,11 @@ _________________________
     * more the same, slower progression
     * make the goal tile more obvious
     * are you sure you want to quit
-    * fix jump issue when you jump over a pad into the water at the edge of the map
-    * add water shadows in
+    * add shadows
+    * add body visible underwater 
+    * add a "turn" tile and logic for that
+    * tidy up restart and quit buttons
+    * consider a wider grid
 
 
 // Definites
