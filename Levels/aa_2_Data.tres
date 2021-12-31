@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "DebuggingWaterJumping3"
+Name = "aa_2"
 Width = 7
 Height = 7
 TileSize = 32
-StartingHops = 20
-MaximumHops = 20
-ScoreRequired = 0
-PlayerStartPosition = Vector2( 2, 0 )
-TileType = PoolIntArray( 4, 4, 0, 4, 5, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 0, 1, 0, 4, 4, 4, 4, 4, 4, 3, 4, 4 )
+StartingHops = 6
+MaximumHops = 10
+ScoreRequired = 100
+PlayerStartPosition = Vector2( 6, 0 )
+TileType = PoolIntArray( 0, 0, 0, 3, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )

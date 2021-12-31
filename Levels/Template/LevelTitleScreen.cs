@@ -48,13 +48,15 @@ public class LevelTitleScreen : Control
     private List<HBoxContainer> Containers;
     private int i = 0;
 
-    private milliTimer timer = new milliTimer();
+    private milliTimer timer;
 
     [Signal]
     public delegate void ActivatePlayer();
 
     public override void _Ready()
     {
+        timer = new milliTimer();
+
         LevelID = GetNode<HBoxContainer>("LevelTitle/AllContainers/LevelID/LevelID");
         _LevelIDLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/LevelID/LevelID/Value");
         MaximumHops = GetNode<HBoxContainer>("LevelTitle/AllContainers/Text/MaximumHops");

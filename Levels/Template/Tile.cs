@@ -36,7 +36,6 @@ namespace Hopper
         //Children in the tree
         public CollisionShape2D CollisionShape;
         public Sprite LilySprite;
-        //public Sprite WaterSprite;
         public Sprite BugSprite;
         public Counter Label;
         public AnimationPlayer LilyAnimation;
@@ -49,7 +48,6 @@ namespace Hopper
         {
             CollisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
             LilySprite = GetNode<Sprite>("LilySprite");
-            //WaterSprite = GetNode<Sprite>("WaterSprite");
             BugSprite = GetNode<Sprite>("BugSprite");
             Label = GetNode<Counter>("Label");
             LilyAnimation = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
@@ -69,8 +67,6 @@ namespace Hopper
             
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
             if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Lights");
-
-            //WaterSprite.Frame = 0;
         }
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)

@@ -36,14 +36,11 @@ tracks/1/keys = {
 Type = 5
 JumpLength = 2
 
-[node name="WaterSprite" parent="." index="1"]
-hframes = 9
-
-[node name="LilySprite" parent="." index="2"]
+[node name="LilySprite" parent="." index="1"]
 texture = ExtResource( 2 )
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 anims/Spring = SubResource( 1 )
 
-[node name="SplashSprite" parent="." index="3"]
+[node name="SplashSprite" parent="." index="2"]
 frame = 4

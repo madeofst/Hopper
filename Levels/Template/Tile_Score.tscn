@@ -5,9 +5,6 @@
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 2
 
-[node name="WaterSprite" parent="." index="1"]
-hframes = 9
-
-[node name="BugSprite" parent="." index="4"]
+[node name="BugSprite" parent="." index="3"]
 visible = true
 frame = 17

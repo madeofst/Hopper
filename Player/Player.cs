@@ -12,15 +12,13 @@ namespace Hopper
         private Sprite PlayerSprite;
         public AnimationPlayer AnimationPlayer;
 
-        //Player parameters
+        //Player general parameters
         public int HopsRemaining { get; set; } = 3;
         public int TotalScore { get; set; } = 0;
         public int LevelScore { get; set; } = 0;
-        private Vector2 _GridPosition;
-        private Tile _CurrentTile;
-        private Tile LandTile, SplashTile, ExitTile;
         public bool Active = false;
 
+        private Vector2 _GridPosition;
         public Vector2 GridPosition
         {
             get
@@ -33,6 +31,8 @@ namespace Hopper
                 Position = _GridPosition * Grid.TileSize + Grid.RectPosition;// + Grid.TileSize / 2;
             }
         }
+        
+        private Tile _CurrentTile;
         private Tile CurrentTile 
         { 
             get
@@ -41,16 +41,24 @@ namespace Hopper
             } 
         }
 
-        //Animation parameters
-        //public bool Animating { get; private set; } = false;
+
+        //Movement and animation
+        //private Queue<MovementNode> MovementNodes;
+
+        private Tile LandTile, SplashTile, ExitTile;
+
+
+        //private Queue<Tile> TurnTiles;
         public Queue<Vector2> MoveInputQueue;
+        private Queue<Animation> AnimationQueue;
         public Animation CurrentAnimation = null;
+        public AnimationNode CurrentAnimationNode { get; private set; } = null;
         public float AnimationTimeElapsed = 0;
+        private Curve currentJumpCurve;
         [Export]
         public Curve JumpCurve;
         [Export]
         public Curve DoubleJumpCurve;
-        private Curve currentJumpCurve;
         
 
         //Signals
@@ -103,56 +111,173 @@ namespace Hopper
             }
         }
 
-        private void CheckMovement(Vector2 Movement)
+        private void CalculateMovement(Vector2 Movement)
         {
-            Vector2 AdjustedMovement = ExtraJump(Movement);
-            LandTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + AdjustedMovement));
+            Queue<MovementNode> MovementNodes = new Queue<MovementNode>();
+            MovementNodes.Enqueue(new MovementNode(CurrentTile, Movement));
 
-            string jumpPrefix = "Jump";
-            string jumpSuffix = "";
-            currentJumpCurve = JumpCurve;
-            
-            if ((LandTile.GridPosition - GridPosition).Length() > 1) 
+            //Vector2 MovementVector;
+            Vector2 JumpVector = GetJumpDistance(Movement);
+            Vector2 JumpTargetPosition = GridPosition + JumpVector;
+
+            if ((Grid.WithinGrid(JumpTargetPosition) && Grid.GetTile(JumpTargetPosition).Type == Type.Rock) ||
+                 !Grid.WithinGrid(JumpTargetPosition))
             {
-                jumpPrefix = "DoubleJump";
-                currentJumpCurve = DoubleJumpCurve;
-            }
-
-            if (LandTile.Type == Type.Water) SplashTile = LandTile;
-
-            while (LandTile.Type == Type.Water)
-            {
-                LandTile = Grid.GetTile(Grid.DetermineWaterExit(LandTile, AdjustedMovement));
-                ExitTile = Grid.GetTile(Grid.LimitToBounds(LandTile.GridPosition - Movement));
-            }
-
-            if (SplashTile != null) jumpSuffix = "Splash";
-
-            if (LandTile.GridPosition != GridPosition && LandTile.Type != Type.Rock)
-            {
-                Animate(Movement, jumpPrefix, jumpSuffix);
+                Movement = -Movement;
+                LandTile = Grid.GetTile(Grid.LimitToBounds(JumpTargetPosition + Movement));
+                // If the direction switches after the 1st one, it will always be a bounce
             }
             else
             {
-                LandTile = CurrentTile;
-                SplashTile = null;
-                ExitTile = null;
-                CurrentAnimation = null;
+                LandTile = Grid.GetTile(Grid.LimitToBounds(GridPosition + JumpVector));
+                if (LandTile.Type == Type.Water &&
+                    (!Grid.WithinGrid(LandTile.GridPosition + Movement) ||
+                     Grid.GetTile(LandTile.GridPosition + Movement).Type == Type.Rock)) 
+                {
+                    Movement = -Movement;
+                }
+            }
+            MovementNodes.Enqueue(new MovementNode(LandTile, Movement));
+
+            if (LandTile.Type == Type.Water)
+            {
+                Vector2 SwimTargetPosition = LandTile.GridPosition + Movement;
+                while (true)
+                {
+                    if (!Grid.WithinGrid(SwimTargetPosition) || Grid.GetTile(SwimTargetPosition).Type == Type.Rock)
+                    {
+                        Movement = -Movement;
+                        MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition + Movement), Movement));
+                    }
+                    else if (Grid.GetTile(SwimTargetPosition).Type == Type.Water)
+                    {
+                        if (Grid.ViableLandingPoint(SwimTargetPosition + Movement))
+                        {
+                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition), Movement));
+                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition + Movement), Movement));
+                            break;
+                        }
+                    }
+                    SwimTargetPosition += Movement;
+                }
+            }
+            //can add an else if here for other types that affect movement at a later point
+            PrintNodes(MovementNodes);
+            //maybe clean array of duplicates?
+            CreateAnimationSequence(MovementNodes);
+        }
+
+        private void CreateAnimationSequence(Queue<MovementNode> movementNodes)
+        {
+            Queue<AnimationNode> AnimationQueue = new Queue<AnimationNode>();
+            MovementNode current = movementNodes.Dequeue();
+            MovementNode next = movementNodes.Peek();
+
+            string Prefix = null, Suffix = null;
+
+
+            //This is the jumping part
+            if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2)
+            {
+                Prefix = "DoubleJump";
+            }
+            else if (current.MovementDirection != next.MovementDirection)
+            {
+                if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 0) Prefix = "Bounce";
+                else Prefix = "DoubleBounce";
+            }
+            else
+            {
+                Prefix = "Jump";
+            }
+
+            if (next.Tile.Type == Type.Water) Suffix = "Splash";
+
+            AnimationQueue.Enqueue(new AnimationNode(
+                AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
+                next.Tile.GridPosition - current.Tile.GridPosition));
+
+
+            //This bit needs to be a simple function
+            current = movementNodes.Dequeue();
+            next = movementNodes.Peek();
+
+            while (current.Tile.GridPosition == next.Tile.GridPosition && 
+                   current.MovementDirection == next.MovementDirection)
+            {
+                current = movementNodes.Dequeue();
+                next = movementNodes.Peek();
+            }
+
+
+            //This is the swimming part
+            while (movementNodes.Count > 2)
+            {
+                Prefix = "Swim"; Suffix = null;
+
+                AnimationQueue.Enqueue(new AnimationNode(
+                    AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
+                    next.Tile.GridPosition - current.Tile.GridPosition));
+                
+                //This bit needs to be a simple function
+                current = movementNodes.Dequeue();
+                next = movementNodes.Peek();
+
+                while (current.Tile.GridPosition == next.Tile.GridPosition && 
+                    current.MovementDirection == next.MovementDirection)
+                {
+                    current = movementNodes.Dequeue();
+                    next = movementNodes.Peek();
+                }
+            }
+
+            //This is the exit leap
+            if (movementNodes.Count == 1)
+            {
+                Prefix = "Jump"; Suffix = "Exit";
+                AnimationQueue.Enqueue(new AnimationNode(
+                    AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
+                    next.Tile.GridPosition - current.Tile.GridPosition));
+            }
+            PrintAnimationSequence(AnimationQueue);
+
+            if (CurrentTile.Type == Type.Jump)
+            {
+                CurrentTile.LilyAnimation.Play("Spring");
+            }
+            else
+            {
+                CurrentTile.LilyAnimation.Play("Jump");
+            }
+            CurrentTile.SplashAnimation.Play("Jump");
+
+            CurrentAnimationNode = AnimationQueue.Dequeue();
+            AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimationNode.Animation));
+        }
+
+        private void PrintAnimationSequence(Queue<AnimationNode> animationQueue)
+        {
+            int i = 1;
+            foreach (AnimationNode n in animationQueue)
+            {
+                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement}");
+                i++;
             }
         }
 
-        private Vector2 ExtraJump(Vector2 movementDirection)
+        private void PrintNodes(Queue<MovementNode> movementNodes)
         {
-            if (CurrentTile.Type == Type.Jump)
+            int i = 1;
+            foreach (MovementNode n in movementNodes)
             {
-                Vector2 jumpMovement = movementDirection * CurrentTile.JumpLength;
-                while (Grid.GetTile(Grid.LimitToBounds(GridPosition + jumpMovement)).Type == Type.Rock &&
-                       jumpMovement.Abs() >= Vector2.Zero)
-                {
-                    jumpMovement -= movementDirection;
-                }
-                return jumpMovement;
+                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
+                i++;
             }
+        }
+
+        private Vector2 GetJumpDistance(Vector2 movementDirection)
+        {
+            if (CurrentTile.Type == Type.Jump) return movementDirection * CurrentTile.JumpLength;
             return movementDirection;
         }
 
@@ -163,6 +288,14 @@ namespace Hopper
             GlobalPosition = ExitTile.GlobalPosition;
             GridPosition = ExitTile.GridPosition;
             Animate((LandTile.GridPosition - ExitTile.GridPosition), "Jump", "Exit");
+        }
+
+        private string MovementString(Vector2 movement)
+        {
+            if      (movement == Vector2.Left)   return "Left";  
+            else if (movement == Vector2.Right)  return "Right";
+            else if (movement == Vector2.Up)     return "Up";
+            return "Down";
         }
 
         private void Animate(Vector2 movement, string jumpPrefix, string jumpSuffix = "")
@@ -199,20 +332,17 @@ namespace Hopper
             if (ExitTile != null) ExitTile.SplashAnimation.Play("Exit");
         }
 
-        public void AfterAnimation(string animationName)
+        public void AfterAnimation(string animationName) //TODO: Need to review this part of the procedure
         {
             AnimationTimeElapsed = 0;
             if (animationName == "LevelComplete")
             {
                 EmitSignal(nameof(IncrementLevel));
             }
-            else if (animationName.Right(animationName.Length - 6) == "Splash")
-            {
-                ExitAnimation();
-            }
             else
             {
-                if (animationName.BeginsWith("Jump") || animationName.BeginsWith("DoubleJump"))
+
+/*                 if (animationName.BeginsWith("Jump") || animationName.BeginsWith("DoubleJump"))
                 {
                     GridPosition = LandTile.GridPosition;
                     UpdateHopsRemaining(-1);
@@ -223,7 +353,7 @@ namespace Hopper
                     }
                 }
                 CurrentAnimation = null;
-                LandTile = null;
+                LandTile = null; */
             }
         }
 
@@ -280,9 +410,9 @@ namespace Hopper
             if (Active)
             {
                 if(CurrentAnimation == null && 
-                MoveInputQueue.Count > 0)
+                   MoveInputQueue.Count > 0)
                 {
-                    CheckMovement(MoveInputQueue.Dequeue());
+                    CalculateMovement(MoveInputQueue.Dequeue());
                 }
             }
         }
@@ -292,8 +422,7 @@ namespace Hopper
             if (CurrentAnimation != null)
             {
                 //GD.Print(GlobalPosition);
-                Tile endTile = LandTile;
-                if (SplashTile != null) endTile = SplashTile;
+                Tile endTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
                 AnimationTimeElapsed += delta;
                 float animationLength = CurrentAnimation.Length;
                 float totalDistance = (endTile.GridPosition - GridPosition).Length() * endTile.Size.x;

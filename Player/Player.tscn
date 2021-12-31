@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Player/Resources/Frog1_32x32_AllJumpsCombined.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
@@ -10,6 +10,42 @@
 [ext_resource path="res://Player/Resources/JumpCurve.tres" type="Curve" id=8]
 [ext_resource path="res://Player/Resources/PlayerJumpUpSplash.tres" type="Animation" id=9]
 [ext_resource path="res://Player/Resources/PlayerJumpLeftSplash.tres" type="Animation" id=10]
+
+[sub_resource type="Animation" id=34]
+resource_name = "BounceDown"
+
+[sub_resource type="Animation" id=35]
+resource_name = "BounceLeft"
+
+[sub_resource type="Animation" id=36]
+resource_name = "BounceRight"
+
+[sub_resource type="Animation" id=37]
+resource_name = "BounceUp"
+
+[sub_resource type="Animation" id=38]
+resource_name = "DoubleBounceDown"
+
+[sub_resource type="Animation" id=42]
+resource_name = "DoubleBounceDownSplash"
+
+[sub_resource type="Animation" id=39]
+resource_name = "DoubleBounceLeft"
+
+[sub_resource type="Animation" id=43]
+resource_name = "DoubleBounceLeftSplash"
+
+[sub_resource type="Animation" id=40]
+resource_name = "DoubleBounceRight"
+
+[sub_resource type="Animation" id=44]
+resource_name = "DoubleBounceRightSplash"
+
+[sub_resource type="Animation" id=41]
+resource_name = "DoubleBounceUp"
+
+[sub_resource type="Animation" id=45]
+resource_name = "DoubleBounceUpSplash"
 
 [sub_resource type="Animation" id=1]
 resource_name = "DoubleJumpDown"
@@ -601,6 +637,18 @@ tracks/1/keys = {
 "values": [  ]
 }
 
+[sub_resource type="Animation" id=46]
+resource_name = "SwimDown"
+
+[sub_resource type="Animation" id=47]
+resource_name = "SwimLeft"
+
+[sub_resource type="Animation" id=48]
+resource_name = "SwimRight"
+
+[sub_resource type="Animation" id=49]
+resource_name = "SwimUp"
+
 [sub_resource type="AnimationNodeAnimation" id=19]
 animation = "IdleDown"
 
@@ -674,10 +722,22 @@ centered = false
 offset = Vector2( -16, -42 )
 hframes = 36
 vframes = 5
-frame = 116
+frame = 165
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 method_call_mode = 1
+anims/BounceDown = SubResource( 34 )
+anims/BounceLeft = SubResource( 35 )
+anims/BounceRight = SubResource( 36 )
+anims/BounceUp = SubResource( 37 )
+anims/DoubleBounceDown = SubResource( 38 )
+anims/DoubleBounceDownSplash = SubResource( 42 )
+anims/DoubleBounceLeft = SubResource( 39 )
+anims/DoubleBounceLeftSplash = SubResource( 43 )
+anims/DoubleBounceRight = SubResource( 40 )
+anims/DoubleBounceRightSplash = SubResource( 44 )
+anims/DoubleBounceUp = SubResource( 41 )
+anims/DoubleBounceUpSplash = SubResource( 45 )
 anims/DoubleJumpDown = SubResource( 1 )
 anims/DoubleJumpDownSplash = SubResource( 2 )
 anims/DoubleJumpLeft = SubResource( 3 )
@@ -703,6 +763,10 @@ anims/JumpUp = SubResource( 16 )
 anims/JumpUpExit = SubResource( 17 )
 anims/JumpUpSplash = SubResource( 18 )
 anims/LevelComplete = SubResource( 33 )
+anims/SwimDown = SubResource( 46 )
+anims/SwimLeft = SubResource( 47 )
+anims/SwimRight = SubResource( 48 )
+anims/SwimUp = SubResource( 49 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 31 )

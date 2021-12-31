@@ -33,7 +33,6 @@ namespace Hopper
         public Vector2 TileSize;
 
         public Tile[,] Tiles;
-
         public Tile GoalTile
         {
             get
@@ -57,7 +56,10 @@ namespace Hopper
 
         public Tile GetTile(Vector2 position)
         {
-            return Tiles[(int)position.x, (int)position.y];
+            if (WithinGrid(position))
+                return Tiles[(int)position.x, (int)position.y];
+            else
+                return null;
         }
 
         public override void _Ready()
@@ -135,9 +137,9 @@ namespace Hopper
             );
         }
 
-        public Vector2 DetermineWaterExit(Tile newTile, Vector2 adjustedMovement)
+/*         public Vector2 DetermineWaterExit(Tile landTile, Vector2 adjustedMovement)
         {
-            Vector2 CheckPosition = newTile.GridPosition + adjustedMovement.Normalized();
+            Vector2 CheckPosition = landTile.GridPosition + adjustedMovement.Normalized();
             while (WithinGrid(CheckPosition))
             {
                 if (GetTile(CheckPosition).Type == Type.Rock) break;
@@ -148,17 +150,17 @@ namespace Hopper
                 CheckPosition += adjustedMovement.Normalized();
             }
             //if you reach the edge of the grid or a rock?
-            if (ViableLandingPoint(newTile.GridPosition + adjustedMovement.Normalized()))
+            if (ViableLandingPoint(landTile.GridPosition + adjustedMovement.Normalized()))
             {
-                return newTile.GridPosition + adjustedMovement.Normalized();
+                return landTile.GridPosition + adjustedMovement.Normalized();
             } 
             else
             {
-                return newTile.GridPosition - adjustedMovement;
+                return landTile.GridPosition - adjustedMovement;
             }
-        }
+        } */
 
-        private bool ViableLandingPoint(Vector2 position)
+        public bool ViableLandingPoint(Vector2 position)
         {
             if (!WithinGrid(position)) return false;
             if (GetTile(position).Type == Type.Water) return false;
@@ -220,6 +222,24 @@ namespace Hopper
             newTile.Editable = true;
             ReplaceTile(gridPosition, newTile);
         }
+
+/*         public Tile SwimTo(Tile LandTile, Vector2 Movement)
+        {
+            Vector2 SwimTargetPosition = LandTile.GridPosition + Movement;
+            while (WithinGrid(SwimTargetPosition))
+            {
+                if (GetTile(SwimTargetPosition).Type == Type.Rock)
+                {
+                    return GetTile(SwimTargetPosition - Movement);
+                }
+                else if (GetTile(SwimTargetPosition).Type == Type.Water)
+                {
+                    if (ViableLandingPoint(SwimTargetPosition + Movement)) return GetTile(SwimTargetPosition);
+                }
+                SwimTargetPosition += Movement;
+            }
+            return GetTile(SwimTargetPosition - Movement);
+        } */
 
         internal void ReplaceTile(Vector2 gridPosition, Tile newTile)
         {

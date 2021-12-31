@@ -6,9 +6,5 @@
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 1
 
-[node name="WaterSprite" parent="." index="1"]
-hframes = 9
-frame = 1
-
-[node name="LilySprite" parent="." index="2"]
+[node name="LilySprite" parent="." index="1"]
 texture = ExtResource( 2 )

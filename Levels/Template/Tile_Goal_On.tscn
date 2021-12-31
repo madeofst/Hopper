@@ -24,11 +24,7 @@ tracks/0/keys = {
 Type = 1
 Activated = true
 
-[node name="WaterSprite" parent="." index="1"]
-hframes = 9
-frame = 1
-
-[node name="LilySprite" parent="." index="2"]
+[node name="LilySprite" parent="." index="1"]
 texture = ExtResource( 2 )
 hframes = 2
 
