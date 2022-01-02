@@ -94,10 +94,10 @@ namespace Hopper
             HUD = GetNode<HUD>("HUD");
             LevelTitleScreen = GetNode<LevelTitleScreen>("LevelTitleScreen");
 
-            Music = GetNode<AudioStreamPlayer2D>("Music");
-            FailLevel = GetNode<AudioStreamPlayer2D>("FailLevel");
-            SucceedLevel = GetNode<AudioStreamPlayer2D>("SucceedLevel");
-            GoalActivate = GetNode<AudioStreamPlayer2D>("GoalActivate");
+            Music = GetNode<AudioStreamPlayer2D>("Audio/Music");
+            FailLevel = GetNode<AudioStreamPlayer2D>("Audio/FailLevel");
+            SucceedLevel = GetNode<AudioStreamPlayer2D>("Audio/SucceedLevel");
+            GoalActivate = GetNode<AudioStreamPlayer2D>("Audio/GoalActivate");
         }
 
         public void Init(bool tempWorldForTesting = false, string levelName = "")
@@ -236,7 +236,7 @@ namespace Hopper
         {
             Music.Stop();
             Player.Active = false;
-            Player.MoveInputQueue.Clear();
+            Player.ClearQueues();
             Player.AnimationPlayer.Play("LevelComplete");
 
             if (iLevel >= Levels.Length - 1)

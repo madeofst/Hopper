@@ -7,11 +7,13 @@ namespace Hopper
     {
         public Animation Animation;
         public Vector2 Movement;
+        public Curve Curve;
 
-        public AnimationNode(Animation Animation, Vector2 Movement)
+        public AnimationNode(Animation Animation, Vector2 Movement, Curve Curve)
         {
             this.Animation = Animation;
             this.Movement = Movement;
+            this.Curve = Curve;
         }
     }
 }
