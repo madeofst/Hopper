@@ -15,6 +15,9 @@ _________________________
     * add a "turn" tile and logic for that
     * tidy up restart and quit buttons
     * consider a wider grid
+    * fix jump issue when you jump over a pad into the water at the edge of the map
+    * add water shadows in
+    * make grid more obvious for water tiles
 
 
 // Definites
