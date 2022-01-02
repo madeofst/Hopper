@@ -2,6 +2,7 @@ using System;
 using Godot;
 using System.Collections.Generic;
 
+
 namespace Hopper
 {
     public class Player : Node2D
@@ -247,7 +248,7 @@ namespace Hopper
             }
 
             //End extras and playing
-            PrintAnimationSequence(AnimationQueue);
+            //PrintAnimationSequence(AnimationQueue);
 
             if (CurrentTile.Type == Type.Jump)
             {
@@ -273,7 +274,7 @@ namespace Hopper
             int i = 1;
             foreach (AnimationNode n in animationQueue)
             {
-                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement}");
+                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
                 i++;
             }
         }
@@ -356,6 +357,7 @@ namespace Hopper
             CurrentAnimationNode = AnimationQueue.Dequeue();
             CurrentMovementCurve = CurrentAnimationNode.Curve;
             AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimationNode.Animation));
+            GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -426,12 +428,16 @@ namespace Hopper
                 float animationLength;
                 if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim")
                 {
-                    animationLength = 0.3f * CurrentAnimationNode.Movement.Length(); //TODO: fixed value of 0.15f per tile
+                    double logBase = 5;
+                    double maxValue = 1.2;
+                    animationLength = (float)(maxValue * (Math.Log((double)CurrentAnimationNode.Movement.Length() + 1, logBase)/
+                                                          Math.Log(6, logBase))); //Uses log ratio with 6 as the maximum and a factor of 0.8
                 }
                 else
                 {
                     animationLength = CurrentAnimationNode.Animation.Length;
                 }
+                GD.Print($"movment {CurrentAnimationNode.Movement.Length()} - anim {animationLength}");
                 float totalDistance = (AnimationEndTile.GridPosition - GridPosition).Length() * AnimationEndTile.Size.x;
                 float distanceTravelled = totalDistance - (AnimationEndTile.GlobalPosition - GlobalPosition).Length();
                 float timeRatio = AnimationTimeElapsed/animationLength;
