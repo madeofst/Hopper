@@ -12,6 +12,7 @@ _________________________
     * are you sure you want to quit
     * fix jump issue when you jump over a pad into the water at the edge of the map
     * add water shadows in
+    * make grid more obvious for water tiles
 
 
 // Definites
