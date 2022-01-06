@@ -1,5 +1,5 @@
 [gd_resource type="Curve" format=2]
 
 [resource]
-resource_name = "Swim"
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.809242, 0.992523 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+resource_name = "SwimCurve"
+_data = [ Vector2( 0, 0 ), 0.0, 0.593706, 0, 0, Vector2( 0.685512, 0.681818 ), 0.98369, 0.98369, 0, 0, Vector2( 1, 1 ), 1.09341, 0.0, 0, 0 ]

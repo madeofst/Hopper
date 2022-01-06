@@ -12,6 +12,6 @@ TileSize = 32
 StartingHops = 20
 MaximumHops = 20
 ScoreRequired = 0
-PlayerStartPosition = Vector2( 4, 0 )
+PlayerStartPosition = Vector2( 0, 0 )
 TileType = PoolIntArray( 0, 0, 0, 4, 5, 0, 4, 4, 4, 4, 4, 0, 4, 4, 3, 0, 0, 4, 4, 4, 0, 4, 0, 4, 4, 4, 4, 4, 4, 0, 0, 4, 5, 4, 3, 4, 0, 4, 1, 0, 4, 4, 4, 0, 0, 4, 3, 4, 0 )
 TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )

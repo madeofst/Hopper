@@ -71,11 +71,11 @@ namespace Hopper
                 "WaterIsIt4",
                 //Challenge
                 //TODO: need some easier ones
-                "DivingIn6",
-                "Retrace",      //FIXME: will need rewriting
-                "DivingInEfficiently2",
+                //"DivingIn6", //FIXME: rewrite needed for new system
+                //"Retrace",      //FIXME: will need rewriting
+                //"DivingInEfficiently2",
                 "DivingInEfficiently1",
-                "SideWind",     //FIXME: slight change required to first jump
+                "SideWind",     
                 "MiniMaze",
                 "GettingAbout9",
         };
@@ -122,6 +122,8 @@ namespace Hopper
             Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
             Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalState));
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
+            Player.Connect(nameof(Player.MoveBehind), this, nameof(MovePlayerBehind));
+            Player.Connect(nameof(Player.MoveToTop), this, nameof(MovePlayerToTop));
 
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Activate));
 
@@ -141,6 +143,16 @@ namespace Hopper
                     NewLevel(Player.GridPosition);
                 }
             }
+        }
+
+        private void MovePlayerToTop()
+        {
+            MoveChild(Player, GetChildCount());
+        }
+
+        private void MovePlayerBehind()
+        {
+            MoveChild(Player, 4);
         }
 
         private void NewLevel(Vector2 playerPosition)

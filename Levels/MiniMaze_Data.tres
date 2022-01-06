@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-StartingHops = 12
-MaximumHops = 12
-ScoreRequired = 200
 Name = "MiniMaze"
 Width = 7
 Height = 7
 TileSize = 32
+StartingHops = 12
+MaximumHops = 12
+ScoreRequired = 200
 PlayerStartPosition = Vector2( 0, 0 )
-TileType = PoolIntArray( 0, 0, 0, 0, 2, 0, 0, 0, 3, 5, 4, 0, 5, 4, 0, 5, 3, 3, 3, 3, 3, 0, 0, 4, 2, 3, 1, 0, 0, 0, 5, 3, 0, 0, 0, 0, 0, 4, 5, 3, 0, 0, 0, 2, 0, 3, 0, 2, 0 )
-TilePointValue = PoolIntArray( 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 100, 0 )
+TileType = PoolIntArray( 0, 0, 0, 0, 2, 0, 0, 0, 3, 5, 4, 0, 5, 4, 0, 5, 3, 3, 3, 3, 3, 0, 0, 4, 2, 3, 1, 0, 0, 0, 5, 3, 0, 0, 0, 0, 4, 4, 5, 3, 0, 0, 2, 0, 5, 3, 0, 2, 0 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 100, 0 )

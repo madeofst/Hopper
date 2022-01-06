@@ -54,6 +54,10 @@ namespace Hopper
         public Curve DoubleJumpCurve;
         [Export]
         public Curve SwimCurve;
+        [Export]
+        public Curve DiveCurve;
+        [Export]
+        public Curve SwimDistanceRationCurve;
 
         //Signals
         [Signal]
@@ -70,6 +74,10 @@ namespace Hopper
         public delegate void HopsExhausted();
         [Signal]
         public delegate void QuitToMenu();
+        [Signal]
+        public delegate void MoveBehind();
+        [Signal]
+        public delegate void MoveToTop();
 
         public override void _Ready()
         {
@@ -199,10 +207,16 @@ namespace Hopper
                 AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
                 next.Tile.GridPosition - current.Tile.GridPosition, movementCurve));
 
-            Suffix = null;
-
             if (movementNodes.Count > 1)
             {
+
+                if (next.MovementDirection == -current.MovementDirection)
+                {
+                    AnimationQueue.Enqueue(new AnimationNode(
+                        AnimationPlayer.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
+                        Vector2.Zero, SwimCurve));
+                }
+                    
                 //This bit needs to be a simple function
                 current = movementNodes.Dequeue();
                 next = movementNodes.Peek();
@@ -217,13 +231,24 @@ namespace Hopper
                 //This is the swimming part
                 while (movementNodes.Count >= 2)
                 {
+                    if (Suffix == "Splash")
+                        movementCurve = DiveCurve;
+                    else
+                        movementCurve = SwimCurve;
                     Prefix = "Swim"; Suffix = null;
-                    movementCurve = SwimCurve;
 
                     AnimationQueue.Enqueue(new AnimationNode(
                         AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
                         next.Tile.GridPosition - current.Tile.GridPosition, movementCurve));
                     
+                    
+                    if (next.MovementDirection == -current.MovementDirection)
+                    {
+                        AnimationQueue.Enqueue(new AnimationNode(
+                            AnimationPlayer.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
+                            Vector2.Zero, SwimCurve));
+                    }
+
                     //This bit needs to be a simple function
                     current = movementNodes.Dequeue();
                     next = movementNodes.Peek();
@@ -248,7 +273,7 @@ namespace Hopper
             }
 
             //End extras and playing
-            //PrintAnimationSequence(AnimationQueue);
+            PrintAnimationSequence(AnimationQueue);
 
             if (CurrentTile.Type == Type.Jump)
             {
@@ -284,7 +309,7 @@ namespace Hopper
             int i = 1;
             foreach (MovementNode n in movementNodes)
             {
-                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
+                //GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
                 i++;
             }
         }
@@ -336,6 +361,7 @@ namespace Hopper
                 }
                 else
                 {
+                    //GD.Print("Animation complete.");
                     UpdateHopsRemaining(-1);
                     UpdateScore();
                     if (!CheckGoal())
@@ -357,7 +383,7 @@ namespace Hopper
             CurrentAnimationNode = AnimationQueue.Dequeue();
             CurrentMovementCurve = CurrentAnimationNode.Curve;
             AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimationNode.Animation));
-            GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
+            //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -414,6 +440,7 @@ namespace Hopper
             {
                 if(CurrentAnimationNode == null && MoveInputQueue.Count > 0)
                 {
+                    //GD.Print("ExecuteNextMovement");
                     CalculateMovement(MoveInputQueue.Dequeue());
                 }
             }
@@ -425,26 +452,37 @@ namespace Hopper
             {
                 AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
                 AnimationTimeElapsed += delta;
-                float animationLength;
-                if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim")
+                
+                if (CurrentAnimationNode.Animation.ResourceName == "SwimDownTurn")
                 {
-                    double logBase = 5;
-                    double maxValue = 1.2;
-                    animationLength = (float)(maxValue * (Math.Log((double)CurrentAnimationNode.Movement.Length() + 1, logBase)/
-                                                          Math.Log(6, logBase))); //Uses log ratio with 6 as the maximum and a factor of 0.8
+                    
+                }
+
+                float animationLength;
+                if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim" &&
+                    CurrentAnimationNode.Animation.ResourceName.Right(CurrentAnimationNode.Animation.ResourceName.Length-4) != "Turn")
+                {
+                    animationLength = SwimDistanceRationCurve.Interpolate((CurrentAnimationNode.Movement.Length())/6);
                 }
                 else
                 {
                     animationLength = CurrentAnimationNode.Animation.Length;
+                    GD.Print($"{CurrentAnimationNode.Animation.ResourceName} movment dir {CurrentAnimationNode.Movement.Length()} animation length {animationLength}");
                 }
-                GD.Print($"movment {CurrentAnimationNode.Movement.Length()} - anim {animationLength}");
+                
                 float totalDistance = (AnimationEndTile.GridPosition - GridPosition).Length() * AnimationEndTile.Size.x;
                 float distanceTravelled = totalDistance - (AnimationEndTile.GlobalPosition - GlobalPosition).Length();
                 float timeRatio = AnimationTimeElapsed/animationLength;
                 float pixelsToMove = totalDistance * CurrentMovementCurve.Interpolate(timeRatio) - distanceTravelled;
                 GlobalPosition = GlobalPosition.MoveToward(AnimationEndTile.GlobalPosition, pixelsToMove);
                 
-                if (GlobalPosition == AnimationEndTile.GlobalPosition) AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
+                if (GlobalPosition == AnimationEndTile.GlobalPosition &&
+                    (CurrentAnimationNode.Curve == SwimCurve ||
+                    CurrentAnimationNode.Curve == DiveCurve) &&
+                    CurrentAnimationNode.Animation.ResourceName.Right(CurrentAnimationNode.Animation.ResourceName.Length-4) != "Turn")
+                {
+                    AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
+                }
             }
         }
 
@@ -472,6 +510,16 @@ namespace Hopper
         public void Activate()
         {
             Active = true;
+        }
+
+        public void EmitMoveBehind()
+        {
+            EmitSignal(nameof(MoveBehind));
+        }
+        
+        public void EmitMoveToTop()
+        {
+            EmitSignal(nameof(MoveToTop));
         }
     }
 }

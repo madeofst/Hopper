@@ -109,8 +109,8 @@ public class LevelTitleScreen : Control
     {
         if (@event.IsActionPressed("ui_accept"))
         {
-            EmitSignal(nameof(ActivatePlayer));
             FadeAndHide();
+            EmitSignal(nameof(ActivatePlayer));
         }
     }
 
