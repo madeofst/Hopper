@@ -29,10 +29,12 @@ bus = "FX"
 
 [node name="SucceedLevel" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource( 7 )
+volume_db = -3.0
 bus = "FX"
 
 [node name="GoalActivate" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource( 6 )
+volume_db = -3.0
 bus = "FX"
 
 [node name="WaterShader" type="TextureRect" parent="."]
@@ -61,6 +63,7 @@ __meta__ = {
 }
 
 [node name="PondGrid" type="TextureRect" parent="."]
+visible = false
 margin_right = 360.0
 margin_bottom = 240.0
 rect_min_size = Vector2( 480, 270 )
