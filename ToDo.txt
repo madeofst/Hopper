@@ -1,53 +1,55 @@
 
-//  Changes to make following Zoe's first test
-_________________________
-
-    * introduce the rock on a simpler one
-    * redo level with two vertical walls of rocks
-    * make it clearer how many hops you need on the water teaching ones
-    * jump over a pad into the water - need to teach
-    * make the beat quieter
-    * more the same, slower progression
-    * make the goal tile more obvious
-    * are you sure you want to quit
-    * add shadows
-    * add body visible underwater 
-    * add a "turn" tile and logic for that
-    * tidy up restart and quit buttons
-    * consider a wider grid
-    * add water shadows in
-    * make grid more obvious for water tiles
-
-
 // Definites
 _________________________
 
     // Fixes
+    -MAIN GAME
+    * timing of hop counter (possibly)
+    * bug with timer on shaky score text
+    * bug with score carrying over after restart (and staying blue)
+    * fix incorrect sound on restart
+    * redo level with two vertical walls of rocks
+    * fix double bounce animation
+    * fix !is_inside_tree error (for temp tile obj) when bouncing off the edge of the map
+
+    -LEVEL EDITOR
     * Level editor - saving after a change
     * Level editor - autosaving and updates
     * Bug when clicking play in editor with no level selected
-    * timing of hop counter (possibly)
-    * bug with timer on shaky score text
-    
-    // Definite additions
-    * Timer reduces with each goal reached?
-    * Add max hop limit increase tile
-    * Add timer extension tile
-    * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
 
-    //Plan in steps
-    * Redesign timer
+    //Necessary improvements
+    -LEVEL DESIGN
+    * introduce the rock on a simpler one
+    * make it clearer how many hops you need on the water teaching ones
+    * jump over a pad into the water - need to teach
+    * more the same, slower progression
+
+    -VISUAL DESIGN
+    * make the goal tile more obvious
+    * are you sure you want to quit
+    * tidy up restart and quit buttons
+    * redesign boundary to make grid clearer
+
     * Animations
-        - frog still (eyes blinking)
         - complete level (open up portal and jump in?)
-        - eat bug
-        - start level (maybe) (open up portal and jump out?)
     * Sound FX
         - game over
         - eat bug
+        - bounce
 
 //Maybes
 _________________________
+
+    //Possible improvements
+    * add body visible underwater 
+    * add shadows
+    * add water shadows in
+    * consider a wider grid
+
+    * Animations
+        - frog still (eyes blinking)
+        - eat bug
+        - start level (maybe) (open up portal and jump out?)
 
     //Pathfinding
     * Transfer to path finding algorithm for coins?
@@ -63,6 +65,12 @@ _________________________
     * Animate main menu
     * Improve score assignment
 
+    // For timed mode
+    * Timer reduces with each goal reached?
+    * Add max hop limit increase tile
+    * Add timer extension tile
+    * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
+    * Redesign timer
 
 1200 * 675
 

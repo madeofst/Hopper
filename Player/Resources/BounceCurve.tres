@@ -1,0 +1,5 @@
+[gd_resource type="Curve" format=2]
+
+[resource]
+resource_name = "BounceCurve"
+_data = [ Vector2( 0, 0 ), 0.0, -0.059068, 0, 0, Vector2( 0.441696, 0.735227 ), 0.0, 0.0, 0, 0, Vector2( 0.590106, 0.744318 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0306818 ), -0.643181, 0.0, 0, 0 ]

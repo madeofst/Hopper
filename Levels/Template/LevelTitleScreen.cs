@@ -107,7 +107,7 @@ public class LevelTitleScreen : Control
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("ui_accept"))
+        if (@event.IsActionReleased("ui_accept"))
         {
             FadeAndHide();
             EmitSignal(nameof(ActivatePlayer));

@@ -48,7 +48,7 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-             //Basic (no special tiles)
+/*              //Basic (no special tiles)
                 //Instructional
                 "StartingOut",
                 "SecondOfLy",
@@ -56,7 +56,7 @@ namespace Hopper
                 "PointsPointsPoints6",
                 "ArtAndSoul2",
             //Jumping (jump tile only)
-                //Instructional
+                //Instructional */
                 "MovingOn",
                 "MovingOn2",
                 //Challenge
@@ -157,7 +157,8 @@ namespace Hopper
 
         private void NewLevel(Vector2 playerPosition)
         {
-            if (CurrentLevel != null) CurrentLevel.QueueFree();
+            if (CurrentLevel != null) 
+                CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
             BuildLevel();
@@ -165,7 +166,8 @@ namespace Hopper
 
         private void NewLevel(string levelName, bool replay = false)
         {
-            if (CurrentLevel != null) CurrentLevel.QueueFree();
+            if (CurrentLevel != null) 
+                CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Load(levelName, true);
             BuildLevel(replay);
             ConnectRestartButton();
