@@ -38,6 +38,10 @@
 [ext_resource path="res://Player/Resources/PlayerSwimUpTurn.tres" type="Animation" id=36]
 [ext_resource path="res://Player/Resources/PlayerSwimLeftTurn.tres" type="Animation" id=37]
 [ext_resource path="res://Player/Resources/BounceCurve.tres" type="Curve" id=38]
+[ext_resource path="res://Player/Resources/PlayerDoubleBounceDown.tres" type="Animation" id=39]
+[ext_resource path="res://Player/Resources/PlayerDoubleBounceDownSplash.tres" type="Animation" id=40]
+[ext_resource path="res://Player/Resources/PlayerDoubleBounceLeftSplash.tres" type="Animation" id=41]
+[ext_resource path="res://Player/Resources/PlayerDoubleBounceLeft.tres" type="Animation" id=42]
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
@@ -171,18 +175,6 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=38]
-resource_name = "DoubleBounceDown"
-
-[sub_resource type="Animation" id=42]
-resource_name = "DoubleBounceDownSplash"
-
-[sub_resource type="Animation" id=39]
-resource_name = "DoubleBounceLeft"
-
-[sub_resource type="Animation" id=43]
-resource_name = "DoubleBounceLeftSplash"
-
 [sub_resource type="Animation" id=40]
 resource_name = "DoubleBounceRight"
 
@@ -311,10 +303,10 @@ anims/BounceDown = SubResource( 34 )
 anims/BounceLeft = SubResource( 35 )
 anims/BounceRight = SubResource( 36 )
 anims/BounceUp = SubResource( 37 )
-anims/DoubleBounceDown = SubResource( 38 )
-anims/DoubleBounceDownSplash = SubResource( 42 )
-anims/DoubleBounceLeft = SubResource( 39 )
-anims/DoubleBounceLeftSplash = SubResource( 43 )
+anims/DoubleBounceDown = ExtResource( 39 )
+anims/DoubleBounceDownSplash = ExtResource( 40 )
+anims/DoubleBounceLeft = ExtResource( 42 )
+anims/DoubleBounceLeftSplash = ExtResource( 41 )
 anims/DoubleBounceRight = SubResource( 40 )
 anims/DoubleBounceRightSplash = SubResource( 44 )
 anims/DoubleBounceUp = SubResource( 41 )

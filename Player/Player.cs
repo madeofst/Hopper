@@ -43,6 +43,7 @@ namespace Hopper
         }
 
         private Tile AnimationEndTile;
+        private Tile AnimationReturnTile;
         public Queue<Vector2> MoveInputQueue;
         private Queue<AnimationNode> AnimationQueue;
         public AnimationNode CurrentAnimationNode { get; private set; } = null;
@@ -376,7 +377,6 @@ namespace Hopper
                 }
                 else
                 {
-                    //GD.Print("Animation complete.");
                     UpdateHopsRemaining(-1);
                     UpdateScore();
                     if (!CheckGoal())
@@ -397,6 +397,7 @@ namespace Hopper
         {
             CurrentAnimationNode = AnimationQueue.Dequeue();
             CurrentMovementCurve = CurrentAnimationNode.Curve;
+            SetAnimationTiles();
             AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimationNode.Animation));
             GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
         }
@@ -449,6 +450,43 @@ namespace Hopper
             AnimationPlayer.Play("IdleDown");
         }
 
+        public void SetAnimationTiles()
+        {   
+            if (CurrentAnimationNode != null)
+            {
+                if (CurrentAnimationNode.Animation.ResourceName.Contains("Bounce"))
+                {   
+                    AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.BounceVector);
+                    if (AnimationEndTile == null) 
+                    {
+                        AnimationEndTile = new Tile(){};
+                        AnimationEndTile.Type = Type.Rock;
+                        AnimationEndTile.GridPosition = CurrentTile.GridPosition + CurrentAnimationNode.BounceVector;
+                        AnimationEndTile.GlobalPosition = CurrentTile.GlobalPosition + CurrentAnimationNode.BounceVector * AnimationEndTile.Size;
+                    }
+
+                    if (CurrentAnimationNode.Animation.ResourceName.Contains("DoubleBounce"))
+                    {      
+                        AnimationReturnTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.BounceVector - CurrentAnimationNode.Movement);
+                        if (AnimationReturnTile.Type == Type.Rock) AnimationReturnTile = CurrentTile;
+                    }
+                    else
+                    {
+                        AnimationReturnTile = Grid.GetTile(CurrentTile.GridPosition); 
+                    }
+                }
+                else
+                {
+                    AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
+                    AnimationReturnTile = null;
+                }
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public override void _Process(float delta)
         {
             if (Active)
@@ -463,35 +501,10 @@ namespace Hopper
 
         public override void _PhysicsProcess(float delta)
         {
-            if (CurrentAnimationNode != null)
+            if (AnimationEndTile != null && CurrentAnimationNode != null)
             {
-                //Changing the end tile half way through the bounce animation back to the start
-                if (CurrentAnimationNode.Animation.ResourceName.Contains("Bounce"))
-                {   
-                    if (AnimationTimeElapsed >= CurrentAnimationNode.Animation.Length/2)
-                    {
-                        if (CurrentAnimationNode.Animation.ResourceName.Contains("DoubleBounce")) 
-                            AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.BounceVector - CurrentAnimationNode.Movement);
-                        else
-                            AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition); 
-                    }
-                    else
-                    {
-                        AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.BounceVector);
-                        if (AnimationEndTile == null) 
-                        {
-                            AnimationEndTile = new Tile(){};
-                            AnimationEndTile.Type = Type.Rock;
-                            AnimationEndTile.GridPosition = CurrentTile.GridPosition + CurrentAnimationNode.BounceVector;
-                            AnimationEndTile.GlobalPosition = CurrentTile.GlobalPosition + CurrentAnimationNode.BounceVector * AnimationEndTile.Size;
-                        }
-                    }
-                }
-                else
-                {
-                    AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
-                }
-
+                UpdateAnimationEndTile();
+                
                 AnimationTimeElapsed += delta;
 
                 float animationLength;
@@ -503,7 +516,7 @@ namespace Hopper
                 else
                 {
                     animationLength = CurrentAnimationNode.Animation.Length;
-                    //GD.Print($"{CurrentAnimationNode.Animation.ResourceName} movment dir {CurrentAnimationNode.Movement.Length()} animation length {animationLength}");
+                    GD.Print($"{CurrentAnimationNode.Animation.ResourceName} movment dir {CurrentAnimationNode.Movement.Length()} animation length {animationLength}");
                 }
                 
                 float totalDistance = (AnimationEndTile.GridPosition - GridPosition).Length() * AnimationEndTile.Size.x;
@@ -517,11 +530,20 @@ namespace Hopper
                     CurrentAnimationNode.Curve == DiveCurve) &&
                     CurrentAnimationNode.Animation.ResourceName.Right(CurrentAnimationNode.Animation.ResourceName.Length-4) != "Turn")
                 {
+                    if (AnimationEndTile.IsInsideTree() == false) AnimationEndTile.QueueFree();
                     AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
                 }
-
-                if (AnimationEndTile.IsInsideTree() == false) AnimationEndTile.QueueFree();
             }
+        }
+
+        private void UpdateAnimationEndTile()
+        {
+            if (AnimationReturnTile != null && AnimationTimeElapsed >= CurrentAnimationNode.Animation.Length/2)
+            {
+                AnimationEndTile = AnimationReturnTile;
+                AnimationReturnTile = null;
+            }
+
         }
 
         public override void _Input(InputEvent @event)
