@@ -4,7 +4,6 @@ _________________________
 
     // Fixes
     -MAIN GAME
-    * timing of hop counter (possibly)
     * bug with timer on shaky score text
     * bug with score carrying over after restart (and staying blue)
     * fix incorrect sound on restart
@@ -41,6 +40,7 @@ _________________________
 _________________________
 
     //Possible improvements
+    * timing of hop counter
     * add body visible underwater 
     * add shadows
     * add water shadows in

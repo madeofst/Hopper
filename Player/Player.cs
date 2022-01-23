@@ -215,13 +215,16 @@ namespace Hopper
 
             AnimationQueue.Enqueue(new AnimationNode(
                 AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
-                next.Tile.GridPosition - current.Tile.GridPosition, movementCurve));
+                next.Tile.GridPosition - current.Tile.GridPosition, 
+                movementCurve));
 
-            if (Prefix == "Bounce" || Prefix == "DoubleBounce") AnimationQueue.Peek().BounceVector = current.MovementDirection;
+            if (Prefix == "Bounce")
+                AnimationQueue.Peek().BounceVector = current.MovementDirection;
+            else if (Prefix == "DoubleBounce")
+                AnimationQueue.Peek().BounceVector = current.MovementDirection * 2;
 
             if (movementNodes.Count > 1)
             {
-
                 if (next.MovementDirection == -current.MovementDirection)
                 {
                     AnimationQueue.Enqueue(new AnimationNode(
@@ -367,7 +370,6 @@ namespace Hopper
                 AnimationTimeElapsed = 0;
                 GridPosition = AnimationEndTile.GridPosition;
                 
-                
                 if (AnimationQueue.Count > 0)
                 {
                     PlayNextAnimation();
@@ -468,7 +470,10 @@ namespace Hopper
                 {   
                     if (AnimationTimeElapsed >= CurrentAnimationNode.Animation.Length/2)
                     {
-                        AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition);
+                        if (CurrentAnimationNode.Animation.ResourceName.Contains("DoubleBounce")) 
+                            AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.BounceVector - CurrentAnimationNode.Movement);
+                        else
+                            AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition); 
                     }
                     else
                     {
