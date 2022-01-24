@@ -24,7 +24,7 @@ _________________________
     * more the same, slower progression
 
     -VISUAL DESIGN
-    * make the goal tile more obvious
+    * make the goal tile more obvious - hole which opens up and you jump into (with a flag that pops up behind?)
     * are you sure you want to quit
     * tidy up restart and quit buttons
     * redesign boundary to make grid clearer
