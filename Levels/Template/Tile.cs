@@ -62,7 +62,6 @@ namespace Hopper
                 if (PointValue > 0) BugSprite.Modulate = ModulatePalette.Colors[(PointValue/100)-1];
             }
 
-            //CallDeferred("Init");
             Connect("mouse_entered", this, "OnMouseEnter");
             
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");

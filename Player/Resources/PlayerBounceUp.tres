@@ -1,7 +1,7 @@
 [gd_resource type="Animation" format=2]
 
 [resource]
-resource_name = "DoubleBounceDown"
+resource_name = "BounceUp"
 length = 0.63
 step = 0.07
 tracks/0/type = "value"
@@ -14,5 +14,19 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 288, 289, 290, 291, 292, 293, 294, 295, 296 ]
+"values": [ 261, 262, 263, 264, 265, 266, 267, 268, 269 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.28 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "TriggerLandAnimation"
+} ]
 }

@@ -127,6 +127,10 @@ namespace Hopper
             if ((Grid.WithinGrid(JumpTargetPosition) && Grid.GetTile(JumpTargetPosition).Type == Type.Rock) ||
                  !Grid.WithinGrid(JumpTargetPosition))
             {
+                Tile t = TempEdgeTile(Type.Rock,
+                                      JumpTargetPosition,
+                                      CurrentTile.GlobalPosition + JumpVector * CurrentTile.Size);
+                MovementNodes.Enqueue(new MovementNode(t, Movement));
                 Movement = -Movement;
                 AnimationEndTile = Grid.GetTile(Grid.LimitToBounds(JumpTargetPosition + Movement));
                 // If the direction switches after the 1st one, it will always be a bounce
@@ -326,6 +330,8 @@ namespace Hopper
             foreach (MovementNode n in movementNodes)
             {
                 GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
+                //if (n.Tile != null) GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
+                //else GD.Print($"Node {i} - outside - {n.MovementDirection}");
                 i++;
             }
         }
@@ -346,8 +352,11 @@ namespace Hopper
 
         public void TriggerLandAnimation()
         {
-            AnimationEndTile.SplashAnimation.Play("Land");
-            if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
+            if (AnimationEndTile.IsInsideTree()) 
+            {
+                AnimationEndTile.SplashAnimation.Play("Land");
+                if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
+            }
         }
 
         public void TriggerSplashAnimation()
@@ -450,6 +459,15 @@ namespace Hopper
             AnimationPlayer.Play("IdleDown");
         }
 
+        public Tile TempEdgeTile(Type type, Vector2 GridPos, Vector2 GlobalPos)
+        {
+            Tile t = new Tile(){};
+            t.Type = type;
+            t.GridPosition = GridPos;
+            t.GlobalPosition = GlobalPos;
+            return t;
+        }
+
         public void SetAnimationTiles()
         {   
             if (CurrentAnimationNode != null)
@@ -459,10 +477,9 @@ namespace Hopper
                     AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.BounceVector);
                     if (AnimationEndTile == null) 
                     {
-                        AnimationEndTile = new Tile(){};
-                        AnimationEndTile.Type = Type.Rock;
-                        AnimationEndTile.GridPosition = CurrentTile.GridPosition + CurrentAnimationNode.BounceVector;
-                        AnimationEndTile.GlobalPosition = CurrentTile.GlobalPosition + CurrentAnimationNode.BounceVector * AnimationEndTile.Size;
+                        AnimationEndTile = TempEdgeTile(Type.Rock,
+                                                        CurrentTile.GridPosition + CurrentAnimationNode.BounceVector,
+                                                        CurrentTile.GlobalPosition + CurrentAnimationNode.BounceVector * AnimationEndTile.Size);
                     }
 
                     if (CurrentAnimationNode.Animation.ResourceName.Contains("DoubleBounce"))
@@ -485,6 +502,8 @@ namespace Hopper
             {
                 throw new NotImplementedException();
             }
+
+            if (AnimationEndTile == null) throw new NotImplementedException();
         }
 
         public override void _Process(float delta)
@@ -504,7 +523,6 @@ namespace Hopper
             if (AnimationEndTile != null && CurrentAnimationNode != null)
             {
                 UpdateAnimationEndTile();
-                
                 AnimationTimeElapsed += delta;
 
                 float animationLength;
@@ -516,15 +534,18 @@ namespace Hopper
                 else
                 {
                     animationLength = CurrentAnimationNode.Animation.Length;
-                    GD.Print($"{CurrentAnimationNode.Animation.ResourceName} movment dir {CurrentAnimationNode.Movement.Length()} animation length {animationLength}");
                 }
                 
-                float totalDistance = (AnimationEndTile.GridPosition - GridPosition).Length() * AnimationEndTile.Size.x;
-                float distanceTravelled = totalDistance - (AnimationEndTile.GlobalPosition - GlobalPosition).Length();
+                float totalDistance = (AnimationEndTile.GlobalPosition - CurrentTile.GlobalPosition).Length();
+                float distanceRemaining = (AnimationEndTile.GlobalPosition - GlobalPosition).Length();
+                float distanceTravelled = totalDistance - distanceRemaining;
                 float timeRatio = AnimationTimeElapsed/animationLength;
-                float pixelsToMove = totalDistance * CurrentMovementCurve.Interpolate(timeRatio) - distanceTravelled;
+                float pixelsToMove = (totalDistance * CurrentMovementCurve.Interpolate(timeRatio)) - distanceTravelled;
                 GlobalPosition = GlobalPosition.MoveToward(AnimationEndTile.GlobalPosition, pixelsToMove);
                 
+                //GD.Print($"{CurrentAnimationNode.Animation.ResourceName} -AniLen {animationLength} -TotDis {totalDistance} -DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
+                //GD.Print($"-DisTra {distanceTravelled} -DisRem {distanceTravelled} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
+
                 if (GlobalPosition == AnimationEndTile.GlobalPosition &&
                     (CurrentAnimationNode.Curve == SwimCurve ||
                     CurrentAnimationNode.Curve == DiveCurve) &&
@@ -542,8 +563,8 @@ namespace Hopper
             {
                 AnimationEndTile = AnimationReturnTile;
                 AnimationReturnTile = null;
+                GD.Print("Switch");
             }
-
         }
 
         public override void _Input(InputEvent @event)
