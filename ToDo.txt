@@ -8,7 +8,7 @@ _________________________
     * bug with score carrying over after restart (and staying blue)
     * redo level with two vertical walls of rocks
     * fix double bounce animation
-    * fix !is_inside_tree error (for temp tile obj) when bouncing off the edge of the map
+    * tile land splash animation cuts short on score tiles when they are removed
 
     -LEVEL EDITOR
     * Level editor - saving after a change
