@@ -88,7 +88,7 @@ namespace Hopper
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.Right)
                 {
-                    EmitSignal(nameof(PlayerStartUpdated), GridPosition);
+                    EmitSignal(nameof(PlayerStartUpdated), GridPosition - Vector2.One);
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
                 {

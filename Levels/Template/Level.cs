@@ -46,7 +46,7 @@ namespace Hopper
             StartingHops = LevelData.StartingHops;
             MaximumHops = LevelData.MaximumHops;
             ScoreRequired = LevelData.ScoreRequired;
-            PlayerStartPosition = LevelData.PlayerStartPosition;
+            PlayerStartPosition = LevelData.PlayerStartPosition + Vector2.One;
             Grid.Resources = resources;
             Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
             Grid.ClearExistingChildren();
@@ -68,9 +68,9 @@ namespace Hopper
         public void UpdateLevelData()
         {
             int i = 0;
-            for (int y = 0; y < Grid.GridHeight; y++)
+            for (int y = 1; y < Grid.GridHeight - 1; y++)
             {
-                for (int x = 0; x < Grid.GridWidth; x++)
+                for (int x = 1; x < Grid.GridWidth - 1; x++)
                 {
                     LevelData.TileType[i] = Grid.Tiles[x, y].Type;
                     LevelData.TilePointValue[i] = Grid.Tiles[x, y].PointValue;
@@ -81,7 +81,7 @@ namespace Hopper
             LevelData.StartingHops = StartingHops;
             LevelData.MaximumHops = MaximumHops;
             LevelData.ScoreRequired = ScoreRequired;
-            LevelData.PlayerStartPosition = PlayerStartPosition;
+            LevelData.PlayerStartPosition = PlayerStartPosition + Vector2.One;
         }
 
         public bool UpdateGoalState(int currentScore, Tile activatedGoalTile)

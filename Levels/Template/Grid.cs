@@ -59,7 +59,7 @@ namespace Hopper
             if (WithinGrid(position))
                 return Tiles[(int)position.x, (int)position.y];
             else
-                return null;
+                throw new NotImplementedException();
         }
 
         public override void _Ready()
@@ -69,8 +69,8 @@ namespace Hopper
 
         public virtual void DefineGrid(int tileSize, int gridWidth, int gridHeight)
         {
-            GridWidth = gridWidth;
-            GridHeight = gridHeight;
+            GridWidth = gridWidth + 2;
+            GridHeight = gridHeight + 2;
 
             TileSize = new Vector2(tileSize, tileSize);
             RectSize = new Vector2(tileSize * GridWidth, tileSize * GridHeight);
@@ -95,9 +95,9 @@ namespace Hopper
         internal void PopulateGrid(LevelData levelData = null)
         {
             int i = 0;
-            for (int y = 0; y < GridHeight; y++)
+            for (int y = 1; y < GridHeight - 1; y++)
             {
-                for (int x = 0; x < GridWidth; x++)
+                for (int x = 1; x < GridWidth - 1; x++)
                 {
                     Tile tempTile;
                     if (levelData != null)
@@ -115,6 +115,27 @@ namespace Hopper
                     AddChild(Tiles[x, y]);
                     Tiles[x, y].Owner = this;
                     i++;
+                }
+            }
+            FillEdges();
+        }
+
+        private void FillEdges()
+        {
+            for (int y = 0; y < GridHeight; y++)
+            {
+                for (int x = 0; x < GridWidth; x++)
+                {
+                    if (Tiles[x, y] == null)
+                    {
+                        Tile tempTile = Resources.RockScene.Instance() as Tile;
+                        Tiles[x, y] = tempTile;
+                        Tiles[x, y].GridPosition = new Vector2(x, y);
+                        Tiles[x, y].Name = $"Tile{x}-{y}";
+                        Tiles[x, y].Visible = false;
+                        AddChild(Tiles[x, y]);
+                        Tiles[x, y].Owner = this;
+                    } 
                 }
             }
         }
@@ -136,29 +157,6 @@ namespace Hopper
                 Mathf.Clamp(Position.y, 0, GridHeight - 1)
             );
         }
-
-/*         public Vector2 DetermineWaterExit(Tile landTile, Vector2 adjustedMovement)
-        {
-            Vector2 CheckPosition = landTile.GridPosition + adjustedMovement.Normalized();
-            while (WithinGrid(CheckPosition))
-            {
-                if (GetTile(CheckPosition).Type == Type.Rock) break;
-                if (GetTile(CheckPosition).Type == Type.Water)
-                {
-                    if (ViableLandingPoint(CheckPosition + adjustedMovement.Normalized())) return CheckPosition + adjustedMovement.Normalized();
-                }
-                CheckPosition += adjustedMovement.Normalized();
-            }
-            //if you reach the edge of the grid or a rock?
-            if (ViableLandingPoint(landTile.GridPosition + adjustedMovement.Normalized()))
-            {
-                return landTile.GridPosition + adjustedMovement.Normalized();
-            } 
-            else
-            {
-                return landTile.GridPosition - adjustedMovement;
-            }
-        } */
 
         public bool ViableLandingPoint(Vector2 position)
         {
@@ -222,24 +220,6 @@ namespace Hopper
             newTile.Editable = true;
             ReplaceTile(gridPosition, newTile);
         }
-
-/*         public Tile SwimTo(Tile LandTile, Vector2 Movement)
-        {
-            Vector2 SwimTargetPosition = LandTile.GridPosition + Movement;
-            while (WithinGrid(SwimTargetPosition))
-            {
-                if (GetTile(SwimTargetPosition).Type == Type.Rock)
-                {
-                    return GetTile(SwimTargetPosition - Movement);
-                }
-                else if (GetTile(SwimTargetPosition).Type == Type.Water)
-                {
-                    if (ViableLandingPoint(SwimTargetPosition + Movement)) return GetTile(SwimTargetPosition);
-                }
-                SwimTargetPosition += Movement;
-            }
-            return GetTile(SwimTargetPosition - Movement);
-        } */
 
         internal void ReplaceTile(Vector2 gridPosition, Tile newTile)
         {

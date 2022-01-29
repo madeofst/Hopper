@@ -6,7 +6,6 @@ _________________________
     -MAIN GAME
     * bug with timer on shaky score text
     * bug with score carrying over after restart (and staying blue)
-    * fix incorrect sound on restart
     * redo level with two vertical walls of rocks
     * fix double bounce animation
     * fix !is_inside_tree error (for temp tile obj) when bouncing off the edge of the map
