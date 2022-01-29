@@ -187,7 +187,7 @@ namespace Hopper
         {
             AnimationQueue = new Queue<AnimationNode>();
             MovementNode current = movementNodes.Dequeue();
-            MovementNode next = movementNodes.Peek();
+            MovementNode next = movementNodes.Dequeue();
 
             string Prefix = null, Suffix = null;
             Curve movementCurve;
@@ -195,25 +195,41 @@ namespace Hopper
             //This is the jumping part
             if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2)
             {
-                Prefix = "DoubleJump";
-                movementCurve = DoubleJumpCurve;
+                if (next.Tile.Type == Type.Rock)
+                {
+                    Prefix = "DoubleBounce";
+                    movementCurve = BounceCurve;
+                }
+                else
+                {
+                    Prefix = "DoubleJump";
+                    movementCurve = DoubleJumpCurve;
+                }
             }
-            else if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 0)
-            {   
-                Prefix = "Bounce";
-                movementCurve = BounceCurve;
-            }
-            else if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 1 &&
+/*             else if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 1 &&
                       current.MovementDirection != next.MovementDirection &&
                       current.Tile.Type == Type.Jump)
             {
                 Prefix = "DoubleBounce";
                 movementCurve = BounceCurve;
             }
+            else if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 0)
+            {   
+                Prefix = "Bounce";
+                movementCurve = BounceCurve;
+            } */
             else
             {
-                Prefix = "Jump";
-                movementCurve = JumpCurve;
+                if (next.Tile.Type == Type.Rock)
+                {
+                    Prefix = "Bounce";
+                    movementCurve = BounceCurve;
+                }
+                else
+                {
+                    Prefix = "Jump";
+                    movementCurve = JumpCurve;
+                }
             }
 
             if (next.Tile.Type == Type.Water) Suffix = "Splash";
@@ -228,7 +244,7 @@ namespace Hopper
             else if (Prefix == "DoubleBounce")
                 AnimationQueue.Peek().BounceVector = current.MovementDirection * 2;
 
-            if (movementNodes.Count > 1)
+            if (movementNodes.Count > 0)
             {
                 if (next.MovementDirection == -current.MovementDirection)
                 {
@@ -238,7 +254,7 @@ namespace Hopper
                 }
                     
                 //This bit needs to be a simple function
-                current = movementNodes.Dequeue();
+                current = next;
                 next = movementNodes.Peek();
 
                 while (current.Tile.GridPosition == next.Tile.GridPosition && 
@@ -461,7 +477,7 @@ namespace Hopper
 
         public Tile TempEdgeTile(Type type, Vector2 GridPos, Vector2 GlobalPos)
         {
-            Tile t = new Tile(){};
+            Tile t = new Tile();
             t.Type = type;
             t.GridPosition = GridPos;
             t.GlobalPosition = GlobalPos;
@@ -477,6 +493,7 @@ namespace Hopper
                     AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.BounceVector);
                     if (AnimationEndTile == null) 
                     {
+                        AnimationEndTile = new Tile(){};
                         AnimationEndTile = TempEdgeTile(Type.Rock,
                                                         CurrentTile.GridPosition + CurrentAnimationNode.BounceVector,
                                                         CurrentTile.GlobalPosition + CurrentAnimationNode.BounceVector * AnimationEndTile.Size);
