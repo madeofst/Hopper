@@ -206,7 +206,7 @@ namespace Hopper
             if (!replay)
             {
                 LevelTitleScreen.Init(iLevel + 1, CurrentLevel.MaximumHops, CurrentLevel.ScoreRequired);
-                LevelTitleScreen.Animate();
+                LevelTitleScreen.AnimateShow();
             }
             Music.Play();
         }

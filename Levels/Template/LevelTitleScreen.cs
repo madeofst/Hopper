@@ -36,6 +36,9 @@ public class LevelTitleScreen : Control
     }
 
     public bool AnimationActive { get; private set; }
+    public int FillDirection { get; private set; }
+    public int Speed { get; private set; }
+    public bool Animating { get; private set; }
 
     private HBoxContainer LevelID;
     private HBoxContainer MaximumHops;
@@ -45,10 +48,12 @@ public class LevelTitleScreen : Control
     private RichTextLabel _MaximumHopsLabel;
     private RichTextLabel _RequiredScoreLabel;
 
-    private List<HBoxContainer> Containers;
+    private List<Control> Containers;
     private int i = 0;
 
     private milliTimer timer;
+
+    private ShaderMaterial Shader;
 
     [Signal]
     public delegate void ActivatePlayer();
@@ -63,6 +68,14 @@ public class LevelTitleScreen : Control
         _MaximumHopsLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/MaximumHops/Value");
         RequiredScore = GetNode<HBoxContainer>("LevelTitle/AllContainers/Text/ScoreTarget");
         _RequiredScoreLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/ScoreTarget/Value");
+        Shader = (ShaderMaterial)Material;
+        
+        Containers = new List<Control>() 
+        {
+            LevelID,
+            MaximumHops,
+            RequiredScore
+        };
     }
 
     public void Init(int levelID, int maxHops, int reqScore)
@@ -73,23 +86,52 @@ public class LevelTitleScreen : Control
         RequiredScoreLabel = reqScore;
     }
 
-    public void Animate()
+    public void AnimateShow()
     {
-        Containers = new List<HBoxContainer>() 
+        FillDirection = 1;
+        Speed = 1;
+        Animating = true;
+
+        float i = 0.2f;
+        foreach (Control c in Containers)
         {
-            //LevelID,
-            MaximumHops,
-            RequiredScore
-        };
-        foreach (HBoxContainer c in Containers) c.Visible = false;
-        AnimationActive = true;
-        timer.Start(0.3f);
+            c.Modulate = new Color(c.Modulate, 0);
+            Tween tween = c.GetNode<Tween>("Tween");
+            tween.InterpolateProperty(c, "rect_scale", Vector2.Zero, Vector2.One, 0.9f, Tween.TransitionType.Elastic, Tween.EaseType.Out, i);
+            tween.InterpolateProperty(c, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In, i - 0.2f);
+            tween.Start();
+            i += 0.3f;
+            
+        }
+    }
+
+    public void AnimateHide()
+    {
+        FillDirection = -1;
+        Speed = 3;
+        Animating = true;
+
+        float i = 0f;
+        foreach (Control c in Containers)
+        {
+            Tween tween = c.GetNode<Tween>("Tween");
+            tween.InterpolateProperty(c, "rect_scale", Vector2.One, Vector2.Zero, 0.5f, Tween.TransitionType.Expo, Tween.EaseType.Out, i);
+            tween.InterpolateProperty(c, "modulate", new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In, i);
+            tween.Start();
+            i += 0.1f;
+        }
     }
 
     public override void _PhysicsProcess(float delta)
     {
-        if (timer.Finished() && AnimationActive)
-        {
+        float fill = (float)Shader.GetShaderParam("fill");
+        if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
+
+        if (Animating)
+        {           
+            Shader.SetShaderParam("fill", fill + delta * Speed * FillDirection);
+            //GD.Print($"{fill} - {delta * 10}");
+
             if (i >= Containers.Count)
             {
                 i = 0;
@@ -109,13 +151,8 @@ public class LevelTitleScreen : Control
     {
         if (@event.IsActionReleased("ui_accept"))
         {
-            FadeAndHide();
+            AnimateHide();
             EmitSignal(nameof(ActivatePlayer));
         }
-    }
-
-    private void FadeAndHide()
-    {
-        Visible = false;
     }
 }

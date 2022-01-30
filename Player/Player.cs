@@ -338,7 +338,7 @@ namespace Hopper
             int i = 1;
             foreach (AnimationNode n in animationQueue)
             {
-                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
+                //GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
                 i++;
             }
         }
@@ -348,7 +348,7 @@ namespace Hopper
             int i = 1;
             foreach (MovementNode n in movementNodes)
             {
-                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
+                //GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
                 //if (n.Tile != null) GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
                 //else GD.Print($"Node {i} - outside - {n.MovementDirection}");
                 i++;
@@ -430,7 +430,7 @@ namespace Hopper
             AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
 
             AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimationNode.Animation));
-            GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
+            //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
         }
 
         public void UpdateHopsRemaining(int addedHops)

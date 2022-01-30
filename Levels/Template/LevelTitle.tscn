@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://Shaders/Transition/HM_Transition.tres" type="Material" id=1]
 [ext_resource path="res://Themes/Dots42.tres" type="Theme" id=2]
 [ext_resource path="res://Themes/Disco32.tres" type="Theme" id=3]
 
 [node name="LevelTitle" type="MarginContainer"]
+material = ExtResource( 1 )
 margin_right = 480.0
 margin_bottom = 270.0
 __meta__ = {
@@ -31,6 +33,9 @@ margin_bottom = 118.0
 margin_left = 41.0
 margin_right = 272.0
 margin_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 115, 32 )
 size_flags_horizontal = 6
 size_flags_vertical = 4
 custom_constants/separation = 13
@@ -38,6 +43,8 @@ custom_constants/separation = 13
 [node name="Label" type="RichTextLabel" parent="AllContainers/LevelID/LevelID"]
 margin_right = 156.0
 margin_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
 rect_min_size = Vector2( 156, 64 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -73,6 +80,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Tween" type="Tween" parent="AllContainers/LevelID/LevelID"]
+
 [node name="Text" type="VBoxContainer" parent="AllContainers"]
 margin_top = 122.0
 margin_right = 314.0
@@ -83,6 +92,7 @@ size_flags_vertical = 4
 [node name="MaximumHops" type="HBoxContainer" parent="AllContainers/Text"]
 margin_right = 314.0
 margin_bottom = 36.0
+rect_pivot_offset = Vector2( 157, 17 )
 
 [node name="Label" type="RichTextLabel" parent="AllContainers/Text/MaximumHops"]
 margin_right = 240.0
@@ -116,10 +126,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Tween" type="Tween" parent="AllContainers/Text/MaximumHops"]
+
 [node name="ScoreTarget" type="HBoxContainer" parent="AllContainers/Text"]
 margin_top = 40.0
 margin_right = 314.0
 margin_bottom = 76.0
+rect_pivot_offset = Vector2( 157, 17 )
 
 [node name="Label" type="RichTextLabel" parent="AllContainers/Text/ScoreTarget"]
 margin_right = 240.0
@@ -152,3 +165,5 @@ scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Tween" type="Tween" parent="AllContainers/Text/ScoreTarget"]
