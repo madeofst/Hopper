@@ -10,6 +10,7 @@ namespace Hopper
         
         //References to existing nodes
         public Level CurrentLevel { get; set; }
+        public Level NextLevel { get; set; }
         private Grid Grid { get; set; }
         private Player Player { get; set; }
         private HUD HUD { get; set; }
@@ -166,17 +167,18 @@ namespace Hopper
 
         private void NewLevel(string levelName, bool replay = false)
         {
+
             if (CurrentLevel != null) 
                 CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Load(levelName, true);
             BuildLevel(replay);
-            ConnectRestartButton();
+            ConnectRestartButton(CurrentLevel);
         }
 
-        private void ConnectRestartButton()
+        private void ConnectRestartButton(Level currentLevel)
         {
             if (HUD.Restart.IsConnected("pressed", this, "NewLevel")) HUD.Restart.Disconnect("pressed", this, "NewLevel");
-            HUD.Restart.Connect("pressed", this, "NewLevel", new Godot.Collections.Array() { Levels[iLevel], true } );
+            HUD.Restart.Connect("pressed", this, "NewLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
         }
 
         private void BuildLevel(bool replay = false)
@@ -227,6 +229,16 @@ namespace Hopper
                 {
                     if (Timer.Finished()) GameOver = true;
                 }
+
+                if (LevelTitleScreen.Animating || LevelTitleScreen.Visible)
+                {
+                    Player.Active = false;
+                }
+                else
+                {
+                    Player.Active = true;
+                }
+                GD.Print (Player.Active);
 
                 if (GameOver)
                 {
