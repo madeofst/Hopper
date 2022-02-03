@@ -157,6 +157,7 @@ graph_offset = Vector2( 578.31, 64 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=32]
 
 [node name="Player" type="Node2D"]
+visible = false
 position = Vector2( 2, 0 )
 script = ExtResource( 2 )
 JumpCurve = SubResource( 47 )

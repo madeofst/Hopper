@@ -38,6 +38,7 @@ public class LevelTitleScreen : Control
     public int FillDirection { get; private set; }
     public int Speed { get; private set; }
     public bool Animating { get; private set; }
+    public bool Triggered { get; private set; }
 
     private TitleElement LevelID;
     private TitleElement MaximumHops;
@@ -55,6 +56,10 @@ public class LevelTitleScreen : Control
 
     [Signal]
     public delegate void ActivatePlayer();
+    [Signal]
+    public delegate void LoadNextLevel();
+    [Signal]
+    public delegate void StartMusic();
 
     public override void _Ready()
     {
@@ -98,7 +103,6 @@ public class LevelTitleScreen : Control
             c.Tween.InterpolateProperty(c, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In, delay - 0.2f);
             c.Tween.Start();
             delay += 0.3f;
-            
         }
     }
 
@@ -122,8 +126,13 @@ public class LevelTitleScreen : Control
     {
         float fill = (float)Shader.GetShaderParam("fill");
 
+        if ((FillDirection == 1 && fill >= 1) && !Triggered)
+        {
+            Triggered = true;
+            EmitSignal(nameof(LoadNextLevel));
+        }
+
         if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
-        
         foreach (TitleElement c in Containers) if (c.Tween.IsActive()) Animating = true;
 
         if (Animating)
@@ -132,7 +141,11 @@ public class LevelTitleScreen : Control
         }
         else if (!Animating && (FillDirection == -1 && fill <= 0))
         {
-            Visible = false;
+            if (Visible == true)
+            {
+                Visible = false;
+                Triggered = false;
+            }
         }
     }
 
@@ -145,6 +158,7 @@ public class LevelTitleScreen : Control
              @event.IsActionReleased("ui_down"))
              && !Animating && Visible)
         {
+            EmitSignal(nameof(StartMusic));
             AnimateHide();
             EmitSignal(nameof(ActivatePlayer));
         }

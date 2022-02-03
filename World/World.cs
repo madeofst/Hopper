@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading;
 
 namespace Hopper
 {
@@ -9,6 +10,9 @@ namespace Hopper
         private LevelFactory levelFactory { get; set; }
         
         //References to existing nodes
+        private TextureRect WaterShader { get; set; }
+        private TextureRect Water { get; set; }
+        private TextureRect Background { get; set; }
         public Level CurrentLevel { get; set; }
         public Level NextLevel { get; set; }
         private Grid Grid { get; set; }
@@ -92,6 +96,9 @@ namespace Hopper
             Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
             levelFactory = new LevelFactory(Resources);
             
+            WaterShader = GetNode<TextureRect>("WaterShader");
+            Water = GetNode<TextureRect>("Water");
+            Background = GetNode<TextureRect>("Background");
             HUD = GetNode<HUD>("HUD");
             LevelTitleScreen = GetNode<LevelTitleScreen>("LevelTitleScreen");
 
@@ -127,6 +134,8 @@ namespace Hopper
             Player.Connect(nameof(Player.MoveToTop), this, nameof(MovePlayerToTop));
 
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Activate));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevelInThread), new Godot.Collections.Array { false });
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
 
             if (tempWorldForTesting)
             {
@@ -146,6 +155,20 @@ namespace Hopper
             }
         }
 
+        private void ShowWorld()
+        {
+            WaterShader.Visible = true;
+            Water.Visible = true;
+            Background.Visible = true;
+            HUD.Visible = true;
+            Player.Visible = true;
+        }
+
+        private void PlayMusic()
+        {
+            Music.Play();
+        }
+
         private void MovePlayerToTop()
         {
             MoveChild(Player, GetChildCount());
@@ -162,17 +185,26 @@ namespace Hopper
                 CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
-            BuildLevel();
+            BuildLevelInThread();
         }
 
         private void NewLevel(string levelName, bool replay = false)
         {
+            NextLevel = levelFactory.Load(levelName, true);
+            InitialiseLevelLoad(NextLevel, replay);
+        }
 
-            if (CurrentLevel != null) 
-                CurrentLevel.QueueFree();
-            CurrentLevel = levelFactory.Load(levelName, true);
-            BuildLevel(replay);
-            ConnectRestartButton(CurrentLevel);
+        private void InitialiseLevelLoad(Level level, bool replay)
+        {
+            if (!replay)
+            {
+                LevelTitleScreen.Init(iLevel + 1, level.MaximumHops, level.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
+                LevelTitleScreen.AnimateShow();
+            }
+            else
+            {
+                BuildLevelInThread(replay);
+            }
         }
 
         private void ConnectRestartButton(Level currentLevel)
@@ -181,17 +213,44 @@ namespace Hopper
             HUD.Restart.Connect("pressed", this, "NewLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
         }
 
-        private void BuildLevel(bool replay = false)
+        private void BuildLevelInThread(bool replay = false)
         {
-            AddChild(CurrentLevel);
-            CurrentLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
-            CurrentLevel.Build(Resources);           
-            Grid = CurrentLevel.Grid;
-            MoveChild(HUD, GetChildCount());
-            MoveChild(Player, GetChildCount());
-            MoveChild(LevelTitleScreen, GetChildCount());
-            Player.Init(CurrentLevel, replay);
-            ScoreBox.LevelMinScore.BbcodeText = CurrentLevel.ScoreRequired.ToString();
+            ShowWorld();
+            var th = new System.Threading.Thread(BuildLevel);
+            th.Start(false);
+        }
+
+        private void BuildLevel(System.Object obj)
+        {
+            bool replay = false;
+            try {
+                replay = (bool)obj;
+            }
+            catch (InvalidCastException) {
+                replay = false;
+            }
+
+            if (!replay)
+            {
+                if (NextLevel == null)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    if (NextLevel == null) NextLevel = CurrentLevel;
+                }
+            }
+
+            AddChildBelowNode(Background, NextLevel);
+            NextLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
+            NextLevel.Build(Resources);           
+            Grid = NextLevel.Grid;
+            //MoveChild(HUD, GetChildCount());
+            //MoveChild(Player, GetChildCount());
+            //MoveChild(LevelTitleScreen, GetChildCount());
+            Player.Init(NextLevel, replay);
+            ScoreBox.LevelMinScore.BbcodeText = NextLevel.ScoreRequired.ToString();
             if (!PuzzleMode)
             {
                 if (Timer is null)
@@ -204,19 +263,16 @@ namespace Hopper
                     Timer.Reset();
                 }
             }
-  
-            if (!replay)
-            {
-                LevelTitleScreen.Init(iLevel + 1, CurrentLevel.MaximumHops, CurrentLevel.ScoreRequired);
-                LevelTitleScreen.AnimateShow();
-            }
-            Music.Play();
+            ConnectRestartButton(NextLevel);
+            if (CurrentLevel != null) CurrentLevel.QueueFree();
+            CurrentLevel = NextLevel;
+            NextLevel = null;
         }
 
         private void NewPlayer()
         {
             Player = (Player)GD.Load<PackedScene>("res://Player/Player.tscn").Instance();
-            AddChild(Player);
+            AddChildBelowNode(Background, Player);
         }
 
         public override void _Process(float delta)
@@ -238,7 +294,6 @@ namespace Hopper
                 {
                     Player.Active = true;
                 }
-                GD.Print (Player.Active);
 
                 if (GameOver)
                 {
@@ -317,14 +372,17 @@ namespace Hopper
 
         public void UpdateGoalState(int currentScore, int currentLevelScore)
         {
-            ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore);
-            if (!CurrentLevel.Grid.GoalTile.Activated)
+            if (CurrentLevel != null)
             {
-                bool MinScoreReached = CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
-                if (MinScoreReached && currentLevelScore != 0)
+                ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore);
+                if (!CurrentLevel.Grid.GoalTile.Activated)
                 {
-                    GoalActivate.Play();
-                    ScoreBox.Animate();
+                    bool MinScoreReached = CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
+                    if (MinScoreReached && currentLevelScore != 0)
+                    {
+                        GoalActivate.Play();
+                        ScoreBox.Animate();
+                    }
                 }
             }
         }
