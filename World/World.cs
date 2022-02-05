@@ -134,7 +134,7 @@ namespace Hopper
             Player.Connect(nameof(Player.MoveToTop), this, nameof(MovePlayerToTop));
 
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Activate));
-            LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevelInThread), new Godot.Collections.Array { false });
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
 
             if (tempWorldForTesting)
@@ -185,7 +185,7 @@ namespace Hopper
                 CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
-            BuildLevelInThread();
+            BuildLevel();
         }
 
         private void NewLevel(string levelName, bool replay = false)
@@ -203,7 +203,8 @@ namespace Hopper
             }
             else
             {
-                BuildLevelInThread(replay);
+                BuildLevel(replay);
+                //BuildLevelInThread(replay);
             }
         }
 
@@ -213,23 +214,23 @@ namespace Hopper
             HUD.Restart.Connect("pressed", this, "NewLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
         }
 
-        private void BuildLevelInThread(bool replay = false)
+/*         private void BuildLevelInThread(bool replay = false)
         {
             ShowWorld();
             var th = new System.Threading.Thread(BuildLevel);
             th.Start(false);
-        }
+        } */
 
-        private void BuildLevel(System.Object obj)
+        private void BuildLevel(bool replay = false)
         {
-            bool replay = false;
+/*             bool replay = false;
             try {
                 replay = (bool)obj;
             }
             catch (InvalidCastException) {
                 replay = false;
-            }
-
+            } */
+            ShowWorld();
             if (!replay)
             {
                 if (NextLevel == null)
