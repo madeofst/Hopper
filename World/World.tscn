@@ -40,7 +40,6 @@ volume_db = -3.0
 bus = "FX"
 
 [node name="WaterShader" type="TextureRect" parent="."]
-visible = false
 material = ExtResource( 9 )
 margin_right = 480.0
 margin_bottom = 270.0

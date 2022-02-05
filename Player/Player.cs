@@ -9,7 +9,7 @@ namespace Hopper
     {
         //References to existing nodes
         public Level CurrentLevel;
-        public Grid Grid;
+        public Grid Grid = null;
         private Sprite PlayerSprite;
         public AnimationPlayer AnimationPlayer;
 
@@ -33,15 +33,16 @@ namespace Hopper
             }
         }
         
-        private Tile CurrentTile 
+        private Tile CurrentTile
         { 
             get
             {
+                if (Grid == null) return null;
                 return Grid.GetTile(GridPosition);   
             } 
         }
 
-        private Tile AnimationEndTile;
+        private Tile AnimationEndTile = null;
         public Queue<Vector2> MoveInputQueue;
         private Queue<AnimationNode> AnimationQueue;
         public AnimationNode CurrentAnimationNode { get; private set; } = null;
@@ -491,7 +492,7 @@ namespace Hopper
 
         public override void _PhysicsProcess(float delta)
         {
-            if (AnimationEndTile != null && CurrentAnimationNode != null)
+            if (CurrentTile != null && AnimationEndTile != null && CurrentAnimationNode != null)
             {
                 AnimationTimeElapsed += delta;
 
@@ -506,6 +507,7 @@ namespace Hopper
                     animationLength = CurrentAnimationNode.Animation.Length;
                 }
                 
+                //FIXME: get errors on next line when spamming input and trying to restart level
                 float totalDistance = (AnimationEndTile.GlobalPosition - CurrentTile.GlobalPosition).Length();
                 float distanceRemaining = (AnimationEndTile.GlobalPosition - GlobalPosition).Length();
                 float distanceTravelled = totalDistance - distanceRemaining;
@@ -534,7 +536,7 @@ namespace Hopper
                 EmitSignal(nameof(QuitToMenu));
             }
 
-            if (Active) //FIXME: world is not null??
+            if (Active && MoveInputQueue.Count <= HopsRemaining) //FIXME: world is not null??
             {
                 if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);
                 else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);

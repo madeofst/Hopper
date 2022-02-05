@@ -4,16 +4,12 @@ _________________________
 
     // Fixes
     -MAIN GAME
-    * bug with timer on shaky score text
     * bug with clicking restart whilst animating (swimming)
     * bug with player on top of title after restart
     * redo level with two vertical walls of rocks
     * fix double bounce animation
     * tile land splash animation cuts short on score tiles when they are removed
     * sort out intial loading of world over the top of menu (maybe just animate out of menu)
-    * errors across threads when loading new level sometimes???
-    * properties of next level need to be loaded before the level title screen is shown
-    * limit movement queue to no more than the maximum for that level
 
     -LEVEL EDITOR
     * Level editor - saving after a change
@@ -42,6 +38,9 @@ _________________________
 
 //Maybes
 _________________________
+
+    //Possible bugs
+    * bug with timer on shaky score text - not sure what this actually is any more (maybe fixed)
 
     //Possible improvements
     * timing of hop counter
