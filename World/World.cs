@@ -198,7 +198,7 @@ namespace Hopper
         {
             if (!replay)
             {
-                LevelTitleScreen.Init(iLevel + 1, level.MaximumHops, level.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
+                LevelTitleScreen.Init(iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
             }
             else
@@ -246,9 +246,6 @@ namespace Hopper
             NextLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
             NextLevel.Build(Resources);           
             Grid = NextLevel.Grid;
-            //MoveChild(HUD, GetChildCount());
-            //MoveChild(Player, GetChildCount());
-            //MoveChild(LevelTitleScreen, GetChildCount());
             Player.Init(NextLevel, replay);
             ScoreBox.LevelMinScore.BbcodeText = NextLevel.ScoreRequired.ToString();
             if (!PuzzleMode)
