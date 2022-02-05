@@ -5,7 +5,8 @@ _________________________
     // Fixes
     -MAIN GAME
     * bug with timer on shaky score text
-    * bug with score carrying over after restart (and staying blue)
+    * bug with clicking restart whilst animating (swimming)
+    * bug with player on top of title after restart
     * redo level with two vertical walls of rocks
     * fix double bounce animation
     * tile land splash animation cuts short on score tiles when they are removed

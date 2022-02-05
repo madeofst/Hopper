@@ -33,6 +33,7 @@ namespace Hopper
         private ScoreBox ScoreBox  { get; set; }
 
         //World parameters
+        public bool ScoreAnimFinished = false;
         public bool GameOver = false;
         public milliTimer Timer;
         private bool _PuzzleMode = true;
@@ -86,6 +87,7 @@ namespace Hopper
         };
 
         public bool TempForTesting { get; set; } = false;
+        public bool HopsExhausted { get; set; } = false;
 
         //Signals
         [Signal]
@@ -120,7 +122,9 @@ namespace Hopper
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
             HUD.Quit.Connect("pressed", this, "QuitToMenu");
-            
+            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
+            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
+
             NewPlayer();           
             Player.Connect(nameof(Player.QuitToMenu), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.GoalReached), this, nameof(GoalReached));
@@ -153,6 +157,16 @@ namespace Hopper
                     NewLevel(Player.GridPosition);
                 }
             }
+        }
+
+        private void ScoreAnimationFinished()
+        {
+            ScoreAnimFinished = true;
+        }
+
+        private void ScoreAnimationStarted()
+        {
+            ScoreAnimFinished = false;
         }
 
         private void ShowWorld()
@@ -204,7 +218,6 @@ namespace Hopper
             else
             {
                 BuildLevel(replay);
-                //BuildLevelInThread(replay);
             }
         }
 
@@ -214,22 +227,8 @@ namespace Hopper
             HUD.Restart.Connect("pressed", this, "NewLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
         }
 
-/*         private void BuildLevelInThread(bool replay = false)
-        {
-            ShowWorld();
-            var th = new System.Threading.Thread(BuildLevel);
-            th.Start(false);
-        } */
-
         private void BuildLevel(bool replay = false)
         {
-/*             bool replay = false;
-            try {
-                replay = (bool)obj;
-            }
-            catch (InvalidCastException) {
-                replay = false;
-            } */
             ShowWorld();
             if (!replay)
             {
@@ -292,6 +291,8 @@ namespace Hopper
                 {
                     Player.Active = true;
                 }
+
+                if (HopsExhausted && ScoreAnimFinished) RestartLevel();
 
                 if (GameOver)
                 {
@@ -397,10 +398,17 @@ namespace Hopper
             }
             else
             {
-                FailLevel.Play();
-                HUD.ShowPopUp("Try again!");
-                NewLevel(Levels[iLevel], true);
+                HopsExhausted = true;
+                //FIXME: set trigger for reset once score update animation finished
             }
+        }
+
+        public void RestartLevel()
+        {
+            FailLevel.Play();
+            HUD.ShowPopUp("Try again!");
+            NewLevel(Levels[iLevel], true);
+            HopsExhausted = false;
         }
     }
 }

@@ -22,7 +22,6 @@ namespace Hopper
 
         public ResourceRepository()
         {
-            
         }
 
         public override void _Ready()

@@ -49,8 +49,6 @@ public class LevelTitleScreen : Control
     private RichTextLabel _RequiredScoreLabel;
 
     private List<TitleElement> Containers;
-    private List<Tween> Tweens;
-    private int i = 0;
 
     private ShaderMaterial Shader;
 

@@ -148,7 +148,6 @@ margin_right = 275.0
 margin_bottom = 23.0
 
 [node name="PopUpText" parent="." instance=ExtResource( 11 )]
-visible = false
 margin_top = 252.0
 margin_right = -3.05176e-05
 margin_bottom = 0.0
