@@ -93,6 +93,8 @@ namespace Hopper
                 //"Retrace",      //FIXME: will need rewriting
                 //"DivingInEfficiently2",
                 "DivingInEfficiently1",
+                "Mazemerize",
+                "PondInPond",
                 "SideWind",     
                 "MiniMaze", //FIXME: can currently use the jump at the bottom twice
                 "GettingAbout9",

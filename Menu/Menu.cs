@@ -37,7 +37,7 @@ namespace Hopper
 			LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Editor/LevelEditor.tscn").Instance();
 			GetTree().Root.AddChild(editor);
 			Music.Stop();
-			Hide();
+			Fade();
 		}
 
 		private void Fade()
