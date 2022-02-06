@@ -153,7 +153,7 @@ namespace Hopper
             if (tempWorldForTesting)
             {
                 TempForTesting = true;
-                NewLevel(levelName, true);
+                NewLevel(levelName, false);
             }
             else
             {
@@ -171,7 +171,7 @@ namespace Hopper
         //Working with levels
         private void InitialiseLevelLoad(Level level, bool replay)
         {
-            if (!replay)
+            if (!replay && !TempForTesting)
             {
                 LevelTitleScreen.Init(iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
@@ -231,6 +231,7 @@ namespace Hopper
                 }
             }
             ConnectRestartButton(NextLevel);
+            UpdateGoalStateAndScore(0, 0, NextLevel.ScoreRequired);
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
             NextLevel = null;
@@ -291,12 +292,16 @@ namespace Hopper
 
         public void UpdateGoalStateAndScore(int currentScore, int currentLevelScore, int minScore)
         {
-            if (CurrentLevel != null)
+            Level level = null;
+            if (NextLevel != null) level = NextLevel;
+            else if (CurrentLevel != null) level = CurrentLevel;
+
+            if (level != null)
             {
-                ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore, CurrentLevel.ScoreRequired);
-                if (!CurrentLevel.Grid.GoalTile.Activated)
+                ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore, level.ScoreRequired);
+                if (!level.Grid.GoalTile.Activated)
                 {
-                    bool MinScoreReached = CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
+                    bool MinScoreReached = level.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
                     if (MinScoreReached && currentLevelScore != 0)
                     {
                         GoalActivate.Play();

@@ -81,7 +81,7 @@ namespace Hopper
             LevelData.StartingHops = StartingHops;
             LevelData.MaximumHops = MaximumHops;
             LevelData.ScoreRequired = ScoreRequired;
-            LevelData.PlayerStartPosition = PlayerStartPosition + Vector2.One;
+            LevelData.PlayerStartPosition = PlayerStartPosition;
         }
 
         public bool UpdateGoalState(int currentScore, Tile activatedGoalTile)

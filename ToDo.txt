@@ -26,7 +26,6 @@ _________________________
     * redesign boundary to make grid clearer
 
     -ANIMATIONS
-    * bounce and double bounce
     * complete level (open up portal and jump in?)
     
     -SOUND
@@ -66,6 +65,7 @@ _________________________
     //Presentational
     * Animate main menu
     * Improve score assignment
+    * bounce and double bounce improvments
 
     // For timed mode
     * Timer reduces with each goal reached?

@@ -105,7 +105,7 @@ namespace Hopper
 
             MoveInputQueue = new Queue<Vector2>();
 
-            EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore, CurrentLevel.ScoreRequired);
+            //EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore, CurrentLevel.ScoreRequired);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
             EmitMoveToTop();
             

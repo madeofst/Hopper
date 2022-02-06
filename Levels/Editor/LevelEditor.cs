@@ -100,8 +100,8 @@ namespace Hopper
 
         private void PopulateParameterValues()
         {
-            PlayerStartX.Text = CurrentLevel.PlayerStartPosition.x.ToString();
-            PlayerStartY.Text = CurrentLevel.PlayerStartPosition.y.ToString();
+            PlayerStartX.Text = (CurrentLevel.PlayerStartPosition.x - 1).ToString();
+            PlayerStartY.Text = (CurrentLevel.PlayerStartPosition.y - 1).ToString();
             StartingHops.Text = CurrentLevel.StartingHops.ToString();
             MaximumHops.Text = CurrentLevel.MaximumHops.ToString();
             ScoreRequired.Text = CurrentLevel.ScoreRequired.ToString();
