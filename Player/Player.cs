@@ -346,7 +346,7 @@ namespace Hopper
             int i = 1;
             foreach (AnimationNode n in animationQueue)
             {
-                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
+                //GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
                 i++;
             }
         }
