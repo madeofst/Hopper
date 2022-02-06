@@ -12,9 +12,12 @@ public class ScoreBox : Control
         LevelMinScore = GetNode<ScoreLabel>("LevelMinScore");
     }
 
-    public void UpdatePlayerScore(int totalScore, int levelScore)
+    public void UpdatePlayerScore(int totalScore, int levelScore, int minScore)
     {
-        PlayerLevelScore.BbcodeText = levelScore.ToString();
+        if (levelScore > minScore)
+            PlayerLevelScore.UpdateText(levelScore.ToString(), true);
+        else
+            PlayerLevelScore.UpdateText(levelScore.ToString(), false);
     }
 
     internal void Animate()

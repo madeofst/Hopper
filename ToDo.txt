@@ -4,12 +4,6 @@ _________________________
 
     // Fixes
     -MAIN GAME
-    * bug with clicking restart whilst animating (swimming)
-    * bug with player on top of title after restart
-    * redo level with two vertical walls of rocks
-    * fix double bounce animation
-    * tile land splash animation cuts short on score tiles when they are removed
-    * sort out intial loading of world over the top of menu (maybe just animate out of menu)
 
     -LEVEL EDITOR
     * Level editor - saving after a change
@@ -17,7 +11,9 @@ _________________________
     * Bug when clicking play in editor with no level selected
 
     //Necessary improvements
+    
     -LEVEL DESIGN
+    * redo level with two vertical walls of rocks
     * introduce the rock on a simpler one
     * make it clearer how many hops you need on the water teaching ones
     * jump over a pad into the water - need to teach
@@ -29,18 +25,21 @@ _________________________
     * tidy up restart and quit buttons
     * redesign boundary to make grid clearer
 
-    * Animations
-        - complete level (open up portal and jump in?)
-    * Sound FX
-        - game over
-        - eat bug
-        - bounce
+    -ANIMATIONS
+    * bounce and double bounce
+    * complete level (open up portal and jump in?)
+    
+    -SOUND
+    * game over
+    * eat bug
+    * bounce
 
 //Maybes
 _________________________
 
     //Possible bugs
     * bug with timer on shaky score text - not sure what this actually is any more (maybe fixed)
+    * bug with player on top of title after restart (can't replicate currently)
 
     //Possible improvements
     * timing of hop counter

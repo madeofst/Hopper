@@ -131,7 +131,7 @@ namespace Hopper
 
         public void GoHome()
         {
-            Menu.Show();
+            Menu.ShowMenu();
             QueueFree();
         }
     }

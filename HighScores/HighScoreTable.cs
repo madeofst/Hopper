@@ -46,7 +46,7 @@ namespace Hopper
 
         private void OnBackButtonPressed()
         {
-            Menu.Show();
+            Menu.ShowMenu();
             QueueFree();
         }
     }

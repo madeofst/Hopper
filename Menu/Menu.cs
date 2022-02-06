@@ -8,17 +8,19 @@ namespace Hopper
 	public class Menu : MarginContainer
 	{
 		public AudioStreamPlayer2D Music;
+		private Tween Tween;
 		public override void _Ready()
 		{
 			Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+			Tween = GetNode<Tween>("Tween");
 		}
 
 		public void newGamePressed()
 		{
 			World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
-			GetTree().Root.AddChild(world);
+			GetTree().Root.AddChildBelowNode(GetNode<ResourceRepository>("/root/ResourceRepository"), world);
 			Music.Stop();
-			Hide();
+			Fade();
 			world.Init();
 		}
 
@@ -37,5 +39,25 @@ namespace Hopper
 			Music.Stop();
 			Hide();
 		}
-	}
+
+		private void Fade()
+		{
+			Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In);
+			Tween.Start();
+		}
+
+		public void Test(object Object, string nodePath)
+		{
+			//move behind and hide
+			GetTree().Root.MoveChild(this, 1);
+			Hide();
+			GD.Print("Test.");
+		}
+
+        internal void ShowMenu()
+        {
+			Modulate = new Color (1, 1, 1, 1);
+            Show();
+        }
+    }
 }

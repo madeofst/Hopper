@@ -37,7 +37,9 @@ Type = 5
 JumpLength = 2
 
 [node name="LilySprite" parent="." index="1"]
+position = Vector2( 16, 17 )
 texture = ExtResource( 2 )
+offset = Vector2( 0, 0 )
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 anims/Spring = SubResource( 1 )

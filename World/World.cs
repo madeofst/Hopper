@@ -6,36 +6,48 @@ namespace Hopper
 {
     public class World : Node2D
     {
+        //Classes for loading stuff
         private ResourceRepository Resources { get; set; }
         private LevelFactory levelFactory { get; set; }
         
-        //References to existing nodes
+        //Visuals
         private TextureRect WaterShader { get; set; }
         private TextureRect Water { get; set; }
         private TextureRect Background { get; set; }
+
+        //Player
+        private Player Player { get; set; }
+
+        //Level
         public Level CurrentLevel { get; set; }
         public Level NextLevel { get; set; }
         private Grid Grid { get; set; }
-        private Player Player { get; set; }
-        private HUD HUD { get; set; }
-        private AnimationPlayer PopUp { get; set; }
-        public LevelTitleScreen LevelTitleScreen { get; private set; }
         
+        //Title
+        public LevelTitleScreen LevelTitleScreen { get; private set; }
+
+        //Audio
         public AudioStreamPlayer2D Music { get; set; }
         public AudioStreamPlayer2D FailLevel { get; private set; }
         public AudioStreamPlayer2D SucceedLevel { get; private set; }
         public AudioStreamPlayer2D GoalActivate { get; private set; }
 
+        //HUD
+        private HUD HUD { get; set; }        
         private HopCounter HopCounterBar { get; set; }
-        private ScoreCounter ScoreCounter { get; set; }
-        private TimeCounter TimeCounter { get; set; }
+        //private ScoreCounter ScoreCounter { get; set; }
+        //private TimeCounter TimeCounter { get; set; }
         private Stopwatch Stopwatch { get; set; }
         private ScoreBox ScoreBox  { get; set; }
 
-        //World parameters
+        //Timer
+        public milliTimer Timer;
+
+        //Parameters for World
+        public bool TempForTesting { get; set; } = false;
+        public bool HopsExhausted { get; set; } = false;
         public bool ScoreAnimFinished = false;
         public bool GameOver = false;
-        public milliTimer Timer;
         private bool _PuzzleMode = true;
         public bool PuzzleMode
         {
@@ -86,8 +98,6 @@ namespace Hopper
                 "GettingAbout9",
         };
 
-        public bool TempForTesting { get; set; } = false;
-        public bool HopsExhausted { get; set; } = false;
 
         //Signals
         [Signal]
@@ -113,15 +123,15 @@ namespace Hopper
         public void Init(bool tempWorldForTesting = false, string levelName = "")
         {
             HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
-            ScoreCounter = GetNode<ScoreCounter>("HUD/TimeAndScoreSimple/VBoxContainer/ScoreCounter");
-            TimeCounter = GetNode<TimeCounter>("HUD/TimeAndScoreSimple/VBoxContainer/TimeCounter");
+            //ScoreCounter = GetNode<ScoreCounter>("HUD/TimeAndScoreSimple/VBoxContainer/ScoreCounter");
+            //TimeCounter = GetNode<TimeCounter>("HUD/TimeAndScoreSimple/VBoxContainer/TimeCounter");
             Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
             ScoreBox = GetNode<ScoreBox>("HUD/ScoreBox");
 
-            Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
+            //Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
-            HUD.Quit.Connect("pressed", this, "QuitToMenu");
+            HUD.Quit.Connect("pressed", this, nameof(QuitToMenu));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
@@ -131,8 +141,7 @@ namespace Hopper
             Player.Connect(nameof(Player.IncrementLevel), this, nameof(IncrementLevel));
             Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateHop));
             Player.Connect(nameof(Player.HopsExhausted), this, nameof(OnHopsExhausted));
-            Player.Connect(nameof(Player.ScoreUpdated), ScoreCounter, nameof(ScoreCounter.UpdateText));
-            Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalState));
+            Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalStateAndScore));
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
             Player.Connect(nameof(Player.MoveBehind), this, nameof(MovePlayerBehind));
             Player.Connect(nameof(Player.MoveToTop), this, nameof(MovePlayerToTop));
@@ -159,38 +168,18 @@ namespace Hopper
             }
         }
 
-        private void ScoreAnimationFinished()
+        //Working with levels
+        private void InitialiseLevelLoad(Level level, bool replay)
         {
-            ScoreAnimFinished = true;
-        }
-
-        private void ScoreAnimationStarted()
-        {
-            ScoreAnimFinished = false;
-        }
-
-        private void ShowWorld()
-        {
-            WaterShader.Visible = true;
-            Water.Visible = true;
-            Background.Visible = true;
-            HUD.Visible = true;
-            Player.Visible = true;
-        }
-
-        private void PlayMusic()
-        {
-            Music.Play();
-        }
-
-        private void MovePlayerToTop()
-        {
-            MoveChild(Player, GetChildCount());
-        }
-
-        private void MovePlayerBehind()
-        {
-            MoveChild(Player, 4);
+            if (!replay)
+            {
+                LevelTitleScreen.Init(iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
+                LevelTitleScreen.AnimateShow();
+            }
+            else
+            {
+                BuildLevel(replay);
+            }
         }
 
         private void NewLevel(Vector2 playerPosition)
@@ -206,25 +195,6 @@ namespace Hopper
         {
             NextLevel = levelFactory.Load(levelName, true);
             InitialiseLevelLoad(NextLevel, replay);
-        }
-
-        private void InitialiseLevelLoad(Level level, bool replay)
-        {
-            if (!replay)
-            {
-                LevelTitleScreen.Init(iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
-                LevelTitleScreen.AnimateShow();
-            }
-            else
-            {
-                BuildLevel(replay);
-            }
-        }
-
-        private void ConnectRestartButton(Level currentLevel)
-        {
-            if (HUD.Restart.IsConnected("pressed", this, "NewLevel")) HUD.Restart.Disconnect("pressed", this, "NewLevel");
-            HUD.Restart.Connect("pressed", this, "NewLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
         }
 
         private void BuildLevel(bool replay = false)
@@ -247,7 +217,7 @@ namespace Hopper
             NextLevel.Build(Resources);           
             Grid = NextLevel.Grid;
             Player.Init(NextLevel, replay);
-            ScoreBox.LevelMinScore.BbcodeText = NextLevel.ScoreRequired.ToString();
+            ScoreBox.LevelMinScore.UpdateText(NextLevel.ScoreRequired.ToString(), false);
             if (!PuzzleMode)
             {
                 if (Timer is null)
@@ -264,76 +234,6 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
             NextLevel = null;
-        }
-
-        private void NewPlayer()
-        {
-            Player = (Player)GD.Load<PackedScene>("res://Player/Player.tscn").Instance();
-            AddChildBelowNode(Background, Player);
-        }
-
-        public override void _Process(float delta)
-        {
-            if (CurrentLevel != null)
-            {
-                UpdateTimeRemaining();
-
-                if (Timer != null)
-                {
-                    if (Timer.Finished()) GameOver = true;
-                }
-
-                if (LevelTitleScreen.Animating || LevelTitleScreen.Visible)
-                {
-                    Player.Active = false;
-                }
-                else
-                {
-                    Player.Active = true;
-                }
-
-                if (HopsExhausted && ScoreAnimFinished) RestartLevel();
-
-                if (GameOver)
-                {
-                    Music.Stop();
-                    GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
-                    GetTree().Root.AddChild(GameOver);
-                    GameOver.Score = Player.TotalScore;
-                    GameOver.ScoreLabel.Text = GameOver.Score.ToString();
-                    QueueFree();
-                }
-            }
-        }
-
-        private void UpdateTimeRemaining()
-        {
-            if (Timer != null) EmitSignal(nameof(TimeUpdate), Timer.Remaining());
-        }
-
-
-        public void GoalReached()
-        {
-            Music.Stop();
-            Player.Active = false;
-            Player.ClearQueues();
-            Player.AnimationPlayer.Play("LevelComplete");
-
-            if (iLevel >= Levels.Length - 1)
-            {
-                HUD.ShowPopUp("Game Complete");
-            }
-            else
-            {
-                HUD.ShowPopUp("Level complete!");
-                SucceedLevel.Play();
-            }
-        }
-
-        public void QuitToMenu()
-        {
-            QueueFree();
-            GetNode<Menu>("/root/Menu").Show();
         }
 
         public void IncrementLevel()
@@ -363,17 +263,37 @@ namespace Hopper
             }
         }
 
-        public void UpdateTile(Type NewType)
+        //Working with player
+        private void NewPlayer()
         {
-            Tile NewTile = Resources.LoadByType(NewType).Instance() as Tile;
-            CurrentLevel.Grid.ReplaceTile(Player.GridPosition, NewTile);
+            Player = (Player)GD.Load<PackedScene>("res://Player/Player.tscn").Instance();
+            AddChildBelowNode(Background, Player);
         }
 
-        public void UpdateGoalState(int currentScore, int currentLevelScore)
+
+        public void GoalReached()
+        {
+            Music.Stop();
+            Player.Active = false;
+            Player.ClearQueues();
+            Player.AnimationPlayer.Play("LevelComplete");
+
+            if (iLevel >= Levels.Length - 1)
+            {
+                HUD.ShowPopUp("Game Complete");
+            }
+            else
+            {
+                HUD.ShowPopUp("Level complete!");
+                SucceedLevel.Play();
+            }
+        }
+
+        public void UpdateGoalStateAndScore(int currentScore, int currentLevelScore, int minScore)
         {
             if (CurrentLevel != null)
             {
-                ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore);
+                ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore, CurrentLevel.ScoreRequired);
                 if (!CurrentLevel.Grid.GoalTile.Activated)
                 {
                     bool MinScoreReached = CurrentLevel.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
@@ -399,16 +319,98 @@ namespace Hopper
             else
             {
                 HopsExhausted = true;
-                //FIXME: set trigger for reset once score update animation finished
             }
         }
 
-        public void RestartLevel()
+        //General utitlity methods
+        public void UpdateTile(Type NewType)
         {
+            Tile NewTile = Resources.LoadByType(NewType).Instance() as Tile;
+            CurrentLevel.Grid.ReplaceTile(Player.GridPosition, NewTile);
+        }
+
+        private void UpdateTimeRemaining()
+        {
+            if (Timer != null) EmitSignal(nameof(TimeUpdate), Timer.Remaining());
+        }
+
+        private void ConnectRestartButton(Level currentLevel)
+        {
+            if (HUD.Restart.IsConnected("pressed", this, "RestartLevel")) HUD.Restart.Disconnect("pressed", this, "RestartLevel");
+            HUD.Restart.Connect("pressed", this, "RestartLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
+        }
+
+        private void ScoreAnimationFinished()   { ScoreAnimFinished = true; }
+        private void ScoreAnimationStarted()    { ScoreAnimFinished = false; }
+
+        private void ShowWorld()
+        {
+            WaterShader.Visible = true;
+            Water.Visible = true;
+            Background.Visible = true;
+            HUD.Visible = true;
+            Player.Visible = true;
+        }
+
+        private void PlayMusic()    { Music.Play(); }
+
+        private void MovePlayerToTop()  { MoveChild(Player, GetChildCount() - 2); }
+        private void MovePlayerBehind() { MoveChild(Player, 4); }
+
+        public override void _Process(float delta)
+        {
+            if (CurrentLevel != null)
+            {
+                UpdateTimeRemaining();
+
+                if (Timer != null)
+                {
+                    if (Timer.Finished()) GameOver = true;
+                }
+
+                if (LevelTitleScreen.Animating || LevelTitleScreen.Visible)
+                {
+                    Player.Active = false;
+                }
+                else
+                {
+                    Player.Active = true;
+                }
+
+                if (HopsExhausted && ScoreAnimFinished) FailAndRestartLevel();
+
+                if (GameOver)
+                {
+                    Music.Stop();
+                    GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
+                    GetTree().Root.AddChild(GameOver);
+                    GameOver.Score = Player.TotalScore;
+                    GameOver.ScoreLabel.Text = GameOver.Score.ToString();
+                    QueueFree();
+                }
+            }
+        }
+
+        
+        public void RestartLevel(string levelName, bool replay = false)
+        {
+            Player.RestartingLevel = true;
+            NewLevel(levelName, replay);
+        }
+
+        public void FailAndRestartLevel()
+        {
+            Player.RestartingLevel = true;
             FailLevel.Play();
             HUD.ShowPopUp("Try again!");
             NewLevel(Levels[iLevel], true);
             HopsExhausted = false;
+        }
+        
+        public void QuitToMenu()
+        {
+            QueueFree();
+            GetNode<Menu>("/root/Menu").ShowMenu();
         }
     }
 }

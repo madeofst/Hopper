@@ -18,6 +18,7 @@ namespace Hopper
         public int TotalScore { get; set; } = 0;
         public int LevelScore { get; set; } = 0;
         public bool Active = false;
+        public bool RestartingLevel = false;
 
         private Vector2 _GridPosition;
         public Vector2 GridPosition
@@ -42,10 +43,10 @@ namespace Hopper
             } 
         }
 
-        private Tile AnimationEndTile = null;
+        private Tile AnimationEndTile;
         public Queue<Vector2> MoveInputQueue;
         private Queue<AnimationNode> AnimationQueue;
-        public AnimationNode CurrentAnimationNode { get; private set; } = null;
+        public AnimationNode CurrentAnimationNode { get; private set; }
         public float AnimationTimeElapsed = 0;
         private Curve CurrentMovementCurve;
         [Export]
@@ -67,7 +68,7 @@ namespace Hopper
         [Signal]
         public delegate void IncrementLevel();
         [Signal]
-        public delegate void ScoreUpdated(int totalScore, int levelScore = 0);
+        public delegate void ScoreUpdated(int totalScore, int levelScore = 0, int minScore = 0);
         [Signal]
         public delegate void HopCompleted(int hopsRemaining);
         [Signal]
@@ -91,6 +92,11 @@ namespace Hopper
             PlayerSprite = GetNode<Sprite>("PlayerSprite");
             AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
+            AnimationEndTile = null;
+            CurrentAnimationNode = null;
+            AnimationTimeElapsed = 0;
+
+            RestartingLevel = false;
             CurrentLevel = currentLevel;
             Grid = CurrentLevel.Grid;            
             GridPosition = CurrentLevel.PlayerStartPosition;
@@ -99,8 +105,9 @@ namespace Hopper
 
             MoveInputQueue = new Queue<Vector2>();
 
-            EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore);
+            EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore, CurrentLevel.ScoreRequired);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
+            EmitMoveToTop();
             
             ResetAnimation();
             
@@ -311,7 +318,7 @@ namespace Hopper
             }
 
             //End extras and playing
-            //PrintAnimationSequence(AnimationQueue);
+            PrintAnimationSequence(AnimationQueue);
 
             if (CurrentTile.Type == Type.Jump)
             {
@@ -339,7 +346,7 @@ namespace Hopper
             int i = 1;
             foreach (AnimationNode n in animationQueue)
             {
-                //GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
+                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
                 i++;
             }
         }
@@ -449,9 +456,11 @@ namespace Hopper
                 TotalScore += CurrentTile.PointValue;
                 if (CurrentTile.Type == Type.Score) 
                 {
-                    EmitSignal(nameof(TileChanged), Type.Lily);
+                    CurrentTile.BugSprite.Visible = false;
+                    CurrentTile.PointValue = 0;
+                    CurrentTile.Label.Visible = false;
                 }
-                EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore);
+                EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore, CurrentLevel.ScoreRequired);
             }
         }
 
@@ -492,7 +501,10 @@ namespace Hopper
 
         public override void _PhysicsProcess(float delta)
         {
-            if (CurrentTile != null && AnimationEndTile != null && CurrentAnimationNode != null)
+            if (!RestartingLevel && 
+                CurrentTile != null && 
+                AnimationEndTile != null && 
+                CurrentAnimationNode != null)
             {
                 AnimationTimeElapsed += delta;
 
@@ -507,7 +519,6 @@ namespace Hopper
                     animationLength = CurrentAnimationNode.Animation.Length;
                 }
                 
-                //FIXME: get errors on next line when spamming input and trying to restart level
                 float totalDistance = (AnimationEndTile.GlobalPosition - CurrentTile.GlobalPosition).Length();
                 float distanceRemaining = (AnimationEndTile.GlobalPosition - GlobalPosition).Length();
                 float distanceTravelled = totalDistance - distanceRemaining;
@@ -545,24 +556,10 @@ namespace Hopper
             }
         }
 
-        public void Deactivate()
-        {
-            Active = false;
-        }
+        public void Activate()      { Active = true; }
+        public void Deactivate()    { Active = false; }
 
-        public void Activate()
-        {
-            Active = true;
-        }
-
-        public void EmitMoveBehind()
-        {
-            EmitSignal(nameof(MoveBehind));
-        }
-        
-        public void EmitMoveToTop()
-        {
-            EmitSignal(nameof(MoveToTop));
-        }
+        public void EmitMoveToTop()     { EmitSignal(nameof(MoveToTop)); }
+        public void EmitMoveBehind()    { EmitSignal(nameof(MoveBehind)); }
     }
 }

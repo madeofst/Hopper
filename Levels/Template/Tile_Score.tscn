@@ -5,6 +5,10 @@
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 2
 
+[node name="LilySprite" parent="." index="1"]
+position = Vector2( 16, 17 )
+offset = Vector2( 0, 0 )
+
 [node name="BugSprite" parent="." index="3"]
 visible = true
 frame = 17
