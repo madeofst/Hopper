@@ -64,10 +64,13 @@ namespace Hopper
 
         private void SaveAndPlayLevel()
         {
-            SaveCurrentLevel();
-			World TestWorld = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
-			GetTree().Root.AddChild(TestWorld);
-            TestWorld.Init(true, CurrentLevel.LevelName);
+            if (CurrentLevel != null)
+            {
+                SaveCurrentLevel();
+                World TestWorld = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
+                GetTree().Root.AddChild(TestWorld);
+                TestWorld.Init(true, CurrentLevel.LevelName);
+            }
         }
 
         private void SaveCurrentLevel()

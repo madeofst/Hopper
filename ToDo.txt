@@ -6,9 +6,7 @@ _________________________
     -MAIN GAME
 
     -LEVEL EDITOR
-    * Level editor - saving after a change
     * Level editor - autosaving and updates
-    * Bug when clicking play in editor with no level selected
 
     //Necessary improvements
     

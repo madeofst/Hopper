@@ -70,6 +70,7 @@ namespace Hopper
                 //Instructional
                 "StartingOut",
                 "SecondOfLy",
+                "Up",
                 //Challenge
                 "PointsPointsPoints6",
                 "ArtAndSoul2",
@@ -93,6 +94,7 @@ namespace Hopper
                 //"Retrace",      //FIXME: will need rewriting
                 //"DivingInEfficiently2",
                 "DivingInEfficiently1",
+                "SideToSide",
                 "Mazemerize",
                 "PondInPond",
                 "SideWind",     
