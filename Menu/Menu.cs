@@ -51,7 +51,7 @@ namespace Hopper
 			//move behind and hide
 			GetTree().Root.MoveChild(this, 1);
 			Hide();
-			GD.Print("Test.");
+			//GD.Print("Test.");
 		}
 
         internal void ShowMenu()

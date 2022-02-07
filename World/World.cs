@@ -35,8 +35,6 @@ namespace Hopper
         //HUD
         private HUD HUD { get; set; }        
         private HopCounter HopCounterBar { get; set; }
-        //private ScoreCounter ScoreCounter { get; set; }
-        //private TimeCounter TimeCounter { get; set; }
         private Stopwatch Stopwatch { get; set; }
         private ScoreBox ScoreBox  { get; set; }
 
@@ -66,7 +64,7 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-              //Basic (no special tiles)
+            //Basic (no special tiles)
                 //Instructional
                 "StartingOut",
                 "SecondOfLy",
@@ -84,24 +82,23 @@ namespace Hopper
                 "Jumpington",
             //Water (jump + water tile)
                 //Instructional
-                "WaterIsIt1",   //FIXME: need to revisit these
+                "WaterIsIt1",
                 "WaterIsIt2",
                 "WaterIsIt3",
                 "WaterIsIt4",
                 //Challenge
                 //TODO: need some easier ones
-                //"DivingIn6", //FIXME: rewrite needed for new system
-                //"Retrace",      //FIXME: will need rewriting
+                "Retrace",      
+                "DivingIn6",
                 //"DivingInEfficiently2",
                 "DivingInEfficiently1",
                 "SideToSide",
                 "Mazemerize",
                 "PondInPond",
                 "SideWind",     
-                "MiniMaze", //FIXME: can currently use the jump at the bottom twice
+                "MiniMaze",
                 "GettingAbout9",
         };
-
 
         //Signals
         [Signal]
@@ -127,12 +124,9 @@ namespace Hopper
         public void Init(bool tempWorldForTesting = false, string levelName = "")
         {
             HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
-            //ScoreCounter = GetNode<ScoreCounter>("HUD/TimeAndScoreSimple/VBoxContainer/ScoreCounter");
-            //TimeCounter = GetNode<TimeCounter>("HUD/TimeAndScoreSimple/VBoxContainer/TimeCounter");
             Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
             ScoreBox = GetNode<ScoreBox>("HUD/ScoreBox");
 
-            //Connect(nameof(World.TimeUpdate), TimeCounter, "UpdateText");
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
             HUD.Quit.Connect("pressed", this, nameof(QuitToMenu));

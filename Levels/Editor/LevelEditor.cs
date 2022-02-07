@@ -79,7 +79,7 @@ namespace Hopper
             {
                 WriteParameterValues();
                 Error error = levelFactory.Save(CurrentLevel);
-                GD.PrintErr(error);
+                //GD.PrintErr(error);
             }
         }
 

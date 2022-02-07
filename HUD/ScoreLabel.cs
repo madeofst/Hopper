@@ -30,7 +30,7 @@ public class ScoreLabel : RichTextLabel
         BbcodeText = $"[shake rate=35 level=10][color=#ff0000]{PlainText}[/color][/shake]";
         timer = new milliTimer();
         timer.Start(0.4f);
-        GD.Print($"{this.Name} - {BbcodeText} - {timer.Remaining()}");
+        //GD.Print($"{this.Name} - {BbcodeText} - {timer.Remaining()}");
     }
 
     public void EndShake()
@@ -47,7 +47,7 @@ public class ScoreLabel : RichTextLabel
             {
                 timer = null;
                 EndShake();
-                GD.Print($"{this.Name} - {BbcodeText}");
+                //GD.Print($"{this.Name} - {BbcodeText}");
             }
         }
     }

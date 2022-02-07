@@ -173,7 +173,7 @@ namespace Hopper
             PrintNodes(MovementNodes);
             if (MovementNodes.Count >= 20)
             {
-                GD.Print("Impossible sequence");
+                //GD.Print("Impossible sequence");
                 EmitSignal(nameof(HopsExhausted));
             }
             else
