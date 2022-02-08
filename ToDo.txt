@@ -10,21 +10,16 @@ _________________________
 
     //Necessary improvements
     -LEVEL DESIGN
-    * introduce the rock on a simpler one
-    * make it clearer how many hops you need on the water teaching ones
     * jump over a pad into the water - need to teach
     * more the same, slower progression
 
     -VISUAL DESIGN
     * are you sure you want to quit
     * redesign boundary to make grid clearer
-    * improve try again and stop input
     * introduce water in simpler puzzles (but more complex than just a line)
 
     -ANIMATIONS
     * make the goal tile more obvious - hole which opens up and you jump into (with a flag that pops up behind?)
-    * complete level (open up portal and jump in?)
-    * fail level
     
     -SOUND
     * game over
@@ -39,16 +34,20 @@ _________________________
     * bug with player on top of title after restart (can't replicate currently)
 
     //Possible improvements
+    * introduce the rock on a simpler one
+    * make it clearer how many hops you need on the water teaching ones
     * timing of hop counter
     * add body visible underwater 
     * add shadows
     * add water shadows in
     * consider a wider grid
 
-    * Animations
-        - frog still (eyes blinking)
-        - eat bug
-        - start level (maybe) (open up portal and jump out?)
+    //Animations
+    * complete level (open up portal and jump in?)
+    * fail level
+    * frog still (eyes blinking)
+    * eat bug
+    * start level (maybe) (open up portal and jump out?)
 
     //Pathfinding
     * Transfer to path finding algorithm for coins?
