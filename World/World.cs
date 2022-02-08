@@ -87,14 +87,17 @@ namespace Hopper
                 "WaterIsIt3",
                 "WaterIsIt4",
                 //Challenge
+                "BlueLine",
                 //TODO: need some easier ones
-                "Retrace",      
+            //Combined challenge
+                "Retrace",
+                "DivingIn1",      
+                "DivingIn1a",
                 "DivingIn6",
-                //"DivingInEfficiently2",
                 "DivingInEfficiently1",
                 "SideToSide",
                 "Mazemerize",
-                //"PondInPond",
+                "PondInPond",
                 "SideWind",     
                 "MiniMaze",
                 "GettingAbout9",
@@ -413,7 +416,7 @@ namespace Hopper
         public void QuitToMenu()
         {
             QueueFree();
-            GetNode<Menu>("/root/Menu").ShowMenu();
+            if (!TempForTesting) GetNode<Menu>("/root/Menu").ShowMenu();
         }
     }
 }

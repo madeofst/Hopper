@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-MaximumHops = 11
-ScoreRequired = 300
-StartingHops = 11
-TileType = PoolIntArray( 4, 4, 0, 0, 3, 4, 4, 4, 3, 0, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 4, 0, 0, 0, 5, 2, 5, 3, 0, 0, 5, 0, 3, 0, 0, 3, 0, 3, 1, 2, 5, 4, 4, 0, 0, 0, 0, 3, 4 )
 Name = "DoubleJump"
 Width = 7
-TileSize = 32
-PlayerStartPosition = Vector2( 1, 5 )
-TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 Height = 7
+TileSize = 32
+StartingHops = 11
+MaximumHops = 11
+ScoreRequired = 300
+PlayerStartPosition = Vector2( 1, 5 )
+TileType = PoolIntArray( 4, 4, 0, 0, 3, 4, 4, 4, 3, 0, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 4, 0, 0, 0, 5, 2, 5, 3, 0, 0, 5, 0, 3, 0, 0, 3, 0, 3, 1, 2, 5, 4, 4, 0, 0, 0, 0, 3, 4 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
