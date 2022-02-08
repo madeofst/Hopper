@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Player/Resources/Frog1_32x32_AllJumpsCombined.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
@@ -48,6 +48,9 @@
 [ext_resource path="res://Player/Resources/PlayerBounceDown.tres" type="Animation" id=46]
 [ext_resource path="res://Player/Resources/PlayerBounceUp.tres" type="Animation" id=47]
 [ext_resource path="res://Player/Resources/PlayerBounceLeft.tres" type="Animation" id=48]
+[ext_resource path="res://Player/Resources/Frog1_64x96_AppearAndDisappearFX.png" type="Texture" id=49]
+[ext_resource path="res://Player/Resources/PlayerFXSmoke.tres" type="Animation" id=50]
+[ext_resource path="res://Player/Resources/PlayerFXIdle.tres" type="Animation" id=51]
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
@@ -94,67 +97,71 @@ tracks/0/keys = {
 "values": [ 232, 233, 234, 235 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=19]
-animation = "IdleDown"
-
-[sub_resource type="AnimationNodeAnimation" id=20]
-animation = "IdleLeft"
-
-[sub_resource type="AnimationNodeAnimation" id=21]
-animation = "IdleRight"
-
-[sub_resource type="AnimationNodeAnimation" id=22]
-animation = "IdleUp"
-
-[sub_resource type="AnimationNodeAnimation" id=23]
-animation = "JumpDown"
-
-[sub_resource type="AnimationNodeAnimation" id=24]
-animation = "JumpLeft"
-
-[sub_resource type="AnimationNodeAnimation" id=25]
-animation = "JumpRight"
-
-[sub_resource type="AnimationNodeAnimation" id=26]
-animation = "JumpUp"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=29]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachine" id=31]
-states/IdleDown/node = SubResource( 19 )
-states/IdleDown/position = Vector2( 1024, 322 )
-states/IdleLeft/node = SubResource( 20 )
-states/IdleLeft/position = Vector2( 1024, 168 )
-states/IdleRight/node = SubResource( 21 )
-states/IdleRight/position = Vector2( 1024, 97 )
-states/IdleUp/node = SubResource( 22 )
-states/IdleUp/position = Vector2( 1024, 249 )
-states/JumpDown/node = SubResource( 23 )
-states/JumpDown/position = Vector2( 815, 322 )
-states/JumpLeft/node = SubResource( 24 )
-states/JumpLeft/position = Vector2( 815, 168 )
-states/JumpRight/node = SubResource( 25 )
-states/JumpRight/position = Vector2( 815, 97 )
-states/JumpUp/node = SubResource( 26 )
-states/JumpUp/position = Vector2( 815, 249 )
-transitions = [ "JumpRight", "IdleRight", SubResource( 27 ), "JumpUp", "IdleUp", SubResource( 28 ), "JumpDown", "IdleDown", SubResource( 29 ), "JumpLeft", "IdleLeft", SubResource( 30 ) ]
-graph_offset = Vector2( 578.31, 64 )
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=32]
+[sub_resource type="Animation" id=51]
+resource_name = "Appear"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 8, 9, 10, 11 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../PlayerSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Activate"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("..:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [node name="Player" type="Node2D"]
 visible = false
@@ -168,6 +175,7 @@ BounceCurve = ExtResource( 38 )
 SwimDistanceRationCurve = SubResource( 48 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )
@@ -175,7 +183,9 @@ hframes = 36
 vframes = 9
 frame = 8
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerSprite"]
+root_node = NodePath("../..")
+autoplay = "IdleDown"
 method_call_mode = 1
 anims/BounceDown = ExtResource( 46 )
 anims/BounceLeft = ExtResource( 48 )
@@ -224,9 +234,18 @@ anims/SwimRightTurn = SubResource( 49 )
 anims/SwimUp = ExtResource( 30 )
 anims/SwimUpTurn = ExtResource( 36 )
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 31 )
-anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 32 )
+[node name="FXSprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 49 )
+centered = false
+offset = Vector2( -16, -42 )
+hframes = 12
+frame = 5
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="AfterAnimation"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FXSprite"]
+autoplay = "Idle"
+anims/Appear = SubResource( 51 )
+anims/Idle = ExtResource( 51 )
+anims/Smoke = ExtResource( 50 )
+
+[connection signal="animation_finished" from="PlayerSprite/AnimationPlayer" to="." method="AfterAnimation"]

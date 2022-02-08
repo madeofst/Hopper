@@ -10,8 +10,9 @@ namespace Hopper
         //References to existing nodes
         public Level CurrentLevel;
         public Grid Grid = null;
-        private Sprite PlayerSprite;
-        public AnimationPlayer AnimationPlayer;
+        public Sprite PlayerSprite;
+        public AnimationPlayer PlayerAnimation;
+        public AnimationPlayer PlayerFX;
 
         //Player general parameters
         public int HopsRemaining { get; set; } = 3;
@@ -85,6 +86,8 @@ namespace Hopper
         public delegate void Restart();
         [Signal]
         public delegate void Quit();
+        [Signal]
+        public delegate void PlayFailSound();
     
         public override void _Ready()
         {
@@ -94,8 +97,11 @@ namespace Hopper
         public void Init(Level currentLevel, bool replay) //Called each time a new level starts
         {
             PlayerSprite = GetNode<Sprite>("PlayerSprite");
-            AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            PlayerAnimation = GetNode<AnimationPlayer>("PlayerSprite/AnimationPlayer");
+            PlayerFX = GetNode<AnimationPlayer>("FXSprite/AnimationPlayer");
 
+            Visible = false;
+            //PlayerSprite.Visible = false;
             AnimationEndTile = null;
             CurrentAnimationNode = null;
             AnimationTimeElapsed = 0;
@@ -115,14 +121,14 @@ namespace Hopper
             
             ResetAnimation();
             
-            if (replay)
+/*             if (replay)
             {
                 Active = true;
             }
             else
             {
                 Active = false;
-            }
+            } */
         }
 
         private void CalculateMovement(Vector2 Movement)
@@ -226,7 +232,7 @@ namespace Hopper
             if (next.Tile.Type == Type.Water) Suffix = "Splash";
 
             AnimationQueue.Enqueue(new AnimationNode(
-                AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
+                PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
                 next.Tile.GridPosition - current.Tile.GridPosition, 
                 movementCurve));
 
@@ -237,7 +243,7 @@ namespace Hopper
                     if (next.Tile.Type == Type.Water)
                     {
                         AnimationQueue.Enqueue(new AnimationNode(
-                            AnimationPlayer.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
+                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
                             Vector2.Zero, SwimCurve));
                     }
                 }
@@ -269,13 +275,13 @@ namespace Hopper
                     }
 
                     AnimationQueue.Enqueue(new AnimationNode(
-                        AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
+                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
                         next.Tile.GridPosition - current.Tile.GridPosition, movementCurve));
                     
                     if (next.MovementDirection == -current.MovementDirection)
                     {
                         AnimationQueue.Enqueue(new AnimationNode(
-                            AnimationPlayer.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
+                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
                             Vector2.Zero, SwimCurve));
                     }
 
@@ -315,7 +321,7 @@ namespace Hopper
                         throw new NotImplementedException(); //Shouldn't happen
                     }
                     AnimationQueue.Enqueue(new AnimationNode(
-                        AnimationPlayer.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
+                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
                         next.Tile.GridPosition - current.Tile.GridPosition, movementCurve));
                     
                 }
@@ -425,7 +431,7 @@ namespace Hopper
                     }
                     else
                     {
-                        AnimationPlayer.Play("LevelComplete");
+                        PlayerAnimation.Play("LevelComplete");
                     }
                     AnimationEndTile = null;
                     CurrentAnimationNode = null;
@@ -435,11 +441,14 @@ namespace Hopper
 
         private void PlayNextAnimation()
         {
-            CurrentAnimationNode = AnimationQueue.Dequeue();
-            CurrentMovementCurve = CurrentAnimationNode.Curve;
-            AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
-            AnimationPlayer.Play(AnimationPlayer.FindAnimation(CurrentAnimationNode.Animation));
-            //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
+            if (HopsRemaining > 0)
+            {
+                CurrentAnimationNode = AnimationQueue.Dequeue();
+                CurrentMovementCurve = CurrentAnimationNode.Curve;
+                AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
+                PlayerAnimation.Play(PlayerAnimation.FindAnimation(CurrentAnimationNode.Animation));
+                //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
+            }
         }
 
         public void UpdateHopsRemaining(int addedHops)
@@ -479,17 +488,37 @@ namespace Hopper
             return false;
         }
 
-        private void CheckHopsRemaining()
+        public void Appear()
+        {
+            PlayerFX.Play("Appear");
+        }
+
+        private void Smoke()
+        {
+            PlayerFX.Play("Smoke");
+            if (HopsRemaining <= 0) EmitSignal(nameof(PlayFailSound));
+        }
+
+        public void SendRestartSignal()
         {
             if (HopsRemaining <= 0)
             {
                 EmitSignal(nameof(HopsExhausted));
             }
+            else
+            {
+                EmitSignal(nameof(Restart));
+            }
+        }
+
+        private void CheckHopsRemaining()
+        {
+            if (HopsRemaining <= 0) Smoke();
         }
 
         public void ResetAnimation()
         {
-            AnimationPlayer.Play("IdleDown");
+            PlayerAnimation.Play("IdleDown");
         }
 
         public override void _Process(float delta)
@@ -552,7 +581,7 @@ namespace Hopper
             }
             else if (Active && @event.IsActionPressed("ui_restart"))
             {
-                EmitSignal(nameof(Restart));
+                Smoke();
             }
             else if (Active && @event.IsActionPressed("ui_quit"))
             {
