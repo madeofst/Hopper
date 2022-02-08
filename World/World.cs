@@ -137,12 +137,13 @@ namespace Hopper
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
             HUD.Quit.Connect("pressed", this, nameof(QuitToMenu));
-            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
-            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
-            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
+            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+            
             NewPlayer();           
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));
             Player.Connect(nameof(Player.GoalReached), this, nameof(GoalReached));
@@ -396,9 +397,9 @@ namespace Hopper
                 {
                     Player.Deactivate();
                 }
-                else
+                else if (TempForTesting && !Player.Active)
                 {
-                    //Player.Activate();
+                    Player.Activate();
                 }
 
                 if (HopsExhausted && ScoreAnimFinished) FailAndRestartLevel();

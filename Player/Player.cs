@@ -17,7 +17,7 @@ namespace Hopper
         public int HopsRemaining { get; set; } = 3;
         public int TotalScore { get; set; } = 0;
         public int LevelScore { get; set; } = 0;
-        private bool Active = false;
+        public bool Active { get; private set; } = false;
         public bool RestartingLevel = false;
 
         private Vector2 _GridPosition;

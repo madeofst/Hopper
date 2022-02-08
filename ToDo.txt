@@ -7,10 +7,8 @@ _________________________
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
-    * input not activating on player when in test mode
 
     //Necessary improvements
-    
     -LEVEL DESIGN
     * introduce the rock on a simpler one
     * make it clearer how many hops you need on the water teaching ones
