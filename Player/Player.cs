@@ -17,7 +17,7 @@ namespace Hopper
         public int HopsRemaining { get; set; } = 3;
         public int TotalScore { get; set; } = 0;
         public int LevelScore { get; set; } = 0;
-        public bool Active = false;
+        private bool Active = false;
         public bool RestartingLevel = false;
 
         private Vector2 _GridPosition;
@@ -76,12 +76,16 @@ namespace Hopper
         [Signal]
         public delegate void HopsExhausted();
         [Signal]
-        public delegate void QuitToMenu();
+        public delegate void Pause();
         [Signal]
         public delegate void MoveBehind();
         [Signal]
         public delegate void MoveToTop();
-
+        [Signal]
+        public delegate void Restart();
+        [Signal]
+        public delegate void Quit();
+    
         public override void _Ready()
         {
             Name = "Player";
@@ -542,9 +546,17 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if (@event.IsActionPressed("ui_cancel"))
+            if (Active && @event.IsActionPressed("ui_cancel"))
             {   
-                EmitSignal(nameof(QuitToMenu));
+                EmitSignal(nameof(Pause));
+            }
+            else if (Active && @event.IsActionPressed("ui_restart"))
+            {
+                EmitSignal(nameof(Restart));
+            }
+            else if (Active && @event.IsActionPressed("ui_quit"))
+            {
+                EmitSignal(nameof(Quit));
             }
 
             if (Active && MoveInputQueue.Count <= HopsRemaining) //FIXME: world is not null??

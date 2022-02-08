@@ -7,11 +7,11 @@ _________________________
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
+    * input not activating on player when in test mode
 
     //Necessary improvements
     
     -LEVEL DESIGN
-    * redo level with two vertical walls of rocks
     * introduce the rock on a simpler one
     * make it clearer how many hops you need on the water teaching ones
     * jump over a pad into the water - need to teach
@@ -19,7 +19,6 @@ _________________________
 
     -VISUAL DESIGN
     * are you sure you want to quit
-    * tidy up restart and quit buttons
     * redesign boundary to make grid clearer
     * improve try again and stop input
     * introduce water in simpler puzzles (but more complex than just a line)

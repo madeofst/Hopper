@@ -61,8 +61,6 @@ public class LevelTitleScreen : Control
 
     public override void _Ready()
     {
-        //timer = new milliTimer();
-
         LevelID = GetNode<TitleElement>("LevelTitle/AllContainers/LevelID/LevelID");
         _LevelIDLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/LevelID/LevelID/Value");
         MaximumHops = GetNode<TitleElement>("LevelTitle/AllContainers/Text/MaximumHops");
@@ -143,6 +141,7 @@ public class LevelTitleScreen : Control
             {
                 Visible = false;
                 Triggered = false;
+                EmitSignal(nameof(ActivatePlayer));
             }
         }
     }
@@ -158,7 +157,7 @@ public class LevelTitleScreen : Control
         {
             EmitSignal(nameof(StartMusic));
             AnimateHide();
-            EmitSignal(nameof(ActivatePlayer));
+            //EmitSignal(nameof(ActivatePlayer));
         }
     }
 }

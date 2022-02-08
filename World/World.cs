@@ -23,8 +23,9 @@ namespace Hopper
         public Level NextLevel { get; set; }
         private Grid Grid { get; set; }
         
-        //Title
+        //Menus
         public LevelTitleScreen LevelTitleScreen { get; private set; }
+        public PauseMenu PauseMenu { get; private set; }
 
         //Audio
         public AudioStreamPlayer2D Music { get; set; }
@@ -42,6 +43,7 @@ namespace Hopper
         public milliTimer Timer;
 
         //Parameters for World
+        public bool Paused { get; private set; } = false;
         public bool TempForTesting { get; set; } = false;
         public bool HopsExhausted { get; set; } = false;
         public bool ScoreAnimFinished = false;
@@ -64,7 +66,7 @@ namespace Hopper
         public int iLevel { get; set; } = 0;
         public string[] Levels { get; set; } = new string[] 
         {
-            //Basic (no special tiles)
+             //Basic (no special tiles)
                 //Instructional
                 "StartingOut",
                 "SecondOfLy",
@@ -103,6 +105,7 @@ namespace Hopper
                 "GettingAbout9",
         };
 
+
         //Signals
         [Signal]
         public delegate void TimeUpdate(float timeRemaining);
@@ -117,6 +120,7 @@ namespace Hopper
             Background = GetNode<TextureRect>("Background");
             HUD = GetNode<HUD>("HUD");
             LevelTitleScreen = GetNode<LevelTitleScreen>("LevelTitleScreen");
+            PauseMenu = GetNode<PauseMenu>("PauseMenu");
 
             Music = GetNode<AudioStreamPlayer2D>("Audio/Music");
             FailLevel = GetNode<AudioStreamPlayer2D>("Audio/FailLevel");
@@ -133,11 +137,14 @@ namespace Hopper
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
             HUD.Quit.Connect("pressed", this, nameof(QuitToMenu));
+            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
             NewPlayer();           
-            Player.Connect(nameof(Player.QuitToMenu), this, nameof(QuitToMenu));
+            Player.Connect(nameof(Player.Pause), this, nameof(Pause));
             Player.Connect(nameof(Player.GoalReached), this, nameof(GoalReached));
             Player.Connect(nameof(Player.IncrementLevel), this, nameof(IncrementLevel));
             Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateHop));
@@ -146,6 +153,7 @@ namespace Hopper
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
             Player.Connect(nameof(Player.MoveBehind), this, nameof(MovePlayerBehind));
             Player.Connect(nameof(Player.MoveToTop), this, nameof(MovePlayerToTop));
+            Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
 
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Activate));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
@@ -168,6 +176,7 @@ namespace Hopper
                 }
             }
         }
+
 
         //Working with levels
         private void InitialiseLevelLoad(Level level, bool replay)
@@ -276,7 +285,7 @@ namespace Hopper
         public void GoalReached()
         {
             Music.Stop();
-            Player.Active = false;
+            Player.Activate();
             Player.ClearQueues();
             Player.AnimationPlayer.Play("LevelComplete");
 
@@ -344,6 +353,15 @@ namespace Hopper
         {
             if (HUD.Restart.IsConnected("pressed", this, "RestartLevel")) HUD.Restart.Disconnect("pressed", this, "RestartLevel");
             HUD.Restart.Connect("pressed", this, "RestartLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
+
+            if (PauseMenu.RestartButton.IsConnected("pressed", this, "RestartLevel")) PauseMenu.RestartButton.Disconnect("pressed", this, "RestartLevel");
+            PauseMenu.RestartButton.Connect("pressed", this, "RestartLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
+
+            if (PauseMenu.IsConnected(nameof(PauseMenu.Restart), this, "RestartLevel")) PauseMenu.Disconnect(nameof(PauseMenu.Restart), this, "RestartLevel");
+            PauseMenu.Connect(nameof(PauseMenu.Restart), this, "RestartLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
+
+            if (Player.IsConnected(nameof(Player.Restart), this, "RestartLevel")) Player.Disconnect(nameof(Player.Restart), this, "RestartLevel");
+            Player.Connect(nameof(Player.Restart), this, "RestartLevel", new Godot.Collections.Array() { currentLevel.LevelName, true } );
         }
 
         private void ScoreAnimationFinished()   { ScoreAnimFinished = true; }
@@ -360,7 +378,7 @@ namespace Hopper
 
         private void PlayMusic()    { Music.Play(); }
 
-        private void MovePlayerToTop()  { MoveChild(Player, GetChildCount() - 2); }
+        private void MovePlayerToTop()  { MoveChild(Player, GetChildCount() - 3); }
         private void MovePlayerBehind() { MoveChild(Player, 4); }
 
         public override void _Process(float delta)
@@ -376,11 +394,11 @@ namespace Hopper
 
                 if (LevelTitleScreen.Animating || LevelTitleScreen.Visible)
                 {
-                    Player.Active = false;
+                    Player.Deactivate();
                 }
                 else
                 {
-                    Player.Active = true;
+                    //Player.Activate();
                 }
 
                 if (HopsExhausted && ScoreAnimFinished) FailAndRestartLevel();
@@ -402,6 +420,7 @@ namespace Hopper
         {
             Player.RestartingLevel = true;
             NewLevel(levelName, replay);
+            PauseMenu.AnimateHide();
         }
 
         public void FailAndRestartLevel()
@@ -411,6 +430,20 @@ namespace Hopper
             HUD.ShowPopUp("Try again!");
             NewLevel(Levels[iLevel], true);
             HopsExhausted = false;
+        }
+
+        private void Unpause()
+        {
+            Player.Activate();
+            Paused = false;
+        }
+
+        private void Pause()
+        {
+            Paused = true;
+            Player.Deactivate();
+            PauseMenu.Visible = true;
+            PauseMenu.AnimateShow();
         }
         
         public void QuitToMenu()

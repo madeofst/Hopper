@@ -148,6 +148,7 @@ margin_right = 275.0
 margin_bottom = 23.0
 
 [node name="PopUpText" parent="." instance=ExtResource( 11 )]
+visible = false
 margin_top = 252.0
 margin_right = -3.05176e-05
 margin_bottom = 0.0
@@ -156,6 +157,7 @@ margin_bottom = 0.0
 anims/ShowPopUpText = SubResource( 2 )
 
 [node name="Buttons" type="VBoxContainer" parent="."]
+visible = false
 margin_top = 20.0
 margin_right = 63.0
 margin_bottom = 68.0
