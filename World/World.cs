@@ -136,7 +136,7 @@ namespace Hopper
 
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
-            HUD.Quit.Connect("pressed", this, nameof(QuitToMenu));
+            //HUD.Quit.Connect("pressed", this, nameof(QuitToMenu));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
@@ -366,8 +366,8 @@ namespace Hopper
 
         private void ConnectRestartButton(Level currentLevel)
         {
-            if (HUD.Restart.IsConnected("pressed", this, nameof(RestartLevel))) HUD.Restart.Disconnect("pressed", this, nameof(RestartLevel));
-            HUD.Restart.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
+            //if (HUD.Restart.IsConnected("pressed", this, nameof(RestartLevel))) HUD.Restart.Disconnect("pressed", this, nameof(RestartLevel));
+            //HUD.Restart.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
 
             if (PauseMenu.RestartButton.IsConnected("pressed", this, nameof(RestartLevel))) PauseMenu.RestartButton.Disconnect("pressed", this, nameof(RestartLevel));
             PauseMenu.RestartButton.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
