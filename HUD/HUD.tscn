@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://HUD/TimeCounter.cs" type="Script" id=1]
 [ext_resource path="res://HUD/Resources/UpArrow.png" type="Texture" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://HUD/Resources/DownArrow.png" type="Texture" id=13]
 [ext_resource path="res://HUD/Resources/LeftArrow.png" type="Texture" id=14]
 [ext_resource path="res://HUD/Resources/RightArrow.png" type="Texture" id=15]
+[ext_resource path="res://HUD/Resources/Quit.png" type="Texture" id=16]
+[ext_resource path="res://HUD/Resources/Restart.png" type="Texture" id=17]
 
 [sub_resource type="DynamicFont" id=1]
 outline_size = 1
@@ -144,7 +146,6 @@ margin_right = 275.0
 margin_bottom = 23.0
 
 [node name="PopUpText" parent="." instance=ExtResource( 11 )]
-visible = false
 margin_top = 252.0
 margin_right = -3.05176e-05
 margin_bottom = 0.0
@@ -152,39 +153,62 @@ margin_bottom = 0.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/ShowPopUpText = SubResource( 2 )
 
-[node name="Buttons" type="Control" parent="."]
-margin_left = 17.4811
-margin_top = 179.579
-margin_right = 124.481
-margin_bottom = 250.579
+[node name="TouchButtons" type="Control" parent="."]
+margin_top = 1.0
+margin_right = 139.0
+margin_bottom = 270.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Up" type="TouchScreenButton" parent="Buttons"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( 36.0217, 1.05948 )
+[node name="Up" type="TouchScreenButton" parent="TouchButtons"]
+self_modulate = Color( 1, 1, 1, 0.729412 )
+position = Vector2( 46.4179, 136.826 )
+scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 2 )
 pressed = ExtResource( 2 )
 action = "ui_up"
+visibility_mode = 1
 
-[node name="Down" type="TouchScreenButton" parent="Buttons"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( 35.492, 35.492 )
+[node name="Quit" type="TouchScreenButton" parent="TouchButtons"]
+self_modulate = Color( 1, 1, 1, 0.729412 )
+position = Vector2( 70.135, 7.80919 )
+normal = ExtResource( 16 )
+pressed = ExtResource( 16 )
+action = "ui_quit"
+visibility_mode = 1
+
+[node name="Restart" type="TouchScreenButton" parent="TouchButtons"]
+self_modulate = Color( 1, 1, 1, 0.729412 )
+position = Vector2( 3.23035, 7.36915 )
+normal = ExtResource( 17 )
+pressed = ExtResource( 17 )
+action = "ui_restart"
+visibility_mode = 1
+
+[node name="Down" type="TouchScreenButton" parent="TouchButtons"]
+self_modulate = Color( 1, 1, 1, 0.729412 )
+position = Vector2( 45.8882, 209.302 )
+scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 13 )
 pressed = ExtResource( 13 )
 action = "ui_down"
+visibility_mode = 1
 
-[node name="Left" type="TouchScreenButton" parent="Buttons"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( 1.05946, 33.9028 )
+[node name="Left" type="TouchScreenButton" parent="TouchButtons"]
+self_modulate = Color( 1, 1, 1, 0.729412 )
+position = Vector2( 1.07708, 173.496 )
+scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 14 )
 pressed = ExtResource( 14 )
 action = "ui_left"
+visibility_mode = 1
 
-[node name="Right" type="TouchScreenButton" parent="Buttons"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( 70.4543, 33.3731 )
+[node name="Right" type="TouchScreenButton" parent="TouchButtons"]
+self_modulate = Color( 1, 1, 1, 0.729412 )
+position = Vector2( 91.8884, 175.875 )
+scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 15 )
 pressed = ExtResource( 15 )
-action = "ui_left"
+action = "ui_right"
+visibility_mode = 1

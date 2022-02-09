@@ -104,6 +104,8 @@ public class LevelTitleScreen : Control
 
     public void AnimateHide()
     {
+        EmitSignal(nameof(StartMusic));
+
         FillDirection = -1;
         Speed = 3;
         Animating = true;
@@ -155,9 +157,7 @@ public class LevelTitleScreen : Control
              @event.IsActionReleased("ui_down"))
              && !Animating && Visible)
         {
-            EmitSignal(nameof(StartMusic));
             AnimateHide();
-            //EmitSignal(nameof(ActivatePlayer));
         }
     }
 }
