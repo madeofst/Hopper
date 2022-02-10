@@ -202,16 +202,21 @@ namespace Hopper
             Curve movementCurve;
 
             //This is the jumping part
+            if (next.Tile.Type == Type.Goal && next.Tile.Activated)
+            {
+                Prefix = "Goal";
+            }
+
             if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2)
             {
                 if (next.Tile.Type == Type.Rock)
                 {
-                    Prefix = "DoubleBounce";
+                    Prefix += "DoubleBounce";
                     movementCurve = BounceCurve;
                 }
                 else
                 {
-                    Prefix = "DoubleJump";
+                    Prefix += "DoubleJump";
                     movementCurve = DoubleJumpCurve;
                 }
             }
@@ -219,12 +224,12 @@ namespace Hopper
             {
                 if (next.Tile.Type == Type.Rock)
                 {
-                    Prefix = "Bounce";
+                    Prefix += "Bounce";
                     movementCurve = JumpCurve; //FIXME: testing with jumpcurve
                 }
                 else
                 {
-                    Prefix = "Jump";
+                    Prefix += "Jump";
                     movementCurve = JumpCurve;
                 }
             }
@@ -295,24 +300,27 @@ namespace Hopper
 
                 }
 
+                Prefix = "";
+                if (next.Tile.Type == Type.Goal && next.Tile.Activated) Prefix = "Goal";
+                
                 //This is the exit/return bounce leap
                 if (movementNodes.Count == 0)
                 {
                     if (current.Tile.Type == Type.Water)
                     {
-                        Prefix = "Jump"; Suffix = "Exit";
+                        Prefix += "Jump"; Suffix = "Exit";
                         movementCurve = JumpCurve;
                     }
                     else if (current.Tile.Type == Type.Rock)
                     {
                         if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() >= 2)
                         {
-                            Prefix = "DoubleJump";
+                            Prefix += "DoubleJump";
                             movementCurve = DoubleJumpCurve;
                         }
                         else
                         {
-                            Prefix = "Jump";
+                            Prefix += "Jump";
                             movementCurve = JumpCurve;
                         }
                     }
@@ -408,15 +416,16 @@ namespace Hopper
 
         public void AfterAnimation(string animationName) //TODO: Need to review this part of the procedure
         {
-            if (animationName == "LevelComplete")
+            AnimationTimeElapsed = 0;
+            if (AnimationEndTile != null) GridPosition = AnimationEndTile.GridPosition;
+
+            if (animationName.Left(4) == "Goal")
             {
+                CheckGoal();
                 EmitSignal(nameof(IncrementLevel));
             }
             else if (CurrentAnimationNode != null)
-            {
-                AnimationTimeElapsed = 0;
-                GridPosition = AnimationEndTile.GridPosition;
-                
+            {                
                 if (AnimationQueue.Count > 0)
                 {
                     PlayNextAnimation();
@@ -429,10 +438,10 @@ namespace Hopper
                     {
                         CheckHopsRemaining();
                     }
-                    else
+/*                     else
                     {
                         PlayerAnimation.Play("LevelComplete");
-                    }
+                    } */
                     AnimationEndTile = null;
                     CurrentAnimationNode = null;
                 }

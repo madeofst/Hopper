@@ -287,9 +287,8 @@ namespace Hopper
         public void GoalReached()
         {
             Music.Stop();
-            //Player.Activate(); //TODO: not sure what to do here
             Player.ClearQueues();
-            Player.PlayerAnimation.Play("LevelComplete");
+            //Player.PlayerAnimation.Play("LevelComplete");
 
             if (iLevel >= Levels.Length - 1)
             {

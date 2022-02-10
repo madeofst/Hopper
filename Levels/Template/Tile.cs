@@ -63,9 +63,8 @@ namespace Hopper
             }
 
             Connect("mouse_entered", this, "OnMouseEnter");
-            
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
-            if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Lights");
+            if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Activate");
         }
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
@@ -104,6 +103,11 @@ namespace Hopper
         public void OnMouseEnter()
         {
             if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.PointingHand);
+        }
+
+        public void ToIdle()
+        {
+            GetNode<AnimationPlayer>("LilySprite/AnimationPlayer").Play("Idle");
         }
     }
 }

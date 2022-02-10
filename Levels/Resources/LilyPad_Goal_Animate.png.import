@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/LilyPad_Goal_Off.png-189cb2fb5ac30940d0e10dd9e989ec65.stex"
+path="res://.import/LilyPad_Goal_Animate.png-94caed4b5f15e921e5f919c54c79af13.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/Resources/LilyPad_Goal_Off.png"
-dest_files=[ "res://.import/LilyPad_Goal_Off.png-189cb2fb5ac30940d0e10dd9e989ec65.stex" ]
+source_file="res://Levels/Resources/LilyPad_Goal_Animate.png"
+dest_files=[ "res://.import/LilyPad_Goal_Animate.png-94caed4b5f15e921e5f919c54c79af13.stex" ]
 
 [params]
 

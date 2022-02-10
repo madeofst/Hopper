@@ -160,4 +160,9 @@ public class LevelTitleScreen : Control
             AnimateHide();
         }
     }
+
+    public void ClickToHide()
+    {
+        if (!Animating & Visible) AnimateHide();
+    }
 }
