@@ -4,6 +4,7 @@ _________________________
 
     // Fixes
     -MAIN GAME
+    * sometimes an extra click needed to activate player at start of level
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
@@ -19,12 +20,12 @@ _________________________
     * introduce water in simpler puzzles (but more complex than just a line)
 
     -ANIMATIONS
-    * make the goal tile more obvious - hole which opens up and you jump into (with a flag that pops up behind?)
     
     -SOUND
     * game over
     * eat bug
     * bounce
+    * portal entrance/exit
 
 //Maybes
 _________________________
@@ -43,11 +44,11 @@ _________________________
     * consider a wider grid
 
     //Animations
-    * complete level (open up portal and jump in?)
-    * fail level
+    * goal tile to go purple quicker
+    * fail level to be neated up
+    * restart to be a matching portal to goal
     * frog still (eyes blinking)
     * eat bug
-    * start level (maybe) (open up portal and jump out?)
 
     //Pathfinding
     * Transfer to path finding algorithm for coins?
