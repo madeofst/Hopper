@@ -13,8 +13,6 @@ public class HUD : Control
     {
         AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");    
         PopUp = GetNode<RichTextLabel>("PopUpText/RichTextLabel");
-        Restart = GetNode<Button>("Buttons/Restart");
-        Quit = GetNode<Button>("Buttons/Quit");
     }
 
     public void ShowPopUp(string text)

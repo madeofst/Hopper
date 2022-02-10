@@ -30,3 +30,13 @@ __meta__ = {
 [node name="LevelTitle" parent="." instance=ExtResource( 1 )]
 material = null
 use_parent_material = true
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_right = 480.0
+margin_bottom = 270.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Button" to="." method="AnimateHide"]
