@@ -136,7 +136,6 @@ namespace Hopper
 
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
-            //HUD.Quit.Connect("pressed", this, nameof(QuitToMenu));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
@@ -191,6 +190,7 @@ namespace Hopper
             else
             {
                 BuildLevel(replay);
+                Player.Appear();
             }
         }
 
@@ -366,9 +366,6 @@ namespace Hopper
 
         private void ConnectRestartButton(Level currentLevel)
         {
-            //if (HUD.Restart.IsConnected("pressed", this, nameof(RestartLevel))) HUD.Restart.Disconnect("pressed", this, nameof(RestartLevel));
-            //HUD.Restart.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
-
             if (PauseMenu.RestartButton.IsConnected("pressed", this, nameof(RestartLevel))) PauseMenu.RestartButton.Disconnect("pressed", this, nameof(RestartLevel));
             PauseMenu.RestartButton.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
 
@@ -388,7 +385,6 @@ namespace Hopper
             Water.Visible = true;
             Background.Visible = true;
             HUD.Visible = true;
-            //Player.Visible = true;
         }
 
         private void PlayMusic()    { Music.Play(); }
@@ -405,15 +401,6 @@ namespace Hopper
                 if (Timer != null)
                 {
                     if (Timer.Finished()) GameOver = true;
-                }
-
-                if (LevelTitleScreen.Animating || LevelTitleScreen.Visible)
-                {
-                    Player.Deactivate();
-                }
-                else if (TempForTesting && !Player.Active)
-                {
-                    Player.Activate();
                 }
 
                 if (HopsExhausted && ScoreAnimFinished) RestartLevel(CurrentLevel.LevelName, true); //TODO: won't need this after sorting animation

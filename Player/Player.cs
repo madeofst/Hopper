@@ -481,6 +481,7 @@ namespace Hopper
         {
             if (CurrentTile.Type == Type.Goal && CurrentTile.Activated)
             {
+                Deactivate();
                 EmitSignal(nameof(GoalReached));
                 //UpdateHopsRemaining(CurrentLevel.StartingHops); //FIXME: Hops added should come from next level
                 return true;
@@ -495,12 +496,14 @@ namespace Hopper
 
         private void Smoke()
         {
+            Deactivate();
             PlayerFX.Play("Smoke");
             if (HopsRemaining <= 0) EmitSignal(nameof(PlayFailSound));
         }
 
         public void SendRestartSignal()
         {
+            Deactivate();
             if (HopsRemaining <= 0)
             {
                 EmitSignal(nameof(HopsExhausted));
