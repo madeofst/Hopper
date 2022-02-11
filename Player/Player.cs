@@ -14,41 +14,6 @@ namespace Hopper
         public AnimationPlayer PlayerAnimation;
         public AnimationPlayer PlayerFX;
 
-        //Player general parameters
-        public int HopsRemaining { get; set; } = 3;
-        public int TotalScore { get; set; } = 0;
-        public int LevelScore { get; set; } = 0;
-        public bool Active { get; private set; } = false;
-        public bool RestartingLevel = false;
-
-        private Vector2 _GridPosition;
-        public Vector2 GridPosition
-        {
-            get
-            {
-                return _GridPosition;
-            }
-            set
-            {
-                _GridPosition = value;
-                Position = _GridPosition * Grid.TileSize + Grid.RectPosition;// + Grid.TileSize / 2;
-            }
-        }
-        
-        private Tile CurrentTile
-        { 
-            get
-            {
-                if (Grid == null) return null;
-                return Grid.GetTile(GridPosition);   
-            } 
-        }
-
-        private Tile AnimationEndTile;
-        public Queue<Vector2> MoveInputQueue;
-        private Queue<AnimationNode> AnimationQueue;
-        public AnimationNode CurrentAnimationNode { get; private set; }
-        public float AnimationTimeElapsed = 0;
         private Curve CurrentMovementCurve;
         [Export]
         public Curve JumpCurve;
@@ -88,7 +53,43 @@ namespace Hopper
         public delegate void Quit();
         [Signal]
         public delegate void PlayFailSound();
+
+        //Player general parameters
+        public int HopsRemaining { get; set; } = 3;
+        public int TotalScore { get; set; } = 0;
+        public int LevelScore { get; set; } = 0;
+        public bool Active { get; private set; } = false;
+        public bool RestartingLevel = false;
+
+        private Vector2 _GridPosition;
+        private Tile AnimationEndTile;
+        public Queue<Vector2> MoveInputQueue;
+        private Queue<AnimationNode> AnimationQueue;
+        public AnimationNode CurrentAnimationNode { get; private set; }
+        public float AnimationTimeElapsed = 0;
     
+        public Vector2 GridPosition
+        {
+            get
+            {
+                return _GridPosition;
+            }
+            set
+            {
+                _GridPosition = value;
+                Position = _GridPosition * Grid.TileSize + Grid.RectPosition;
+            }
+        }
+        
+        private Tile CurrentTile
+        { 
+            get
+            {
+                if (Grid == null) return null;
+                return Grid.GetTile(GridPosition);   
+            } 
+        }
+
         public override void _Ready()
         {
             Name = "Player";
@@ -101,7 +102,6 @@ namespace Hopper
             PlayerFX = GetNode<AnimationPlayer>("FXSprite/AnimationPlayer");
 
             Visible = false;
-            //PlayerSprite.Visible = false;
             AnimationEndTile = null;
             CurrentAnimationNode = null;
             AnimationTimeElapsed = 0;
@@ -115,20 +115,9 @@ namespace Hopper
 
             MoveInputQueue = new Queue<Vector2>();
 
-            //EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore, CurrentLevel.ScoreRequired);
             EmitSignal(nameof(HopCompleted), HopsRemaining);
             EmitMoveToTop();
-            
             ResetAnimation();
-            
-/*             if (replay)
-            {
-                Active = true;
-            }
-            else
-            {
-                Active = false;
-            } */
         }
 
         private void CalculateMovement(Vector2 Movement)
@@ -183,7 +172,6 @@ namespace Hopper
             PrintNodes(MovementNodes);
             if (MovementNodes.Count >= 20)
             {
-                //GD.Print("Impossible sequence");
                 EmitSignal(nameof(HopsExhausted));
             }
             else
@@ -375,8 +363,6 @@ namespace Hopper
             foreach (MovementNode n in movementNodes)
             {
                 //GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
-                //if (n.Tile != null) GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
-                //else GD.Print($"Node {i} - outside - {n.MovementDirection}");
                 i++;
             }
         }
@@ -438,10 +424,6 @@ namespace Hopper
                     {
                         CheckHopsRemaining();
                     }
-/*                     else
-                    {
-                        PlayerAnimation.Play("LevelComplete");
-                    } */
                     AnimationEndTile = null;
                     CurrentAnimationNode = null;
                 }
@@ -492,10 +474,19 @@ namespace Hopper
             {
                 Deactivate();
                 EmitSignal(nameof(GoalReached));
-                //UpdateHopsRemaining(CurrentLevel.StartingHops); //FIXME: Hops added should come from next level
                 return true;
             }
             return false;
+        }
+
+        private void CheckHopsRemaining()
+        {
+            if (HopsRemaining <= 0) Smoke();
+        }
+
+        public void ResetAnimation()
+        {
+            PlayerAnimation.Play("IdleDown");
         }
 
         public void Appear()
@@ -521,16 +512,6 @@ namespace Hopper
             {
                 EmitSignal(nameof(Restart));
             }
-        }
-
-        private void CheckHopsRemaining()
-        {
-            if (HopsRemaining <= 0) Smoke();
-        }
-
-        public void ResetAnimation()
-        {
-            PlayerAnimation.Play("IdleDown");
         }
 
         public override void _Process(float delta)

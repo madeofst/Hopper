@@ -89,7 +89,6 @@ namespace Hopper
             if (currentScore >= ScoreRequired && !Grid.GoalTile.Activated)
             {
                 Grid.ReplaceTile(Grid.GoalTile.GridPosition, activatedGoalTile);
-                //Grid.GoalTile.LilyAnimation.Play("Activate");
                 return true;
             }
             else

@@ -288,8 +288,6 @@ namespace Hopper
         {
             Music.Stop();
             Player.ClearQueues();
-            //Player.PlayerAnimation.Play("LevelComplete");
-
             if (iLevel >= Levels.Length - 1)
             {
                 HUD.ShowPopUp("Game Complete");
