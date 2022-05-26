@@ -64,7 +64,7 @@ namespace Hopper
 
         //List of levels
         public int iLevel { get; set; } = 0;
-        public string[] Levels { get; set; } = new string[] 
+        public string[] Levels { get; set; } /* = new string[] 
         {
              //Basic (no special tiles)
                 //Instructional
@@ -99,11 +99,12 @@ namespace Hopper
                 "DivingInEfficiently1",
                 "SideToSide",
                 "Mazemerize",
+                "TheSquare",
                 "PondInPond",
                 "SideWind",     
                 "MiniMaze",
                 "GettingAbout9",
-        };
+        }; */
 
 
         //Signals
@@ -128,8 +129,10 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("Audio/GoalActivate");
         }
 
-        public void Init(bool tempWorldForTesting = false, string levelName = "")
+        public void Init(bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
         {
+            Levels = Worlds.World1Levels;
+
             HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
             Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
             ScoreBox = GetNode<ScoreBox>("HUD/ScoreBox");

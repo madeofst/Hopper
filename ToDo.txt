@@ -10,6 +10,9 @@ _________________________
     * Level editor - autosaving and updates
 
     //Necessary improvements
+    -OVERALL DESIGN
+    * Rename world as pond (and worlds as ponds)
+
     -LEVEL DESIGN
     * jump over a pad into the water - need to teach
     * more the same, slower progression
