@@ -400,7 +400,7 @@ namespace Hopper
                     if (Timer.Finished()) GameOver = true;
                 }
 
-                if (HopsExhausted && ScoreAnimFinished) RestartLevel(CurrentLevel.LevelName, true); //TODO: won't need this after sorting animation
+                //if (HopsExhausted && ScoreAnimFinished) RestartLevel(CurrentLevel.LevelName, true); //TODO: won't need this after sorting animation
 
                 if (GameOver)
                 {

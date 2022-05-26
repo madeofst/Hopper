@@ -508,10 +508,7 @@ namespace Hopper
             {
                 EmitSignal(nameof(HopsExhausted));
             }
-            else
-            {
-                EmitSignal(nameof(Restart));
-            }
+            EmitSignal(nameof(Restart));
         }
 
         public override void _Process(float delta)
