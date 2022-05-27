@@ -17,11 +17,10 @@ namespace Hopper
 
 		public void newGamePressed()
 		{
-			World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
-			GetTree().Root.AddChildBelowNode(GetNode<ResourceRepository>("/root/ResourceRepository"), world);
+			Map Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
+			GetTree().Root.AddChildBelowNode(GetNode<ResourceRepository>("/root/ResourceRepository"), Map);
 			Music.Stop();
 			Fade();
-			world.Init();
 		}
 
 		public void highScoresPressed()

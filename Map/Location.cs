@@ -4,7 +4,6 @@ using System;
 public class Location : Node2D
 {
     [Export]
-    public string[] World1Levels;
+    public string[] Levels;
 
-    
 }

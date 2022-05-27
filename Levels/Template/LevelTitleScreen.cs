@@ -137,13 +137,17 @@ public class LevelTitleScreen : Control
         {           
             Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));
         }
-        else if (!Animating && (FillDirection == -1 && fill <= 0))
+        else
         {
-            if (Visible == true)
+            if (FillDirection == -1 && fill <= 0 && Visible == true)
             {
                 Visible = false;
                 Triggered = false;
                 EmitSignal(nameof(ActivatePlayer));
+            }
+            else if (FillDirection == 1 && fill >= 1)
+            {
+                SetProcessInput(true);
             }
         }
     }
@@ -157,12 +161,14 @@ public class LevelTitleScreen : Control
              @event.IsActionReleased("ui_down"))
              && !Animating && Visible)
         {
+            SetProcessInput(false);
             AnimateHide();
         }
     }
 
     public void ClickToHide()
     {
+        SetProcessInput(false);
         if (!Animating & Visible) AnimateHide();
     }
 }

@@ -129,9 +129,9 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("Audio/GoalActivate");
         }
 
-        public void Init(bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
+        public void Init(string[] levels, bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
         {
-            Levels = Worlds.World1Levels;
+            Levels = levels;
 
             HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
             Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
@@ -265,7 +265,8 @@ namespace Hopper
                 {
                     if (iLevel >= Levels.Length)
                     {
-                        QuitToMenu();
+                        QuitToMap(); 
+                        //QuitToMenu();
                     }
                     else 
                     {
@@ -430,7 +431,18 @@ namespace Hopper
             PauseMenu.Visible = true;
             PauseMenu.AnimateShow();
         }
-        
+
+        private void QuitToMap()
+        {
+            QueueFree();
+            Map Map = GetNode<Map>("/root/Map");
+            if (!TempForTesting)
+            {
+                Map.Show();
+                Map.GetNode<Pointer>("Pointer").SetProcessInput(true);
+            }
+        }
+                
         public void QuitToMenu()
         {
             QueueFree();

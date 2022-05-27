@@ -15,7 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Hopper"
-run/main_scene="res://Map/Map.tscn"
+run/main_scene="res://Menu/Menu.tscn"
 
 [autoload]
 

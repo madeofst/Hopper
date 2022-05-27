@@ -408,7 +408,7 @@ namespace Hopper
             if (animationName.Left(4) == "Goal")
             {
                 CheckGoal();
-                EmitSignal(nameof(IncrementLevel));
+                EmitSignal(nameof(IncrementLevel)); //FIXME: this happens at the end of the set of levels
             }
             else if (CurrentAnimationNode != null)
             {                

@@ -3,29 +3,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Map : Node2D
+namespace Hopper
 {
-    public List<Location> Locations;
-    public Pointer Pointer;
-    
-    public override void _Ready()
+    public class Map : Node2D
     {
-        Locations = GetChildren().OfType<Location>().ToList<Location>();
-        Pointer = GetNode<Pointer>("Pointer");
-        Pointer.SetLocations(Locations);
-    }
-
-    public override void _Process(float delta)
-    {
-        foreach (Location l in Locations)
+        public List<Location> Locations;
+        public Pointer Pointer;
+        
+        public override void _Ready()
         {
-            if (Pointer.Position == l.Position)
+            Locations = GetChildren().OfType<Location>().ToList<Location>();
+            Pointer = GetNode<Pointer>("Pointer");
+            Pointer.SetLocations(Locations);
+        }
+
+        public override void _Process(float delta)
+        {
+            foreach (Location l in Locations)
             {
-                l.Scale = new Vector2(1.2f, 1.2f);
-            }
-            else
-            {
-                l.Scale = new Vector2(1f, 1f);
+                if (Pointer.Position == l.Position)
+                {
+                    l.Scale = new Vector2(1.2f, 1.2f);
+                }
+                else
+                {
+                    l.Scale = new Vector2(1f, 1f);
+                }
             }
         }
     }

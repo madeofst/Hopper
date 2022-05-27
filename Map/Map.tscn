@@ -12,11 +12,11 @@ position = Vector2( 232.5, 213 )
 
 [node name="World1" parent="." instance=ExtResource( 1 )]
 position = Vector2( 107.5, 76 )
-World1Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
+Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
 
 [node name="World2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 356, 77 )
-World1Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
+Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
 
 [node name="Pointer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 235, 222.5 )
+position = Vector2( 236, 116 )
