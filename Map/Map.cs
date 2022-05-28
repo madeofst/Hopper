@@ -22,8 +22,11 @@ namespace Hopper
             foreach (var s in worldsToUnlock)
             {
                 Location l = GetNode<Location>((string)s);
-                l.Active = true;
-                l.NewlyActivated = true;
+                if (l.Active == false)
+                {
+                    l.Active = true;
+                    l.NewlyActivated = true;
+                }
             }
             Pointer.Target.NewlyActivated = false;
             Pointer.Target.Complete = true;
