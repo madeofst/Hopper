@@ -6,6 +6,7 @@ public class PauseMenu : Control
 {
     public AnimatedButton RestartButton;
     public AnimatedButton QuitButton;
+    public AnimatedButton MapButton;
     private List<AnimatedButton> Buttons;
 
     private int FillDirection { get; set; }
@@ -20,17 +21,21 @@ public class PauseMenu : Control
     [Signal]
     public delegate void Restart();
     [Signal]
+    public delegate void Map();
+    [Signal]
     public delegate void Quit();
 
     public override void _Ready()
     {
         RestartButton = GetNode<AnimatedButton>("MenuButtons/Buttons/RestartButton");
         QuitButton = GetNode<AnimatedButton>("MenuButtons/Buttons/QuitButton");
+        MapButton = GetNode<AnimatedButton>("MenuButtons/Buttons/MapButton");
         Shader = (ShaderMaterial)Material;
         
         Buttons = new List<AnimatedButton>() 
         {
             RestartButton,
+            MapButton,
             QuitButton
         };
     }
@@ -105,6 +110,10 @@ public class PauseMenu : Control
         else if (@event.IsActionPressed("ui_restart") && Visible && Loaded && !Animating)
         {
             EmitSignal(nameof(Restart));
+        }
+        else if (@event.IsActionPressed("ui_map") && Visible && Loaded && !Animating)
+        {
+            EmitSignal(nameof(Map));
         }
         else if (@event.IsActionPressed("ui_quit") && Visible && Loaded && !Animating)
         {

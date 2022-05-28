@@ -5,6 +5,7 @@ _________________________
     // Fixes
     -MAIN GAME
     * sometimes an extra click needed to activate player at start of level
+    * Level Title Screen and Pause Menu to come out of world
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates

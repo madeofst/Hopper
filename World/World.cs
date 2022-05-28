@@ -147,6 +147,8 @@ namespace Hopper
 
             PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
             PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
+            PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
+            PauseMenu.Connect(nameof(PauseMenu.Map), this, nameof(QuitToMap));
             PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
             
             NewPlayer();           
@@ -438,6 +440,7 @@ namespace Hopper
 
         private void QuitToMap()
         {
+            if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
             QueueFree();
             Map Map = GetNode<Map>("/root/Map");
             if (!TempForTesting)
@@ -450,6 +453,7 @@ namespace Hopper
         public void QuitToMenu()
         {
             QueueFree();
+            GetNode<Map>("/root/Map").QueueFree();
             if (!TempForTesting) GetNode<Menu>("/root/Menu").ShowMenu();
         }
     }
