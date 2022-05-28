@@ -8,7 +8,7 @@ namespace Hopper
     public class Pointer : Node2D
     {
         private Location Start;
-        private Location Target;
+        public Location Target;
         private List<Location> Locations;
 
         // Called when the node enters the scene tree for the first time.
@@ -48,7 +48,7 @@ namespace Hopper
 
             if (direction != Vector2.Inf)
             {
-                Location l = GetFirstLocationInDirection(direction);
+                Location l = GetNearestLocationInDirection(direction);
                 if (l != null) Target = l;
             } 
         }
@@ -59,7 +59,9 @@ namespace Hopper
             SetProcessInput(false);
             World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
             GetTree().Root.AddChildBelowNode(Map, world);
-            world.Init(Target.Levels);
+            world.Connect(nameof(World.UnlockNextWorld), Map, nameof(Map.UnlockWorld), new Godot.Collections.Array{Target.LocationsToUnlock});
+            world.Init(Target.Levels, Position);
+
         }
 
         private bool PointerOnWorld()
@@ -71,17 +73,24 @@ namespace Hopper
             return false;
         }
 
-        private Location GetFirstLocationInDirection(Vector2 direction)
+        private Location GetNearestLocationInDirection(Vector2 direction)
         {
-            List<float> dotProducts = new List<float>();
+            List<float> distances = new List<float>();
             Location target = null;
             foreach (Location l in Locations)
             {
                 float a = Position.DirectionTo(l.Position).Dot(direction);
-                dotProducts.Add(a);
+                if (a > 0.2 && l.Active)
+                {
+                    distances.Add(Position.DistanceTo(l.Position));
+                }
+                else
+                {
+                    distances.Add(float.MaxValue);
+                }
             }
-            float max = dotProducts.Max();
-            if (max > 0.2) target = Locations[dotProducts.IndexOf(max)];
+            float min = distances.Min();
+            if (min < float.MaxValue) target = Locations[distances.IndexOf(min)];
             return target;
         }
     }

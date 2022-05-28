@@ -110,6 +110,8 @@ namespace Hopper
         //Signals
         [Signal]
         public delegate void TimeUpdate(float timeRemaining);
+        [Signal]
+        public delegate void UnlockNextWorld();
 
         public override void _Ready()
         {
@@ -129,9 +131,10 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("Audio/GoalActivate");
         }
 
-        public void Init(string[] levels, bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
+        public void Init(string[] levels, Vector2 position, bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
         {
             Levels = levels;
+            Position = position - new Vector2(240, 135);
 
             HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
             Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
@@ -265,6 +268,7 @@ namespace Hopper
                 {
                     if (iLevel >= Levels.Length)
                     {
+                        EmitSignal(nameof(UnlockNextWorld));
                         QuitToMap(); 
                         //QuitToMenu();
                     }

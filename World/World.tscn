@@ -42,6 +42,7 @@ volume_db = -3.0
 bus = "FX"
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 margin_right = 480.0
 margin_bottom = 270.0
 texture = ExtResource( 13 )
@@ -51,7 +52,6 @@ __meta__ = {
 }
 
 [node name="WaterShader" type="TextureRect" parent="."]
-visible = false
 material = ExtResource( 9 )
 margin_right = 480.0
 margin_bottom = 270.0
@@ -65,10 +65,9 @@ __meta__ = {
 }
 
 [node name="Water" type="TextureRect" parent="."]
-visible = false
 modulate = Color( 1, 1, 1, 0.823529 )
-margin_right = 360.0
-margin_bottom = 240.0
+margin_right = 480.0
+margin_bottom = 270.0
 rect_min_size = Vector2( 480, 270 )
 mouse_filter = 2
 texture = ExtResource( 10 )
@@ -80,8 +79,8 @@ __meta__ = {
 
 [node name="PondGrid" type="TextureRect" parent="."]
 visible = false
-margin_right = 360.0
-margin_bottom = 240.0
+margin_right = 480.0
+margin_bottom = 270.0
 rect_min_size = Vector2( 480, 270 )
 mouse_filter = 2
 texture = ExtResource( 11 )
@@ -92,7 +91,6 @@ __meta__ = {
 }
 
 [node name="Background" type="TextureRect" parent="."]
-visible = false
 margin_right = 480.0
 margin_bottom = 270.0
 rect_min_size = Vector2( 480, 270 )
@@ -105,7 +103,6 @@ __meta__ = {
 }
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
-visible = false
 
 [node name="LevelTitleScreen" parent="." instance=ExtResource( 8 )]
 visible = false

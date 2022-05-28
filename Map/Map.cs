@@ -17,6 +17,18 @@ namespace Hopper
             Pointer.SetLocations(Locations);
         }
 
+        public void UnlockWorld(string[] worldsToUnlock)
+        {
+            foreach (var s in worldsToUnlock)
+            {
+                Location l = GetNode<Location>((string)s);
+                l.Active = true;
+                l.NewlyActivated = true;
+            }
+            Pointer.Target.NewlyActivated = false;
+            Pointer.Target.Complete = true;
+        }
+
         public override void _Process(float delta)
         {
             foreach (Location l in Locations)

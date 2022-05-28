@@ -1,22 +1,65 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Map/Location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map/Pointer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Map/Map.cs" type="Script" id=3]
+[ext_resource path="res://Map/Camera.cs" type="Script" id=4]
+[ext_resource path="res://Map/MapBackground.png" type="Texture" id=5]
+[ext_resource path="res://Levels/Resources/Rock1_32x32.png" type="Texture" id=6]
+[ext_resource path="res://Map/World1.png" type="Texture" id=7]
+[ext_resource path="res://Map/World2.png" type="Texture" id=8]
+[ext_resource path="res://Map/World4.png" type="Texture" id=9]
+[ext_resource path="res://Map/World3.png" type="Texture" id=10]
+[ext_resource path="res://Map/World5.png" type="Texture" id=11]
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 3 )
 
+[node name="Background" type="Sprite" parent="."]
+modulate = Color( 0.764706, 0.764706, 0.764706, 1 )
+position = Vector2( 241.47, -177.085 )
+texture = ExtResource( 5 )
+
 [node name="Start" parent="." instance=ExtResource( 1 )]
 position = Vector2( 232.5, 213 )
+Texture = ExtResource( 6 )
+Active = true
 
 [node name="World1" parent="." instance=ExtResource( 1 )]
-position = Vector2( 107.5, 76 )
-Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
+position = Vector2( 168.52, 101.362 )
+Levels = PoolStringArray( "StartingOut" )
+Texture = ExtResource( 7 )
+Active = true
+NewlyActivated = true
+LocationsToUnlock = PoolStringArray( "World2" )
 
 [node name="World2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 356, 77 )
+position = Vector2( 271.016, 33.5208 )
 Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
+Texture = ExtResource( 8 )
+LocationsToUnlock = PoolStringArray( "World3" )
+
+[node name="World3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 152.876, -66.5164 )
+Levels = PoolStringArray( "WaterIsIt1", "WaterIsIt2", "WaterIsIt3", "WaterIsIt4", "BlueLine" )
+Texture = ExtResource( 10 )
+LocationsToUnlock = PoolStringArray( "World4" )
+
+[node name="World4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 40.6863, -169.62 )
+Levels = PoolStringArray( "Retrace", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
+Texture = ExtResource( 9 )
+LocationsToUnlock = PoolStringArray( "World5" )
+
+[node name="World5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 115.89, -291.4 )
+Levels = PoolStringArray( "Mazemerize", "TheSquare", "PondInPond", "SideWind", "MiniMaze", "GettingAbout9" )
+Texture = ExtResource( 11 )
 
 [node name="Pointer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 236, 116 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 240, 135 )
+current = true
+script = ExtResource( 4 )
