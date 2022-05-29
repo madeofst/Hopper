@@ -26,7 +26,7 @@ Texture = ExtResource( 6 )
 Active = true
 
 [node name="World1" parent="." instance=ExtResource( 1 )]
-position = Vector2( 168.52, 101.362 )
+position = Vector2( 142.137, 104.466 )
 ID = 1
 Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
 Texture = ExtResource( 7 )
@@ -34,7 +34,7 @@ Active = true
 LocationsToUnlock = PoolStringArray( "World2" )
 
 [node name="World2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 288.496, 29.7751 )
+position = Vector2( 262.114, 32.8789 )
 ID = 2
 Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
 Texture = ExtResource( 8 )

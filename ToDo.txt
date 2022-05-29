@@ -13,7 +13,6 @@ _________________________
     //Necessary improvements
     -OVERALL DESIGN
     * Rename world as pond (and worlds as ponds)
-    * Add return to map
 
     -LEVEL DESIGN
     * jump over a pad into the water - need to teach
@@ -22,7 +21,6 @@ _________________________
     -VISUAL DESIGN
     * are you sure you want to quit
     * redesign boundary to make grid clearer
-    * introduce water in simpler puzzles (but more complex than just a line)
 
     -ANIMATIONS
     
@@ -37,18 +35,16 @@ _________________________
 
     //Possible bugs
     * bug with timer on shaky score text - not sure what this actually is any more (maybe fixed)
-    * bug with player on top of title after restart (can't replicate currently)
 
     //Possible improvements
     * introduce the rock on a simpler one
     * make it clearer how many hops you need on the water teaching ones
-    * timing of hop counter
-    * add body visible underwater 
     * add shadows
     * add water shadows in
     * consider a wider grid
 
     //Animations
+    * spring for jump tile
     * goal tile to go purple quicker
     * fail level to be neated up
     * restart to be a matching portal to goal

@@ -51,6 +51,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PondGrid" type="TextureRect" parent="."]
+margin_right = 480.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 480, 270 )
+mouse_filter = 2
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Water" type="TextureRect" parent="."]
 modulate = Color( 1, 1, 1, 0.823529 )
 margin_right = 480.0
@@ -58,19 +70,6 @@ margin_bottom = 270.0
 rect_min_size = Vector2( 480, 270 )
 mouse_filter = 2
 texture = ExtResource( 10 )
-expand = true
-stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PondGrid" type="TextureRect" parent="."]
-visible = false
-margin_right = 480.0
-margin_bottom = 270.0
-rect_min_size = Vector2( 480, 270 )
-mouse_filter = 2
-texture = ExtResource( 11 )
 expand = true
 stretch_mode = 2
 __meta__ = {
