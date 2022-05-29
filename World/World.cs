@@ -43,6 +43,7 @@ namespace Hopper
         public milliTimer Timer;
 
         //Parameters for World
+        public int ID { get; set; }
         public bool Paused { get; private set; } = false;
         public bool TempForTesting { get; set; } = false;
         public bool HopsExhausted { get; set; } = false; //TODO: won't need this after sorting restart animation
@@ -131,8 +132,9 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("Audio/GoalActivate");
         }
 
-        public void Init(string[] levels, Vector2 position, bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
+        public void Init(int worldID, string[] levels, Vector2 position, bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
         {
+            ID = worldID;
             Levels = levels;
             Position = position - new Vector2(240, 135);
 
@@ -193,7 +195,7 @@ namespace Hopper
             if (!replay && !TempForTesting)
             {
                 LevelTitleScreen.SetPosition(Position);
-                LevelTitleScreen.Init(iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
+                LevelTitleScreen.Init(ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
             }
             else

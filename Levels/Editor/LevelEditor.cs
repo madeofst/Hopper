@@ -69,7 +69,7 @@ namespace Hopper
                 SaveCurrentLevel();
                 World TestWorld = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
                 GetTree().Root.AddChild(TestWorld);
-                TestWorld.Init(new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
+                TestWorld.Init(1, new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
             }
         }
 

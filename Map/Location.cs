@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class Location : Node2D
 {
     [Export]
+    public int ID;
+    
+    [Export]
     public string[] Levels;
 
     [Export]

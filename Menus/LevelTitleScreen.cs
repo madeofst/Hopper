@@ -6,6 +6,16 @@ namespace Hopper
 {
     public class LevelTitleScreen : Control
     {
+        private int worldID;
+        private int WorldIDLabel 
+        { 
+            get => worldID; 
+            set
+            {
+                worldID = value;
+                _WorldIDLabel.BbcodeText = value.ToString();
+            }
+        }
         private int levelID;
         private int LevelIDLabel 
         { 
@@ -42,10 +52,12 @@ namespace Hopper
         public bool Animating { get; private set; }
         public bool Triggered { get; private set; }
 
+        private TitleElement WorldID;
         private TitleElement LevelID;
         private TitleElement MaximumHops;
         private TitleElement RequiredScore;
 
+        private RichTextLabel _WorldIDLabel;
         private RichTextLabel _LevelIDLabel;
         private RichTextLabel _MaximumHopsLabel;
         private RichTextLabel _RequiredScoreLabel;
@@ -64,7 +76,8 @@ namespace Hopper
         public override void _Ready()
         {
             LevelID = GetNode<TitleElement>("LevelTitle/AllContainers/LevelID/LevelID");
-            _LevelIDLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/LevelID/LevelID/Value");
+            _LevelIDLabel = LevelID.GetNode<RichTextLabel>("LevelValue");
+            _WorldIDLabel = LevelID.GetNode<RichTextLabel>("WorldValue");
             MaximumHops = GetNode<TitleElement>("LevelTitle/AllContainers/Text/MaximumHops");
             _MaximumHopsLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/MaximumHops/Value");
             RequiredScore = GetNode<TitleElement>("LevelTitle/AllContainers/Text/ScoreTarget");
@@ -79,9 +92,10 @@ namespace Hopper
             };
         }
 
-        public void Init(int levelID, int maxHops, int reqScore)
+        public void Init(int worldID, int levelID, int maxHops, int reqScore)
         {
             Visible = true;
+            WorldIDLabel = worldID;
             LevelIDLabel = levelID;
             MaximumHopsLabel = maxHops;
             RequiredScoreLabel = reqScore;
@@ -133,7 +147,10 @@ namespace Hopper
             }
 
             if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
-            foreach (TitleElement c in Containers) if (c.Tween.IsActive()) Animating = true;
+            foreach (TitleElement c in Containers)
+            {
+                if (c.Tween.IsActive()) Animating = true;
+            }
 
             if (Animating)
             {           
