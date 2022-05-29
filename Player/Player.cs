@@ -571,7 +571,23 @@ namespace Hopper
             }
             else if (Active && @event.IsActionPressed("ui_restart"))
             {
-                Smoke();
+                if (CurrentAnimationNode != null)
+                {
+                    GD.Print(CurrentAnimationNode.Animation.ResourceName.Left(4));
+                    if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim" ||
+                        CurrentAnimationNode.Animation.ResourceName.Left(5) == "Splash")
+                    {
+                        SendRestartSignal();
+                    }
+                    else
+                    {
+                        Smoke();
+                    }
+                }
+                else
+                {
+                    Smoke();
+                }
             }
             else if (Active && @event.IsActionPressed("ui_quit"))
             {
