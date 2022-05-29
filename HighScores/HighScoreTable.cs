@@ -9,7 +9,7 @@ namespace Hopper
     {
         private HighScoreData Data { get; set; }
         private List<HighScore> HighScores { get; set; }
-        private Menu Menu { get; set; }
+        private StartMenu Menu { get; set; }
 
         private List<RichTextLabel> UserNameControlList { get; set; }
         private List<RichTextLabel> ScoreControlList { get; set; }
@@ -19,7 +19,7 @@ namespace Hopper
             Data = new HighScoreData();
             HighScores = Data.List;
 
-            Menu = GetNode<Menu>("/root/Menu");
+            Menu = GetNode<StartMenu>("/root/StartMenu");
 
             CallDeferred("GetChildReferences");
         }

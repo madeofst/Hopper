@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/NewGameButton_unselected.png-d4fc7b22defe3090775582d09a39d1a8.stex"
+path="res://.import/Frog.png-0066f9839b49ff0ec16e7043debb8d6e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Menu/Resources/NewGameButton_unselected.png"
-dest_files=[ "res://.import/NewGameButton_unselected.png-d4fc7b22defe3090775582d09a39d1a8.stex" ]
+source_file="res://Menus/Resources/Frog.png"
+dest_files=[ "res://.import/Frog.png-0066f9839b49ff0ec16e7043debb8d6e.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

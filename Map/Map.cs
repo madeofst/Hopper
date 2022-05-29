@@ -9,12 +9,29 @@ namespace Hopper
     {
         public List<Location> Locations;
         public Pointer Pointer;
+        private PauseMenu PauseMenu;
         
         public override void _Ready()
         {
+            PauseMenu = GetNode<PauseMenu>("../PauseMenu");
+            
+            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+
             Locations = GetChildren().OfType<Location>().ToList<Location>();
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
+        }
+
+        private void QuitToMenu()
+        {
+            QueueFree();
+        }
+
+        private void Unpause()
+        {
+            Pointer.SetProcessInput(false);
         }
 
         public void UnlockWorld(string[] worldsToUnlock)
@@ -46,5 +63,18 @@ namespace Hopper
                 }
             }
         }
+
+        public override void _Input(InputEvent @event)
+        {
+            if (@event.IsActionPressed("ui_cancel"))
+            {
+                Pointer.SetProcessInput(false);
+                PauseMenu.SetPosition(Position);
+                PauseMenu.Visible = true;
+                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
+                PauseMenu.AnimateShow();
+            }
+        }
+
     }
 }

@@ -5,7 +5,7 @@ namespace Hopper
 {
     public class LevelEditor : Node2D
     {
-        private Menu Menu { get; set; }
+        private StartMenu Menu { get; set; }
 
         private ResourceRepository Resources { get; set; }
         private LevelFactory levelFactory { get; set; }
@@ -23,7 +23,7 @@ namespace Hopper
         {
             Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
             levelFactory = new LevelFactory(Resources);
-            Menu = GetNode<Menu>("/root/Menu");
+            Menu = GetNode<StartMenu>("/root/StartMenu");
             CallDeferred("Init");
         }
 

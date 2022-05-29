@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/High Scores.png-5dd95c61e0bf960ed48116f8e478067a.stex"
+path="res://.import/NewGameButton_unselected.png-537f93e61e85480b475cce4171b4d9d2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Menu/Resources/High Scores.png"
-dest_files=[ "res://.import/High Scores.png-5dd95c61e0bf960ed48116f8e478067a.stex" ]
+source_file="res://Menus/Resources/NewGameButton_unselected.png"
+dest_files=[ "res://.import/NewGameButton_unselected.png-537f93e61e85480b475cce4171b4d9d2.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

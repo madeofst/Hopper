@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class PauseMenu : Control
 {
+    public enum PauseMenuMode
+    {
+        Map,
+        World
+    }
+
     public AnimatedButton RestartButton;
     public AnimatedButton QuitButton;
     public AnimatedButton MapButton;
@@ -38,6 +44,36 @@ public class PauseMenu : Control
             MapButton,
             QuitButton
         };
+    }
+
+    public void SetMode(PauseMenuMode pauseMenuMode)
+    {
+        RestartButton.Visible = false;
+        QuitButton.Visible = false;
+        MapButton.Visible = false;
+
+        if (pauseMenuMode == PauseMenuMode.Map)
+        {
+            Buttons = new List<AnimatedButton>() 
+            {
+                QuitButton
+            };
+        }
+        else if (pauseMenuMode == PauseMenuMode.World)
+        {
+            Buttons = new List<AnimatedButton>() 
+            {
+                RestartButton,
+                MapButton,
+                QuitButton
+            };
+        }
+        else
+        {
+            throw new NotImplementedException();
+        }
+
+        foreach (AnimatedButton b in Buttons) b.Visible = true;
     }
 
     public void AnimateShow()

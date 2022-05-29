@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Hopper
 {
-	public class Menu : MarginContainer
+	public class StartMenu : MarginContainer
 	{
 		public AudioStreamPlayer2D Music;
 		private Tween Tween;
@@ -18,7 +18,7 @@ namespace Hopper
 		public void newGamePressed()
 		{
 			Map Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
-			GetTree().Root.AddChildBelowNode(GetNode<ResourceRepository>("/root/ResourceRepository"), Map);
+			GetTree().Root.AddChildBelowNode(GetNode<LoadingScreen>("/root/LoadingScreen"), Map);
 			Music.Stop();
 			Fade();
 		}

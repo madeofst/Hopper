@@ -122,8 +122,8 @@ namespace Hopper
             Water = GetNode<TextureRect>("Water");
             Background = GetNode<TextureRect>("Background");
             HUD = GetNode<HUD>("HUD");
-            LevelTitleScreen = GetNode<LevelTitleScreen>("LevelTitleScreen");
-            PauseMenu = GetNode<PauseMenu>("PauseMenu");
+            LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
+            PauseMenu = GetNode<PauseMenu>("../PauseMenu");
 
             Music = GetNode<AudioStreamPlayer2D>("Audio/Music");
             FailLevel = GetNode<AudioStreamPlayer2D>("Audio/FailLevel");
@@ -192,6 +192,7 @@ namespace Hopper
         {
             if (!replay && !TempForTesting)
             {
+                LevelTitleScreen.SetPosition(Position);
                 LevelTitleScreen.Init(iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
             }
@@ -219,7 +220,6 @@ namespace Hopper
 
         private void BuildLevel(bool replay = false)
         {
-            ShowWorld();
             if (!replay)
             {
                 if (NextLevel == null)
@@ -255,6 +255,7 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
             NextLevel = null;
+            Visible = true;
         }
 
         public void IncrementLevel()
@@ -386,7 +387,7 @@ namespace Hopper
         private void ScoreAnimationFinished()   { ScoreAnimFinished = true; }
         private void ScoreAnimationStarted()    { ScoreAnimFinished = false; }
 
-        private void ShowWorld()
+        public void ShowWorld()
         {
             WaterShader.Visible = true;
             Water.Visible = true;
@@ -394,10 +395,18 @@ namespace Hopper
             HUD.Visible = true;
         }
 
+        public void HideWorld()
+        {
+            WaterShader.Visible = false;
+            Water.Visible = false;
+            Background.Visible = false;
+            HUD.Visible = false;
+        }
+
         private void PlayMusic()    { Music.Play(); }
 
-        private void MovePlayerToTop()  { MoveChild(Player, GetChildCount() - 3); }
-        private void MovePlayerBehind() { MoveChild(Player, 4); }
+        private void MovePlayerToTop()  { MoveChild(Player, HUD.GetPositionInParent() - 1); }
+        private void MovePlayerBehind() { MoveChild(Player, Background.GetPositionInParent()); }
 
         public override void _Process(float delta)
         {
@@ -434,7 +443,9 @@ namespace Hopper
         {
             Paused = true;
             Player.Deactivate();
+            PauseMenu.SetPosition(Position);
             PauseMenu.Visible = true;
+            PauseMenu.SetMode(PauseMenu.PauseMenuMode.World);
             PauseMenu.AnimateShow();
         }
 
@@ -456,7 +467,7 @@ namespace Hopper
             if (!TempForTesting)
             {
                 GetNode<Map>("/root/Map").QueueFree();  
-                GetNode<Menu>("/root/Menu").ShowMenu();
+                GetNode<StartMenu>("/root/StartMenu").ShowMenu();
             }
         }
     }

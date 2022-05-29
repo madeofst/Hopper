@@ -1,19 +1,19 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Music/Menu_short.ogg" type="AudioStream" id=1]
-[ext_resource path="res://HighScores/Resources/HighScoresButton_clicked.png" type="Texture" id=2]
-[ext_resource path="res://Menu/Menu.cs" type="Script" id=3]
-[ext_resource path="res://Fonts/DigitalDisco-Thin.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://Menu/NewGameButton.cs" type="Script" id=5]
-[ext_resource path="res://HighScores/Resources/HighScoresButton_unselected.png" type="Texture" id=6]
-[ext_resource path="res://HighScores/Resources/HighScoresButton_highlighted.png" type="Texture" id=7]
-[ext_resource path="res://Menu/Resources/NewGameButton_clicked.png" type="Texture" id=8]
-[ext_resource path="res://Menu/Resources/NewGameButton_unselected.png" type="Texture" id=9]
-[ext_resource path="res://Menu/Resources/NewGameButton_highlighted.png" type="Texture" id=10]
-[ext_resource path="res://Menu/Resources/HomeScreen.png" type="Texture" id=11]
+[ext_resource path="res://Fonts/DigitalDisco-Thin.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Menus/NewGameButton.cs" type="Script" id=2]
+[ext_resource path="res://Menus/StartMenu.cs" type="Script" id=3]
+[ext_resource path="res://Menus/Resources/NewGameButton_highlighted.png" type="Texture" id=4]
+[ext_resource path="res://Menus/Resources/NewGameButton_clicked.png" type="Texture" id=5]
+[ext_resource path="res://HighScores/Resources/HighScoresButton_highlighted.png" type="Texture" id=6]
+[ext_resource path="res://HighScores/Resources/HighScoresButton_clicked.png" type="Texture" id=7]
+[ext_resource path="res://Music/Menu_short.ogg" type="AudioStream" id=8]
+[ext_resource path="res://HighScores/Resources/HighScoresButton_unselected.png" type="Texture" id=9]
+[ext_resource path="res://Menus/Resources/HomeScreen.png" type="Texture" id=10]
+[ext_resource path="res://Menus/Resources/NewGameButton_unselected.png" type="Texture" id=11]
 
 [sub_resource type="DynamicFont" id=6]
-font_data = ExtResource( 4 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -25,7 +25,7 @@ font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxEmpty" id=5]
 
-[node name="Menu" type="MarginContainer"]
+[node name="StartMenu" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 3.05176e-05
@@ -43,7 +43,7 @@ __meta__ = {
 margin_right = 480.0
 margin_bottom = 270.0
 mouse_filter = 2
-texture = ExtResource( 11 )
+texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -78,10 +78,10 @@ __meta__ = {
 margin_right = 94.0
 margin_bottom = 23.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 8 )
-texture_hover = ExtResource( 10 )
-script = ExtResource( 5 )
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 4 )
+script = ExtResource( 2 )
 
 [node name="CenterContainer4" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 visible = false
@@ -96,9 +96,9 @@ __meta__ = {
 margin_right = 107.0
 margin_bottom = 23.0
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 2 )
-texture_hover = ExtResource( 7 )
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 6 )
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 margin_top = 78.0
@@ -121,7 +121,7 @@ custom_styles/normal = SubResource( 5 )
 text = "Editor"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 1 )
+stream = ExtResource( 8 )
 autoplay = true
 bus = "Music"
 

@@ -58,6 +58,7 @@ namespace Hopper
             Map Map = GetNode<Map>("..");
             SetProcessInput(false);
             World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
+            world.Visible = false;
             GetTree().Root.AddChildBelowNode(Map, world);
             world.Connect(nameof(World.UnlockNextWorld), Map, nameof(Map.UnlockWorld), new Godot.Collections.Array{Target.LocationsToUnlock});
             world.Init(Target.Levels, Position);

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Levels/Template/LevelTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Menus/LevelTitle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Resources/LargeWhiteSquare.png" type="Texture" id=2]
-[ext_resource path="res://Levels/Template/LevelTitleScreen.cs" type="Script" id=3]
+[ext_resource path="res://Menus/LevelTitleScreen.cs" type="Script" id=3]
 [ext_resource path="res://Shaders/Transition/HM_Transition.tres" type="Material" id=4]
 
 [node name="LevelTitleScreen" type="Control"]
