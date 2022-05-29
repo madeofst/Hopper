@@ -48,7 +48,7 @@ namespace Hopper
 		public void Test(object Object, string nodePath)
 		{
 			//move behind and hide
-			GetTree().Root.MoveChild(this, 1);
+			GetTree().Root.MoveChild(this, 2);
 			Hide();
 			//GD.Print("Test.");
 		}

@@ -13,25 +13,25 @@ namespace Hopper
         
         public override void _Ready()
         {
-            PauseMenu = GetNode<PauseMenu>("../PauseMenu");
-            
-            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
-            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
-            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
-
             Locations = GetChildren().OfType<Location>().ToList<Location>();
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
+            CallDeferred(nameof(ConnectToPauseMenu));
+        }
+
+        private void ConnectToPauseMenu()
+        {
+            PauseMenu = GetNode<PauseMenu>("../PauseMenu");
+            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
+            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
         }
 
         private void QuitToMenu()
         {
+            PauseMenu.AnimateHide();
             QueueFree();
-        }
-
-        private void Unpause()
-        {
-            Pointer.SetProcessInput(false);
+            GetNode<StartMenu>("/root/StartMenu").ShowMenu();
         }
 
         public void UnlockWorld(string[] worldsToUnlock)
@@ -68,12 +68,24 @@ namespace Hopper
         {
             if (@event.IsActionPressed("ui_cancel"))
             {
-                Pointer.SetProcessInput(false);
-                PauseMenu.SetPosition(Position);
-                PauseMenu.Visible = true;
-                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
-                PauseMenu.AnimateShow();
+                Pause();
             }
+        }
+
+        private void Pause()
+        {
+            Pointer.SetProcessInput(false);
+            SetProcessInput(false);
+            PauseMenu.SetPosition(Pointer.Position - new Vector2(240, 135));
+            PauseMenu.Visible = true;
+            PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
+            PauseMenu.AnimateShow();
+        }
+
+        private void Unpause()
+        {
+            Pointer.SetProcessInput(true);
+            SetProcessInput(true);
         }
 
     }
