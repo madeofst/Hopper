@@ -37,12 +37,14 @@ LocationsToUnlock = PoolStringArray( "World2" )
 position = Vector2( 271.016, 33.5208 )
 Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
 Texture = ExtResource( 8 )
+Active = true
 LocationsToUnlock = PoolStringArray( "World3" )
 
 [node name="World3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 152.876, -66.5164 )
-Levels = PoolStringArray( "WaterIsIt1", "WaterIsIt2", "WaterIsIt3", "WaterIsIt4", "BlueLine" )
+Levels = PoolStringArray( "WideChannel_3", "WideChannel_4", "Arrowhead", "BlueLine" )
 Texture = ExtResource( 10 )
+Active = true
 LocationsToUnlock = PoolStringArray( "World4" )
 
 [node name="World4" parent="." instance=ExtResource( 1 )]

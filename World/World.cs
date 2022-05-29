@@ -453,8 +453,11 @@ namespace Hopper
         public void QuitToMenu()
         {
             QueueFree();
-            GetNode<Map>("/root/Map").QueueFree();
-            if (!TempForTesting) GetNode<Menu>("/root/Menu").ShowMenu();
+            if (!TempForTesting)
+            {
+                GetNode<Map>("/root/Map").QueueFree();  
+                GetNode<Menu>("/root/Menu").ShowMenu();
+            }
         }
     }
 }
