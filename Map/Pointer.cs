@@ -7,7 +7,7 @@ namespace Hopper
 {   
     public class Pointer : Node2D
     {
-        private Location Start;
+        public Location Start;
         public Location Target;
         private List<Location> Locations;
 
@@ -16,7 +16,6 @@ namespace Hopper
         {
             Start = GetNode<Location>("../Start");
             Target = Start;
-            Position = Start.Position;
         }
 
         public void SetLocations(List<Location> locations)
@@ -26,7 +25,7 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            Position = Position.MoveToward(Target.Position,  delta * 800);
+            Position = Position.MoveToward(Target.Position,  delta * 375);
         }
 
         public override void _Input(InputEvent @event)

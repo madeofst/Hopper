@@ -10,12 +10,14 @@ namespace Hopper
         public List<Location> Locations;
         public Pointer Pointer;
         private PauseMenu PauseMenu;
+        private Tween Tween;
         
         public override void _Ready()
         {
             Locations = GetChildren().OfType<Location>().ToList<Location>();
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
+            Tween = GetNode<Tween>("Tween");
             CallDeferred(nameof(ConnectToPauseMenu));
         }
 
@@ -64,6 +66,13 @@ namespace Hopper
             }
         }
 
+        public void FadeIn()
+        {
+            Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In);
+			Tween.Start();
+            Pointer.Position = Pointer.Start.Position;
+        }
+
         public override void _Input(InputEvent @event)
         {
             if (@event.IsActionPressed("ui_cancel"))
@@ -76,7 +85,7 @@ namespace Hopper
         {
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
-            PauseMenu.SetPosition(Pointer.Position - new Vector2(240, 135));
+            PauseMenu.SetPosition(Pointer.Target.Position - new Vector2(240, 135));
             PauseMenu.Visible = true;
             PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
             PauseMenu.AnimateShow();

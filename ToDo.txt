@@ -5,7 +5,7 @@ _________________________
     // Fixes
     -MAIN GAME
     * sometimes an extra click needed to activate player at start of level
-    * Hop count updates at start of animation
+    * Restarting level mid-movement in game needs to not do the smoke animation
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates

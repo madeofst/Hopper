@@ -10,6 +10,7 @@ namespace Hopper
 		public AudioStreamPlayer2D Music;
 		private Tween Tween;
 		private TextureButton NewGameButton;
+		private Map Map;
 
 		public override void _Ready()
 		{
@@ -21,10 +22,7 @@ namespace Hopper
 
 		public void newGamePressed()
 		{
-			Map Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
-			GetTree().Root.AddChildBelowNode(GetNode<LoadingScreen>("/root/LoadingScreen"), Map);
-			Music.Stop();
-			Fade();
+			FadeOut();
 		}
 
 		public void highScoresPressed()
@@ -40,21 +38,13 @@ namespace Hopper
 			LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Editor/LevelEditor.tscn").Instance();
 			GetTree().Root.AddChild(editor);
 			Music.Stop();
-			Fade();
+			FadeOut();
 		}
 
-		private void Fade()
+		private void FadeOut()
 		{
 			Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In);
 			Tween.Start();
-		}
-
-		public void Test(object Object, string nodePath)
-		{
-			//move behind and hide
-			GetTree().Root.MoveChild(this, 2);
-			Hide();
-			//GD.Print("Test.");
 		}
 
         internal void ShowMenu()
@@ -62,5 +52,16 @@ namespace Hopper
 			Modulate = new Color (1, 1, 1, 1);
             Show();
         }
+
+		public void AfterFade(object x, string key)
+		{
+			Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
+			Map.Modulate = new Color(1, 1, 1, 0);
+			GetTree().Root.AddChildBelowNode(GetNode<LoadingScreen>("/root/LoadingScreen"), Map);
+			Music.Stop();
+			Map.FadeIn();
+			GetTree().Root.MoveChild(this, 2);
+			Hide();
+		}
     }
 }

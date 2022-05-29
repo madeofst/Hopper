@@ -13,7 +13,7 @@ namespace Hopper
         }
         public override void _Process(float delta)
         {
-            Position = Pointer.Position;
+            Position = Position.MoveToward(Pointer.Target.Position,  delta * 600);
         }
     }
 }

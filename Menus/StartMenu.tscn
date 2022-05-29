@@ -131,4 +131,4 @@ bus = "Music"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton" to="." method="newGamePressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4/HighScoresButton" to="." method="highScoresPressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="." method="EditorPressed"]
-[connection signal="tween_completed" from="Tween" to="." method="Test"]
+[connection signal="tween_completed" from="Tween" to="." method="AfterFade"]
