@@ -337,7 +337,7 @@ namespace Hopper
             CurrentTile.SplashAnimation.Play("Jump");
 
             PrintAnimationSequence(AnimationQueue);
-
+            UpdateHopsRemaining(-1);
             PlayNextAnimation();
         }
 
@@ -418,7 +418,7 @@ namespace Hopper
                 }
                 else
                 {
-                    UpdateHopsRemaining(-1);
+                    //UpdateHopsRemaining(-1);
                     UpdateScore();
                     if (!CheckGoal())
                     {
@@ -432,7 +432,7 @@ namespace Hopper
 
         private void PlayNextAnimation()
         {
-            if (HopsRemaining > 0)
+            if (HopsRemaining > -1)
             {
                 CurrentAnimationNode = AnimationQueue.Dequeue();
                 CurrentMovementCurve = CurrentAnimationNode.Curve;

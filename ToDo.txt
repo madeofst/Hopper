@@ -5,7 +5,6 @@ _________________________
     // Fixes
     -MAIN GAME
     * sometimes an extra click needed to activate player at start of level
-    * Level Title Screen and Pause Menu to come out of world
     * Hop count updates at start of animation
 
     -LEVEL EDITOR
