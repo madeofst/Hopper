@@ -9,10 +9,14 @@ namespace Hopper
 	{
 		public AudioStreamPlayer2D Music;
 		private Tween Tween;
+		private TextureButton NewGameButton;
+
 		public override void _Ready()
 		{
 			Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 			Tween = GetNode<Tween>("Tween");
+			NewGameButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton");
+			NewGameButton.GrabFocus();
 		}
 
 		public void newGamePressed()

@@ -56,6 +56,7 @@ namespace Hopper
         private void LoadWorld()
         {
             Map Map = GetNode<Map>("..");
+            Map.SetProcessInput(false);
             SetProcessInput(false);
             World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
             world.Visible = false;

@@ -12,6 +12,8 @@ namespace Hopper
             World
         }
 
+        public PauseMenuMode Mode;
+
         public AnimatedButton RestartButton;
         public AnimatedButton QuitButton;
         public AnimatedButton MapButton;
@@ -50,18 +52,19 @@ namespace Hopper
 
         public void SetMode(PauseMenuMode pauseMenuMode)
         {
+            Mode = pauseMenuMode;
             RestartButton.Visible = false;
             QuitButton.Visible = false;
             MapButton.Visible = false;
 
-            if (pauseMenuMode == PauseMenuMode.Map)
+            if (Mode == PauseMenuMode.Map)
             {
                 Buttons = new List<AnimatedButton>() 
                 {
                     QuitButton
                 };
             }
-            else if (pauseMenuMode == PauseMenuMode.World)
+            else if (Mode == PauseMenuMode.World)
             {
                 Buttons = new List<AnimatedButton>() 
                 {

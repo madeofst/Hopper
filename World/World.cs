@@ -273,7 +273,6 @@ namespace Hopper
                     {
                         EmitSignal(nameof(UnlockNextWorld));
                         QuitToMap(); 
-                        //QuitToMenu();
                     }
                     else 
                     {
@@ -457,6 +456,7 @@ namespace Hopper
             if (!TempForTesting)
             {
                 Map.Show();
+                Map.SetProcessInput(true);
                 Map.GetNode<Pointer>("Pointer").SetProcessInput(true);
             }
         }

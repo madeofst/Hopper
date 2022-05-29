@@ -81,6 +81,7 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 4 )
+texture_focused = ExtResource( 4 )
 script = ExtResource( 2 )
 
 [node name="CenterContainer4" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]

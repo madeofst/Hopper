@@ -84,9 +84,11 @@ namespace Hopper
 
         private void Unpause()
         {
-            Pointer.SetProcessInput(true);
-            SetProcessInput(true);
+            if (PauseMenu.Mode == PauseMenu.PauseMenuMode.Map)
+            {
+                Pointer.SetProcessInput(true);
+                SetProcessInput(true);
+            }
         }
-
     }
 }
