@@ -3,7 +3,7 @@ using System;
 
 namespace Hopper
 {
-    public class Camera : Camera2D
+    public class MapCamera : Camera2D
     {
         Pointer Pointer;
 

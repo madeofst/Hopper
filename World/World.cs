@@ -35,9 +35,7 @@ namespace Hopper
 
         //HUD
         private HUD HUD { get; set; }        
-        private HopCounter HopCounterBar { get; set; }
         private Stopwatch Stopwatch { get; set; }
-        private ScoreBox ScoreBox  { get; set; }
 
         //Timer
         public milliTimer Timer;
@@ -65,48 +63,7 @@ namespace Hopper
 
         //List of levels
         public int iLevel { get; set; } = 0;
-        public string[] Levels { get; set; } /* = new string[] 
-        {
-             //Basic (no special tiles)
-                //Instructional
-                "StartingOut",
-                "SecondOfLy",
-                "Up",
-                //Challenge
-                "PointsPointsPoints6",
-                "ArtAndSoul2",
-            //Jumping (jump tile only)
-                //Instructional 
-                "MovingOn",
-                "MovingOn2",
-                //Challenge
-                "DoubleJump",
-                "WeirdMirror1",
-                "Jumpington",
-            //Water (jump + water tile)
-                //Instructional
-                "WaterIsIt1",
-                "WaterIsIt2",
-                "WaterIsIt3",
-                "WaterIsIt4",
-                //Challenge
-                "BlueLine",
-                //TODO: need some easier ones
-            //Combined challenge
-                "Retrace",
-                "DivingIn1",      
-                "DivingIn1a",
-                "DivingIn6",
-                "DivingInEfficiently1",
-                "SideToSide",
-                "Mazemerize",
-                "TheSquare",
-                "PondInPond",
-                "SideWind",     
-                "MiniMaze",
-                "GettingAbout9",
-        }; */
-
+        public string[] Levels { get; set; }
 
         //Signals
         [Signal]
@@ -122,7 +79,7 @@ namespace Hopper
             WaterShader = GetNode<TextureRect>("WaterShader");
             Water = GetNode<TextureRect>("Water");
             Background = GetNode<TextureRect>("Background");
-            HUD = GetNode<HUD>("HUD");
+            HUD = GetNode<HUD>("../HUD"); 
             LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
             PauseMenu = GetNode<PauseMenu>("../PauseMenu");
 
@@ -138,14 +95,12 @@ namespace Hopper
             Levels = levels;
             Position = position - new Vector2(240, 135);
 
-            HopCounterBar = GetNode<HopCounter>("HUD/HopCounter");
-            Stopwatch = GetNode<Stopwatch>("HUD/TimeAndScoreSimple/VBoxContainer/Stopwatch");
-            ScoreBox = GetNode<ScoreBox>("HUD/ScoreBox");
+            HUD.LockPosition(Position);
 
             Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
 
-            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
-            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
+            HUD.ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
+            HUD.ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
             PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
             PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
@@ -157,7 +112,7 @@ namespace Hopper
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));
             Player.Connect(nameof(Player.GoalReached), this, nameof(GoalReached));
             Player.Connect(nameof(Player.IncrementLevel), this, nameof(IncrementLevel));
-            Player.Connect(nameof(Player.HopCompleted), HopCounterBar, nameof(HopCounterBar.UpdateHop));
+            Player.Connect(nameof(Player.HopCompleted), HUD.HopCounter, nameof(HUD.HopCounter.UpdateHop));
             Player.Connect(nameof(Player.HopsExhausted), this, nameof(OnHopsExhausted));
             Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalStateAndScore));
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
@@ -235,11 +190,15 @@ namespace Hopper
             }
 
             AddChildBelowNode(Background, NextLevel);
-            NextLevel.Connect(nameof(Level.LevelBuilt), HopCounterBar, nameof(HopCounterBar.SetMaxHops));
+            NextLevel.Connect(nameof(Level.LevelBuilt), HUD.HopCounter, nameof(HUD.HopCounter.SetMaxHops));
             NextLevel.Build(Resources);           
             Grid = NextLevel.Grid;
             Player.Init(NextLevel, replay);
-            ScoreBox.LevelMinScore.UpdateText(NextLevel.ScoreRequired.ToString(), false);
+            GetTree().Root.MoveChild(HUD, GetTree().Root.GetChildCount());
+            HUD.Visible = true;
+            HUD.ScoreBox.Visible = true;
+            HUD.HopCounter.Visible = true;
+            HUD.ScoreBox.LevelMinScore.UpdateText(NextLevel.ScoreRequired.ToString(), false);
             if (!PuzzleMode)
             {
                 if (Timer is null)
@@ -319,14 +278,14 @@ namespace Hopper
 
             if (level != null)
             {
-                ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore, level.ScoreRequired);
+                HUD.ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore, level.ScoreRequired);
                 if (!level.Grid.GoalTile.Activated)
                 {
                     bool MinScoreReached = level.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
                     if (MinScoreReached && currentLevelScore != 0)
                     {
                         GoalActivate.Play();
-                        ScoreBox.Animate();
+                        HUD.ScoreBox.Animate();
                     }
                 }
             }
@@ -406,7 +365,7 @@ namespace Hopper
 
         private void PlayMusic()    { Music.Play(); }
 
-        private void MovePlayerToTop()  { MoveChild(Player, HUD.GetPositionInParent() - 1); }
+        private void MovePlayerToTop()  { MoveChild(Player, GetChildCount()); }
         private void MovePlayerBehind() { MoveChild(Player, Background.GetPositionInParent()); }
 
         public override void _Process(float delta)
@@ -430,6 +389,7 @@ namespace Hopper
                     GameOver.Score = Player.TotalScore;
                     GameOver.ScoreLabel.Text = GameOver.Score.ToString();
                     QueueFree();
+                    HUD.QueueFree(); //FIXME: Can't do this is editor mode
                 }
             }
         }
@@ -453,6 +413,9 @@ namespace Hopper
         private void QuitToMap()
         {
             if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
+            HUD.HopCounter.Visible = false;
+            HUD.ScoreBox.Visible = false;
+            HUD.UnlockPosition();
             QueueFree();
             Map Map = GetNode<Map>("/root/Map");
             if (!TempForTesting)
@@ -465,9 +428,11 @@ namespace Hopper
                 
         public void QuitToMenu()
         {
+            HUD.QueueFree();
             QueueFree();
             if (!TempForTesting)
             {
+                HUD.Visible = false;
                 GetNode<Map>("/root/Map").QueueFree();  
                 GetNode<StartMenu>("/root/StartMenu").ShowMenu();
             }

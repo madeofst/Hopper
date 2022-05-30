@@ -176,7 +176,7 @@ self_modulate = Color( 1, 1, 1, 0.729412 )
 position = Vector2( 70.135, 7.80919 )
 normal = ExtResource( 16 )
 pressed = ExtResource( 16 )
-action = "ui_quit"
+action = "ui_cancel"
 visibility_mode = 1
 
 [node name="Restart" type="TouchScreenButton" parent="TouchButtons"]
