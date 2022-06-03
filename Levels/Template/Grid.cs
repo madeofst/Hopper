@@ -6,6 +6,12 @@ namespace Hopper
 {
     public class Grid : Control
     {
+        public ulong Time;
+        public void PrintTime(string desc = "")
+        {
+            GD.Print($"{desc} - {Time}");
+        }
+
         //TODO: add editable property
         private bool editable = false;
         public bool Editable
@@ -99,6 +105,9 @@ namespace Hopper
             {
                 for (int x = 1; x < GridWidth - 1; x++)
                 {
+                    
+                    //Time = OS.GetTicksMsec();
+
                     Tile tempTile;
                     if (levelData != null)
                     {
@@ -108,6 +117,11 @@ namespace Hopper
                     {
                         tempTile = Resources.LilyScene.Instance() as Tile;
                     }
+
+/*                     Time = OS.GetTicksMsec() - Time;
+                    PrintTime($"Time to instance tile type {tempTile.Type}");
+                    Time = OS.GetTicksMsec(); */
+
                     Tiles[x, y] = tempTile;
                     Tiles[x, y].PointValue = levelData.TilePointValue[i];
                     Tiles[x, y].GridPosition = new Vector2(x, y);
@@ -115,6 +129,9 @@ namespace Hopper
                     AddChild(Tiles[x, y]);
                     Tiles[x, y].Owner = this;
                     i++;
+
+/*                     Time = OS.GetTicksMsec() - Time;
+                    PrintTime($"Time to add to tree tile type {tempTile.Type}"); */
                 }
             }
             FillEdges();

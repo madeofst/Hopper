@@ -5,6 +5,7 @@ _________________________
     // Fixes
     -MAIN GAME
     * Restarting level mid-movement in game - smoke animation should stop moving
+    * Pause menu/camera need to move before quit to menu 
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
