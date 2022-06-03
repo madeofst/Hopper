@@ -21,17 +21,29 @@ public class SingleHopCount : Control
             state = value;
         } 
     }
+    public Tween Tween; 
+    public Sprite Sprite;
 
     public override void _Ready()
     {
-        
+        Tween = GetNode<Tween>("Tween");
+        Sprite = GetNode<Sprite>("Sprite");
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    public void SpringIntoView(float delay)
+    {
+        Visible = true;
+        Sprite.Scale = Vector2.Zero;
+        Tween.InterpolateProperty(Sprite, 
+                                  "scale", 
+                                  Vector2.Zero, 
+                                  Vector2.One, 
+                                  0.5f, 
+                                  Tween.TransitionType.Elastic, 
+                                  Tween.EaseType.Out, 
+                                  delay);
+        Tween.Start();
+    }
 }
 
 public enum CounterState

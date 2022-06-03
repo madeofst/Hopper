@@ -15,3 +15,5 @@ __meta__ = {
 texture = ExtResource( 2 )
 centered = false
 hframes = 2
+
+[node name="Tween" type="Tween" parent="."]

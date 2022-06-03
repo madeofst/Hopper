@@ -11,7 +11,7 @@ namespace Hopper
 
         public override void _Ready()
         {
-            CallDeferred("ConnectNodesAndSignals");
+            // CallDeferred("ConnectNodesAndSignals"); //FIXME: needs fixing
         }
 
         public void ConnectNodesAndSignals()

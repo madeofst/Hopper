@@ -147,6 +147,7 @@ namespace Hopper
             }
 
             if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
+            
             foreach (TitleElement c in Containers)
             {
                 if (c.Tween.IsActive()) Animating = true;
@@ -154,7 +155,7 @@ namespace Hopper
 
             if (Animating)
             {           
-                Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));
+                Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));            
             }
             else
             {
@@ -174,11 +175,11 @@ namespace Hopper
         public override void _Input(InputEvent @event)
         {
             if ((@event.IsActionReleased("ui_accept") ||
-                @event.IsActionReleased("ui_left") ||
-                @event.IsActionReleased("ui_up") ||
-                @event.IsActionReleased("ui_right") ||
-                @event.IsActionReleased("ui_down"))
-                && !Animating && Visible)
+                 @event.IsActionReleased("ui_left") ||
+                 @event.IsActionReleased("ui_up") ||
+                 @event.IsActionReleased("ui_right") ||
+                 @event.IsActionReleased("ui_down"))
+                 && !Animating && Visible)
             {
                 SetProcessInput(false);
                 AnimateHide();

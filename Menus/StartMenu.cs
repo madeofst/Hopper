@@ -68,8 +68,8 @@ namespace Hopper
 
 			HUD = (HUD)GD.Load<PackedScene>("res://HUD/HUD.tscn").Instance();
 			GetTree().Root.AddChild(HUD);
-			HUD.HopCounter.Visible = false;
-			HUD.ScoreBox.Visible = false;
+			HUD.HideHopCounter();
+			HUD.HideScoreBox();
 
 			Music.Stop();
 			if (!EditorMode)

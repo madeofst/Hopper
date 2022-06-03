@@ -67,4 +67,30 @@ public class HopCounter : Control
     {
         MaxHops = maxHops;
     }
+
+    public void CountIn()
+    {
+        float delay = 0f;
+        List<SingleHopCount> ActiveHopCounters = HideActiveCounters();
+        Visible = true;
+        foreach (SingleHopCount h in ActiveHopCounters)
+        {
+            h.SpringIntoView(delay);
+            delay += 0.15f;
+        }
+    }
+
+    public List<SingleHopCount> HideActiveCounters()
+    {
+        List<SingleHopCount>ActiveHopCounters = new List<SingleHopCount>();
+        foreach (SingleHopCount h in HopCounters)
+        {
+            if (h.Visible == true)
+            {
+                h.Visible = false;
+                ActiveHopCounters.Add(h);
+            }
+        }
+        return ActiveHopCounters;
+    }
 }

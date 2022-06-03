@@ -127,8 +127,8 @@ namespace Hopper
 
             Vector2 JumpVector = GetJumpDistance(Movement);
             Vector2 JumpTargetPosition = GridPosition + JumpVector;
-
             AnimationEndTile = Grid.GetTile(Grid.LimitToBounds(JumpTargetPosition));
+            
             if ((AnimationEndTile.Type == Type.Rock))
             {
                 Movement = -Movement;

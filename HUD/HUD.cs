@@ -7,10 +7,11 @@ namespace Hopper
     {
         private AnimationPlayer AnimationPlayer;
         private RichTextLabel PopUp;
-        public HopCounter HopCounter;
-        public ScoreBox ScoreBox;
-        public MapCamera Camera;
+        private HopCounter HopCounter;
+        private ScoreBox ScoreBox;
+        private MapCamera Camera;
 
+        //Touch controls
         public Button Restart;
         public Button Quit;
 
@@ -23,6 +24,12 @@ namespace Hopper
             HopCounter = GetNode<HopCounter>("HopCounter");
             ScoreBox = GetNode<ScoreBox>("ScoreBox");
             Camera = GetNode<MapCamera>("../Map/MapCamera");
+        }
+
+        public override void _Process(float delta)
+        {
+            if (!PositionLocked && Camera != null) 
+                RectPosition = Camera.Position - new Vector2(240, 135);
         }
 
         public void ShowPopUp(string text)
@@ -42,10 +49,54 @@ namespace Hopper
             PositionLocked = false;
         }
 
-        public override void _Process(float delta)
+        public void HideScoreBox()
         {
-            if (!PositionLocked && Camera != null) 
-                RectPosition = Camera.Position - new Vector2(240, 135);
+            ScoreBox.Visible = false;
+        }
+
+        public void ShowScoreBox()
+        {
+            ScoreBox.Visible = true;
+        }
+
+        public void HideHopCounter()
+        {
+            HopCounter.Visible = false;
+        }
+
+        public void ShowHopCounter()
+        {
+            HopCounter.Visible = true;
+        }
+
+        public void UpdateScore(int totalScore, int levelScore, int minScore)
+        {
+            ScoreBox.UpdatePlayerScore(totalScore, levelScore, minScore);
+        }
+
+        public void UpdateMinScore(int score, bool postGoal)
+        {
+            ScoreBox.LevelMinScore.UpdateText(score.ToString(), postGoal);
+        }
+
+        public void AnimateScoreBox()
+        {
+            ScoreBox.Animate();
+        }
+
+        public void SetMaxHops(int maxHops)
+        {
+            HopCounter.SetMaxHops(maxHops);
+        }
+
+        public void UpdateHop(int hopsRemaining)
+        {
+            HopCounter.UpdateHop(hopsRemaining);
+        }
+
+        public void CountInActiveHops()
+        {
+            HopCounter.CountIn();
         }
     }
 }

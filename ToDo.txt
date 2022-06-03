@@ -6,7 +6,6 @@ _________________________
     -MAIN GAME
     * sometimes an extra click needed to activate player at start of level
     * Restarting level mid-movement in game - smoke animation should stop moving
-    * mobile controls for map
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates

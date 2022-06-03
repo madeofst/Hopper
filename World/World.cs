@@ -97,10 +97,11 @@ namespace Hopper
 
             HUD.LockPosition(Position);
 
-            Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch");
+            //Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
 
-            HUD.ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
-            HUD.ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
+            ScoreBox ScoreBox = GetNode<ScoreBox>("../HUD/ScoreBox"); //FIXME: this basically defeats the object of signaling up I think
+            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
+            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
             PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
             PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
@@ -112,7 +113,7 @@ namespace Hopper
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));
             Player.Connect(nameof(Player.GoalReached), this, nameof(GoalReached));
             Player.Connect(nameof(Player.IncrementLevel), this, nameof(IncrementLevel));
-            Player.Connect(nameof(Player.HopCompleted), HUD.HopCounter, nameof(HUD.HopCounter.UpdateHop));
+            Player.Connect(nameof(Player.HopCompleted), HUD, nameof(HUD.UpdateHop));
             Player.Connect(nameof(Player.HopsExhausted), this, nameof(OnHopsExhausted));
             Player.Connect(nameof(Player.ScoreUpdated), this, nameof(UpdateGoalStateAndScore));
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
@@ -121,6 +122,7 @@ namespace Hopper
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
 
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), HUD, nameof(HUD.ShowScoreBox));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Appear));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
@@ -149,6 +151,10 @@ namespace Hopper
         {
             if (!replay && !TempForTesting)
             {
+                HUD.HideScoreBox();
+                //HUD.HideHopCounter();
+                HUD.Visible = true;
+                GetTree().Root.MoveChild(LevelTitleScreen, GetTree().Root.GetChildCount());
                 LevelTitleScreen.SetPosition(Position);
                 LevelTitleScreen.Init(ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
@@ -177,6 +183,7 @@ namespace Hopper
 
         private void BuildLevel(bool replay = false)
         {
+            GetTree().Root.MoveChild(HUD, GetTree().Root.GetChildCount());
             if (!replay)
             {
                 if (NextLevel == null)
@@ -190,15 +197,16 @@ namespace Hopper
             }
 
             AddChildBelowNode(Background, NextLevel);
-            NextLevel.Connect(nameof(Level.LevelBuilt), HUD.HopCounter, nameof(HUD.HopCounter.SetMaxHops));
+            NextLevel.Connect(nameof(Level.LevelBuilt), HUD, nameof(HUD.SetMaxHops));
             NextLevel.Build(Resources);           
             Grid = NextLevel.Grid;
+            
+            HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
+            HUD.CountInActiveHops();
             Player.Init(NextLevel, replay);
             GetTree().Root.MoveChild(HUD, GetTree().Root.GetChildCount());
-            HUD.Visible = true;
-            HUD.ScoreBox.Visible = true;
-            HUD.HopCounter.Visible = true;
-            HUD.ScoreBox.LevelMinScore.UpdateText(NextLevel.ScoreRequired.ToString(), false);
+
+
             if (!PuzzleMode)
             {
                 if (Timer is null)
@@ -278,14 +286,14 @@ namespace Hopper
 
             if (level != null)
             {
-                HUD.ScoreBox.UpdatePlayerScore(currentScore, currentLevelScore, level.ScoreRequired);
+                HUD.UpdateScore(currentScore, currentLevelScore, level.ScoreRequired);
                 if (!level.Grid.GoalTile.Activated)
                 {
                     bool MinScoreReached = level.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
                     if (MinScoreReached && currentLevelScore != 0)
                     {
                         GoalActivate.Play();
-                        HUD.ScoreBox.Animate();
+                        HUD.AnimateScoreBox();
                     }
                 }
             }
@@ -413,8 +421,8 @@ namespace Hopper
         private void QuitToMap()
         {
             if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
-            HUD.HopCounter.Visible = false;
-            HUD.ScoreBox.Visible = false;
+            HUD.HideHopCounter();
+            HUD.HideScoreBox();
             HUD.UnlockPosition();
             QueueFree();
             Map Map = GetNode<Map>("/root/Map");
