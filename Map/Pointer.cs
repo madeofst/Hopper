@@ -54,6 +54,7 @@ namespace Hopper
 
         private void LoadWorld()
         {
+            //ulong Time = OS.GetTicksMsec();
             Map Map = GetNode<Map>("..");
             Map.SetProcessInput(false);
             SetProcessInput(false);
@@ -62,6 +63,7 @@ namespace Hopper
             GetTree().Root.AddChildBelowNode(Map, world);
             world.Connect(nameof(World.UnlockNextWorld), Map, nameof(Map.UnlockWorld), new Godot.Collections.Array{Target.LocationsToUnlock});
             world.Init(Target.ID, Target.Levels, Position);
+            //GD.Print(OS.GetTicksMsec() - Time);
         }
 
         private bool PointerOnWorld()
