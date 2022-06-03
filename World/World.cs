@@ -147,14 +147,19 @@ namespace Hopper
 
 
         //Working with levels
+
+        private void NewLevel(string levelName, bool replay = false)
+        {
+            NextLevel = levelFactory.Load(levelName, true);
+            InitialiseLevelLoad(NextLevel, replay);
+        }
+
         private void InitialiseLevelLoad(Level level, bool replay)
         {
             if (!replay && !TempForTesting)
             {
-                HUD.HideScoreBox();
-                //HUD.HideHopCounter();
                 HUD.Visible = true;
-                GetTree().Root.MoveChild(LevelTitleScreen, GetTree().Root.GetChildCount());
+                MoveToTop(LevelTitleScreen);
                 LevelTitleScreen.SetPosition(Position);
                 LevelTitleScreen.Init(ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
@@ -173,12 +178,6 @@ namespace Hopper
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
             BuildLevel();
-        }
-
-        private void NewLevel(string levelName, bool replay = false)
-        {
-            NextLevel = levelFactory.Load(levelName, true);
-            InitialiseLevelLoad(NextLevel, replay);
         }
 
         private void BuildLevel(bool replay = false)
@@ -201,11 +200,11 @@ namespace Hopper
             NextLevel.Build(Resources);           
             Grid = NextLevel.Grid;
             
+            HUD.ShowScoreBox();
             HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
             HUD.CountInActiveHops();
             Player.Init(NextLevel, replay);
-            GetTree().Root.MoveChild(HUD, GetTree().Root.GetChildCount());
-
+            MoveToTop(HUD);
 
             if (!PuzzleMode)
             {
@@ -376,6 +375,12 @@ namespace Hopper
         private void MovePlayerToTop()  { MoveChild(Player, GetChildCount()); }
         private void MovePlayerBehind() { MoveChild(Player, Background.GetPositionInParent()); }
 
+        private void MoveToTop(Node node = null)
+        {
+            if (node == null) node = this;
+            GetTree().Root.MoveChild(node, GetTree().Root.GetChildCount());
+        }
+
         public override void _Process(float delta)
         {
             if (CurrentLevel != null)
@@ -404,6 +409,7 @@ namespace Hopper
 
         private void Unpause()
         {
+            MoveToTop(HUD);
             Player.Activate();
             Paused = false;
         }
@@ -413,6 +419,7 @@ namespace Hopper
             Paused = true;
             Player.Deactivate();
             PauseMenu.SetPosition(Position);
+            MoveToTop(PauseMenu);
             PauseMenu.Visible = true;
             PauseMenu.SetMode(PauseMenu.PauseMenuMode.World);
             PauseMenu.AnimateShow();

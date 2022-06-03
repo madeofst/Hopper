@@ -4,7 +4,6 @@ _________________________
 
     // Fixes
     -MAIN GAME
-    * sometimes an extra click needed to activate player at start of level
     * Restarting level mid-movement in game - smoke animation should stop moving
 
     -LEVEL EDITOR
@@ -34,6 +33,7 @@ _________________________
 _________________________
 
     //Possible bugs
+    * sometimes an extra click needed to activate player at start of level (maybe fixed)
     * bug with timer on shaky score text - not sure what this actually is any more (maybe fixed)
 
     //Possible improvements

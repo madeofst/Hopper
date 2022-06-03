@@ -15,20 +15,15 @@ __meta__ = {
 
 [node name="AllContainers" type="VBoxContainer" parent="."]
 margin_left = 83.0
+margin_top = 63.0
 margin_right = 397.0
-margin_bottom = 198.0
+margin_bottom = 207.0
 size_flags_horizontal = 4
-size_flags_vertical = 2
-
-[node name="Buffer" type="MarginContainer" parent="AllContainers"]
-margin_right = 314.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 0, 50 )
+size_flags_vertical = 4
 
 [node name="LevelID" type="MarginContainer" parent="AllContainers"]
-margin_top = 54.0
 margin_right = 314.0
-margin_bottom = 118.0
+margin_bottom = 64.0
 
 [node name="LevelID" type="HBoxContainer" parent="AllContainers/LevelID"]
 margin_left = 6.0
@@ -36,7 +31,7 @@ margin_right = 307.0
 margin_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_pivot_offset = Vector2( 115, 32 )
+rect_pivot_offset = Vector2( 150, 32 )
 size_flags_horizontal = 6
 size_flags_vertical = 4
 custom_constants/separation = 7
@@ -123,9 +118,9 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="AllContainers/LevelID/LevelID"]
 
 [node name="Text" type="VBoxContainer" parent="AllContainers"]
-margin_top = 122.0
+margin_top = 68.0
 margin_right = 314.0
-margin_bottom = 198.0
+margin_bottom = 144.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 

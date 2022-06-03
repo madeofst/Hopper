@@ -62,7 +62,6 @@ namespace Hopper
             GetTree().Root.AddChildBelowNode(Map, world);
             world.Connect(nameof(World.UnlockNextWorld), Map, nameof(Map.UnlockWorld), new Godot.Collections.Array{Target.LocationsToUnlock});
             world.Init(Target.ID, Target.Levels, Position);
-
         }
 
         private bool PointerOnWorld()
