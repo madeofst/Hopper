@@ -143,12 +143,6 @@ namespace Hopper
                     Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));
                 }
             }
-
-/*             foreach (AnimatedButton b in Buttons) if (b.Tween.IsActive()) 
-                Animating = true; */
-/*             if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) 
-                Animating = false; */
-
         }
 
         public override void _Input(InputEvent @event)

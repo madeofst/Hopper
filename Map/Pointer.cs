@@ -23,6 +23,12 @@ namespace Hopper
             Locations = locations; 
         }
 
+        public void MoveTo(Vector2 position)
+        {
+            Target = Start;
+            Position = position;
+        }
+
         public override void _Process(float delta)
         {
             Position = Position.MoveToward(Target.Position,  delta * 375);

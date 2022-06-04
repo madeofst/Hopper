@@ -15,5 +15,10 @@ namespace Hopper
         {
             Position = Position.MoveToward(Pointer.Target.Position,  delta * 600);
         }
+
+        public void MoveTo(Vector2 position)
+        {
+            Position = position;
+        }
     }
 }

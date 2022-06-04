@@ -12,6 +12,7 @@ namespace Hopper
         public Pointer Pointer;
         private PauseMenu PauseMenu;
         private Tween Tween;
+        private MapCamera Camera;
         
         public override void _Ready()
         {
@@ -19,6 +20,7 @@ namespace Hopper
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
             Tween = GetNode<Tween>("Tween");
+            Camera = GetNode<MapCamera>("MapCamera");
             CallDeferred(nameof(ConnectToPauseMenuAndHUD));
         }
 
@@ -33,10 +35,14 @@ namespace Hopper
 
         private void QuitToMenu()
         {
+            StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
+            Pointer.MoveTo(StartMenu.RectPosition);
+            Camera.MoveTo(Pointer.Position);
+            PauseMenu.RectPosition = StartMenu.RectPosition;
             HUD.QueueFree();
             PauseMenu.AnimateHide();
             QueueFree();
-            GetNode<StartMenu>("/root/StartMenu").ShowMenu();
+            StartMenu.ShowMenu();
         }
 
         public void UnlockWorld(string[] worldsToUnlock)
