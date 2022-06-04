@@ -28,7 +28,7 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            if (!PositionLocked && Camera != null) 
+            if (!PositionLocked && Camera.Name != null)
                 RectPosition = Camera.Position - new Vector2(240, 135);
         }
 

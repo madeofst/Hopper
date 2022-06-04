@@ -7,6 +7,7 @@ namespace Hopper
 {
     public class Map : Node2D
     {
+        public HUD HUD;
         public List<Location> Locations;
         public Pointer Pointer;
         private PauseMenu PauseMenu;
@@ -18,11 +19,12 @@ namespace Hopper
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
             Tween = GetNode<Tween>("Tween");
-            CallDeferred(nameof(ConnectToPauseMenu));
+            CallDeferred(nameof(ConnectToPauseMenuAndHUD));
         }
 
-        private void ConnectToPauseMenu()
+        private void ConnectToPauseMenuAndHUD()
         {
+            HUD = GetNode<HUD>("../HUD");
             PauseMenu = GetNode<PauseMenu>("../PauseMenu");
             PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
             PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
@@ -31,6 +33,7 @@ namespace Hopper
 
         private void QuitToMenu()
         {
+            HUD.QueueFree();
             PauseMenu.AnimateHide();
             QueueFree();
             GetNode<StartMenu>("/root/StartMenu").ShowMenu();

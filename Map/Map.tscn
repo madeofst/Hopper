@@ -54,13 +54,23 @@ position = Vector2( 21.2545, -174.154 )
 ID = 4
 Levels = PoolStringArray( "Retrace", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
 Texture = ExtResource( 9 )
+Active = true
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 270.576, -190.377 )
+position = Vector2( 268.869, -217.691 )
 ID = 5
 Levels = PoolStringArray( "Mazemerize", "TheSquare", "PondInPond", "SideWind", "MiniMaze", "GettingAbout9" )
 Texture = ExtResource( 11 )
+Active = true
+LocationsToUnlock = PoolStringArray(  )
+
+[node name="World6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 123.764, -267.197 )
+ID = 5
+Levels = PoolStringArray( "LongWayShortWay5" )
+Texture = ExtResource( 7 )
+Active = true
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="Pointer" parent="." instance=ExtResource( 2 )]
