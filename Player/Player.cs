@@ -573,7 +573,7 @@ namespace Hopper
             {
                 if (CurrentAnimationNode != null)
                 {
-                    GD.Print(CurrentAnimationNode.Animation.ResourceName.Left(4));
+                    //GD.Print(CurrentAnimationNode.Animation.ResourceName.Left(4));
                     if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim" ||
                         CurrentAnimationNode.Animation.ResourceName.Left(5) == "Splash")
                     {
