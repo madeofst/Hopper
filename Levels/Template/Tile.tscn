@@ -1,12 +1,15 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Levels/Template/TileRectangle.tres" type="Shape2D" id=1]
 [ext_resource path="res://HUD/Counter.cs" type="Script" id=2]
 [ext_resource path="res://Fonts/RainyHeartsLabels.tres" type="Theme" id=3]
 [ext_resource path="res://Levels/Resources/LilyPad1_32x32.png" type="Texture" id=4]
+[ext_resource path="res://Music/FX/FX Splash.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Levels/Template/Tile.cs" type="Script" id=6]
 [ext_resource path="res://Levels/Resources/LilyPad_32x32_ripples.png" type="Texture" id=7]
 [ext_resource path="res://Levels/Resources/Dragonfly Sprite Sheet.png" type="Texture" id=8]
+[ext_resource path="res://Music/FX/FX Exit splash.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Music/FX/FX Simple jump.ogg" type="AudioStream" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -41,6 +44,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ Vector2( 0, 1 ), Vector2( 0, 0 ) ]
 }
+tracks/1/type = "audio"
+tracks/1/path = NodePath("../AudioFX1")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 10 )
+} ],
+"times": PoolRealArray( 0 )
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "Land"
@@ -73,6 +90,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 9, 10, 11, 12, 13 ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("../AudioFX1")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 9 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=4]
@@ -121,6 +152,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 9, 10, 11, 12, 13 ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("../AudioFX1")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 5 )
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=7]
@@ -228,3 +273,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioFX1" type="AudioStreamPlayer" parent="."]
+mix_target = 2
+bus = "FX"

@@ -122,7 +122,7 @@ namespace Hopper
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
 
-            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), HUD, nameof(HUD.ShowScoreBox));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ShowScoreBox), HUD, nameof(HUD.ShowScoreBox));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Appear));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));

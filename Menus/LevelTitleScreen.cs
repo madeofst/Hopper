@@ -67,6 +67,8 @@ namespace Hopper
         private ShaderMaterial Shader;
 
         [Signal]
+        public delegate void ShowScoreBox();
+        [Signal]
         public delegate void ActivatePlayer();
         [Signal]
         public delegate void LoadNextLevel();
@@ -164,6 +166,7 @@ namespace Hopper
                     Visible = false;
                     Triggered = false;
                     EmitSignal(nameof(ActivatePlayer));
+                    EmitSignal(nameof(ShowScoreBox));
                 }
                 else if (FillDirection == 1 && fill >= 1)
                 {
