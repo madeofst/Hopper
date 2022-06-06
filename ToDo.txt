@@ -5,6 +5,7 @@ _________________________
     // Fixes
     -MAIN GAME
     * Restarting level mid-movement in game - smoke animation should stop moving
+    * Set start positions (up) for all tiles
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
@@ -73,5 +74,13 @@ _________________________
     * Introduce hop limit first, then expand grid, then timer, then reduce timer/timer extension
     * Redesign timer
 
+
+// Pre-release checks
+_________________________
+
+    * Set start positions (up) for all tiles
+
+
 1200 * 675
 
+        
