@@ -201,6 +201,7 @@ namespace Hopper
             Grid = NextLevel.Grid;
             
             HUD.ShowScoreBox();
+            HUD.SetButtonToRestart();
             HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
             HUD.CountInActiveHops();
             Player.Init(NextLevel, replay);
@@ -430,6 +431,7 @@ namespace Hopper
             if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
             HUD.HideHopCounter();
             HUD.HideScoreBox();
+            HUD.SetButtonToEnter();
             HUD.UnlockPosition();
             QueueFree();
             Map Map = GetNode<Map>("/root/Map");

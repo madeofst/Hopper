@@ -12,8 +12,8 @@ namespace Hopper
         private MapCamera Camera;
 
         //Touch controls
-        public Button Restart;
-        public Button Quit;
+        public TouchScreenButton Restart;
+        public TouchScreenButton Quit;
 
         private bool PositionLocked = true;
 
@@ -24,6 +24,7 @@ namespace Hopper
             HopCounter = GetNode<HopCounter>("HopCounter");
             ScoreBox = GetNode<ScoreBox>("ScoreBox");
             Camera = GetNode<MapCamera>("../Map/MapCamera");
+            Restart = GetNode<TouchScreenButton>("TouchButtons/Restart");
         }
 
         public override void _Process(float delta)
@@ -72,6 +73,18 @@ namespace Hopper
         public void UpdateScore(int totalScore, int levelScore, int minScore)
         {
             ScoreBox.UpdatePlayerScore(totalScore, levelScore, minScore);
+        }
+
+        public void SetButtonToRestart()
+        {
+            Restart.Normal = GD.Load<Texture>("res://HUD/Resources/Restart.png");
+            Restart.Action = "ui_restart";
+        }
+
+        public void SetButtonToEnter()
+        {
+            Restart.Normal = GD.Load<Texture>("res://HUD/Resources/Enter.png");
+            Restart.Action = "ui_accept";
         }
 
         public void UpdateMinScore(int score, bool postGoal)

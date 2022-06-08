@@ -70,6 +70,7 @@ namespace Hopper
 			GetTree().Root.AddChild(HUD);
 			HUD.HideHopCounter();
 			HUD.HideScoreBox();
+			HUD.SetButtonToEnter();
 
 			Music.Stop();
 			if (!EditorMode)

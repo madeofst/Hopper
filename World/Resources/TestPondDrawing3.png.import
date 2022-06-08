@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TestPondDrawing2.png-e2174876c5c310d0dd4d485264c78235.stex"
+path="res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/TestPondDrawing2.png"
-dest_files=[ "res://.import/TestPondDrawing2.png-e2174876c5c310d0dd4d485264c78235.stex" ]
+source_file="res://World/Resources/TestPondDrawing3.png"
+dest_files=[ "res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex" ]
 
 [params]
 

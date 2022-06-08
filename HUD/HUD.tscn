@@ -134,9 +134,9 @@ __meta__ = {
 }
 
 [node name="HopCounter" parent="." instance=ExtResource( 4 )]
-margin_left = 411.112
+margin_left = 409.112
 margin_top = 51.4929
-margin_right = -36.8882
+margin_right = -38.8882
 margin_bottom = -26.5071
 
 [node name="ScoreBox" parent="." instance=ExtResource( 5 )]
@@ -164,7 +164,7 @@ __meta__ = {
 
 [node name="Up" type="TouchScreenButton" parent="TouchButtons"]
 self_modulate = Color( 1, 1, 1, 0.729412 )
-position = Vector2( 46.4179, 136.826 )
+position = Vector2( 47.7114, 128.879 )
 scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 2 )
 pressed = ExtResource( 2 )
@@ -173,7 +173,7 @@ visibility_mode = 1
 
 [node name="Quit" type="TouchScreenButton" parent="TouchButtons"]
 self_modulate = Color( 1, 1, 1, 0.729412 )
-position = Vector2( 70.135, 7.80919 )
+position = Vector2( 70.135, 32.862 )
 normal = ExtResource( 16 )
 pressed = ExtResource( 16 )
 action = "ui_cancel"
@@ -181,7 +181,7 @@ visibility_mode = 1
 
 [node name="Restart" type="TouchScreenButton" parent="TouchButtons"]
 self_modulate = Color( 1, 1, 1, 0.729412 )
-position = Vector2( 3.23035, 7.36915 )
+position = Vector2( 5.23035, 32.422 )
 normal = ExtResource( 17 )
 pressed = ExtResource( 17 )
 action = "ui_restart"
@@ -189,7 +189,7 @@ visibility_mode = 1
 
 [node name="Down" type="TouchScreenButton" parent="TouchButtons"]
 self_modulate = Color( 1, 1, 1, 0.729412 )
-position = Vector2( 45.8882, 209.302 )
+position = Vector2( 47.1817, 201.355 )
 scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 13 )
 pressed = ExtResource( 13 )
@@ -198,7 +198,7 @@ visibility_mode = 1
 
 [node name="Left" type="TouchScreenButton" parent="TouchButtons"]
 self_modulate = Color( 1, 1, 1, 0.729412 )
-position = Vector2( 1.07708, 173.496 )
+position = Vector2( 2.3706, 165.549 )
 scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 14 )
 pressed = ExtResource( 14 )
@@ -207,7 +207,7 @@ visibility_mode = 1
 
 [node name="Right" type="TouchScreenButton" parent="TouchButtons"]
 self_modulate = Color( 1, 1, 1, 0.729412 )
-position = Vector2( 91.8884, 175.875 )
+position = Vector2( 93.1819, 167.928 )
 scale = Vector2( 1.4, 1.4 )
 normal = ExtResource( 15 )
 pressed = ExtResource( 15 )
