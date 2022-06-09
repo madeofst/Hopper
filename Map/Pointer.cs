@@ -47,9 +47,7 @@ namespace Hopper
             else if (@event.IsActionPressed("ui_up"))
                 direction = Vector2.Up;
             else if (@event.IsActionPressed("ui_accept"))
-            {
                 if (PointerOnWorld()) LoadWorld();
-            }
 
             if (direction != Vector2.Inf)
             {
