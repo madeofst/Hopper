@@ -8,96 +8,143 @@ namespace Hopper
     public class Pointer : Node2D
     {
         public Location Start;
-        public Location Target;
+        public Location CurrentPond 
+        { 
+            get 
+            {
+                foreach (Location l in Locations)
+                {
+                    if (l.Position.IsEqualApprox(Position))
+                    {
+                        return l;
+                    }
+                }
+                return null;
+            } 
+            set
+            {} 
+        }
+
         private List<Location> Locations;
+        private List<PondLinkPath> Paths;
+
+        private PondLinkPath currentPath = null;
+        private PathFollow2D currentPathFollow = null;
+
+        private float MovementDirection = 1;
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
             Start = GetNode<Location>("../Start");
-            Target = Start;
+            CurrentPond = Start;
         }
 
         public void SetLocations(List<Location> locations)
         {
-            Locations = locations; 
+            Locations = locations;
         }
 
-        public void MoveTo(Vector2 position)
+        public void MoveToMenuPosition(Vector2 position)  //FIXME: What's going on here?
         {
-            Target = Start;
+            CurrentPond = Start;
             Position = position;
         }
 
-        public override void _Process(float delta)
+        public override void _PhysicsProcess(float delta)
         {
-            Position = Position.MoveToward(Target.Position,  delta * 375);
+            if (currentPathFollow != null)
+            {
+                float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1f * delta), 0 , 1);
+                currentPathFollow.UnitOffset = unitOffset;
+                Position = currentPathFollow.GlobalPosition;
+                
+                if ((unitOffset >= 1 && MovementDirection == 1) || 
+                    (unitOffset <= 0 && MovementDirection == -1))
+                {
+                    ResetPaths();
+                    currentPathFollow = null;
+                    currentPath = null;
+                }
+            }
         }
 
         public override void _Input(InputEvent @event)
-        {
-            Vector2 direction = Vector2.Inf;
-
-            if (@event.IsActionPressed("ui_left"))
-                direction = Vector2.Left;
-            else if (@event.IsActionPressed("ui_right"))
-                direction = Vector2.Right;
-            else if (@event.IsActionPressed("ui_down"))
-                direction = Vector2.Down;
-            else if (@event.IsActionPressed("ui_up"))
-                direction = Vector2.Up;
-            else if (@event.IsActionPressed("ui_accept"))
-                if (PointerOnWorld()) LoadWorld();
-
-            if (direction != Vector2.Inf)
+        {           
+            if (@event.IsActionPressed("ui_left") ||
+                @event.IsActionPressed("ui_right") ||
+                @event.IsActionPressed("ui_down") ||
+                @event.IsActionPressed("ui_up"))
             {
-                Location l = GetNearestLocationInDirection(direction);
-                if (l != null) Target = l;
-            } 
+                currentPath = GetPath(@event.AsText());
+                if (currentPath != null)
+                {
+                    currentPathFollow = currentPath.GetNode<PathFollow2D>("PathFollow2D");
+                }
+            }
+            else if (@event.IsActionPressed("ui_accept"))
+            {
+                if (PointerOnWorld()) LoadWorld();
+            }
+        }
+
+        private List<PondLinkPath> GetPaths()
+        {
+            return CurrentPond.GetChildren().OfType<PondLinkPath>().ToList();
+        }
+
+        private PondLinkPath GetPath(string actionName)
+        {
+            if (CurrentPond != null)
+            {
+                foreach (var path in GetPaths())
+                {
+                    foreach (string Direction in path.Directions)
+                    {
+                        if (Direction == actionName) return path;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void ResetPaths()
+        {
+            foreach (var path in GetPaths())
+            {
+                path.GetNode<PathFollow2D>("PathFollow2D").UnitOffset = 0;
+            }
         }
 
         private void LoadWorld()
         {
-            //ulong Time = OS.GetTicksMsec();
             Map Map = GetNode<Map>("..");
             Map.SetProcessInput(false);
             SetProcessInput(false);
             World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
             world.Visible = false;
             GetTree().Root.AddChildBelowNode(Map, world);
-            world.Connect(nameof(World.UnlockNextWorld), Map, nameof(Map.UnlockWorld), new Godot.Collections.Array{Target.LocationsToUnlock});
-            world.Init(Target.ID, Target.Levels, Position);
-            //GD.Print(OS.GetTicksMsec() - Time);
+            world.Connect(nameof(World.UnlockNextWorld), Map, nameof(Map.UnlockWorld), new Godot.Collections.Array{CurrentPond.LocationsToUnlock});
+            world.Init(CurrentPond.ID, CurrentPond.Levels, Position);
+        }
+
+        private bool PointerOnStart()
+        {
+            if (Position == Start.Position) return true;
+            return false;
         }
 
         private bool PointerOnWorld()
         {
             foreach (Location l in Locations)
             {
-                if (l.Position == Position && Position != Start.Position) return true;
+                if (l.Position.IsEqualApprox(Position) && Position != Start.Position)
+                {
+                    CurrentPond = l;
+                    return true;
+                }
             }
             return false;
-        }
-
-        private Location GetNearestLocationInDirection(Vector2 direction)
-        {
-            List<float> distances = new List<float>();
-            Location target = null;
-            foreach (Location l in Locations)
-            {
-                float a = Position.DirectionTo(l.Position).Dot(direction);
-                if (a > 0.2 && l.Active)
-                {
-                    distances.Add(Position.DistanceTo(l.Position));
-                }
-                else
-                {
-                    distances.Add(float.MaxValue);
-                }
-            }
-            float min = distances.Min();
-            if (min < float.MaxValue) target = Locations[distances.IndexOf(min)];
-            return target;
         }
     }
 }

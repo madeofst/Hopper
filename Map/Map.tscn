@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Map/Location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map/Pointer.tscn" type="PackedScene" id=2]
@@ -11,6 +11,91 @@
 [ext_resource path="res://Map/World4.png" type="Texture" id=9]
 [ext_resource path="res://Map/World3.png" type="Texture" id=10]
 [ext_resource path="res://Map/World5.png" type="Texture" id=11]
+[ext_resource path="res://Map/PondLinkPath.tscn" type="PackedScene" id=12]
+
+[sub_resource type="Curve2D" id=1]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 232.992, 213.984, 3.00339, 15.0169, -3.00339, -15.0169, 192.992, 189.984, 2.84839, 21.2765, -2.84839, -21.2765, 192.992, 141.984, 0, 0, 0, 0, 152.992, 117.984 )
+}
+
+[sub_resource type="Curve2D" id=3]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -112, 88, -2.82843, -21.5668, 2.82843, 21.5668, -72, 112, -3.29381, -15.2642, 3.29381, 15.2642, -72, 160, 0, 0, 0, 0, -32, 184 )
+}
+
+[sub_resource type="Curve2D" id=2]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -112, 88, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve2D" id=4]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -128, -96 )
+}
+
+[sub_resource type="Curve2D" id=5]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -112, 88 )
+}
+
+[sub_resource type="Curve2D" id=6]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 96 )
+}
+
+[sub_resource type="Curve2D" id=7]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -80, -128 )
+}
+
+[sub_resource type="Curve2D" id=8]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 56, -192, 0, 0, 0, 0, 136, -64 )
+}
+
+[sub_resource type="Curve2D" id=9]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, -32 )
+}
+
+[sub_resource type="Curve2D" id=10]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, -136 )
+}
+
+[sub_resource type="Curve2D" id=11]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -200, 32 )
+}
+
+[sub_resource type="Curve2D" id=12]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -136, -104 )
+}
+
+[sub_resource type="Curve2D" id=13]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -64, 136 )
+}
+
+[sub_resource type="Curve2D" id=14]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 136, 104 )
+}
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 3 )
@@ -18,66 +103,127 @@ script = ExtResource( 3 )
 [node name="Background" type="Sprite" parent="."]
 modulate = Color( 0.764706, 0.764706, 0.764706, 1 )
 position = Vector2( 241.47, -177.085 )
+z_index = -2
 texture = ExtResource( 5 )
 
 [node name="Start" parent="." instance=ExtResource( 1 )]
-position = Vector2( 232, 213 )
+position = Vector2( 232, 216 )
 Texture = ExtResource( 6 )
 Active = true
 
+[node name="World1" parent="Start" instance=ExtResource( 12 )]
+position = Vector2( -232.992, -213.984 )
+curve = SubResource( 1 )
+Directions = PoolStringArray( "Left", "Up" )
+
 [node name="World1" parent="." instance=ExtResource( 1 )]
-position = Vector2( 142.137, 104.466 )
+position = Vector2( 152, 120 )
 ID = 1
 Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
 Texture = ExtResource( 7 )
 Active = true
 LocationsToUnlock = PoolStringArray( "World2" )
 
+[node name="Start" parent="World1" instance=ExtResource( 12 )]
+position = Vector2( 112, -88 )
+curve = SubResource( 3 )
+Directions = PoolStringArray( "Down" )
+
+[node name="World2" parent="World1" instance=ExtResource( 12 )]
+position = Vector2( 112, -88 )
+curve = SubResource( 2 )
+Directions = PoolStringArray( "Right", "Up" )
+
 [node name="World2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 262.114, 32.8789 )
+position = Vector2( 264, 32 )
 ID = 2
 Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
 Texture = ExtResource( 8 )
 Active = true
 LocationsToUnlock = PoolStringArray( "World3" )
 
+[node name="World3" parent="World2" instance=ExtResource( 12 )]
+curve = SubResource( 4 )
+Directions = PoolStringArray( "Left", "Up" )
+
+[node name="World1" parent="World2" instance=ExtResource( 12 )]
+curve = SubResource( 5 )
+Directions = PoolStringArray( "Down" )
+
 [node name="World3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 147.681, -91.9257 )
+position = Vector2( 136, -64 )
 ID = 3
 Levels = PoolStringArray( "WideChannel_3", "WideChannel_4", "Arrowhead", "BlueLine" )
 Texture = ExtResource( 10 )
 Active = true
 LocationsToUnlock = PoolStringArray( "World4", "World5" )
 
+[node name="World2" parent="World3" instance=ExtResource( 12 )]
+curve = SubResource( 6 )
+Directions = PoolStringArray( "Down", "Right" )
+
+[node name="World4" parent="World3" instance=ExtResource( 12 )]
+curve = SubResource( 7 )
+Directions = PoolStringArray( "Up", "Left" )
+
 [node name="World4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 21.2545, -174.154 )
+position = Vector2( 56, -192 )
 ID = 4
 Levels = PoolStringArray( "Retrace", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
 Texture = ExtResource( 9 )
 Active = true
 LocationsToUnlock = PoolStringArray(  )
 
+[node name="World3" parent="World4" instance=ExtResource( 12 )]
+position = Vector2( -56, 192 )
+curve = SubResource( 8 )
+Directions = PoolStringArray( "Down" )
+
+[node name="World5" parent="World4" instance=ExtResource( 12 )]
+curve = SubResource( 9 )
+Directions = PoolStringArray( "Right" )
+
+[node name="World6" parent="World4" instance=ExtResource( 12 )]
+curve = SubResource( 10 )
+Directions = PoolStringArray( "Up" )
+
 [node name="World5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 268.869, -217.691 )
+position = Vector2( 256, -224 )
 ID = 5
 Levels = PoolStringArray( "Mazemerize", "TheSquare", "PondInPond", "SideWind", "MiniMaze", "GettingAbout9" )
 Texture = ExtResource( 11 )
 Active = true
 LocationsToUnlock = PoolStringArray(  )
 
+[node name="World4" parent="World5" instance=ExtResource( 12 )]
+curve = SubResource( 11 )
+Directions = PoolStringArray( "Left" )
+
+[node name="World6" parent="World5" instance=ExtResource( 12 )]
+curve = SubResource( 12 )
+Directions = PoolStringArray( "Up" )
+
 [node name="World6" parent="." instance=ExtResource( 1 )]
-position = Vector2( 123.764, -267.197 )
+position = Vector2( 120, -328 )
 ID = 5
 Levels = PoolStringArray( "LongWayShortWay5" )
 Texture = ExtResource( 7 )
 Active = true
 LocationsToUnlock = PoolStringArray(  )
 
+[node name="World4" parent="World6" instance=ExtResource( 12 )]
+curve = SubResource( 13 )
+Directions = PoolStringArray( "Down", "Left" )
+
+[node name="World5" parent="World6" instance=ExtResource( 12 )]
+curve = SubResource( 14 )
+Directions = PoolStringArray( "Right" )
+
 [node name="Pointer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 232, 213 )
+position = Vector2( 232, 216 )
 
 [node name="MapCamera" type="Camera2D" parent="."]
-position = Vector2( 232, 213 )
+position = Vector2( 232, 216 )
 current = true
 script = ExtResource( 4 )
 

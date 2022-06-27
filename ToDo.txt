@@ -5,7 +5,6 @@ _________________________
     // Fixes
     -MAIN GAME
     * Restarting level mid-movement in game - smoke animation should stop moving
-    * Set start positions (up) for all tiles
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
@@ -23,6 +22,8 @@ _________________________
     * redesign boundary to make grid clearer
 
     -ANIMATIONS
+    * Double jump tidy
+    * Swim Left/Right tidy
     
     -SOUND
     * game over

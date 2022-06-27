@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex"
+path="res://.import/Frog1_32x32_SingleJumpRight.png-7892c83a97feb60c0bc8cbdb2de6c586.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/TestPondDrawing3.png"
-dest_files=[ "res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex" ]
+source_file="res://Player/Resources/_superseded/Frog1_32x32_SingleJumpRight.png"
+dest_files=[ "res://.import/Frog1_32x32_SingleJumpRight.png-7892c83a97feb60c0bc8cbdb2de6c586.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

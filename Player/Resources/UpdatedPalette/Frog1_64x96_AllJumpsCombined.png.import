@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Frog1_32x32_AllJumpsCombined.png-7a0fdc6ca5e5125f1ade01133092e143.stex"
+path="res://.import/Frog1_64x96_AllJumpsCombined.png-7f0212b6dd4821719d201b6e30b27f64.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Resources/Frog1_32x32_AllJumpsCombined.png"
-dest_files=[ "res://.import/Frog1_32x32_AllJumpsCombined.png-7a0fdc6ca5e5125f1ade01133092e143.stex" ]
+source_file="res://Player/Resources/UpdatedPalette/Frog1_64x96_AllJumpsCombined.png"
+dest_files=[ "res://.import/Frog1_64x96_AllJumpsCombined.png-7f0212b6dd4821719d201b6e30b27f64.stex" ]
 
 [params]
 

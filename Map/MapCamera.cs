@@ -13,7 +13,7 @@ namespace Hopper
         }
         public override void _Process(float delta)
         {
-            Position = Position.MoveToward(Pointer.Target.Position,  delta * 600);
+            Position = Position.MoveToward(Pointer.Position,  delta * 180); // FIXME: Camera needs to work
         }
 
         public void MoveTo(Vector2 position)

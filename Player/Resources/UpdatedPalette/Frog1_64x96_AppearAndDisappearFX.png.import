@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex"
+path="res://.import/Frog1_64x96_AppearAndDisappearFX.png-a7afab890e5851db26bef59b6960f649.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/TestPondDrawing3.png"
-dest_files=[ "res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex" ]
+source_file="res://Player/Resources/UpdatedPalette/Frog1_64x96_AppearAndDisappearFX.png"
+dest_files=[ "res://.import/Frog1_64x96_AppearAndDisappearFX.png-a7afab890e5851db26bef59b6960f649.stex" ]
 
 [params]
 
