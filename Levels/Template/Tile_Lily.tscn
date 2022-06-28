@@ -6,3 +6,6 @@
 
 [node name="LilySprite" parent="." index="1"]
 position = Vector2( 16, 17 )
+
+[node name="BugSprite" parent="." index="3"]
+frame = 17
