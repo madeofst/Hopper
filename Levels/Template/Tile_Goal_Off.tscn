@@ -1,12 +1,10 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Levels/Template/Tile.tscn" type="PackedScene" id=1]
-
-[sub_resource type="StreamTexture" id=1]
-load_path = "res://.import/LilyPad_Goal_Off2.png-a99b31c176b7cac5fa6a3a55115d391f.stex"
+[ext_resource path="res://Levels/Resources/UpdatedPalette/LilyPad_Goal_Off2.png" type="Texture" id=2]
 
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 1
 
 [node name="LilySprite" parent="." index="1"]
-texture = SubResource( 1 )
+texture = ExtResource( 2 )
