@@ -23,10 +23,13 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.42 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.42, 0.49 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "TriggerLandAnimation"
+}, {
+"args": [  ],
+"method": "SkipToNextQueuedAnimation"
 } ]
 }

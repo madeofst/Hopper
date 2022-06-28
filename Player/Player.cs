@@ -400,6 +400,14 @@ namespace Hopper
             CurrentTile.SplashAnimation.Play("Exit");
         }
 
+        public void SkipToNextQueuedAnimation()
+        {
+            if (MoveInputQueue.Count > 0)
+            {
+                AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
+            }
+        }
+
         public void AfterAnimation(string animationName) //TODO: Need to review this part of the procedure
         {
             AnimationTimeElapsed = 0;
@@ -418,7 +426,6 @@ namespace Hopper
                 }
                 else
                 {
-                    //UpdateHopsRemaining(-1);
                     UpdateScore();
                     if (!CheckGoal())
                     {
@@ -437,6 +444,7 @@ namespace Hopper
                 CurrentAnimationNode = AnimationQueue.Dequeue();
                 CurrentMovementCurve = CurrentAnimationNode.Curve;
                 AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
+                PlayerAnimation.Stop();
                 PlayerAnimation.Play(PlayerAnimation.FindAnimation(CurrentAnimationNode.Animation));
                 //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
             }
