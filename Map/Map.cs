@@ -36,7 +36,7 @@ namespace Hopper
         private void QuitToMenu()
         {
             StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
-            Pointer.MoveTo(StartMenu.RectPosition);
+            Pointer.MoveToMenuPosition(StartMenu.RectPosition);
             Camera.MoveTo(Pointer.Position);
             PauseMenu.RectPosition = StartMenu.RectPosition;
             HUD.QueueFree();
@@ -56,8 +56,8 @@ namespace Hopper
                     l.NewlyActivated = true;
                 }
             }
-            Pointer.Target.NewlyActivated = false;
-            Pointer.Target.Complete = true;
+            Pointer.CurrentPond.NewlyActivated = false;
+            Pointer.CurrentPond.Complete = true;
         }
 
         public override void _Process(float delta)
@@ -94,7 +94,7 @@ namespace Hopper
         {
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
-            PauseMenu.SetPosition(Pointer.Target.Position - new Vector2(240, 135));
+            PauseMenu.SetPosition(Pointer.CurrentPond.Position - new Vector2(240, 135));
             PauseMenu.Visible = true;
             PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
             PauseMenu.AnimateShow();

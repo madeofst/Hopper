@@ -54,12 +54,15 @@ namespace Hopper
             SplashAnimation = GetNode<AnimationPlayer>("SplashSprite/AnimationPlayer");
             BugAnimation = GetNode<AnimationPlayer>("BugSprite/AnimationPlayer");
             
-            Random rand = new Random();
+            Random rand = new Random((int)(GridPosition.x * GridPosition.y * 100 + Position.x / Position.y));
             if (Type == Type.Score)
             {
                 Label.BbcodeText = $"[center]{PointValue.ToString()}[/center]";
                 BugAnimation.Play($"Hover{rand.Next(1, 3)}");
-                if (PointValue > 0) BugSprite.Modulate = ModulatePalette.Colors[(PointValue/100)-1];
+            }
+            else if (Type == Type.Rock)
+            {
+                LilySprite.Frame = rand.Next(0, 4);
             }
 
             Connect("mouse_entered", this, "OnMouseEnter");

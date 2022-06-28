@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Frog1_32x32_back.png-5b15057e052ba1f4ca6c0551f114cfec.stex"
+path="res://.import/Frog1_64x96_AllJumpsCombined.png-3d10f34d689beac07ce895f60bef6aaa.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Resources/Frog1_32x32_back.png"
-dest_files=[ "res://.import/Frog1_32x32_back.png-5b15057e052ba1f4ca6c0551f114cfec.stex" ]
+source_file="res://Player/Resources/_superseded/Frog1_64x96_AllJumpsCombined.png"
+dest_files=[ "res://.import/Frog1_64x96_AllJumpsCombined.png-3d10f34d689beac07ce895f60bef6aaa.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Frog1_32x32_right.png-0e352622da5266c845658a79665e873a.stex"
+path="res://.import/LilyPad_Goal_Off2.png-a30f11fa62d33579f87c92415c7ff0ae.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Resources/Frog1_32x32_right.png"
-dest_files=[ "res://.import/Frog1_32x32_right.png-0e352622da5266c845658a79665e873a.stex" ]
+source_file="res://Levels/Resources/UpdatedPalette/LilyPad_Goal_Off2.png"
+dest_files=[ "res://.import/LilyPad_Goal_Off2.png-a30f11fa62d33579f87c92415c7ff0ae.stex" ]
 
 [params]
 
@@ -24,11 +24,12 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
