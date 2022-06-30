@@ -9,7 +9,8 @@ namespace Hopper
         public enum PauseMenuMode
         {
             Map,
-            World
+            World,
+            Editor
         }
 
         public PauseMenuMode Mode;
@@ -66,11 +67,21 @@ namespace Hopper
             }
             else if (Mode == PauseMenuMode.World)
             {
+                MapButton.GetNode<RichTextLabel>("Labels/TextLabel").Text = "Back to map";
                 Buttons = new List<AnimatedButton>() 
                 {
                     RestartButton,
                     MapButton,
                     QuitButton
+                };
+            }
+            else if (Mode == PauseMenuMode.Editor)
+            {
+                MapButton.GetNode<RichTextLabel>("Labels/TextLabel").Text = "To editor";
+                Buttons = new List<AnimatedButton>() 
+                {
+                    RestartButton,
+                    MapButton
                 };
             }
             else

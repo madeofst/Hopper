@@ -37,7 +37,7 @@ size_flags_vertical = 4
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
 
-[node name="MaximumHops" type="HBoxContainer" parent="Buttons/RestartButton"]
+[node name="Labels" type="HBoxContainer" parent="Buttons/RestartButton"]
 margin_right = 245.0
 margin_bottom = 38.0
 rect_pivot_offset = Vector2( 157, 17 )
@@ -47,7 +47,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="Buttons/RestartButton/MaximumHops"]
+[node name="TextLabel" type="RichTextLabel" parent="Buttons/RestartButton/Labels"]
 margin_top = 1.0
 margin_right = 194.0
 margin_bottom = 37.0
@@ -66,7 +66,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Value" type="RichTextLabel" parent="Buttons/RestartButton/MaximumHops"]
+[node name="KeyLabel" type="RichTextLabel" parent="Buttons/RestartButton/Labels"]
 margin_left = 200.0
 margin_right = 242.0
 margin_bottom = 36.0
@@ -101,7 +101,7 @@ size_flags_vertical = 4
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
 
-[node name="MaximumHops" type="HBoxContainer" parent="Buttons/MapButton"]
+[node name="Labels" type="HBoxContainer" parent="Buttons/MapButton"]
 margin_right = 245.0
 margin_bottom = 38.0
 size_flags_horizontal = 4
@@ -110,7 +110,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="Buttons/MapButton/MaximumHops"]
+[node name="TextLabel" type="RichTextLabel" parent="Buttons/MapButton/Labels"]
 margin_right = 194.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 194, 36 )
@@ -128,7 +128,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Value" type="RichTextLabel" parent="Buttons/MapButton/MaximumHops"]
+[node name="KeyLabel" type="RichTextLabel" parent="Buttons/MapButton/Labels"]
 margin_left = 200.0
 margin_right = 242.0
 margin_bottom = 36.0
@@ -163,7 +163,7 @@ size_flags_vertical = 4
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
 
-[node name="MaximumHops" type="HBoxContainer" parent="Buttons/QuitButton"]
+[node name="Labels" type="HBoxContainer" parent="Buttons/QuitButton"]
 margin_right = 245.0
 margin_bottom = 36.0
 rect_pivot_offset = Vector2( 157, 17 )
@@ -173,7 +173,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="Buttons/QuitButton/MaximumHops"]
+[node name="TextLabel" type="RichTextLabel" parent="Buttons/QuitButton/Labels"]
 margin_right = 194.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 194, 36 )
@@ -191,7 +191,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Value" type="RichTextLabel" parent="Buttons/QuitButton/MaximumHops"]
+[node name="KeyLabel" type="RichTextLabel" parent="Buttons/QuitButton/Labels"]
 margin_left = 200.0
 margin_right = 242.0
 margin_bottom = 36.0

@@ -206,7 +206,7 @@ Directions = PoolStringArray( "Up" )
 [node name="World6" parent="." instance=ExtResource( 1 )]
 position = Vector2( 120, -328 )
 ID = 5
-Levels = PoolStringArray( "LongWayShortWay5", "StuckInJumpLoop" )
+Levels = PoolStringArray( "LongWayShortWay5", "StuckInJumpLoop", "CrissCross" )
 Texture = ExtResource( 7 )
 Active = true
 LocationsToUnlock = PoolStringArray(  )

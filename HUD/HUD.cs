@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace Hopper
 {
@@ -10,6 +11,8 @@ namespace Hopper
         private HopCounter HopCounter;
         private ScoreBox ScoreBox;
         private MapCamera Camera;
+
+        public Control TouchButtons;
 
         //Touch controls
         public TouchScreenButton Restart;
@@ -25,12 +28,16 @@ namespace Hopper
             ScoreBox = GetNode<ScoreBox>("ScoreBox");
             Camera = GetNode<MapCamera>("../Map/MapCamera");
             Restart = GetNode<TouchScreenButton>("TouchButtons/Restart");
+            TouchButtons = GetNode<Control>("TouchButtons");
         }
 
         public override void _Process(float delta)
         {
-            if (!PositionLocked && Camera.Name != null)
-                RectPosition = Camera.Position - new Vector2(240, 135);
+            if (Camera != null)
+            {
+                if (!PositionLocked && Camera.Name != null)
+                    RectPosition = Camera.Position - new Vector2(240, 135);
+            }
         }
 
         public void ShowPopUp(string text)
@@ -58,6 +65,11 @@ namespace Hopper
         public void ShowScoreBox()
         {
             ScoreBox.Visible = true;
+        }
+
+        public void ShowTouchButtons()
+        {
+            TouchButtons.Visible = true;
         }
 
         public void HideHopCounter()

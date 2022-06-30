@@ -122,6 +122,7 @@ namespace Hopper
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
 
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ShowTouchButtons), HUD, nameof(HUD.ShowTouchButtons));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ShowScoreBox), HUD, nameof(HUD.ShowScoreBox));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Appear));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
@@ -163,6 +164,7 @@ namespace Hopper
                 LevelTitleScreen.SetPosition(Position);
                 LevelTitleScreen.Init(ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
+                HUD.TouchButtons.Visible = false;
             }
             else
             {
@@ -226,6 +228,7 @@ namespace Hopper
             if (TempForTesting)
             {
                 QueueFree();
+                HUD.Visible = false;
             }
             else
             {
@@ -296,7 +299,7 @@ namespace Hopper
         {
             if (TempForTesting)
             {
-                QueueFree();
+                //QueueFree();
             }
             else if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
             {
@@ -391,12 +394,15 @@ namespace Hopper
                 if (GameOver)
                 {
                     Music.Stop();
-                    GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
-                    GetTree().Root.AddChild(GameOver);
-                    GameOver.Score = Player.TotalScore;
-                    GameOver.ScoreLabel.Text = GameOver.Score.ToString();
+                    if (!PuzzleMode)
+                    {
+                        GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
+                        GetTree().Root.AddChild(GameOver);
+                        GameOver.Score = Player.TotalScore;
+                        GameOver.ScoreLabel.Text = GameOver.Score.ToString();
+                    }
                     QueueFree();
-                    HUD.QueueFree(); //FIXME: Can't do this is editor mode
+                    if (!TempForTesting) HUD.QueueFree(); //FIXME: Can't do this is editor mode
                 }
             }
         }
@@ -415,7 +421,14 @@ namespace Hopper
             PauseMenu.SetPosition(Position);
             MoveToTop(PauseMenu);
             PauseMenu.Visible = true;
-            PauseMenu.SetMode(PauseMenu.PauseMenuMode.World);
+            if (TempForTesting)
+            {
+                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Editor);
+            }
+            else
+            {
+                PauseMenu.SetMode(PauseMenu.PauseMenuMode.World);
+            }
             PauseMenu.AnimateShow();
         }
 
@@ -427,12 +440,16 @@ namespace Hopper
             HUD.SetButtonToEnter();
             HUD.UnlockPosition();
             QueueFree();
-            Map Map = GetNode<Map>("/root/Map");
             if (!TempForTesting)
             {
+                Map Map = GetNode<Map>("/root/Map");
                 Map.Show();
                 Map.SetProcessInput(true);
                 Map.GetNode<Pointer>("Pointer").SetProcessInput(true);
+            }
+            else
+            {
+                HUD.Visible = false;
             }
         }
                 

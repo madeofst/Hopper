@@ -93,6 +93,7 @@ namespace Hopper
 
         private string CheckValidityOfLevel()
         {
+            if (CurrentLevel == null) return "No level.";
             if (!CurrentLevel.Grid.HasOneGoal()) return "Level must have exactly one goal tile.";
             return null;
         }

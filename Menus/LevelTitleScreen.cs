@@ -67,6 +67,8 @@ namespace Hopper
         private ShaderMaterial Shader;
 
         [Signal]
+        public delegate void ShowTouchButtons();
+        [Signal]
         public delegate void ShowScoreBox();
         [Signal]
         public delegate void ActivatePlayer();
@@ -166,7 +168,7 @@ namespace Hopper
                     Visible = false;
                     Triggered = false;
                     EmitSignal(nameof(ActivatePlayer));
-                    EmitSignal(nameof(ShowScoreBox));
+                    EmitSignal(nameof(ShowTouchButtons));
                 }
                 else if (FillDirection == 1 && fill >= 1)
                 {
