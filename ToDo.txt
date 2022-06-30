@@ -46,10 +46,6 @@ _________________________
     * consider a wider grid
 
     //Animations
-    * spring for jump tile
-    * goal tile to go purple quicker
-    * fail level to be neated up
-    * restart to be a matching portal to goal
     * frog still (eyes blinking)
     * eat bug
 
