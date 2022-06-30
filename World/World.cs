@@ -156,9 +156,9 @@ namespace Hopper
 
         private void InitialiseLevelLoad(Level level, bool replay)
         {
+            HUD.Visible = true;
             if (!replay && !TempForTesting)
             {
-                HUD.Visible = true;
                 MoveToTop(LevelTitleScreen);
                 LevelTitleScreen.SetPosition(Position);
                 LevelTitleScreen.Init(ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself

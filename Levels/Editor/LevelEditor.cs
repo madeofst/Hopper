@@ -64,12 +64,20 @@ namespace Hopper
 
         private void SaveAndPlayLevel()
         {
-            if (CurrentLevel != null)
+            string Error = CheckValidityOfLevel();
+            if (Error != null)
             {
-                SaveCurrentLevel();
-                World TestWorld = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
-                GetTree().Root.AddChild(TestWorld);
-                TestWorld.Init(1, new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
+                GD.Print(Error);
+            }
+            else
+            {
+                if (CurrentLevel != null)
+                {
+                    SaveCurrentLevel();
+                    World TestWorld = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
+                    GetTree().Root.AddChild(TestWorld);
+                    TestWorld.Init(1, new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
+                }
             }
         }
 
@@ -81,6 +89,12 @@ namespace Hopper
                 Error error = levelFactory.Save(CurrentLevel);
                 //GD.PrintErr(error);
             }
+        }
+
+        private string CheckValidityOfLevel()
+        {
+            if (!CurrentLevel.Grid.HasOneGoal()) return "Level must have exactly one goal tile.";
+            return null;
         }
 
         //Load

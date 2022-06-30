@@ -57,8 +57,8 @@ JumpLength = 2
 [node name="LilySprite" parent="." index="1"]
 position = Vector2( 16, 17 )
 texture = ExtResource( 2 )
-hframes = 6
-frame = 5
+hframes = 7
+frame = 6
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 autoplay = "Idle"

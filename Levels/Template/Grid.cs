@@ -246,5 +246,16 @@ namespace Hopper
             Tiles[(int)gridPosition.x, (int)gridPosition.y] = newTile;
             AddChild(newTile);
         }
+
+        public bool HasOneGoal()
+        {
+            int goalCount = 0;
+            foreach (Tile tile in Tiles)
+            {
+                if (tile.Type == Type.Goal) goalCount += 1;
+            }
+            if (goalCount == 1) return true;
+            return false;
+        }
     }
 }
