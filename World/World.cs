@@ -185,14 +185,7 @@ namespace Hopper
             GetTree().Root.MoveChild(HUD, GetTree().Root.GetChildCount());
             if (!replay)
             {
-                if (NextLevel == null)
-                {
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    if (NextLevel == null) NextLevel = CurrentLevel;
-                }
+                if (NextLevel == null) NextLevel = CurrentLevel;
             }
 
             AddChildBelowNode(Background, NextLevel);
