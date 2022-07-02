@@ -179,11 +179,12 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if ((@event.IsActionReleased("ui_accept") ||
+            if ((@event.IsActionPressed("ui_accept") ||
                  @event.IsActionReleased("ui_left") ||
                  @event.IsActionReleased("ui_up") ||
                  @event.IsActionReleased("ui_right") ||
-                 @event.IsActionReleased("ui_down"))
+                 @event.IsActionReleased("ui_down")) ||
+                 @event is InputEventScreenTouch && @event.IsPressed()
                  && !Animating && Visible)
             {
                 SetProcessInput(false);

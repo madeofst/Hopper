@@ -71,20 +71,30 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {           
-            if (@event.IsActionPressed("ui_left") ||
-                @event.IsActionPressed("ui_right") ||
-                @event.IsActionPressed("ui_down") ||
-                @event.IsActionPressed("ui_up"))
+            if (@event.IsActionPressed("ui_left"))
             {
-                currentPath = GetPath(@event.AsText());
-                if (currentPath != null)
-                {
-                    currentPathFollow = currentPath.GetNode<PathFollow2D>("PathFollow2D");
-                }
+                currentPath = GetPath("Left");
+            }
+            else if (@event.IsActionPressed("ui_right"))
+            {
+                currentPath = GetPath("Right");
+            }
+            else if (@event.IsActionPressed("ui_down"))
+            {
+                currentPath = GetPath("Down");
+            }
+            else if (@event.IsActionPressed("ui_up"))
+            {
+                currentPath = GetPath("Up");
             }
             else if (@event.IsActionPressed("ui_accept"))
             {
                 if (PointerOnWorld()) LoadWorld();
+            }
+
+            if (currentPath != null)
+            {
+                currentPathFollow = currentPath.GetNode<PathFollow2D>("PathFollow2D");
             }
         }
 
