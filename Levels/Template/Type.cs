@@ -7,6 +7,7 @@ namespace Hopper
         Score,
         Rock,
         Water,
-        Jump
+        Jump,
+        Bounce
     }
 }

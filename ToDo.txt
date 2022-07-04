@@ -5,6 +5,9 @@ _________________________
     // Fixes
     -MAIN GAME
     * Restarting level mid-movement in game - smoke animation should stop moving
+    * Just need to work out how to do animation sequence
+    * I think it needs the whole thing basically needs to go within a do-while as with the movement nodes
+    * Consider the infinite loop issue again!
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates

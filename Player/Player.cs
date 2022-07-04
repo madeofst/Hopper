@@ -129,45 +129,56 @@ namespace Hopper
             Vector2 JumpTargetPosition = GridPosition + JumpVector;
             AnimationEndTile = Grid.GetTile(Grid.LimitToBounds(JumpTargetPosition));
             
-            if ((AnimationEndTile.Type == Type.Rock))
+            do
             {
-                Movement = -Movement;
-                MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
-                do 
+                if (AnimationEndTile.Type == Type.Bounce)
                 {
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
                     AnimationEndTile = Grid.GetTile(AnimationEndTile.GridPosition + Movement);
-                } while (AnimationEndTile.Type == Type.Rock);
-                
-            }
-            else if (AnimationEndTile.Type == Type.Water &&
-                    (Grid.GetTile(AnimationEndTile.GridPosition + Movement).Type == Type.Rock)) 
-            {
-                Movement = -Movement;
-            }
-            MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
-
-            if (AnimationEndTile.Type == Type.Water)
-            {
-                Vector2 SwimTargetPosition = AnimationEndTile.GridPosition + Movement;
-                while (MovementNodes.Count < 20)
-                {
-                    if (!Grid.WithinGrid(SwimTargetPosition) || Grid.GetTile(SwimTargetPosition).Type == Type.Rock)
-                    {
-                        Movement = -Movement;
-                        MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition + Movement), Movement));
-                    }
-                    else if (Grid.GetTile(SwimTargetPosition).Type == Type.Water)
-                    {
-                        if (Grid.ViableLandingPoint(SwimTargetPosition + Movement))
-                        {
-                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition), Movement));
-                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition + Movement), Movement));
-                            break;
-                        }
-                    }
-                    SwimTargetPosition += Movement;
                 }
-            }
+                else if ((AnimationEndTile.Type == Type.Rock))
+                {
+                    Movement = -Movement;
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
+                    do 
+                    {
+                        AnimationEndTile = Grid.GetTile(AnimationEndTile.GridPosition + Movement);
+                    } while (AnimationEndTile.Type == Type.Rock);
+                    
+                }
+                else if (AnimationEndTile.Type == Type.Water &&
+                        (Grid.GetTile(AnimationEndTile.GridPosition + Movement).Type == Type.Rock)) 
+                {
+                    Movement = -Movement;
+                }
+                MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
+
+                if (AnimationEndTile.Type == Type.Water)
+                {
+                    Vector2 SwimTargetPosition = AnimationEndTile.GridPosition + Movement;
+                    while (MovementNodes.Count < 20)
+                    {
+                        if (!Grid.WithinGrid(SwimTargetPosition) || Grid.GetTile(SwimTargetPosition).Type == Type.Rock)
+                        {
+                            Movement = -Movement;
+                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition + Movement), Movement));
+                        }
+                        else if (Grid.GetTile(SwimTargetPosition).Type == Type.Water)
+                        {
+                            if (Grid.ViableLandingPoint(SwimTargetPosition + Movement))
+                            {
+                                MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition), Movement));
+                                AnimationEndTile = Grid.GetTile(SwimTargetPosition + Movement);
+                                MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
+                                break;
+                            }
+                        }
+                        SwimTargetPosition += Movement;
+                    }
+                }
+
+            } while (AnimationEndTile.Type == Type.Bounce);
+
 
             PrintNodes(MovementNodes);
             if (MovementNodes.Count >= 20)
@@ -210,7 +221,7 @@ namespace Hopper
             }
             else
             {
-                if (next.Tile.Type == Type.Rock)
+                if (next.Tile.Type == Type.Rock || next.Tile.Type == Type.Bounce)
                 {
                     Prefix += "Bounce";
                     movementCurve = JumpCurve; //FIXME: testing with jumpcurve
@@ -290,7 +301,7 @@ namespace Hopper
 
                 Prefix = "";
                 if (next.Tile.Type == Type.Goal && next.Tile.Activated) Prefix = "Goal";
-                
+
                 //This is the exit/return bounce leap
                 if (movementNodes.Count == 0)
                 {
@@ -299,7 +310,7 @@ namespace Hopper
                         Prefix += "Jump"; Suffix = "Exit";
                         movementCurve = JumpCurve;
                     }
-                    else if (current.Tile.Type == Type.Rock)
+                    else if (current.Tile.Type == Type.Rock || current.Tile.Type == Type.Bounce)
                     {
                         if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() >= 2)
                         {
