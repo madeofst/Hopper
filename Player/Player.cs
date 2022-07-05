@@ -1,7 +1,7 @@
 using System;
 using Godot;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace Hopper
 {
@@ -416,6 +416,10 @@ namespace Hopper
             if (MoveInputQueue.Count > 0)
             {
                 AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
+            }
+            else if (AnimationQueue.Peek().Animation.ResourceName.Contains("Bounce"))
+            {
+                //FIXME: maybe here to make the bounce quicker
             }
         }
 
