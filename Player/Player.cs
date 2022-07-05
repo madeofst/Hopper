@@ -149,6 +149,7 @@ namespace Hopper
                 else if (AnimationEndTile.Type == Type.Water &&
                         (Grid.GetTile(AnimationEndTile.GridPosition + Movement).Type == Type.Rock)) 
                 {
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
                     Movement = -Movement;
                 }
                 MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
@@ -160,8 +161,9 @@ namespace Hopper
                     {
                         if (!Grid.WithinGrid(SwimTargetPosition) || Grid.GetTile(SwimTargetPosition).Type == Type.Rock)
                         {
+                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition - Movement), Movement));
+                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition - Movement), -Movement));
                             Movement = -Movement;
-                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition + Movement), Movement));
                         }
                         else if (Grid.GetTile(SwimTargetPosition).Type == Type.Water)
                         {
@@ -177,7 +179,7 @@ namespace Hopper
                     }
                 }
 
-            } while (AnimationEndTile.Type == Type.Bounce);
+            } while (AnimationEndTile.Type == Type.Bounce || AnimationEndTile.Type == Type.Rock);
 
 
             PrintNodes(MovementNodes);
@@ -194,11 +196,21 @@ namespace Hopper
         private void CreateAnimationSequence(Queue<MovementNode> movementNodes)
         {
             AnimationQueue = new Queue<AnimationNode>();
-            MovementNode current = movementNodes.Dequeue();
-            MovementNode next = movementNodes.Dequeue();
+            MovementNode current = null;
+            MovementNode next = null;
 
             while (movementNodes.Count > 0)
             {
+                if (current == null)
+                {
+                    current = movementNodes.Dequeue();
+                } 
+                else
+                {
+                    current = next;
+                }
+                next = movementNodes.Dequeue();
+
                 AnimationNode nextAnimationNode = NextAnimationNode(movementNodes, current, next);
                 if (nextAnimationNode != null)
                 {
@@ -229,18 +241,86 @@ namespace Hopper
 
         private AnimationNode NextAnimationNode(Queue<MovementNode> movementNodes, MovementNode current, MovementNode next) //FIXME: need to remove reference to movementNodes here
         {
-            string Prefix = null, Suffix = null;
+            string Goal = null;
+            string Length = null;
+            string Movement = null;
+            string Direction = null;
+            string Suffix = null;
+
             Curve movementCurve;
+
             Type fromType = current.Tile.Type;
             Type toType = next.Tile.Type;
 
-            //This is the jumping part
-            if (toType == Type.Goal && next.Tile.Activated)
+            // Goal part
+            if (toType == Type.Goal && next.Tile.Activated) Goal = "Goal";
+
+            // Movement part
+            if (fromType == Type.Water && toType == Type.Water)
             {
-                Prefix = "Goal";
+                Movement = "Swim";
+                movementCurve = SwimCurve;
+            }
+            else if (fromType == Type.Bounce || fromType == Type.Rock)
+            {
+                Movement = "Bounce";
+                movementCurve = BounceCurve;
+            }
+            else
+            {
+                Movement = "Jump";
+                movementCurve = JumpCurve;
             }
 
-            if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2)
+            // Length part
+            if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2 &&
+                 Movement != "Swim")
+            {   
+                Length = "Double";
+                movementCurve = DoubleJumpCurve;
+            }
+
+            // Suffix part
+            if (Movement == "Swim" && next.MovementDirection == -current.MovementDirection)
+            {
+                Suffix = "Turn";
+            }
+            else if (toType == Type.Water && fromType != Type.Water)
+            {
+                Suffix = "Splash";
+                //movementCurve = DiveCurve;
+            }
+            else if (toType != Type.Water && fromType == Type.Water)
+            {
+                Suffix = "Exit";
+            }
+
+            // Direction part
+            if (Suffix == "Turn")
+            {
+                Direction = MovementString(current.MovementDirection);
+            }
+            else
+            {
+                Direction = MovementString(current.MovementDirection);
+            }            
+
+            AnimationNode node = null;
+            // Build the string and return the node (or null)
+            Animation animation = PlayerAnimation.GetAnimation($"{Goal}{Length}{Movement}{Direction}{Suffix}");
+
+            GD.Print($"Built string = '{Goal}{Length}{Movement}{Direction}{Suffix}'");
+
+            if (animation != null)
+            {
+                //GD.Print($"Animation name = '{animation.ResourceName}'");
+                node = new AnimationNode(animation, next.Tile.GridPosition - current.Tile.GridPosition, movementCurve);
+            }
+
+            return node;
+
+
+            /* if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2)
             {
                 if (toType == Type.Rock)
                 {
@@ -265,7 +345,7 @@ namespace Hopper
                     Prefix += "Jump";
                     movementCurve = JumpCurve;
                 }
-            }
+            } 
 
             if (toType == Type.Water) Suffix = "Splash";
 
@@ -366,7 +446,7 @@ namespace Hopper
                         PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"),
                         next.Tile.GridPosition - current.Tile.GridPosition, movementCurve);
                 }
-            }
+            }*/
         }
 
         internal void ClearQueues()
@@ -380,7 +460,7 @@ namespace Hopper
             int i = 1;
             foreach (AnimationNode n in animationQueue)
             {
-                //GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
+                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
                 i++;
             }
         }
@@ -390,7 +470,7 @@ namespace Hopper
             int i = 1;
             foreach (MovementNode n in movementNodes)
             {
-                //GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
+                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
                 i++;
             }
         }
@@ -434,10 +514,10 @@ namespace Hopper
             {
                 AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
             }
-            else if (AnimationQueue.Peek().Animation.ResourceName.Contains("Bounce"))
+/*             else if (AnimationQueue.Peek().Animation.ResourceName.Contains("Bounce"))
             {
                 //FIXME: maybe here to make the bounce quicker
-            }
+            } */
         }
 
         public void AfterAnimation(string animationName) //TODO: Need to review this part of the procedure
