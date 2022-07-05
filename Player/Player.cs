@@ -197,18 +197,52 @@ namespace Hopper
             MovementNode current = movementNodes.Dequeue();
             MovementNode next = movementNodes.Dequeue();
 
+            while (movementNodes.Count > 0)
+            {
+                AnimationNode nextAnimationNode = NextAnimationNode(movementNodes, current, next);
+                if (nextAnimationNode != null)
+                {
+                    AnimationQueue.Enqueue(nextAnimationNode);
+                }
+                else
+                {
+                    GD.Print($"Error: Animation not found.");
+                }
+            }
+
+            PrintAnimationSequence(AnimationQueue);
+
+            if (CurrentTile.Type == Type.Jump)
+            {
+                CurrentTile.LilyAnimation.Play("Spring");
+            }
+            else
+            {
+                CurrentTile.LilyAnimation.Play("Jump");
+            }
+            CurrentTile.SplashAnimation.Play("Jump");
+
+            PrintAnimationSequence(AnimationQueue);
+            UpdateHopsRemaining(-1);
+            PlayNextAnimation();
+        }
+
+        private AnimationNode NextAnimationNode(Queue<MovementNode> movementNodes, MovementNode current, MovementNode next) //FIXME: need to remove reference to movementNodes here
+        {
             string Prefix = null, Suffix = null;
             Curve movementCurve;
+            Type fromType = current.Tile.Type;
+            Type toType = next.Tile.Type;
 
             //This is the jumping part
-            if (next.Tile.Type == Type.Goal && next.Tile.Activated)
+            if (toType == Type.Goal && next.Tile.Activated)
             {
                 Prefix = "Goal";
             }
 
             if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2)
             {
-                if (next.Tile.Type == Type.Rock)
+                if (toType == Type.Rock)
                 {
                     Prefix += "DoubleBounce";
                     movementCurve = BounceCurve;
@@ -221,7 +255,7 @@ namespace Hopper
             }
             else
             {
-                if (next.Tile.Type == Type.Rock || next.Tile.Type == Type.Bounce)
+                if (toType == Type.Rock || toType == Type.Bounce)
                 {
                     Prefix += "Bounce";
                     movementCurve = JumpCurve; //FIXME: testing with jumpcurve
@@ -233,38 +267,38 @@ namespace Hopper
                 }
             }
 
-            if (next.Tile.Type == Type.Water) Suffix = "Splash";
+            if (toType == Type.Water) Suffix = "Splash";
 
-            AnimationQueue.Enqueue(new AnimationNode(
-                PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
-                next.Tile.GridPosition - current.Tile.GridPosition, 
-                movementCurve));
+            return new AnimationNode(
+                PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"),
+                next.Tile.GridPosition - current.Tile.GridPosition,
+                movementCurve);
 
-            if (movementNodes.Count > 0)
+            if (movementNodes.Count > 0) //FIXME: remove this
             {
                 if (next.MovementDirection == -current.MovementDirection)
                 {
-                    if (next.Tile.Type == Type.Water)
+                    if (toType == Type.Water)
                     {
-                        AnimationQueue.Enqueue(new AnimationNode(
-                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
-                            Vector2.Zero, SwimCurve));
+                        return new AnimationNode(
+                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"),
+                            Vector2.Zero, SwimCurve);
                     }
                 }
 
-                do
+                do  //FIXME: This is a return
                 {
                     current = next;
                     next = movementNodes.Dequeue();
                 }
-                while (current.Tile.GridPosition == next.Tile.GridPosition && 
+                while (current.Tile.GridPosition == next.Tile.GridPosition &&
                        current.MovementDirection == next.MovementDirection);
 
-                
+
                 //This is the swimming (or bounce into water) part
-                while (movementNodes.Count >= 1)
+                while (movementNodes.Count >= 1) //FIXME: remove this
                 {
-                    if (current.Tile.Type == Type.Rock)
+                    if (fromType == Type.Rock)
                     {
                         movementCurve = JumpCurve;
                         Prefix = "Jump"; Suffix = "Splash";
@@ -278,39 +312,39 @@ namespace Hopper
                         Prefix = "Swim"; Suffix = null;
                     }
 
-                    AnimationQueue.Enqueue(new AnimationNode(
-                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
-                        next.Tile.GridPosition - current.Tile.GridPosition, movementCurve));
-                    
+                    return new AnimationNode(
+                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"),
+                        next.Tile.GridPosition - current.Tile.GridPosition, movementCurve);
+
                     if (next.MovementDirection == -current.MovementDirection)
                     {
-                        AnimationQueue.Enqueue(new AnimationNode(
-                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"), 
-                            Vector2.Zero, SwimCurve));
+                        return new AnimationNode(
+                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"),
+                            Vector2.Zero, SwimCurve);  //FIXME: This is a return
                     }
 
-                    do
+                    do //FIXME: This is a return
                     {
                         current = next;
                         next = movementNodes.Dequeue();
                     }
-                    while (current.Tile.GridPosition == next.Tile.GridPosition && 
+                    while (current.Tile.GridPosition == next.Tile.GridPosition &&
                         current.MovementDirection == next.MovementDirection);
 
                 }
 
                 Prefix = "";
-                if (next.Tile.Type == Type.Goal && next.Tile.Activated) Prefix = "Goal";
+                if (toType == Type.Goal && next.Tile.Activated) Prefix = "Goal";
 
                 //This is the exit/return bounce leap
                 if (movementNodes.Count == 0)
                 {
-                    if (current.Tile.Type == Type.Water)
+                    if (fromType == Type.Water)
                     {
                         Prefix += "Jump"; Suffix = "Exit";
                         movementCurve = JumpCurve;
                     }
-                    else if (current.Tile.Type == Type.Rock || current.Tile.Type == Type.Bounce)
+                    else if (fromType == Type.Rock || fromType == Type.Bounce)
                     {
                         if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() >= 2)
                         {
@@ -327,29 +361,12 @@ namespace Hopper
                     {
                         throw new NotImplementedException(); //Shouldn't happen
                     }
-                    AnimationQueue.Enqueue(new AnimationNode(
-                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"), 
-                        next.Tile.GridPosition - current.Tile.GridPosition, movementCurve));
-                    
+
+                    return new AnimationNode(
+                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"),
+                        next.Tile.GridPosition - current.Tile.GridPosition, movementCurve);
                 }
             }
-
-            //End extras and playing
-            PrintAnimationSequence(AnimationQueue);
-
-            if (CurrentTile.Type == Type.Jump)
-            {
-                CurrentTile.LilyAnimation.Play("Spring");
-            }
-            else
-            {
-                CurrentTile.LilyAnimation.Play("Jump");
-            }
-            CurrentTile.SplashAnimation.Play("Jump");
-
-            PrintAnimationSequence(AnimationQueue);
-            UpdateHopsRemaining(-1);
-            PlayNextAnimation();
         }
 
         internal void ClearQueues()
