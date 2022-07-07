@@ -150,6 +150,7 @@ namespace Hopper
         public void GoHome()
         {
             Menu.ShowMenu();
+            GetNode<HUD>("/root/HUD").QueueFree();
             QueueFree();
         }
     }

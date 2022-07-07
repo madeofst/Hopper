@@ -84,16 +84,14 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if (@event.IsActionPressed("ui_cancel"))
-            {
-                Pause();
-            }
+            if (@event.IsActionPressed("ui_cancel")) Pause();
         }
 
         private void Pause()
         {
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
+            MoveToTop(PauseMenu);
             PauseMenu.SetPosition(Pointer.CurrentPond.Position - new Vector2(240, 135));
             PauseMenu.Visible = true;
             PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
@@ -107,6 +105,12 @@ namespace Hopper
                 Pointer.SetProcessInput(true);
                 SetProcessInput(true);
             }
+        }
+
+        private void MoveToTop(Node node = null)
+        {
+            if (node == null) node = this;
+            GetTree().Root.MoveChild(node, GetTree().Root.GetChildCount());
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Hopper
         {
             if (currentPathFollow != null)
             {
-                float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1f * delta), 0 , 1);
+                float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1.6f * delta), 0 , 1);
                 currentPathFollow.UnitOffset = unitOffset;
                 Position = currentPathFollow.GlobalPosition;
                 

@@ -389,8 +389,6 @@ namespace Hopper
                     if (Timer.Finished()) GameOver = true;
                 }
 
-                //if (HopsExhausted && ScoreAnimFinished) RestartLevel(CurrentLevel.LevelName, true); //TODO: won't need this after sorting animation
-
                 if (GameOver)
                 {
                     Music.Stop();
@@ -402,7 +400,7 @@ namespace Hopper
                         GameOver.ScoreLabel.Text = GameOver.Score.ToString();
                     }
                     QueueFree();
-                    if (!TempForTesting) HUD.QueueFree(); //FIXME: Can't do this is editor mode
+                    if (!TempForTesting) HUD.QueueFree();
                 }
             }
         }
