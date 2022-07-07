@@ -123,7 +123,8 @@ namespace Hopper
         private void CalculateMovement(Vector2 Movement)
         {
             Queue<MovementNode> MovementNodes = new Queue<MovementNode>();
-            MovementNodes.Enqueue(new MovementNode(CurrentTile, Movement));
+            bool Submerged = false;
+            MovementNodes.Enqueue(new MovementNode(CurrentTile, Movement, Submerged));
 
             Vector2 JumpVector = GetJumpDistance(Movement);
             Vector2 JumpTargetPosition = GridPosition + JumpVector;
@@ -133,53 +134,59 @@ namespace Hopper
             {
                 if (AnimationEndTile.Type == Type.Bounce)
                 {
-                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     AnimationEndTile = Grid.GetTile(AnimationEndTile.GridPosition + Movement);
                 }
                 else if ((AnimationEndTile.Type == Type.Rock))
                 {
                     Movement = -Movement;
-                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     do 
                     {
                         AnimationEndTile = Grid.GetTile(AnimationEndTile.GridPosition + Movement);
                     } while (AnimationEndTile.Type == Type.Rock);
-                    
                 }
-                else if (AnimationEndTile.Type == Type.Water &&
-                        (Grid.GetTile(AnimationEndTile.GridPosition + Movement).Type == Type.Rock)) 
+                else if (AnimationEndTile.Type == Type.Water)
                 {
-                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
-                    Movement = -Movement;
-                }
-                MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
-
-                if (AnimationEndTile.Type == Type.Water)
-                {
-                    Vector2 SwimTargetPosition = AnimationEndTile.GridPosition + Movement;
-                    while (MovementNodes.Count < 20)
+                    Submerged = true;
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
+                    if ((Grid.GetTile(AnimationEndTile.GridPosition + Movement).Type == Type.Rock)) 
                     {
-                        if (!Grid.WithinGrid(SwimTargetPosition) || Grid.GetTile(SwimTargetPosition).Type == Type.Rock)
+                        MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
+                        Movement = -Movement;
+                    }
+                    else
+                    {
+                        Vector2 SwimTargetPosition = AnimationEndTile.GridPosition + Movement;
+                        while (MovementNodes.Count < 20)
                         {
-                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition - Movement), Movement));
-                            MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition - Movement), -Movement));
-                            Movement = -Movement;
-                        }
-                        else if (Grid.GetTile(SwimTargetPosition).Type == Type.Water)
-                        {
-                            if (Grid.ViableLandingPoint(SwimTargetPosition + Movement))
+                            if (!Grid.WithinGrid(SwimTargetPosition) || Grid.GetTile(SwimTargetPosition).Type == Type.Rock)
                             {
-                                MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition), Movement));
-                                AnimationEndTile = Grid.GetTile(SwimTargetPosition + Movement);
-                                MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement));
-                                break;
+                                MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition - Movement), Movement, Submerged));
+                                MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition - Movement), -Movement, Submerged));
+                                Movement = -Movement;
                             }
+                            else if (Grid.GetTile(SwimTargetPosition).Type == Type.Water)
+                            {
+                                if (Grid.ViableLandingPoint(SwimTargetPosition + Movement))
+                                {
+                                    MovementNodes.Enqueue(new MovementNode(Grid.GetTile(SwimTargetPosition), Movement, Submerged));
+                                    Submerged = false;
+                                    AnimationEndTile = Grid.GetTile(SwimTargetPosition + Movement);
+                                    break;
+                                }
+                            }
+                            SwimTargetPosition += Movement;
                         }
-                        SwimTargetPosition += Movement;
                     }
                 }
+                else
+                {
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
+                    break;
+                }
 
-            } while (AnimationEndTile.Type == Type.Bounce || AnimationEndTile.Type == Type.Rock);
+            } while (true);
 
 
             PrintNodes(MovementNodes);
@@ -211,7 +218,7 @@ namespace Hopper
                 }
                 next = movementNodes.Dequeue();
 
-                AnimationNode nextAnimationNode = NextAnimationNode(movementNodes, current, next);
+                AnimationNode nextAnimationNode = NextAnimationNode(current, next);
                 if (nextAnimationNode != null)
                 {
                     AnimationQueue.Enqueue(nextAnimationNode);
@@ -234,12 +241,12 @@ namespace Hopper
             }
             CurrentTile.SplashAnimation.Play("Jump");
 
-            PrintAnimationSequence(AnimationQueue);
+            //PrintAnimationSequence(AnimationQueue);
             UpdateHopsRemaining(-1);
             PlayNextAnimation();
         }
 
-        private AnimationNode NextAnimationNode(Queue<MovementNode> movementNodes, MovementNode current, MovementNode next) //FIXME: need to remove reference to movementNodes here
+        private AnimationNode NextAnimationNode(MovementNode current, MovementNode next) //FIXME: need to remove reference to movementNodes here
         {
             string Goal = null;
             string Length = null;
@@ -256,7 +263,7 @@ namespace Hopper
             if (toType == Type.Goal && next.Tile.Activated) Goal = "Goal";
 
             // Movement part
-            if (fromType == Type.Water && toType == Type.Water)
+            if (current.Submerged && next.Submerged)
             {
                 Movement = "Swim";
                 movementCurve = SwimCurve;
@@ -285,12 +292,11 @@ namespace Hopper
             {
                 Suffix = "Turn";
             }
-            else if (toType == Type.Water && fromType != Type.Water)
+            else if (!current.Submerged && next.Submerged)
             {
                 Suffix = "Splash";
-                //movementCurve = DiveCurve;
             }
-            else if (toType != Type.Water && fromType == Type.Water)
+            else if (current.Submerged && !next.Submerged)
             {
                 Suffix = "Exit";
             }
@@ -318,135 +324,6 @@ namespace Hopper
             }
 
             return node;
-
-
-            /* if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() == 2)
-            {
-                if (toType == Type.Rock)
-                {
-                    Prefix += "DoubleBounce";
-                    movementCurve = BounceCurve;
-                }
-                else
-                {
-                    Prefix += "DoubleJump";
-                    movementCurve = DoubleJumpCurve;
-                }
-            }
-            else
-            {
-                if (toType == Type.Rock || toType == Type.Bounce)
-                {
-                    Prefix += "Bounce";
-                    movementCurve = JumpCurve; //FIXME: testing with jumpcurve
-                }
-                else
-                {
-                    Prefix += "Jump";
-                    movementCurve = JumpCurve;
-                }
-            } 
-
-            if (toType == Type.Water) Suffix = "Splash";
-
-            return new AnimationNode(
-                PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"),
-                next.Tile.GridPosition - current.Tile.GridPosition,
-                movementCurve);
-
-            if (movementNodes.Count > 0) //FIXME: remove this
-            {
-                if (next.MovementDirection == -current.MovementDirection)
-                {
-                    if (toType == Type.Water)
-                    {
-                        return new AnimationNode(
-                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"),
-                            Vector2.Zero, SwimCurve);
-                    }
-                }
-
-                do  //FIXME: This is a return
-                {
-                    current = next;
-                    next = movementNodes.Dequeue();
-                }
-                while (current.Tile.GridPosition == next.Tile.GridPosition &&
-                       current.MovementDirection == next.MovementDirection);
-
-
-                //This is the swimming (or bounce into water) part
-                while (movementNodes.Count >= 1) //FIXME: remove this
-                {
-                    if (fromType == Type.Rock)
-                    {
-                        movementCurve = JumpCurve;
-                        Prefix = "Jump"; Suffix = "Splash";
-                    }
-                    else
-                    {
-                        if (Suffix == "Splash")
-                            movementCurve = DiveCurve;
-                        else
-                            movementCurve = SwimCurve;
-                        Prefix = "Swim"; Suffix = null;
-                    }
-
-                    return new AnimationNode(
-                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"),
-                        next.Tile.GridPosition - current.Tile.GridPosition, movementCurve);
-
-                    if (next.MovementDirection == -current.MovementDirection)
-                    {
-                        return new AnimationNode(
-                            PlayerAnimation.GetAnimation($"Swim{MovementString(current.MovementDirection)}Turn"),
-                            Vector2.Zero, SwimCurve);  //FIXME: This is a return
-                    }
-
-                    do //FIXME: This is a return
-                    {
-                        current = next;
-                        next = movementNodes.Dequeue();
-                    }
-                    while (current.Tile.GridPosition == next.Tile.GridPosition &&
-                        current.MovementDirection == next.MovementDirection);
-
-                }
-
-                Prefix = "";
-                if (toType == Type.Goal && next.Tile.Activated) Prefix = "Goal";
-
-                //This is the exit/return bounce leap
-                if (movementNodes.Count == 0)
-                {
-                    if (fromType == Type.Water)
-                    {
-                        Prefix += "Jump"; Suffix = "Exit";
-                        movementCurve = JumpCurve;
-                    }
-                    else if (fromType == Type.Rock || fromType == Type.Bounce)
-                    {
-                        if ((next.Tile.GridPosition - current.Tile.GridPosition).Length() >= 2)
-                        {
-                            Prefix += "DoubleJump";
-                            movementCurve = DoubleJumpCurve;
-                        }
-                        else
-                        {
-                            Prefix += "Jump";
-                            movementCurve = JumpCurve;
-                        }
-                    }
-                    else
-                    {
-                        throw new NotImplementedException(); //Shouldn't happen
-                    }
-
-                    return new AnimationNode(
-                        PlayerAnimation.GetAnimation($"{Prefix}{MovementString(current.MovementDirection)}{Suffix}"),
-                        next.Tile.GridPosition - current.Tile.GridPosition, movementCurve);
-                }
-            }*/
         }
 
         internal void ClearQueues()
@@ -470,7 +347,7 @@ namespace Hopper
             int i = 1;
             foreach (MovementNode n in movementNodes)
             {
-                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection}");
+                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
                 i++;
             }
         }

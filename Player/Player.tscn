@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Player/Resources/UpdatedPalette/Frog1_64x96_AllJumpsCombined.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
@@ -52,6 +52,10 @@
 [ext_resource path="res://Player/Resources/PlayerFXSmoke.tres" type="Animation" id=50]
 [ext_resource path="res://Player/Resources/PlayerFXIdle.tres" type="Animation" id=51]
 [ext_resource path="res://Player/Resources/PlayerGoalJumpDown.tres" type="Animation" id=52]
+[ext_resource path="res://Player/Resources/PlayerBounceDownSplash.tres" type="Animation" id=53]
+[ext_resource path="res://Player/Resources/BounceUpSplash.tres" type="Animation" id=54]
+[ext_resource path="res://Player/Resources/BounceLeftSplash.tres" type="Animation" id=55]
+[ext_resource path="res://Player/Resources/PlayerBounceRightSplash.tres" type="Animation" id=56]
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
@@ -663,7 +667,6 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="Node2D"]
-visible = false
 position = Vector2( 2, 0 )
 script = ExtResource( 2 )
 JumpCurve = SubResource( 47 )
@@ -678,7 +681,7 @@ texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )
 hframes = 36
-vframes = 9
+vframes = 11
 frame = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerSprite"]
@@ -686,9 +689,13 @@ root_node = NodePath("../..")
 autoplay = "IdleDown"
 method_call_mode = 1
 anims/BounceDown = ExtResource( 46 )
+anims/BounceDownSplash = ExtResource( 53 )
 anims/BounceLeft = ExtResource( 48 )
+anims/BounceLeftSplash = ExtResource( 55 )
 anims/BounceRight = ExtResource( 45 )
+anims/BounceRightSplash = ExtResource( 56 )
 anims/BounceUp = ExtResource( 47 )
+anims/BounceUpSplash = ExtResource( 54 )
 anims/DoubleBounceDown = ExtResource( 39 )
 anims/DoubleBounceDownSplash = ExtResource( 40 )
 anims/DoubleBounceLeft = ExtResource( 42 )
