@@ -5,7 +5,7 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "DefaultLevelName"
+Name = "3-3-4"
 Width = 7
 Height = 7
 TileSize = 32
@@ -13,5 +13,5 @@ StartingHops = 14
 MaximumHops = 14
 ScoreRequired = 200
 PlayerStartPosition = Vector2( 2, 0 )
-TileType = PoolIntArray( 4, 0, 0, 0, 1, 0, 4, 0, 0, 0, 5, 0, 0, 0, 5, 4, 6, 4, 6, 4, 5, 0, 4, 0, 6, 0, 4, 0, 2, 0, 3, 0, 3, 0, 2, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4 )
+TileType = PoolIntArray( 4, 0, 0, 0, 1, 0, 4, 0, 0, 0, 5, 0, 0, 0, 5, 4, 6, 4, 6, 4, 5, 6, 0, 0, 6, 0, 0, 6, 2, 6, 3, 0, 3, 6, 2, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4 )
 TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
