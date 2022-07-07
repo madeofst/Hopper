@@ -11,4 +11,4 @@ texture = ExtResource( 2 )
 hframes = 4
 
 [node name="BugSprite" parent="." index="3"]
-frame = 15
+frame = 17

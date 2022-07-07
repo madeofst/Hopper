@@ -267,17 +267,17 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.001, 0.28 ),
+"times": PoolRealArray( -0.00262947, 0, 0.28 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
-"args": [  ],
-"method": "TriggerExitSplashAnimation"
-}, {
 "args": [  ],
 "method": "EmitMoveToTop"
 }, {
 "args": [  ],
-"method": "TriggerLandAnimation"
+"method": "TriggerExitSplashAnimation"
+}, {
+"args": [  ],
+"method": "TriggerSplashAnimation"
 } ]
 }
 tracks/2/type = "value"
@@ -369,7 +369,7 @@ tracks/1/keys = {
 "method": "EmitMoveToTop"
 }, {
 "args": [  ],
-"method": "TriggerLandAnimation"
+"method": "TriggerSplashAnimation"
 } ]
 }
 tracks/2/type = "value"
@@ -461,7 +461,7 @@ tracks/1/keys = {
 "method": "EmitMoveToTop"
 }, {
 "args": [  ],
-"method": "TriggerLandAnimation"
+"method": "TriggerSplashAnimation"
 } ]
 }
 tracks/2/type = "value"
@@ -553,7 +553,7 @@ tracks/1/keys = {
 "method": "EmitMoveToTop"
 }, {
 "args": [  ],
-"method": "TriggerLandAnimation"
+"method": "TriggerSplashAnimation"
 } ]
 }
 tracks/2/type = "value"
@@ -667,6 +667,7 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="Node2D"]
+visible = false
 position = Vector2( 2, 0 )
 script = ExtResource( 2 )
 JumpCurve = SubResource( 47 )

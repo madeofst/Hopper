@@ -202,7 +202,7 @@ namespace Hopper
             Player.Init(NextLevel, replay);
             MoveToTop(HUD);
 
-            if (!PuzzleMode)
+            if (!PuzzleMode && !TempForTesting)
             {
                 if (Timer is null)
                 {

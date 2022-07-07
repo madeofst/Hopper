@@ -241,12 +241,11 @@ namespace Hopper
             }
             CurrentTile.SplashAnimation.Play("Jump");
 
-            //PrintAnimationSequence(AnimationQueue);
             UpdateHopsRemaining(-1);
             PlayNextAnimation();
         }
 
-        private AnimationNode NextAnimationNode(MovementNode current, MovementNode next) //FIXME: need to remove reference to movementNodes here
+        private AnimationNode NextAnimationNode(MovementNode current, MovementNode next)
         {
             string Goal = null;
             string Length = null;
@@ -311,12 +310,11 @@ namespace Hopper
                 Direction = MovementString(current.MovementDirection);
             }            
 
-            AnimationNode node = null;
             // Build the string and return the node (or null)
             Animation animation = PlayerAnimation.GetAnimation($"{Goal}{Length}{Movement}{Direction}{Suffix}");
+            //GD.Print($"Built string = '{Goal}{Length}{Movement}{Direction}{Suffix}'");
 
-            GD.Print($"Built string = '{Goal}{Length}{Movement}{Direction}{Suffix}'");
-
+            AnimationNode node = null;
             if (animation != null)
             {
                 //GD.Print($"Animation name = '{animation.ResourceName}'");
@@ -337,7 +335,7 @@ namespace Hopper
             int i = 1;
             foreach (AnimationNode n in animationQueue)
             {
-                GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
+                //GD.Print($"Node {i} - {n.Animation.ResourceName} - {n.Movement} - {n.Curve.ResourceName}");
                 i++;
             }
         }
@@ -347,7 +345,7 @@ namespace Hopper
             int i = 1;
             foreach (MovementNode n in movementNodes)
             {
-                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
+                //GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
                 i++;
             }
         }
@@ -368,7 +366,7 @@ namespace Hopper
 
         public void TriggerLandAnimation()
         {
-            if (AnimationEndTile.IsInsideTree()) 
+            if (AnimationEndTile.IsInsideTree() && AnimationEndTile.Type != Type.Rock) 
             {
                 AnimationEndTile.SplashAnimation.Play("Land");
                 if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
@@ -387,14 +385,10 @@ namespace Hopper
 
         public void SkipToNextQueuedAnimation()
         {
-            if (MoveInputQueue.Count > 0)
+            if (MoveInputQueue.Count > 0 || AnimationQueue.Count > 0)
             {
                 AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
             }
-/*             else if (AnimationQueue.Peek().Animation.ResourceName.Contains("Bounce"))
-            {
-                //FIXME: maybe here to make the bounce quicker
-            } */
         }
 
         public void AfterAnimation(string animationName) //TODO: Need to review this part of the procedure
