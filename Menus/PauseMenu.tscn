@@ -16,7 +16,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color( 0.717647, 0.654902, 0.360784, 0.980392 )
+modulate = Color( 0.94902, 0.898039, 0.592157, 1 )
 use_parent_material = true
 margin_left = -10.0
 margin_top = -122.0

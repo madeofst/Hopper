@@ -47,7 +47,7 @@ namespace Hopper
 
 		private void FadeOut()
 		{
-			Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In);
+			Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), 1f, Tween.TransitionType.Sine, Tween.EaseType.Out);
 			Tween.Start();
 		}
 

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://World/World.cs" type="Script" id=1]
 [ext_resource path="res://World/Resources/TestPondDrawing3.png" type="Texture" id=2]
-[ext_resource path="res://World/Resources/TestPondDrawing.png" type="Texture" id=3]
+[ext_resource path="res://Menus/Resources/Blue.png" type="Texture" id=3]
 [ext_resource path="res://Music/Game_1.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Music/FX/FX End level (fail).ogg" type="AudioStream" id=5]
 [ext_resource path="res://Music/FX/FX Goal activated.ogg" type="AudioStream" id=6]
@@ -43,7 +43,29 @@ margin_right = 480.0
 margin_bottom = 270.0
 rect_min_size = Vector2( 480, 270 )
 mouse_filter = 2
+texture = ExtResource( 10 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blue" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.607843 )
+margin_right = 480.0
+margin_bottom = 270.0
 texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Water" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.835294 )
+margin_right = 480.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 480, 270 )
+mouse_filter = 2
+texture = ExtResource( 10 )
 expand = true
 stretch_mode = 2
 __meta__ = {
@@ -51,24 +73,12 @@ __meta__ = {
 }
 
 [node name="PondGrid" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.466667 )
 margin_right = 480.0
 margin_bottom = 270.0
 rect_min_size = Vector2( 480, 270 )
 mouse_filter = 2
 texture = ExtResource( 11 )
-expand = true
-stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Water" type="TextureRect" parent="."]
-modulate = Color( 1, 1, 1, 0.823529 )
-margin_right = 480.0
-margin_bottom = 270.0
-rect_min_size = Vector2( 480, 270 )
-mouse_filter = 2
-texture = ExtResource( 10 )
 expand = true
 stretch_mode = 2
 __meta__ = {

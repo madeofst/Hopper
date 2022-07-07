@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Fonts/DigitalDisco-Thin.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Menus/NewGameButton.cs" type="Script" id=2]
@@ -9,8 +9,11 @@
 [ext_resource path="res://HighScores/Resources/HighScoresButton_clicked.png" type="Texture" id=7]
 [ext_resource path="res://Music/Menu_short.ogg" type="AudioStream" id=8]
 [ext_resource path="res://HighScores/Resources/HighScoresButton_unselected.png" type="Texture" id=9]
-[ext_resource path="res://Menus/Resources/HomeScreen.png" type="Texture" id=10]
+[ext_resource path="res://Menus/Resources/Menu.png" type="Texture" id=10]
 [ext_resource path="res://Menus/Resources/NewGameButton_unselected.png" type="Texture" id=11]
+[ext_resource path="res://World/Resources/TestPondDrawing.png" type="Texture" id=12]
+[ext_resource path="res://Shaders/WaterShader.tres" type="Material" id=13]
+[ext_resource path="res://Menus/Resources/Blue.png" type="Texture" id=14]
 
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 1 )
@@ -39,7 +42,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="WaterShader" type="TextureRect" parent="."]
+material = ExtResource( 13 )
+margin_right = 480.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 480, 270 )
+mouse_filter = 2
+texture = ExtResource( 12 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blue" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0.980392 )
+margin_right = 480.0
+margin_bottom = 270.0
+texture = ExtResource( 14 )
+
+[node name="Title" type="TextureRect" parent="."]
 margin_right = 480.0
 margin_bottom = 270.0
 mouse_filter = 2
@@ -50,13 +72,13 @@ stretch_mode = 4
 margin_right = 480.0
 margin_bottom = 270.0
 mouse_filter = 2
-custom_constants/margin_top = 140
+custom_constants/margin_top = 152
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_top = 140.0
+margin_top = 152.0
 margin_right = 480.0
 margin_bottom = 270.0
-custom_constants/separation = 20
+custom_constants/separation = 9
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -102,9 +124,9 @@ texture_pressed = ExtResource( 7 )
 texture_hover = ExtResource( 6 )
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 78.0
+margin_top = 67.0
 margin_right = 480.0
-margin_bottom = 94.0
+margin_bottom = 83.0
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
 margin_left = 221.0

@@ -2,4 +2,5 @@
 .mono
 .vscode
 .export
+.test
 calc
