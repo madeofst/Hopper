@@ -51,6 +51,7 @@ namespace Hopper
             Grid.DefineGrid(LevelData.TileSize, LevelData.Width, LevelData.Height);
             Grid.ClearExistingChildren();
             Grid.PopulateGrid(LevelData);
+            Grid.Connect(nameof(Grid.ConnectTileRightClick), this, nameof(ConnectTileRightClick));
             ConnectTiles();
             EmitSignal(nameof(LevelBuilt), MaximumHops);
         }
@@ -60,8 +61,13 @@ namespace Hopper
             foreach (Tile t in Grid.Tiles)
             {
                 Grid.ConnectTile(t);
-                t.Connect(nameof(Tile.PlayerStartUpdated), this, nameof(UpdatePlayerStart));
+                
             }
+        }
+
+        private void ConnectTileRightClick(Tile t)
+        {
+            t.Connect(nameof(Tile.PlayerStartUpdated), this, nameof(UpdatePlayerStart));
         }
 
 

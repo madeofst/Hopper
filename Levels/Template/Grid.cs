@@ -54,6 +54,8 @@ namespace Hopper
 
         [Signal]
         public delegate void NextLevel();
+        [Signal]
+        public delegate void ConnectTileRightClick();
 
         public Grid()
         {
@@ -165,6 +167,7 @@ namespace Hopper
         public void ConnectTile(Tile tile)
         {
             tile.Connect(nameof(Tile.TileUpdated), this, nameof(UpdateTile));
+            EmitSignal(nameof(ConnectTileRightClick), tile);
         }
 
         public Vector2 LimitToBounds(Vector2 Position)
@@ -232,7 +235,6 @@ namespace Hopper
             Tile newTile = Resources.LoadByType(type).Instance() as Tile;
             if (newTile.Type == Type.Score) newTile.PointValue = score;
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
-            //newTile.Connect(nameof(Tile.TileUpdated), this, "UpdateTile");
             ConnectTile(newTile);
             newTile.Editable = true;
             ReplaceTile(gridPosition, newTile);
