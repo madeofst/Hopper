@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://Player/Resources/UpdatedPalette/Frog1_64x96_AllJumpsCombined.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
@@ -56,6 +56,10 @@
 [ext_resource path="res://Player/Resources/BounceUpSplash.tres" type="Animation" id=54]
 [ext_resource path="res://Player/Resources/BounceLeftSplash.tres" type="Animation" id=55]
 [ext_resource path="res://Player/Resources/PlayerBounceRightSplash.tres" type="Animation" id=56]
+[ext_resource path="res://Player/Resources/PlayerGoalBounceDown.tres" type="Animation" id=57]
+[ext_resource path="res://Player/Resources/PlayerGoalBounceUp.tres" type="Animation" id=58]
+[ext_resource path="res://Player/Resources/PlayerGoalBounceRight.tres" type="Animation" id=59]
+[ext_resource path="res://Player/Resources/PlayerGoalBounceLeft.tres" type="Animation" id=60]
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
@@ -667,7 +671,6 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="Node2D"]
-visible = false
 position = Vector2( 2, 0 )
 script = ExtResource( 2 )
 JumpCurve = SubResource( 47 )
@@ -713,6 +716,10 @@ anims/DoubleJumpRight = ExtResource( 13 )
 anims/DoubleJumpRightSplash = ExtResource( 14 )
 anims/DoubleJumpUp = ExtResource( 18 )
 anims/DoubleJumpUpSplash = ExtResource( 28 )
+anims/GoalBounceDown = ExtResource( 57 )
+anims/GoalBounceLeft = ExtResource( 60 )
+anims/GoalBounceRight = ExtResource( 59 )
+anims/GoalBounceUp = ExtResource( 58 )
 anims/GoalDoubleJumpDown = SubResource( 56 )
 anims/GoalDoubleJumpLeft = SubResource( 57 )
 anims/GoalDoubleJumpRight = SubResource( 58 )
