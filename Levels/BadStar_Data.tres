@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+Name = "BadStar"
+Width = 7
+Height = 7
+TileSize = 32
+StartingHops = 13
+MaximumHops = 13
+ScoreRequired = 400
+PlayerStartPosition = Vector2( 1, 3 )
+TileType = PoolIntArray( 0, 0, 0, 0, 0, 3, 0, 0, 6, 2, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 2, 0, 0, 6, 1, 6, 0, 0, 2, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 2, 6, 0, 0, 3, 0, 0, 0, 0, 0 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
