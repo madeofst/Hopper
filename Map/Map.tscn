@@ -220,9 +220,11 @@ curve = SubResource( 14 )
 Directions = PoolStringArray( "Right" )
 
 [node name="Pointer" parent="." instance=ExtResource( 2 )]
+visible = false
 position = Vector2( 232, 216 )
 
 [node name="MapCamera" type="Camera2D" parent="."]
+visible = false
 position = Vector2( 232, 216 )
 current = true
 script = ExtResource( 4 )
