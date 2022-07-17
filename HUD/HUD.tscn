@@ -43,9 +43,6 @@ margin_right = 480.0
 margin_bottom = 270.0
 mouse_filter = 1
 script = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TimeAndScoreSimple" type="MarginContainer" parent="."]
 visible = false
@@ -134,16 +131,16 @@ __meta__ = {
 }
 
 [node name="HopCounter" parent="." instance=ExtResource( 4 )]
-margin_left = 409.112
+margin_left = 403.5
 margin_top = 51.4929
-margin_right = -38.8882
+margin_right = -44.5005
 margin_bottom = -26.5071
 
 [node name="ScoreBox" parent="." instance=ExtResource( 5 )]
-margin_left = 205.0
-margin_top = 5.0
-margin_right = 275.0
-margin_bottom = 23.0
+margin_left = 386.262
+margin_top = 23.5206
+margin_right = 456.262
+margin_bottom = 41.5206
 
 [node name="PopUpText" parent="." instance=ExtResource( 11 )]
 visible = false

@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Threading;
 
 namespace Hopper
 {
@@ -17,6 +16,9 @@ namespace Hopper
 
         //Player
         private Player Player { get; set; }
+
+        //Pond
+        private Pond Pond { get; set; }
 
         //Level
         public Level CurrentLevel { get; set; }
