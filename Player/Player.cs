@@ -584,8 +584,11 @@ namespace Hopper
             {
                 EmitSignal(nameof(Quit));
             }
-
-            if (Active && MoveInputQueue.Count <= HopsRemaining) //FIXME: world is not null??
+            string currentResourceName = CurrentAnimationNode == null ? "" : CurrentAnimationNode.Animation.ResourceName;
+            if (Active && 
+                MoveInputQueue.Count <= HopsRemaining && 
+                !currentResourceName.Contains("Swim") &&
+                !currentResourceName.Contains("Splash")) //FIXME: world is not null??
             {
                 if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);
                 else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);
