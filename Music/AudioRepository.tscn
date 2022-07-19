@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Music/Game_1.ogg" type="AudioStream" id=1]
+[ext_resource path="res://Music/FX/FX End level (fail).ogg" type="AudioStream" id=2]
+[ext_resource path="res://Music/FX/FX Goal activated.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Music/FX/FX End level (success).ogg" type="AudioStream" id=4]
+[ext_resource path="res://Music/AudioRepository.cs" type="Script" id=5]
+
+[node name="AudioRepository" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 1 )
+attenuation = 0.000370046
+bus = "Music"
+
+[node name="FailLevel" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+volume_db = -3.0
+bus = "FX"
+
+[node name="SucceedLevel" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+volume_db = -3.0
+bus = "FX"
+
+[node name="GoalActivate" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -3.0
+bus = "FX"

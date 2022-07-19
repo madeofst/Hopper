@@ -4,7 +4,7 @@
 [ext_resource path="res://Themes/Dots42.tres" type="Theme" id=2]
 [ext_resource path="res://Themes/Disco32.tres" type="Theme" id=3]
 [ext_resource path="res://Levels/Template/TitleElement.cs" type="Script" id=4]
-[ext_resource path="res://Menus/Resources/HawkinsPond.png" type="Texture" id=5]
+[ext_resource path="res://Menus/Resources/BelAirPond.png" type="Texture" id=5]
 
 [node name="LevelTitle" type="MarginContainer"]
 material = ExtResource( 1 )
@@ -23,22 +23,20 @@ texture = ExtResource( 5 )
 stretch_mode = 6
 
 [node name="AllContainers" type="VBoxContainer" parent="."]
-visible = false
 use_parent_material = true
-margin_left = 93.0
-margin_top = 178.0
-margin_right = 407.0
-margin_bottom = 322.0
+margin_left = 219.0
+margin_top = 218.0
+margin_right = 281.0
+margin_bottom = 282.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="LevelID" type="MarginContainer" parent="AllContainers"]
-margin_right = 314.0
+margin_right = 62.0
 margin_bottom = 64.0
 
 [node name="LevelID" type="HBoxContainer" parent="AllContainers/LevelID"]
-margin_left = 6.0
-margin_right = 307.0
+margin_right = 62.0
 margin_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -49,6 +47,7 @@ custom_constants/separation = 7
 script = ExtResource( 4 )
 
 [node name="Label" type="RichTextLabel" parent="AllContainers/LevelID/LevelID"]
+visible = false
 margin_right = 156.0
 margin_bottom = 64.0
 grow_horizontal = 2
@@ -68,6 +67,7 @@ __meta__ = {
 }
 
 [node name="StageValue" type="RichTextLabel" parent="AllContainers/LevelID/LevelID"]
+visible = false
 margin_left = 163.0
 margin_right = 194.0
 margin_bottom = 64.0
@@ -87,6 +87,7 @@ __meta__ = {
 }
 
 [node name="-" type="RichTextLabel" parent="AllContainers/LevelID/LevelID"]
+visible = false
 margin_left = 201.0
 margin_right = 232.0
 margin_bottom = 64.0
@@ -106,8 +107,7 @@ __meta__ = {
 }
 
 [node name="LevelValue" type="RichTextLabel" parent="AllContainers/LevelID/LevelID"]
-margin_left = 239.0
-margin_right = 301.0
+margin_right = 62.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 62, 64 )
 rect_clip_content = false
@@ -129,6 +129,7 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="AllContainers/LevelID/LevelID"]
 
 [node name="Text" type="VBoxContainer" parent="AllContainers"]
+visible = false
 margin_top = 68.0
 margin_right = 314.0
 margin_bottom = 144.0

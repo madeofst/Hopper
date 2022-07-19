@@ -6,6 +6,28 @@ namespace Hopper
 {
     public class LevelTitleScreen : Control
     {
+
+        private string PondLabel 
+        { 
+            set
+            {
+                Color colour = new Color();
+                if (value == "Hawkins")
+                {
+                    colour = Color.Color8(36, 51, 41);
+                }
+                else if (value == "BelAir")
+                {
+                    colour = Color.Color8(245, 197, 168);
+                }
+                else //(value == "Liffey")
+                {
+                    colour = Color.Color8(217, 165, 232);
+                }
+                GetNode<TextureRect>("Background").Modulate = colour;
+                GetNode<TextureRect>("LevelTitle/PondName").Texture = GD.Load<Texture>($"res://Menus/Resources/{value}Pond.png");
+            }
+        }
         private int stageID;
         private int StageIDLabel 
         { 
@@ -96,9 +118,10 @@ namespace Hopper
             };
         }
 
-        public void Init(int StageID, int levelID, int maxHops, int reqScore)
+        public void Init(string PondName, int StageID, int levelID, int maxHops, int reqScore)
         {
             Visible = true;
+            PondLabel = PondName;
             StageIDLabel = StageID;
             LevelIDLabel = levelID;
             MaximumHopsLabel = maxHops;

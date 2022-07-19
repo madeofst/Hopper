@@ -56,8 +56,8 @@ namespace Hopper
                     l.NewlyActivated = true;
                 }
             }
-            Pointer.CurrentPond.NewlyActivated = false;
-            Pointer.CurrentPond.Complete = true;
+            Pointer.CurrentStage.NewlyActivated = false;
+            Pointer.CurrentStage.Complete = true;
         }
 
         public override void _Process(float delta)
@@ -92,7 +92,7 @@ namespace Hopper
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
             MoveToTop(PauseMenu);
-            PauseMenu.SetPosition(Pointer.CurrentPond.Position - new Vector2(240, 135));
+            PauseMenu.SetPosition(Pointer.CurrentStage.Position - new Vector2(240, 135));
             PauseMenu.Visible = true;
             PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
             PauseMenu.AnimateShow();

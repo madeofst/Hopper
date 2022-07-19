@@ -19,6 +19,7 @@ namespace Hopper
 
         //Pond
         private Pond Pond { get; set; }
+        private string PondName { get; set; }
 
         //Level
         public Level CurrentLevel { get; set; }
@@ -85,14 +86,15 @@ namespace Hopper
             LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
             PauseMenu = GetNode<PauseMenu>("../PauseMenu");
 
-            Music = GetNode<AudioStreamPlayer2D>("Audio/Music");
-            FailLevel = GetNode<AudioStreamPlayer2D>("Audio/FailLevel");
-            SucceedLevel = GetNode<AudioStreamPlayer2D>("Audio/SucceedLevel");
-            GoalActivate = GetNode<AudioStreamPlayer2D>("Audio/GoalActivate");
+            Music = GetNode<AudioStreamPlayer2D>("../AudioRepository/Music");
+            FailLevel = GetNode<AudioStreamPlayer2D>("../AudioRepository/FailLevel");
+            SucceedLevel = GetNode<AudioStreamPlayer2D>("../AudioRepository/SucceedLevel");
+            GoalActivate = GetNode<AudioStreamPlayer2D>("../AudioRepository/GoalActivate");
         }
 
-        public void Init(int StageID, string[] levels, Vector2 position, bool tempStageForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
+        public void Init(int StageID, string[] levels, Vector2 position, bool tempStageForTesting = false, string pondName = "", string levelName = "") //TODO: Think I probs just need to pass an array of level names here
         {
+            PondName = pondName;
             ID = StageID;
             Levels = levels;
             Position = position - new Vector2(240, 135);
@@ -164,7 +166,7 @@ namespace Hopper
             {
                 MoveToTop(LevelTitleScreen);
                 LevelTitleScreen.SetPosition(Position);
-                LevelTitleScreen.Init(ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
+                LevelTitleScreen.Init(PondName, ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
                 HUD.TouchButtons.Visible = false;
             }

@@ -8,7 +8,7 @@ namespace Hopper
     public class Pointer : Node2D
     {
         public Location Start;
-        public Location CurrentPond 
+        public Location CurrentStage 
         { 
             get 
             {
@@ -37,7 +37,7 @@ namespace Hopper
         public override void _Ready()
         {
             Start = GetNode<Location>("../Start");
-            CurrentPond = Start;
+            CurrentStage = Start;
         }
 
         public void SetLocations(List<Location> locations)
@@ -47,7 +47,7 @@ namespace Hopper
 
         public void MoveToMenuPosition(Vector2 position)  //FIXME: What's going on here?
         {
-            CurrentPond = Start;
+            CurrentStage = Start;
             Position = position;
         }
 
@@ -100,12 +100,12 @@ namespace Hopper
 
         private List<PondLinkPath> GetPaths()
         {
-            return CurrentPond.GetChildren().OfType<PondLinkPath>().ToList();
+            return CurrentStage.GetChildren().OfType<PondLinkPath>().ToList();
         }
 
         private PondLinkPath GetPath(string actionName)
         {
-            if (CurrentPond != null)
+            if (CurrentStage != null)
             {
                 foreach (var path in GetPaths())
                 {
@@ -134,8 +134,8 @@ namespace Hopper
             Stage Stage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
             Stage.Visible = false;
             GetTree().Root.AddChildBelowNode(Map, Stage);
-            Stage.Connect(nameof(Stage.UnlockNextStage), Map, nameof(Map.UnlockStage), new Godot.Collections.Array{CurrentPond.LocationsToUnlock});
-            Stage.Init(CurrentPond.ID, CurrentPond.Levels, Position);
+            Stage.Connect(nameof(Stage.UnlockNextStage), Map, nameof(Map.UnlockStage), new Godot.Collections.Array{CurrentStage.LocationsToUnlock});
+            Stage.Init(CurrentStage.ID, CurrentStage.Levels, Position, false, CurrentStage.Pond);
         }
 
         private bool PointerOnStart()
@@ -150,7 +150,7 @@ namespace Hopper
             {
                 if (l.Position.IsEqualApprox(Position) && Position != Start.Position)
                 {
-                    CurrentPond = l;
+                    CurrentStage = l;
                     return true;
                 }
             }

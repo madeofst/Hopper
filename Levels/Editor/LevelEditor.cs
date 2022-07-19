@@ -76,7 +76,7 @@ namespace Hopper
                     SaveCurrentLevel();
                     Stage TestStage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
                     GetTree().Root.AddChild(TestStage);
-                    TestStage.Init(1, new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
+                    TestStage.Init(1, new string[]{}, Position + new Vector2(240, 135), true, "", CurrentLevel.LevelName);
                 }
             }
         }

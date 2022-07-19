@@ -6,6 +6,9 @@ public class Location : Node2D
 {
     [Export]
     public int ID;
+
+    [Export]
+    public string Pond;
     
     [Export]
     public string[] Levels;

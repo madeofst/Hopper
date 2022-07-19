@@ -8,17 +8,22 @@ namespace Hopper
         private StartMenu StartMenu;
         private PauseMenu PauseMenu;
         private LevelTitleScreen LevelTitleScreen;
+        private AudioRepository AudioRepo;
 
         public override void _Ready()
         {
             StartMenu = (StartMenu)GD.Load<PackedScene>("res://Menus/StartMenu.tscn").Instance();
             PauseMenu = (PauseMenu)GD.Load<PackedScene>("res://Menus/PauseMenu.tscn").Instance();
             LevelTitleScreen = (LevelTitleScreen)GD.Load<PackedScene>("res://Menus/LevelTitleScreen.tscn").Instance();
+            AudioRepo = (AudioRepository)GD.Load<PackedScene>("res://Music/AudioRepository.tscn").Instance();
             CallDeferred(nameof(AddMenusToTree));
         }
 
         private void AddMenusToTree()
         {
+            AudioRepo.Visible = false;
+            GetTree().Root.AddChild(AudioRepo);
+            
             GetTree().Root.AddChild(StartMenu);
             PauseMenu.Visible = false;
             GetTree().Root.AddChild(PauseMenu);
