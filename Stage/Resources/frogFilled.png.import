@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frogFilled20.png-13e324c52f5845c18e9f256b89a6c113.stex"
+path="res://.import/frogFilled.png-d73e32cc2c15669c247c96859a793eee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/frogFilled20.png"
-dest_files=[ "res://.import/frogFilled20.png-13e324c52f5845c18e9f256b89a6c113.stex" ]
+source_file="res://Stage/Resources/frogFilled.png"
+dest_files=[ "res://.import/frogFilled.png-d73e32cc2c15669c247c96859a793eee.stex" ]
 
 [params]
 
@@ -24,7 +24,7 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

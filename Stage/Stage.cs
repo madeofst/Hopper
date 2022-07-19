@@ -3,7 +3,7 @@ using System;
 
 namespace Hopper
 {
-    public class World : Node2D
+    public class Stage : Node2D
     {
         //Classes for loading stuff
         private ResourceRepository Resources { get; set; }
@@ -42,7 +42,7 @@ namespace Hopper
         //Timer
         public milliTimer Timer;
 
-        //Parameters for World
+        //Parameters for Stage
         public int ID { get; set; }
         public bool Paused { get; private set; } = false;
         public bool TempForTesting { get; set; } = false;
@@ -71,7 +71,7 @@ namespace Hopper
         [Signal]
         public delegate void TimeUpdate(float timeRemaining);
         [Signal]
-        public delegate void UnlockNextWorld();
+        public delegate void UnlockNextStage();
 
         public override void _Ready()
         {
@@ -91,15 +91,15 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("Audio/GoalActivate");
         }
 
-        public void Init(int worldID, string[] levels, Vector2 position, bool tempWorldForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
+        public void Init(int StageID, string[] levels, Vector2 position, bool tempStageForTesting = false, string levelName = "") //TODO: Think I probs just need to pass an array of level names here
         {
-            ID = worldID;
+            ID = StageID;
             Levels = levels;
             Position = position - new Vector2(240, 135);
 
             HUD.LockPosition(Position);
 
-            //Connect(nameof(World.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
+            //Connect(nameof(Stage.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
 
             ScoreBox ScoreBox = GetNode<ScoreBox>("../HUD/ScoreBox"); //FIXME: this basically defeats the object of signaling up I think
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
@@ -130,7 +130,7 @@ namespace Hopper
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
 
-            if (tempWorldForTesting)
+            if (tempStageForTesting)
             {
                 TempForTesting = true;
                 NewLevel(levelName, false);
@@ -238,7 +238,7 @@ namespace Hopper
                 {
                     if (iLevel >= Levels.Length)
                     {
-                        EmitSignal(nameof(UnlockNextWorld));
+                        EmitSignal(nameof(UnlockNextStage));
                         QuitToMap(); 
                     }
                     else 
@@ -353,7 +353,7 @@ namespace Hopper
         private void ScoreAnimationFinished()   { ScoreAnimFinished = true; }
         private void ScoreAnimationStarted()    { ScoreAnimFinished = false; }
 
-        public void ShowWorld()
+        public void ShowStage()
         {
             WaterShader.Visible = true;
             Water.Visible = true;
@@ -361,7 +361,7 @@ namespace Hopper
             HUD.Visible = true;
         }
 
-        public void HideWorld()
+        public void HideStage()
         {
             WaterShader.Visible = false;
             Water.Visible = false;
@@ -427,7 +427,7 @@ namespace Hopper
             }
             else
             {
-                PauseMenu.SetMode(PauseMenu.PauseMenuMode.World);
+                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Stage);
             }
             PauseMenu.AnimateShow();
         }

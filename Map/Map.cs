@@ -45,9 +45,9 @@ namespace Hopper
             StartMenu.ShowMenu();
         }
 
-        public void UnlockWorld(string[] worldsToUnlock)
+        public void UnlockStage(string[] StagesToUnlock)
         {
-            foreach (var s in worldsToUnlock)
+            foreach (var s in StagesToUnlock)
             {
                 Location l = GetNode<Location>((string)s);
                 if (l.Active == false)

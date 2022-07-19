@@ -89,7 +89,7 @@ namespace Hopper
             }
             else if (@event.IsActionPressed("ui_accept"))
             {
-                if (PointerOnWorld()) LoadWorld();
+                if (PointerOnStage()) LoadStage();
             }
 
             if (currentPath != null)
@@ -126,16 +126,16 @@ namespace Hopper
             }
         }
 
-        private void LoadWorld()
+        private void LoadStage()
         {
             Map Map = GetNode<Map>("..");
             Map.SetProcessInput(false);
             SetProcessInput(false);
-            World world = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
-            world.Visible = false;
-            GetTree().Root.AddChildBelowNode(Map, world);
-            world.Connect(nameof(World.UnlockNextWorld), Map, nameof(Map.UnlockWorld), new Godot.Collections.Array{CurrentPond.LocationsToUnlock});
-            world.Init(CurrentPond.ID, CurrentPond.Levels, Position);
+            Stage Stage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
+            Stage.Visible = false;
+            GetTree().Root.AddChildBelowNode(Map, Stage);
+            Stage.Connect(nameof(Stage.UnlockNextStage), Map, nameof(Map.UnlockStage), new Godot.Collections.Array{CurrentPond.LocationsToUnlock});
+            Stage.Init(CurrentPond.ID, CurrentPond.Levels, Position);
         }
 
         private bool PointerOnStart()
@@ -144,7 +144,7 @@ namespace Hopper
             return false;
         }
 
-        private bool PointerOnWorld()
+        private bool PointerOnStage()
         {
             foreach (Location l in Locations)
             {

@@ -11,7 +11,7 @@
 [ext_resource path="res://HighScores/Resources/HighScoresButton_unselected.png" type="Texture" id=9]
 [ext_resource path="res://Menus/Resources/Menu.png" type="Texture" id=10]
 [ext_resource path="res://Menus/Resources/NewGameButton_unselected.png" type="Texture" id=11]
-[ext_resource path="res://World/Resources/TestPondDrawing.png" type="Texture" id=12]
+[ext_resource path="res://Stage/Resources/TestPondDrawing.png" type="Texture" id=12]
 [ext_resource path="res://Shaders/WaterShader.tres" type="Material" id=13]
 [ext_resource path="res://Menus/Resources/Blue.png" type="Texture" id=14]
 

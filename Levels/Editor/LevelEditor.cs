@@ -10,7 +10,7 @@ namespace Hopper
         private ResourceRepository Resources { get; set; }
         private LevelFactory levelFactory { get; set; }
         private Level CurrentLevel { get; set; }
-        private World TestWorld { get; set; }
+        private Stage TestStage { get; set; }
 
         //Parameter edit boxes
         private LineEdit PlayerStartX { get; set; }
@@ -74,9 +74,9 @@ namespace Hopper
                 if (CurrentLevel != null)
                 {
                     SaveCurrentLevel();
-                    World TestWorld = (World)GD.Load<PackedScene>("res://World/World.tscn").Instance();
-                    GetTree().Root.AddChild(TestWorld);
-                    TestWorld.Init(1, new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
+                    Stage TestStage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
+                    GetTree().Root.AddChild(TestStage);
+                    TestStage.Init(1, new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
                 }
             }
         }

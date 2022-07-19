@@ -19,7 +19,7 @@ run/main_scene="res://Menus/LoadingScreen.tscn"
 
 [autoload]
 
-ResourceRepository="*res://World/ResourceRepository.tscn"
+ResourceRepository="*res://Stage/ResourceRepository.tscn"
 
 [display]
 

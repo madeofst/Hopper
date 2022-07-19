@@ -6,14 +6,14 @@ namespace Hopper
 {
     public class LevelTitleScreen : Control
     {
-        private int worldID;
-        private int WorldIDLabel 
+        private int stageID;
+        private int StageIDLabel 
         { 
-            get => worldID; 
+            get => stageID; 
             set
             {
-                worldID = value;
-                _WorldIDLabel.BbcodeText = value.ToString();
+                stageID = value;
+                _StageIDLabel.BbcodeText = value.ToString();
             }
         }
         private int levelID;
@@ -52,12 +52,12 @@ namespace Hopper
         public bool Animating { get; private set; }
         public bool Triggered { get; private set; }
 
-        private TitleElement WorldID;
+        private TitleElement StageID;
         private TitleElement LevelID;
         private TitleElement MaximumHops;
         private TitleElement RequiredScore;
 
-        private RichTextLabel _WorldIDLabel;
+        private RichTextLabel _StageIDLabel;
         private RichTextLabel _LevelIDLabel;
         private RichTextLabel _MaximumHopsLabel;
         private RichTextLabel _RequiredScoreLabel;
@@ -81,7 +81,7 @@ namespace Hopper
         {
             LevelID = GetNode<TitleElement>("LevelTitle/AllContainers/LevelID/LevelID");
             _LevelIDLabel = LevelID.GetNode<RichTextLabel>("LevelValue");
-            _WorldIDLabel = LevelID.GetNode<RichTextLabel>("WorldValue");
+            _StageIDLabel = LevelID.GetNode<RichTextLabel>("StageValue");
             MaximumHops = GetNode<TitleElement>("LevelTitle/AllContainers/Text/MaximumHops");
             _MaximumHopsLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/MaximumHops/Value");
             RequiredScore = GetNode<TitleElement>("LevelTitle/AllContainers/Text/ScoreTarget");
@@ -96,10 +96,10 @@ namespace Hopper
             };
         }
 
-        public void Init(int worldID, int levelID, int maxHops, int reqScore)
+        public void Init(int StageID, int levelID, int maxHops, int reqScore)
         {
             Visible = true;
-            WorldIDLabel = worldID;
+            StageIDLabel = StageID;
             LevelIDLabel = levelID;
             MaximumHopsLabel = maxHops;
             RequiredScoreLabel = reqScore;

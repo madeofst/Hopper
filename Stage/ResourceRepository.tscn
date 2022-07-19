@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://World/ResourceRepository.cs" type="Script" id=1]
+[ext_resource path="res://Stage/ResourceRepository.cs" type="Script" id=1]
 [ext_resource path="res://Levels/Template/Tile_Goal_Off.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/Template/Tile_Lily.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Template/Tile_Rock.tscn" type="PackedScene" id=4]

@@ -588,7 +588,7 @@ namespace Hopper
             if (Active && 
                 MoveInputQueue.Count <= HopsRemaining && 
                 !currentResourceName.Contains("Swim") &&
-                !currentResourceName.Contains("Splash")) //FIXME: world is not null??
+                !currentResourceName.Contains("Splash")) //FIXME: Stage is not null??
             {
                 if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);
                 else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);

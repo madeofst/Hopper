@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Water.png-72acf01b7e3e223ca9b7ae80e0856142.stex"
+path="res://.import/Water.png-2b9d86824a68446f754298699336ba4c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/Water.png"
-dest_files=[ "res://.import/Water.png-72acf01b7e3e223ca9b7ae80e0856142.stex" ]
+source_file="res://Stage/Resources/Water.png"
+dest_files=[ "res://.import/Water.png-2b9d86824a68446f754298699336ba4c.stex" ]
 
 [params]
 

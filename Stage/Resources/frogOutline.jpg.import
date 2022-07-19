@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex"
+path="res://.import/frogOutline.jpg-e979f27ed6b223af163070d3dccdfe4d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/TestPondDrawing3.png"
-dest_files=[ "res://.import/TestPondDrawing3.png-eb031d059f1d7606c157ae1ad2f10b1a.stex" ]
+source_file="res://Stage/Resources/frogOutline.jpg"
+dest_files=[ "res://.import/frogOutline.jpg-e979f27ed6b223af163070d3dccdfe4d.stex" ]
 
 [params]
 

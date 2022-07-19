@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/PondGrid.png-f0a89928ced9027c35687dbb2567bdbd.stex"
+path="res://.import/Coin1.png-d8bf9d4f3f041480219db3168ab3db30.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/PondGrid.png"
-dest_files=[ "res://.import/PondGrid.png-f0a89928ced9027c35687dbb2567bdbd.stex" ]
+source_file="res://Stage/Resources/Coin1.png"
+dest_files=[ "res://.import/Coin1.png-d8bf9d4f3f041480219db3168ab3db30.stex" ]
 
 [params]
 
@@ -24,12 +24,12 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

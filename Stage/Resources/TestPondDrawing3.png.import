@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frogOutline.png-cf68a6aba56c74c2e0f9185ffb5f796f.stex"
+path="res://.import/TestPondDrawing3.png-25172d325b04a600f1d2f436c3d6457f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/frogOutline.png"
-dest_files=[ "res://.import/frogOutline.png-cf68a6aba56c74c2e0f9185ffb5f796f.stex" ]
+source_file="res://Stage/Resources/TestPondDrawing3.png"
+dest_files=[ "res://.import/TestPondDrawing3.png-25172d325b04a600f1d2f436c3d6457f.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

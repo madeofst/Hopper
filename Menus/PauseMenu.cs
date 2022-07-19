@@ -9,7 +9,7 @@ namespace Hopper
         public enum PauseMenuMode
         {
             Map,
-            World,
+            Stage,
             Editor
         }
 
@@ -65,7 +65,7 @@ namespace Hopper
                     QuitButton
                 };
             }
-            else if (Mode == PauseMenuMode.World)
+            else if (Mode == PauseMenuMode.Stage)
             {
                 MapButton.GetNode<RichTextLabel>("Labels/TextLabel").Text = "Back to map";
                 Buttons = new List<AnimatedButton>() 

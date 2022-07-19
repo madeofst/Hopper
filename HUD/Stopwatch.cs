@@ -5,7 +5,7 @@ namespace Hopper
 {
     public class Stopwatch : TextureProgress
     {
-        public World World { get; set; }
+        public Stage Stage { get; set; }
 
         public Stopwatch(){}
 
@@ -16,7 +16,7 @@ namespace Hopper
 
         public void ConnectNodesAndSignals()
         {
-            World = GetNode<World>("/root/World");
+            Stage = GetNode<Stage>("/root/Stage");
             MakeConnections();
         }
 
@@ -27,7 +27,7 @@ namespace Hopper
 
         public virtual void MakeConnections()
         {
-            //World.Connect(nameof(World.TimeUpdate), this, "UpdateStopwatch");
+            //Stage.Connect(nameof(Stage.TimeUpdate), this, "UpdateStopwatch");
         }
     }
 }

@@ -67,7 +67,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WorldValue" type="RichTextLabel" parent="AllContainers/LevelID/LevelID"]
+[node name="StageValue" type="RichTextLabel" parent="AllContainers/LevelID/LevelID"]
 margin_left = 163.0
 margin_right = 194.0
 margin_bottom = 64.0

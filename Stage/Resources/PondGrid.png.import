@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frogFilled.png-7d3e90dccc8bff4e3747a221409d5dae.stex"
+path="res://.import/PondGrid.png-305704e75b65cb1655f9998712f2f103.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/frogFilled.png"
-dest_files=[ "res://.import/frogFilled.png-7d3e90dccc8bff4e3747a221409d5dae.stex" ]
+source_file="res://Stage/Resources/PondGrid.png"
+dest_files=[ "res://.import/PondGrid.png-305704e75b65cb1655f9998712f2f103.stex" ]
 
 [params]
 
@@ -24,11 +24,12 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

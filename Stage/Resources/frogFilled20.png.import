@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-75479b59d0fdbf9cf4e64e670fc3bfc5.stex"
+path="res://.import/frogFilled20.png-411442e99d6d23a4a8f54775fcd0b10a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://World/Resources/icon.png"
-dest_files=[ "res://.import/icon.png-75479b59d0fdbf9cf4e64e670fc3bfc5.stex" ]
+source_file="res://Stage/Resources/frogFilled20.png"
+dest_files=[ "res://.import/frogFilled20.png-411442e99d6d23a4a8f54775fcd0b10a.stex" ]
 
 [params]
 
