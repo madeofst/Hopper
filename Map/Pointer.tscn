@@ -1,10 +1,101 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Map/Pointer.cs" type="Script" id=1]
-[ext_resource path="res://Map/Resources/Frog1_32x32_front.png" type="Texture" id=2]
+[ext_resource path="res://Player/Resources/UpdatedPalette/Frog1_64x96_AllJumpsCombined.png" type="Texture" id=2]
+[ext_resource path="res://Map/Resources/PlayerJumpUp.tres" type="Animation" id=3]
+[ext_resource path="res://Map/Resources/PlayerJumpLeft.tres" type="Animation" id=4]
+[ext_resource path="res://Map/Resources/PlayerJumpRight.tres" type="Animation" id=5]
+[ext_resource path="res://Map/Resources/IdleUp.tres" type="Animation" id=6]
+[ext_resource path="res://Map/Resources/PlayerJumpDown.tres" type="Animation" id=7]
+[ext_resource path="res://Map/Resources/IdleDown.tres" type="Animation" id=8]
+[ext_resource path="res://Map/Resources/IdleRight.tres" type="Animation" id=9]
+[ext_resource path="res://Map/Resources/IdleLeft.tres" type="Animation" id=10]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "IdleRight"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "IdleLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "IdleDown"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "IdleUp"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=5]
+blend_point_0/node = SubResource( 1 )
+blend_point_0/pos = Vector2( 1, 0 )
+blend_point_1/node = SubResource( 2 )
+blend_point_1/pos = Vector2( -1, 0 )
+blend_point_2/node = SubResource( 3 )
+blend_point_2/pos = Vector2( 0, 1 )
+blend_point_3/node = SubResource( 4 )
+blend_point_3/pos = Vector2( 0, -1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "PlayerJumpDown"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "PlayerJumpRight"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "PlayerJumpUp"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "PlayerJumpLeft"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=10]
+blend_point_0/node = SubResource( 6 )
+blend_point_0/pos = Vector2( 0, 1 )
+blend_point_1/node = SubResource( 7 )
+blend_point_1/pos = Vector2( 1.1, 0 )
+blend_point_2/node = SubResource( 8 )
+blend_point_2/pos = Vector2( 0, -1 )
+blend_point_3/node = SubResource( 9 )
+blend_point_3/pos = Vector2( -1.1, 0 )
+min_space = Vector2( -1.1, -1.1 )
+max_space = Vector2( 1.1, 1.1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachine" id=13]
+states/Idle/node = SubResource( 5 )
+states/Idle/position = Vector2( 757.667, 138.556 )
+states/Jump/node = SubResource( 10 )
+states/Jump/position = Vector2( 992.333, 138.407 )
+transitions = [ "Idle", "Jump", SubResource( 11 ), "Jump", "Idle", SubResource( 12 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
 [node name="Pointer" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="PlayerSprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
+hframes = 36
+vframes = 11
+frame = 20
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/IdleDown = ExtResource( 8 )
+anims/IdleLeft = ExtResource( 10 )
+anims/IdleRight = ExtResource( 9 )
+anims/IdleUp = ExtResource( 6 )
+anims/PlayerJumpDown = ExtResource( 7 )
+anims/PlayerJumpLeft = ExtResource( 4 )
+anims/PlayerJumpRight = ExtResource( 5 )
+anims/PlayerJumpUp = ExtResource( 3 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 13 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 14 )
+parameters/Idle/blend_position = Vector2( 0, 0 )
+parameters/Jump/blend_position = Vector2( 0.00486732, 0.255664 )

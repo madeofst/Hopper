@@ -28,6 +28,9 @@ namespace Hopper
         private List<Location> Locations;
         private List<PondLinkPath> Paths;
 
+        private AnimationTree AnimationTree;
+        private AnimationNodeStateMachinePlayback AnimationState;
+
         private PondLinkPath currentPath = null;
         private PathFollow2D currentPathFollow = null;
 
@@ -37,6 +40,8 @@ namespace Hopper
         public override void _Ready()
         {
             Start = GetNode<Location>("../Start");
+            AnimationTree = GetNode<AnimationTree>("AnimationTree");
+            AnimationState = (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback");
             CurrentStage = Start;
         }
 
@@ -53,10 +58,13 @@ namespace Hopper
 
         public override void _PhysicsProcess(float delta)
         {
+            Vector2 movementVector = Vector2.Zero;
             if (currentPathFollow != null)
             {
-                float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1.6f * delta), 0 , 1);
+                float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1f * delta), 0 , 1);
                 currentPathFollow.UnitOffset = unitOffset;
+                movementVector = (currentPathFollow.GlobalPosition - Position).Normalized();
+                GD.Print(movementVector);
                 Position = currentPathFollow.GlobalPosition;
                 
                 if ((unitOffset >= 1 && MovementDirection == 1) || 
@@ -65,6 +73,13 @@ namespace Hopper
                     ResetPaths();
                     currentPathFollow = null;
                     currentPath = null;
+                    AnimationState.Travel("Idle");
+                }
+                else
+                {
+                    AnimationTree.Set("parameters/Idle/blend_position", movementVector);
+                    AnimationTree.Set("parameters/Jump/blend_position", movementVector);
+                    AnimationState.Travel("Jump");
                 }
             }
         }

@@ -119,7 +119,6 @@ Directions = PoolStringArray( "Left", "Up" )
 [node name="World1" parent="." instance=ExtResource( 1 )]
 position = Vector2( 152, 120 )
 ID = 1
-Pond = "Hawkins"
 Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
 Texture = ExtResource( 7 )
 Active = true
@@ -138,7 +137,6 @@ Directions = PoolStringArray( "Right", "Up" )
 [node name="World2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 264, 32 )
 ID = 2
-Pond = "Hawkins"
 Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
 Texture = ExtResource( 8 )
 Active = true
@@ -155,7 +153,6 @@ Directions = PoolStringArray( "Down" )
 [node name="World3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 136, -64 )
 ID = 3
-Pond = "BelAir"
 Levels = PoolStringArray( "WideChannel_3", "WideChannel_4", "Arrowhead", "BlueLine" )
 Texture = ExtResource( 10 )
 Active = true
@@ -172,7 +169,6 @@ Directions = PoolStringArray( "Up", "Left" )
 [node name="World4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 56, -192 )
 ID = 4
-Pond = "BelAir"
 Levels = PoolStringArray( "Retrace", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
 Texture = ExtResource( 9 )
 Active = true
@@ -194,7 +190,6 @@ Directions = PoolStringArray( "Up" )
 [node name="World5" parent="." instance=ExtResource( 1 )]
 position = Vector2( 256, -224 )
 ID = 5
-Pond = "Liffey"
 Levels = PoolStringArray( "Mazemerize", "TheSquare", "PondInPond", "SideWind", "MiniMaze", "GettingAbout9" )
 Texture = ExtResource( 11 )
 Active = true
@@ -211,7 +206,6 @@ Directions = PoolStringArray( "Up" )
 [node name="World6" parent="." instance=ExtResource( 1 )]
 position = Vector2( 120, -328 )
 ID = 5
-Pond = "Liffey"
 Levels = PoolStringArray( "LongWayShortWay5", "StuckInJumpLoop", "CrissCross" )
 Texture = ExtResource( 7 )
 Active = true
