@@ -19,13 +19,13 @@ namespace Hopper
 			Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
 			Tween = GetNode<Tween>("Tween");
 			NewGameButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton");
-			NewGameButton.GrabFocus();
 		}
+
 
 		public void newGamePressed()
 		{
 			EditorMode = false;
-			FadeOut();
+			if (!Tween.IsActive()) FadeOut();
 		}
 
 		public void highScoresPressed()
@@ -54,6 +54,7 @@ namespace Hopper
         internal void ShowMenu()
         {
 			Modulate = new Color (1, 1, 1, 1);
+			NewGameButton.GrabFocus();
             Show();
         }
 

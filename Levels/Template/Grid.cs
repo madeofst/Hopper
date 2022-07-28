@@ -12,7 +12,6 @@ namespace Hopper
             GD.Print($"{desc} - {Time}");
         }
 
-        //TODO: add editable property
         private bool editable = false;
         public bool Editable
         { 
@@ -29,7 +28,6 @@ namespace Hopper
 
         public int GridWidth;
         public int GridHeight; 
-        public int GoalCount; //TODO: should live in level
 
         public ResourceRepository Resources { get; set; }
         

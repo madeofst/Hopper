@@ -12,6 +12,8 @@ namespace Hopper
         private ScoreBox ScoreBox;
         private MapCamera Camera;
 
+        private LevelTitleScreen LevelTitleScreen;
+
         public Control TouchButtons;
 
         //Touch controls
@@ -22,6 +24,8 @@ namespace Hopper
 
         public override void _Ready()
         {
+            LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
+            ConnectToLevelTitle();
             AnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");    
             PopUp = GetNode<RichTextLabel>("PopUpText/RichTextLabel");
             HopCounter = GetNode<HopCounter>("HopCounter");
@@ -29,6 +33,24 @@ namespace Hopper
             Camera = GetNode<MapCamera>("../Map/MapCamera");
             Restart = GetNode<TouchScreenButton>("TouchButtons/Restart");
             TouchButtons = GetNode<Control>("TouchButtons");
+        }
+
+        private void ConnectToLevelTitle()
+        {
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ShowTouchButtons), this, nameof(ShowTouchButtons));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ShowScoreBox), this, nameof(ShowScoreBox));
+        }
+
+        private void DisconnectFromLevelTitle()
+        {
+            LevelTitleScreen.Disconnect(nameof(LevelTitleScreen.ShowTouchButtons), this, nameof(ShowTouchButtons));
+            LevelTitleScreen.Disconnect(nameof(LevelTitleScreen.ShowScoreBox), this, nameof(ShowScoreBox));
+        }
+
+        internal void Close()
+        {
+            DisconnectFromLevelTitle();
+            QueueFree();
         }
 
         public override void _Process(float delta)

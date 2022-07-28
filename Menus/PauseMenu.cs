@@ -175,6 +175,5 @@ namespace Hopper
                 EmitSignal(nameof(Quit));
             }
         }
-
     }
 }

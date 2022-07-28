@@ -47,7 +47,6 @@ namespace Hopper
         public int ID { get; set; }
         public bool Paused { get; private set; } = false;
         public bool TempForTesting { get; set; } = false;
-        public bool HopsExhausted { get; set; } = false; //TODO: won't need this after sorting restart animation
         public bool ScoreAnimFinished = false;
         public bool GameOver = false;
         private bool _PuzzleMode = true;
@@ -92,7 +91,7 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("../AudioRepository/GoalActivate");
         }
 
-        public void Init(int StageID, string[] levels, Vector2 position, bool tempStageForTesting = false, string pondName = "", string levelName = "") //TODO: Think I probs just need to pass an array of level names here
+        public void Init(int StageID, string[] levels, Vector2 position, bool tempStageForTesting = false, string pondName = "", string levelName = "", Map Map = null) 
         {
             PondName = pondName;
             ID = StageID;
@@ -107,11 +106,17 @@ namespace Hopper
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
-            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
-            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
-            PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
-            PauseMenu.Connect(nameof(PauseMenu.Map), this, nameof(QuitToMap));
-            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+            if (Map != null)
+            {
+                Map.DisconnectPauseSignals();
+
+                PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+                PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
+                PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+
+                PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
+                PauseMenu.Connect(nameof(PauseMenu.Map), this, nameof(QuitToMap));
+            }
             
             NewPlayer();           
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));
@@ -126,8 +131,6 @@ namespace Hopper
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
 
-            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ShowTouchButtons), HUD, nameof(HUD.ShowTouchButtons));
-            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ShowScoreBox), HUD, nameof(HUD.ShowScoreBox));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Appear));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
@@ -168,7 +171,8 @@ namespace Hopper
                 LevelTitleScreen.SetPosition(Position);
                 LevelTitleScreen.Init(PondName, ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
-                HUD.TouchButtons.Visible = false;
+                if (HUD.TouchButtons.Visible) 
+                    HUD.TouchButtons.Visible = false; //FIXME: not sure why but this creates an error !is_inside_tree = true
             }
             else
             {
@@ -301,17 +305,9 @@ namespace Hopper
 
         public void OnHopsExhausted()
         {
-            if (TempForTesting)
-            {
-                //QueueFree();
-            }
-            else if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
+            if (Levels.Length <= 0 || iLevel > Levels.Length - 1)
             {
                 GameOver = true;
-            }
-            else
-            {
-                HopsExhausted = true; //TODO: won't need this after sorting smoke animation
             }
         }
                 
@@ -320,11 +316,7 @@ namespace Hopper
             Player.RestartingLevel = true;
             if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
             NewLevel(levelName, true);
-            if (fail)
-            {
-                HUD.ShowPopUp("Try again!");
-                HopsExhausted = false;
-            }
+            if (fail) HUD.ShowPopUp("Try again!");
             Player.Appear();
         }
 
@@ -404,7 +396,7 @@ namespace Hopper
                         GameOver.ScoreLabel.Text = GameOver.Score.ToString();
                     }
                     QueueFree();
-                    if (!TempForTesting) HUD.QueueFree();
+                    if (!TempForTesting) HUD.Close();;
                 }
             }
         }
@@ -445,6 +437,7 @@ namespace Hopper
             if (!TempForTesting)
             {
                 Map Map = GetNode<Map>("/root/Map");
+                Map.ConnectPauseSignals();
                 Map.Show();
                 Map.SetProcessInput(true);
                 Map.GetNode<Pointer>("Pointer").SetProcessInput(true);
@@ -454,11 +447,13 @@ namespace Hopper
                 HUD.Visible = false;
             }
         }
-                
+
         public void QuitToMenu()
         {
-            HUD.QueueFree();
+            HUD.Close();
             QueueFree();
+            PauseMenu.RectPosition = GetNode<StartMenu>("../StartMenu").RectPosition;
+            PauseMenu.AnimateHide();
             if (!TempForTesting)
             {
                 HUD.Visible = false;

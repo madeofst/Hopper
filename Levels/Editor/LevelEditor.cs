@@ -42,7 +42,7 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.New((Type)FillWith);
             AddChild(CurrentLevel);
-            CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
+            CurrentLevel.Build(Resources);
             PopulateParameterValues();
             CurrentLevel.Connect(nameof(Level.LevelParametersUpdated), this, nameof(PopulateParameterValues));
             CurrentLevel.Editable = true;
@@ -110,7 +110,7 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Load(path);
             AddChild(CurrentLevel);
-            CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
+            CurrentLevel.Build(Resources);
             PopulateParameterValues();
             CurrentLevel.Connect(nameof(Level.LevelParametersUpdated), this, nameof(PopulateParameterValues));
             CurrentLevel.Editable = true;
@@ -141,7 +141,7 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate();
             AddChild(CurrentLevel);
-            CurrentLevel.Build(Resources); //TODO: may be able to come out and run automatically
+            CurrentLevel.Build(Resources);
             PopulateParameterValues();
             CurrentLevel.Connect(nameof(Level.LevelParametersUpdated), this, nameof(PopulateParameterValues));
             CurrentLevel.Editable = true;

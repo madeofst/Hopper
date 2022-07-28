@@ -28,9 +28,21 @@ namespace Hopper
         {
             HUD = GetNode<HUD>("../HUD");
             PauseMenu = GetNode<PauseMenu>("../PauseMenu");
+            ConnectPauseSignals();
+        }
+
+        public void ConnectPauseSignals()
+        {
             PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
             PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
             PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+        }
+
+        public void DisconnectPauseSignals()
+        {
+            PauseMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
+            PauseMenu.Disconnect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
+            PauseMenu.Disconnect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
         }
 
         private void QuitToMenu()
@@ -39,7 +51,7 @@ namespace Hopper
             Pointer.MoveToMenuPosition(StartMenu.RectPosition);
             Camera.MoveTo(Pointer.Position);
             PauseMenu.RectPosition = StartMenu.RectPosition;
-            HUD.QueueFree();
+            HUD.Close();
             PauseMenu.AnimateHide();
             QueueFree();
             StartMenu.ShowMenu();

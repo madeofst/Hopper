@@ -78,10 +78,10 @@ namespace Hopper
             {
                 if (ev.ButtonIndex == (int)ButtonList.Left)
                 {
-                    if (Type == Type.Bounce) //Max enum value //TODO: this needs writing for new tile loading
+                    if (Type == Type.Bounce) //TODO: The type here must always equal the max enum value
                     {
                         EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue);
-                    }    //Type = Type.Lily; //Min enum value
+                    }
                     else
                     {
                         Type += 1;

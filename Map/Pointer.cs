@@ -50,8 +50,9 @@ namespace Hopper
             Locations = locations;
         }
 
-        public void MoveToMenuPosition(Vector2 position)  //FIXME: What's going on here?
+        public void MoveToMenuPosition(Vector2 position)
         {
+            //This just helps the visual transition from map to menu
             CurrentStage = Start;
             Position = position;
         }
@@ -150,7 +151,7 @@ namespace Hopper
             Stage.Visible = false;
             GetTree().Root.AddChildBelowNode(Map, Stage);
             Stage.Connect(nameof(Stage.UnlockNextStage), Map, nameof(Map.UnlockStage), new Godot.Collections.Array{CurrentStage.LocationsToUnlock});
-            Stage.Init(CurrentStage.ID, CurrentStage.Levels, Position, false, CurrentStage.Pond);
+            Stage.Init(CurrentStage.ID, CurrentStage.Levels, Position, false, CurrentStage.Pond, "", Map);
         }
 
         private bool PointerOnStart()
