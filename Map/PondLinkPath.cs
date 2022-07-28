@@ -7,5 +7,14 @@ namespace Hopper
     {
         [Export]
         public string[] Directions;
+
+        [Export]
+        public bool Active;
+/* 
+        [Export]
+        public string Start;
+
+        [Export]
+        public string End; */
     }
 }

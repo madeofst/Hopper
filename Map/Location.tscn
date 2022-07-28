@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Map/World1.png" type="Texture" id=1]
+[ext_resource path="res://Levels/Resources/LilyPad1_32x32.png" type="Texture" id=1]
 [ext_resource path="res://Map/Location.cs" type="Script" id=2]
+[ext_resource path="res://Map/LocationTool.cs" type="Script" id=3]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Active"
@@ -80,3 +81,6 @@ anims/Active = SubResource( 2 )
 anims/Complete = SubResource( 4 )
 anims/Inactive = SubResource( 3 )
 anims/New = SubResource( 1 )
+
+[node name="Tool" type="Node2D" parent="."]
+script = ExtResource( 3 )

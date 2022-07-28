@@ -50,12 +50,9 @@ namespace Hopper
             foreach (var s in StagesToUnlock)
             {
                 Location l = GetNode<Location>((string)s);
-                if (l.Active == false)
-                {
-                    l.Active = true;
-                    l.NewlyActivated = true;
-                }
+                if (l.Active == false) l.Activate(Pointer.CurrentStage);
             }
+            Pointer.CurrentStage.UnlockAllPaths();
             Pointer.CurrentStage.NewlyActivated = false;
             Pointer.CurrentStage.Complete = true;
         }

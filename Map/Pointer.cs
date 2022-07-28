@@ -64,7 +64,7 @@ namespace Hopper
                 float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1f * delta), 0 , 1);
                 currentPathFollow.UnitOffset = unitOffset;
                 movementVector = (currentPathFollow.GlobalPosition - Position).Normalized();
-                GD.Print(movementVector);
+                //GD.Print(movementVector);
                 Position = currentPathFollow.GlobalPosition;
                 
                 if ((unitOffset >= 1 && MovementDirection == 1) || 
@@ -126,7 +126,7 @@ namespace Hopper
                 {
                     foreach (string Direction in path.Directions)
                     {
-                        if (Direction == actionName) return path;
+                        if (Direction == actionName && path.Active) return path;
                     }
                 }
             }
