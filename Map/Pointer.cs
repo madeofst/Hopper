@@ -62,14 +62,15 @@ namespace Hopper
             Vector2 movementVector = Vector2.Zero;
             if (currentPathFollow != null)
             {
-                float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1f * delta), 0 , 1);
-                currentPathFollow.UnitOffset = unitOffset;
+                //float unitOffset = Mathf.Clamp(currentPathFollow.UnitOffset + (MovementDirection * 1f * delta), 0 , 1);
+                float Offset = currentPathFollow.Offset + (MovementDirection * 160f * delta);
+                if (currentPathFollow.UnitOffset <= 1) currentPathFollow.Offset = Offset;
                 movementVector = (currentPathFollow.GlobalPosition - Position).Normalized();
                 //GD.Print(movementVector);
                 Position = currentPathFollow.GlobalPosition;
                 
-                if ((unitOffset >= 1 && MovementDirection == 1) || 
-                    (unitOffset <= 0 && MovementDirection == -1))
+                if ((currentPathFollow.UnitOffset >= 1 && MovementDirection == 1) || 
+                    (currentPathFollow.UnitOffset <= 0 && MovementDirection == -1))
                 {
                     ResetPaths();
                     currentPathFollow = null;

@@ -22,6 +22,15 @@ namespace Hopper
             Tween = GetNode<Tween>("Tween");
             Camera = GetNode<MapCamera>("MapCamera");
             CallDeferred(nameof(ConnectToPauseMenuAndHUD));
+            CallDeferred(nameof(ActivateLocations));
+        }
+
+        private void ActivateLocations()
+        {
+            foreach (Location l in Locations)
+            {
+                if (l.Active) l.Activate(Pointer.Start);
+            }
         }
 
         private void ConnectToPauseMenuAndHUD()

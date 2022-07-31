@@ -63,6 +63,14 @@ namespace Hopper
             {
                 if (p.Name == CurrentStage.Name) p.Active = true;
             }
+            
+            StageData StageData = GetNode<StageData>("StageData");
+            foreach (string level in Levels)
+            {
+                Sprite LevelSprite = (Sprite)GD.Load<PackedScene>("res://Map/LevelSprite.tscn").Instance();
+                StageData.AddChild(LevelSprite);
+            }
+            StageData.Init();
         }
 
         public void UnlockAllPaths()
