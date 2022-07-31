@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Hopper
@@ -35,37 +35,6 @@ namespace Hopper
             set
             {
                 stageID = value;
-                _StageIDLabel.BbcodeText = value.ToString();
-            }
-        }
-        private int levelID;
-        private int LevelIDLabel 
-        { 
-            get => levelID; 
-            set
-            {
-                levelID = value;
-                _LevelIDLabel.BbcodeText = value.ToString();
-            }
-        }
-        private int maximumHops;
-        private int MaximumHopsLabel
-        {
-            get => maximumHops; 
-            set
-            {
-                maximumHops = value;
-                _MaximumHopsLabel.BbcodeText = value.ToString();
-            }
-        }
-        private int requiredScore;
-        private int RequiredScoreLabel
-        {
-            get => requiredScore; 
-            set
-            {
-                requiredScore = value;
-                _RequiredScoreLabel.BbcodeText = value.ToString();
             }
         }
 
@@ -75,16 +44,10 @@ namespace Hopper
         public bool Triggered { get; private set; }
 
         private TitleElement StageID;
-        private TitleElement LevelID;
-        private TitleElement MaximumHops;
-        private TitleElement RequiredScore;
-
         private RichTextLabel _StageIDLabel;
-        private RichTextLabel _LevelIDLabel;
-        private RichTextLabel _MaximumHopsLabel;
-        private RichTextLabel _RequiredScoreLabel;
 
-        private List<TitleElement> Containers;
+        private HBoxContainer LevelButtons;
+        private List<TextureButton> LevelSelectors = new List<TextureButton>();
 
         private ShaderMaterial Shader;
 
@@ -98,34 +61,62 @@ namespace Hopper
         public delegate void LoadNextLevel();
         [Signal]
         public delegate void StartMusic();
+        [Signal]
+        public delegate void SelectLevel();
 
         public override void _Ready()
         {
-            LevelID = GetNode<TitleElement>("LevelTitle/AllContainers/LevelID/LevelID");
-            _LevelIDLabel = LevelID.GetNode<RichTextLabel>("LevelValue");
-            _StageIDLabel = LevelID.GetNode<RichTextLabel>("StageValue");
-            MaximumHops = GetNode<TitleElement>("LevelTitle/AllContainers/Text/MaximumHops");
-            _MaximumHopsLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/MaximumHops/Value");
-            RequiredScore = GetNode<TitleElement>("LevelTitle/AllContainers/Text/ScoreTarget");
-            _RequiredScoreLabel = GetNode<RichTextLabel>("LevelTitle/AllContainers/Text/ScoreTarget/Value");
             Shader = (ShaderMaterial)Material;
-            
-            Containers = new List<TitleElement>() 
-            {
-                LevelID,
-                MaximumHops,
-                RequiredScore
-            };
+            LevelButtons = GetNode<HBoxContainer>("LevelTitle/LevelSelector/LevelButtons");
         }
 
-        public void Init(string PondName, int StageID, int levelID, int maxHops, int reqScore)
+        public void Init(string PondName, int StageID, int LevelCount, int levelID, int maxHops, int reqScore)
         {
             Visible = true;
             PondLabel = PondName;
             StageIDLabel = StageID;
-            LevelIDLabel = levelID;
-            MaximumHopsLabel = maxHops;
-            RequiredScoreLabel = reqScore;
+
+            LevelSelectors.Clear();
+            foreach (Node n in LevelButtons.GetChildren())
+            {
+                LevelButtons.RemoveChild(n);
+                n.QueueFree();
+            }
+
+            for (int i = 0; i < LevelCount; i++)
+            {
+                TextureButton b = (TextureButton)GD.Load<PackedScene>("res://Menus/LevelSelectButton.tscn").Instance();
+                b.Name = i.ToString();
+                LevelButtons.AddChild(b);
+                LevelSelectors.Add(b);
+                if (levelID == i + 1) LevelSelectors[i].GrabFocus();
+                b.Connect(nameof(LevelSelectButton.ChangeFocus), this, nameof(UpdateFocus));
+            }
+
+            UpdateLevelReached(levelID - 1);
+        }
+
+        public void UpdateLevelReached(int level)
+        {
+            foreach (TextureButton b in LevelSelectors)
+            {
+                if (int.Parse(b.Name) <= level)
+                {
+                    b.FocusMode = FocusModeEnum.All;
+                    b.TextureNormal = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");
+                }
+                else
+                {
+                    b.FocusMode = FocusModeEnum.None;
+                    b.Disabled = true;
+                }
+            }
+        }
+
+        public void UpdateFocus(string name)
+        {
+            GD.Print(name);
+            EmitSignal(nameof(SelectLevel), int.Parse(name));
         }
 
         public void AnimateShow()
@@ -133,16 +124,6 @@ namespace Hopper
             FillDirection = 1;
             Speed = 1;
             Animating = true;
-
-            float delay = 0.2f;
-            foreach (TitleElement c in Containers)
-            {
-                c.Modulate = new Color(c.Modulate, 0);
-                c.Tween.InterpolateProperty(c, "rect_scale", Vector2.Zero, Vector2.One, 0.9f, Tween.TransitionType.Elastic, Tween.EaseType.Out, delay);
-                c.Tween.InterpolateProperty(c, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In, delay - 0.2f);
-                c.Tween.Start();
-                delay += 0.3f;
-            }
         }
 
         public void AnimateHide()
@@ -152,15 +133,6 @@ namespace Hopper
             FillDirection = -1;
             Speed = 3;
             Animating = true;
-
-            float delay = 0f;
-            foreach (TitleElement c in Containers)
-            {
-                c.Tween.InterpolateProperty(c, "rect_scale", Vector2.One, Vector2.Zero, 0.5f, Tween.TransitionType.Expo, Tween.EaseType.Out, delay);
-                c.Tween.InterpolateProperty(c, "modulate", new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In, delay);
-                c.Tween.Start();
-                delay += 0.1f;
-            }
         }
 
         public override void _PhysicsProcess(float delta)
@@ -174,11 +146,6 @@ namespace Hopper
             }
 
             if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
-            
-            foreach (TitleElement c in Containers)
-            {
-                if (c.Tween.IsActive()) Animating = true;
-            }
 
             if (Animating)
             {           
@@ -203,16 +170,17 @@ namespace Hopper
         public override void _Input(InputEvent @event)
         {
             if ((@event.IsActionPressed("ui_accept") ||
-                 @event.IsActionReleased("ui_left") ||
-                 @event.IsActionReleased("ui_up") ||
-                 @event.IsActionReleased("ui_right") ||
-                 @event.IsActionReleased("ui_down")) ||
                  @event is InputEventScreenTouch && @event.IsPressed()
-                 && !Animating && Visible)
+                 && !Animating && Visible))
             {
                 SetProcessInput(false);
                 AnimateHide();
             }
+        }
+
+        private void MoveLevelSelection(Vector2 direction)
+        {
+            GD.Print($"Select {direction}");
         }
 
         public void ClickToHide()

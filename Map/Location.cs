@@ -26,7 +26,6 @@ namespace Hopper
             {
                 GD.Print("Try update texture");
                 texture = value;
-                //tool.UpdateTexture(texture);
             }
         }
 
@@ -54,7 +53,6 @@ namespace Hopper
             Sprite = GetNode<Sprite>("Sprite");
             AnimationPlayer = Sprite.GetNode<AnimationPlayer>("AnimationPlayer");
             Sprite.Texture = Texture;
-            //tool = GetNode<LocationTool>("Tool");
         }
 
         public void Activate(Location CurrentStage)

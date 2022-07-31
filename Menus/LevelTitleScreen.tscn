@@ -23,7 +23,6 @@ texture = ExtResource( 2 )
 stretch_mode = 6
 
 [node name="LevelTitle" parent="." instance=ExtResource( 1 )]
-material = null
 
 [node name="Button" type="Button" parent="."]
 visible = false

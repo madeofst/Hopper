@@ -151,6 +151,7 @@ namespace Hopper
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Appear));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.SelectLevel), this, nameof(NewLevel));
 
             if (tempStageForTesting)
             {
@@ -170,8 +171,13 @@ namespace Hopper
             }
         }
 
-
         //Working with levels
+
+        private void NewLevel(int levelID)
+        {
+            NextLevel = levelFactory.Load(Levels[levelID], true);
+            BuildLevel(false);
+        }
 
         private void NewLevel(string levelName, bool replay = false)
         {
@@ -186,7 +192,12 @@ namespace Hopper
             {
                 MoveToTop(LevelTitleScreen);
                 LevelTitleScreen.SetPosition(Position);
-                LevelTitleScreen.Init(PondName, ID, iLevel + 1, level.LevelData.MaximumHops, level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
+                LevelTitleScreen.Init(PondName, 
+                                      ID,
+                                      Levels.Length, 
+                                      iLevel + 1, 
+                                      level.LevelData.MaximumHops, 
+                                      level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
                 LevelTitleScreen.AnimateShow();
                 if (HUD.TouchButtons.Visible) 
                     HUD.TouchButtons.Visible = false; //FIXME: not sure why but this creates an error !is_inside_tree = true
@@ -250,7 +261,7 @@ namespace Hopper
         public void IncrementLevel()
         {
             iLevel++;
-            EmitSignal(nameof(UpdateStageLevelData), iLevel);
+            UpdateLevelReached();
             if (TempForTesting)
             {
                 QueueFree();
@@ -275,6 +286,12 @@ namespace Hopper
                     NewLevel(Player.GridPosition);
                 }
             }
+        }
+
+        private void UpdateLevelReached()
+        {
+            LevelTitleScreen.UpdateLevelReached(iLevel);
+            EmitSignal(nameof(UpdateStageLevelData), iLevel);
         }
 
         //Working with player
