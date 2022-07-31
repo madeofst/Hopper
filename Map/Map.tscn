@@ -123,8 +123,6 @@ position = Vector2( -232.992, -213.984 )
 curve = SubResource( 1 )
 Directions = PoolStringArray( "Left", "Up" )
 Active = true
-Start = "Start"
-End = "World1"
 
 [node name="World1" parent="." instance=ExtResource( 1 )]
 position = Vector2( 152, 120 )
@@ -139,16 +137,12 @@ LocationsToUnlock = PoolStringArray( "World2", "World3" )
 position = Vector2( 112, -88 )
 curve = SubResource( 2 )
 Directions = PoolStringArray( "Left" )
-Start = "World1"
-End = "World2"
 
 [node name="World3" parent="World1" instance=ExtResource( 12 )]
 position = Vector2( -104, 0 )
 curve = SubResource( 7 )
 Directions = PoolStringArray( "Up" )
 Active = true
-Start = "World1"
-End = "World3"
 
 [node name="World2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 104, 104 )
@@ -161,8 +155,6 @@ LocationsToUnlock = PoolStringArray(  )
 [node name="World1" parent="World2" instance=ExtResource( 12 )]
 curve = SubResource( 5 )
 Directions = PoolStringArray( "Right" )
-Start = "World2"
-End = "World1"
 
 [node name="World3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 256, -56 )
@@ -178,13 +170,10 @@ position = Vector2( -56, 184 )
 curve = SubResource( 8 )
 Directions = PoolStringArray( "Down" )
 Active = true
-Start = "World3"
-End = "World1"
 
 [node name="World4" parent="World3" instance=ExtResource( 12 )]
 curve = SubResource( 9 )
 Directions = PoolStringArray( "Right" )
-Start = "World"
 
 [node name="World6" parent="World3" instance=ExtResource( 12 )]
 curve = SubResource( 10 )

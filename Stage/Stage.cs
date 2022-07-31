@@ -64,7 +64,7 @@ namespace Hopper
         }
 
         //List of levels
-        public int iLevel { get; set; } = 0;
+        public int iLevel { get; set; }
         public string[] Levels { get; set; }
 
         //Signals
@@ -72,6 +72,8 @@ namespace Hopper
         public delegate void TimeUpdate(float timeRemaining);
         [Signal]
         public delegate void UnlockNextStage();
+        [Signal]
+        public delegate void UpdateStageLevelData();
 
         public override void _Ready()
         {
@@ -91,11 +93,26 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("../AudioRepository/GoalActivate");
         }
 
-        public void Init(int StageID, string[] levels, Vector2 position, bool tempStageForTesting = false, string pondName = "", string levelName = "", Map Map = null) 
+        public void Init(int StageID, 
+                         string[] levels, 
+                         Vector2 position, 
+                         bool tempStageForTesting = false, 
+                         string pondName = "", 
+                         string levelName = "", 
+                         Map Map = null,
+                         int iLevel = 0) 
         {
             PondName = pondName;
             ID = StageID;
             Levels = levels;
+            if (iLevel > Levels.Length - 1)
+            {
+                this.iLevel = 0;
+            }
+            else
+            {
+                this.iLevel = iLevel;
+            }
             Position = position - new Vector2(240, 135);
 
             HUD.LockPosition(Position);
@@ -233,6 +250,7 @@ namespace Hopper
         public void IncrementLevel()
         {
             iLevel++;
+            EmitSignal(nameof(UpdateStageLevelData), iLevel);
             if (TempForTesting)
             {
                 QueueFree();

@@ -71,11 +71,16 @@ namespace Hopper
             foreach (var s in StagesToUnlock)
             {
                 Location l = GetNode<Location>((string)s);
-                if (l.Active == false) l.Activate(Pointer.CurrentStage);
+                if (l.Active == false) l.Activate(Pointer.CurrentLocation);
             }
-            Pointer.CurrentStage.UnlockAllPaths();
-            Pointer.CurrentStage.NewlyActivated = false;
-            Pointer.CurrentStage.Complete = true;
+            Pointer.CurrentLocation.UnlockAllPaths();
+            Pointer.CurrentLocation.NewlyActivated = false;
+            Pointer.CurrentLocation.Complete = true;
+        }
+
+        public void UpdateStageLevelData(int LevelReached)
+        {
+            Pointer.CurrentLocation.UpdateStageLevelData(LevelReached);
         }
 
         public override void _Process(float delta)
@@ -110,7 +115,7 @@ namespace Hopper
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
             MoveToTop(PauseMenu);
-            PauseMenu.SetPosition(Pointer.CurrentStage.Position - new Vector2(240, 135));
+            PauseMenu.SetPosition(Pointer.CurrentLocation.Position - new Vector2(240, 135));
             PauseMenu.Visible = true;
             PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
             PauseMenu.AnimateShow();

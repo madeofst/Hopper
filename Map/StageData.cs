@@ -11,7 +11,7 @@ public class StageData : Node2D
 
     private List<Sprite> LevelSprites;
 
-    public void Init()
+    public void Init(int LevelReached)
     {
         LevelSprites = GetChildren().OfType<Sprite>().ToList();
         for(int i = 1; i <= LevelSprites.Count; i++)
@@ -19,6 +19,15 @@ public class StageData : Node2D
             float spacing = Mathf.Tau / LevelSprites.Count;
             Vector2 vec = new Vector2(Radius, 0).Rotated(spacing * i + Mathf.Pi/2);
             LevelSprites[i-1].Position = vec + Offset;
+        }
+        Update(LevelReached);
+    }
+
+    public void Update(int LevelReached)
+    {
+        for(int i = 0; i < LevelReached; i++)
+        {
+            LevelSprites[i].Frame = 1;
         }
     }
 

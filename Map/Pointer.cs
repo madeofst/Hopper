@@ -8,7 +8,7 @@ namespace Hopper
     public class Pointer : Node2D
     {
         public Location Start;
-        public Location CurrentStage 
+        public Location CurrentLocation 
         { 
             get 
             {
@@ -42,7 +42,7 @@ namespace Hopper
             Start = GetNode<Location>("../Start");
             AnimationTree = GetNode<AnimationTree>("AnimationTree");
             AnimationState = (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback");
-            CurrentStage = Start;
+            CurrentLocation = Start;
         }
 
         public void SetLocations(List<Location> locations)
@@ -53,7 +53,7 @@ namespace Hopper
         public void MoveToMenuPosition(Vector2 position)
         {
             //This just helps the visual transition from map to menu
-            CurrentStage = Start;
+            CurrentLocation = Start;
             Position = position;
         }
 
@@ -117,12 +117,12 @@ namespace Hopper
 
         private List<PondLinkPath> GetPaths()
         {
-            return CurrentStage.GetChildren().OfType<PondLinkPath>().ToList();
+            return CurrentLocation.GetChildren().OfType<PondLinkPath>().ToList();
         }
 
         private PondLinkPath GetPath(string actionName)
         {
-            if (CurrentStage != null)
+            if (CurrentLocation != null)
             {
                 foreach (var path in GetPaths())
                 {
@@ -151,8 +151,21 @@ namespace Hopper
             Stage Stage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
             Stage.Visible = false;
             GetTree().Root.AddChildBelowNode(Map, Stage);
-            Stage.Connect(nameof(Stage.UnlockNextStage), Map, nameof(Map.UnlockStage), new Godot.Collections.Array{CurrentStage.LocationsToUnlock});
-            Stage.Init(CurrentStage.ID, CurrentStage.Levels, Position, false, CurrentStage.Pond, "", Map);
+            Stage.Connect(nameof(Stage.UnlockNextStage), 
+                          Map, 
+                          nameof(Map.UnlockStage), 
+                          new Godot.Collections.Array{CurrentLocation.LocationsToUnlock});
+            Stage.Connect(nameof(Stage.UpdateStageLevelData),
+                          Map,
+                          nameof(Map.UpdateStageLevelData));
+            Stage.Init(CurrentLocation.ID, 
+                       CurrentLocation.Levels, 
+                       Position, 
+                       false, 
+                       CurrentLocation.Pond, 
+                       "", 
+                       Map, 
+                       CurrentLocation.LevelReached);
         }
 
         private bool PointerOnStart()
@@ -167,7 +180,7 @@ namespace Hopper
             {
                 if (l.Position.IsEqualApprox(Position) && Position != Start.Position)
                 {
-                    CurrentStage = l;
+                    CurrentLocation = l;
                     return true;
                 }
             }
