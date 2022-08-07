@@ -155,17 +155,15 @@ namespace Hopper
                           Map, 
                           nameof(Map.UnlockStage), 
                           new Godot.Collections.Array{CurrentLocation.LocationsToUnlock});
-            Stage.Connect(nameof(Stage.UpdateStageLevelData),
+            Stage.Connect(nameof(Stage.UpdateLocationProgress),
                           Map,
-                          nameof(Map.UpdateStageLevelData));
-            Stage.Init(CurrentLocation.ID, 
+                          nameof(Map.UpdateLocationProgress));
+            Stage.Init(new StageData(CurrentLocation.ID, CurrentLocation.Pond, CurrentLocation.LevelReached), 
                        CurrentLocation.Levels, 
                        Position, 
                        false, 
-                       CurrentLocation.Pond, 
                        "", 
-                       Map, 
-                       CurrentLocation.LevelReached);
+                       Map);
         }
 
         private bool PointerOnStart()

@@ -78,9 +78,9 @@ namespace Hopper
             Pointer.CurrentLocation.Complete = true;
         }
 
-        public void UpdateStageLevelData(int LevelReached)
+        public void UpdateLocationProgress(int LevelReached)
         {
-            Pointer.CurrentLocation.UpdateStageLevelData(LevelReached);
+            Pointer.CurrentLocation.UpdateLocationProgress(LevelReached);
         }
 
         public override void _Process(float delta)

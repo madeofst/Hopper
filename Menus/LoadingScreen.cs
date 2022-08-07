@@ -23,7 +23,6 @@ namespace Hopper
         {
             AudioRepo.Visible = false;
             GetTree().Root.AddChild(AudioRepo);
-            
             GetTree().Root.AddChild(StartMenu);
             PauseMenu.Visible = false;
             GetTree().Root.AddChild(PauseMenu);

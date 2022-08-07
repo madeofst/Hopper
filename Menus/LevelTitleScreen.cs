@@ -70,11 +70,11 @@ namespace Hopper
             LevelButtons = GetNode<HBoxContainer>("LevelTitle/LevelSelector/LevelButtons");
         }
 
-        public void Init(string PondName, int StageID, int LevelCount, int levelID, int maxHops, int reqScore)
+        public void Init(StageData StageData, int LevelCount, int iLevel, int maxHops, int reqScore)
         {
             Visible = true;
-            PondLabel = PondName;
-            StageIDLabel = StageID;
+            PondLabel = StageData.Pond;
+            StageIDLabel = StageData.ID;
 
             LevelSelectors.Clear();
             foreach (Node n in LevelButtons.GetChildren())
@@ -89,18 +89,18 @@ namespace Hopper
                 b.Name = i.ToString();
                 LevelButtons.AddChild(b);
                 LevelSelectors.Add(b);
-                if (levelID == i + 1) LevelSelectors[i].GrabFocus();
+                if (iLevel == i + 1) LevelSelectors[i].GrabFocus();
                 b.Connect(nameof(LevelSelectButton.ChangeFocus), this, nameof(UpdateFocus));
             }
 
-            UpdateLevelReached(levelID - 1);
+            UpdateLevelReached(StageData.LevelReached);
         }
 
-        public void UpdateLevelReached(int level)
+        public void UpdateLevelReached(int LevelReached)
         {
             foreach (TextureButton b in LevelSelectors)
             {
-                if (int.Parse(b.Name) <= level)
+                if (int.Parse(b.Name) <= LevelReached)
                 {
                     b.FocusMode = FocusModeEnum.All;
                     b.TextureNormal = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");

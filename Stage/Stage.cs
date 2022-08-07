@@ -19,7 +19,6 @@ namespace Hopper
 
         //Pond
         private Pond Pond { get; set; }
-        private string PondName { get; set; }
 
         //Level
         public Level CurrentLevel { get; set; }
@@ -62,6 +61,7 @@ namespace Hopper
                 _PuzzleMode = value;
             }
         }
+        public StageData StageData;
 
         //List of levels
         public int iLevel { get; set; }
@@ -73,7 +73,7 @@ namespace Hopper
         [Signal]
         public delegate void UnlockNextStage();
         [Signal]
-        public delegate void UpdateStageLevelData();
+        public delegate void UpdateLocationProgress();
 
         public override void _Ready()
         {
@@ -93,25 +93,23 @@ namespace Hopper
             GoalActivate = GetNode<AudioStreamPlayer2D>("../AudioRepository/GoalActivate");
         }
 
-        public void Init(int StageID, 
+        public void Init(StageData StageData,
                          string[] levels, 
                          Vector2 position, 
-                         bool tempStageForTesting = false, 
-                         string pondName = "", 
+                         bool tempStageForTesting = false,
                          string levelName = "", 
-                         Map Map = null,
-                         int iLevel = 0) 
+                         Map Map = null) 
         {
-            PondName = pondName;
-            ID = StageID;
+            this.StageData = StageData;
+            ID = StageData.ID;
             Levels = levels;
-            if (iLevel > Levels.Length - 1)
+            if (StageData.LevelReached > Levels.Length - 1)
             {
                 this.iLevel = 0;
             }
             else
             {
-                this.iLevel = iLevel;
+                this.iLevel = StageData.LevelReached;
             }
             Position = position - new Vector2(240, 135);
 
@@ -162,7 +160,7 @@ namespace Hopper
             {
                 if (PuzzleMode)
                 {
-                    NewLevel(Levels[iLevel]);
+                    NewLevel(Levels[StageData.LevelReached]);
                 }
                 else
                 {
@@ -175,7 +173,8 @@ namespace Hopper
 
         private void NewLevel(int levelID)
         {
-            NextLevel = levelFactory.Load(Levels[levelID], true);
+            iLevel = levelID;
+            NextLevel = levelFactory.Load(Levels[iLevel], true);
             BuildLevel(false);
         }
 
@@ -192,8 +191,7 @@ namespace Hopper
             {
                 MoveToTop(LevelTitleScreen);
                 LevelTitleScreen.SetPosition(Position);
-                LevelTitleScreen.Init(PondName, 
-                                      ID,
+                LevelTitleScreen.Init(StageData,
                                       Levels.Length, 
                                       iLevel + 1, 
                                       level.LevelData.MaximumHops, 
@@ -260,8 +258,9 @@ namespace Hopper
 
         public void IncrementLevel()
         {
+            if (iLevel == StageData.LevelReached) UpdateLevelReached();
             iLevel++;
-            UpdateLevelReached();
+            
             if (TempForTesting)
             {
                 QueueFree();
@@ -290,8 +289,9 @@ namespace Hopper
 
         private void UpdateLevelReached()
         {
-            LevelTitleScreen.UpdateLevelReached(iLevel);
-            EmitSignal(nameof(UpdateStageLevelData), iLevel);
+            StageData.LevelReached++;
+            LevelTitleScreen.UpdateLevelReached(StageData.LevelReached);
+            EmitSignal(nameof(UpdateLocationProgress), StageData.LevelReached);
         }
 
         //Working with player

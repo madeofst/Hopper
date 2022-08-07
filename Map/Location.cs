@@ -46,7 +46,8 @@ namespace Hopper
 
         public int LevelReached;
         private LocationTool tool;
-        private StageData StageData;
+        private LocationProgress LocationProgress;
+
 
         public override void _Ready()
         {
@@ -64,13 +65,13 @@ namespace Hopper
                 if (p.Name == CurrentStage.Name) p.Active = true;
             }
             
-            StageData = GetNode<StageData>("StageData");
+            LocationProgress = GetNode<LocationProgress>("LocationProgress");
             foreach (string level in Levels)
             {
                 Sprite LevelSprite = (Sprite)GD.Load<PackedScene>("res://Map/LevelSprite.tscn").Instance();
-                StageData.AddChild(LevelSprite);
+                LocationProgress.AddChild(LevelSprite);
             }
-            StageData.Init(LevelReached);
+            LocationProgress.Init(LevelReached);
         }
 
         public void UnlockAllPaths()
@@ -93,10 +94,10 @@ namespace Hopper
                 AnimationPlayer.Play("Inactive");
         }
 
-        public void UpdateStageLevelData(int levelReached)
+        public void UpdateLocationProgress(int levelReached)
         {
             LevelReached = levelReached;
-            StageData.Update(levelReached);
+            LocationProgress.Update(levelReached);
         }
     }
 }

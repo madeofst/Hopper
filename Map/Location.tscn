@@ -3,7 +3,7 @@
 [ext_resource path="res://Levels/Resources/LilyPad1_32x32.png" type="Texture" id=1]
 [ext_resource path="res://Map/Location.cs" type="Script" id=2]
 [ext_resource path="res://Map/LocationTool.cs" type="Script" id=3]
-[ext_resource path="res://Map/StageData.cs" type="Script" id=4]
+[ext_resource path="res://Map/LocationProgress.cs" type="Script" id=4]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Active"
@@ -87,6 +87,6 @@ anims/New = SubResource( 1 )
 [node name="Tool" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="StageData" type="Node2D" parent="."]
+[node name="LocationProgress" type="Node2D" parent="."]
 position = Vector2( 0.0920563, 0 )
 script = ExtResource( 4 )
