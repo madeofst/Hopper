@@ -14,7 +14,7 @@
 [sub_resource type="Curve2D" id=1]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 232.992, 213.984, 3.00339, 15.0169, -3.00339, -15.0169, 192.992, 189.984, 2.84839, 21.2765, -2.84839, -21.2765, 192.992, 141.984, 0, 0, 0, 0, 152.992, 117.984 )
+"points": PoolVector2Array( 0, 0, 0, 0, 232, 216, 0.690925, 14.5965, -0.690925, -14.5965, 200, 192, 0.115477, 21.2765, -0.115477, -21.2765, 208, 144, 0, 0, 0, 0, 184, 120, 0, 0, 0, 0, 152, 120 )
 }
 
 [sub_resource type="Curve2D" id=2]
@@ -26,7 +26,7 @@ _data = {
 [sub_resource type="Curve2D" id=7]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 104, 0, 0, 0, 0, 0, 208, -176 )
+"points": PoolVector2Array( 0, 0, 0, 0, 104, 0, 0, 0, 0, 0, 104, 0, 0, 0, 0, 0, 136, 0, -6.09191, 12.4487, 6.09191, -12.4487, 152, -16, -6.09191, 15.0973, 6.09191, -15.0973, 152, -64, -4.23785, 1.85406, 4.23785, -1.85406, 176, -88, 0, 0, 0, 0, 208, -88 )
 }
 
 [sub_resource type="Curve2D" id=5]
@@ -38,67 +38,67 @@ _data = {
 [sub_resource type="Curve2D" id=8]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 56, -184, 0, 0, 0, 0, -48, -8 )
+"points": PoolVector2Array( 0, 0, 0, 0, 56, -184, 6.68174, -2.22725, -6.68174, 2.22725, 24, -184, 7.15731, -16.0242, -7.15731, 16.0242, 0, -160, 7.12719, -16.2589, -7.12719, 16.2589, 0, -112, 0, 0, 0, 0, -16, -96, 0, 0, 0, 0, -48, -96 )
 }
 
 [sub_resource type="Curve2D" id=9]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56, -16 )
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, -16 )
 }
 
 [sub_resource type="Curve2D" id=10]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -144, -120 )
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 21, 0.75, -21, -0.75, -32, 0, 0, 33.0356, 0, -33.0356, -64, -48, 11, 0.25, -11, -0.25, -96, -96, 0, 0, 0, 0, -128, -96 )
 }
 
 [sub_resource type="Curve2D" id=11]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -56, 16 )
+"points": PoolVector2Array( 0, 0, 0, 0, 3.05176e-05, 0, 0, 0, 0, 0, -48, 16 )
 }
 
 [sub_resource type="Curve2D" id=12]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56, 16 )
+"points": PoolVector2Array( 0, 0, 0, 0, 3.05176e-05, -0.0920601, 0, 0, 0, 0, 48, 15.9079 )
 }
 
 [sub_resource type="Curve2D" id=14]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -56, -16 )
+"points": PoolVector2Array( 0, 0, 0, 0, -8, -8, 0, 0, 0, 0, -56, -24 )
 }
 
 [sub_resource type="Curve2D" id=16]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56, -8 )
+"points": PoolVector2Array( 0, 0, 0, 0, -3.05176e-05, 0, 0, 0, 0, 0, 48, -16 )
 }
 
 [sub_resource type="Curve2D" id=17]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -56, 8 )
+"points": PoolVector2Array( 0, 0, 0, 0, 0, -0.27618, 0, 0, 0, 0, -48, 15.7238 )
 }
 
 [sub_resource type="Curve2D" id=15]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 112, -176, 0, 0, 0, 0, 256, -56 )
+"points": PoolVector2Array( 0, 0, 0, 0, 104, -184, -11.2666, -0.0280628, 11.2666, 0.0280628, 136, -184, 0, -31.6198, 0, 31.6198, 168, -136, -20.5, 0, 20.5, 0, 200, -88, 0, 0, 0, 0, 232, -88 )
 }
 
 [sub_resource type="Curve2D" id=18]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -56, 8 )
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -48, 16 )
 }
 
 [sub_resource type="Curve2D" id=19]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 56, -8 )
+"points": PoolVector2Array( 0, 0, 0, 0, 8, -47.9079, 0, 0, 0, 0, 56, -63.9079 )
 }
 
 [node name="Map" type="Node2D"]
@@ -119,7 +119,7 @@ LocationsToUnlock = PoolStringArray(  )
 [node name="World1" parent="Start" instance=ExtResource( 12 )]
 self_modulate = Color( 0.501961, 0.6, 1, 0.701961 )
 material = ExtResource( 7 )
-position = Vector2( -232.992, -213.984 )
+position = Vector2( -232, -216 )
 curve = SubResource( 1 )
 Directions = PoolStringArray( "Left", "Up" )
 Active = true
@@ -129,7 +129,7 @@ position = Vector2( 152, 120 )
 Texture = ExtResource( 6 )
 ID = 1
 Pond = "Hawkins"
-Levels = PoolStringArray( "StartingOut" )
+Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
 Active = true
 LocationsToUnlock = PoolStringArray( "World2", "World3" )
 
@@ -157,7 +157,7 @@ curve = SubResource( 5 )
 Directions = PoolStringArray( "Right" )
 
 [node name="World3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 256, -56 )
+position = Vector2( 256, 32 )
 Texture = ExtResource( 8 )
 ID = 3
 Pond = "BelAir"
@@ -181,7 +181,7 @@ Directions = PoolStringArray( "Up", "Left" )
 Active = true
 
 [node name="World4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 312, -72 )
+position = Vector2( 304, 16 )
 Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
@@ -193,11 +193,12 @@ curve = SubResource( 11 )
 Directions = PoolStringArray( "Left" )
 
 [node name="World5" parent="World4" instance=ExtResource( 12 )]
+position = Vector2( 0, 0.0920601 )
 curve = SubResource( 12 )
 Directions = PoolStringArray( "Right" )
 
 [node name="World5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 368, -56 )
+position = Vector2( 352, 32 )
 Texture = ExtResource( 8 )
 ID = 5
 Pond = "BelAir"
@@ -205,6 +206,7 @@ Levels = PoolStringArray( "Mazemerize", "TheSquare", "PondInPond", "SideWind", "
 LocationsToUnlock = PoolStringArray( "World6" )
 
 [node name="World4" parent="World5" instance=ExtResource( 12 )]
+position = Vector2( 7.99997, 8 )
 curve = SubResource( 14 )
 Directions = PoolStringArray( "Left" )
 
@@ -213,7 +215,7 @@ curve = SubResource( 16 )
 Directions = PoolStringArray( "Right" )
 
 [node name="World6" parent="." instance=ExtResource( 1 )]
-position = Vector2( 424, -64 )
+position = Vector2( 400, 16 )
 Texture = ExtResource( 8 )
 ID = 6
 Pond = "BelAir"
@@ -221,11 +223,12 @@ Levels = PoolStringArray( "LongWayShortWay5", "StuckInJumpLoop", "CrissCross" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World5" parent="World6" instance=ExtResource( 12 )]
+position = Vector2( -3.05176e-05, 0.27618 )
 curve = SubResource( 17 )
 Directions = PoolStringArray( "Left" )
 
 [node name="World7" parent="." instance=ExtResource( 1 )]
-position = Vector2( 112, -176 )
+position = Vector2( 128, -64 )
 Texture = ExtResource( 9 )
 ID = 7
 Pond = "Liffey"
@@ -234,7 +237,7 @@ Active = true
 LocationsToUnlock = PoolStringArray( "World8" )
 
 [node name="World3" parent="World7" instance=ExtResource( 12 )]
-position = Vector2( -112, 176 )
+position = Vector2( -104, 184 )
 curve = SubResource( 15 )
 Directions = PoolStringArray( "Down", "Right" )
 Active = true
@@ -244,7 +247,7 @@ curve = SubResource( 18 )
 Directions = PoolStringArray( "Left" )
 
 [node name="World8" parent="." instance=ExtResource( 1 )]
-position = Vector2( 56, -168 )
+position = Vector2( 80, -48 )
 Texture = ExtResource( 6 )
 ID = 8
 Pond = "Liffey"
@@ -252,6 +255,7 @@ Levels = PoolStringArray( "3-3-4", "Trickery", "FillipeFilloppe", "Twins" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World7" parent="World8" instance=ExtResource( 12 )]
+position = Vector2( -8, 48 )
 curve = SubResource( 19 )
 Directions = PoolStringArray( "Right" )
 
@@ -259,7 +263,7 @@ Directions = PoolStringArray( "Right" )
 position = Vector2( 232, 216 )
 
 [node name="MapCamera" type="Camera2D" parent="."]
-position = Vector2( 232, 216 )
+position = Vector2( 224, -24 )
 current = true
 script = ExtResource( 4 )
 

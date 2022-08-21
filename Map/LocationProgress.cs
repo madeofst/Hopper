@@ -7,7 +7,7 @@ namespace Hopper
     public class LocationProgress : Node2D
     {
         //Radius of circle for levelsprites
-        const int Radius = 20;
+        const int Radius = 18;
         //Offset for each individual sprite
         private Vector2 Offset = new Vector2(-4, -4);
 
@@ -18,8 +18,8 @@ namespace Hopper
             LevelSprites = GetChildren().OfType<Sprite>().ToList();
             for(int i = 1; i <= LevelSprites.Count; i++)
             {
-                float spacing = Mathf.Tau / LevelSprites.Count;
-                Vector2 vec = new Vector2(Radius, 0).Rotated(spacing * i + Mathf.Pi/2);
+                float spacing = Mathf.Tau / 2.7f / LevelSprites.Count;
+                Vector2 vec = new Vector2(Radius, 0).Rotated(spacing * i + Mathf.Tau * 0.02f);
                 LevelSprites[i-1].Position = vec + Offset;
             }
             Update(LevelReached);

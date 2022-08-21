@@ -111,6 +111,7 @@ namespace Hopper
         }
 
         private void Pause()
+        
         {
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
