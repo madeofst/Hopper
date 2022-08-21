@@ -4,5 +4,4 @@
 
 [node name="LevelSprite" type="Sprite"]
 texture = ExtResource( 1 )
-offset = Vector2( 4, 4 )
 hframes = 2

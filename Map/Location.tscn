@@ -73,7 +73,6 @@ tracks/0/keys = {
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 0.568627, 0.752941, 1 )
 position = Vector2( 0.0920563, 0.0920582 )
 texture = ExtResource( 1 )
 
@@ -88,5 +87,4 @@ anims/New = SubResource( 1 )
 script = ExtResource( 3 )
 
 [node name="LocationProgress" type="Node2D" parent="."]
-position = Vector2( 0.0920563, 0 )
 script = ExtResource( 4 )

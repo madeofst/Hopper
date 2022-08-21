@@ -178,7 +178,7 @@ namespace Hopper
             {
                 if (l.Position.IsEqualApprox(Position) && Position != Start.Position)
                 {
-                    CurrentLocation = l;
+                    //CurrentLocation = l;
                     return true;
                 }
             }

@@ -186,6 +186,7 @@ Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
 Levels = PoolStringArray( "Retrace", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
+Active = true
 LocationsToUnlock = PoolStringArray( "World5" )
 
 [node name="World3" parent="World4" instance=ExtResource( 12 )]
