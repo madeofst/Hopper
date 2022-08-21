@@ -58,8 +58,8 @@ _________________________
 
     //Tiles
     * Permanent/semi-permanent change of jump length
-    * Add bounce tile? - auto bounce - would need a new animation
     * multiple goals?
+    * score on other tile types
 
     //Presentational
     * Animate main menu

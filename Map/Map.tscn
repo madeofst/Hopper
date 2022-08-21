@@ -62,7 +62,7 @@ _data = {
 [sub_resource type="Curve2D" id=12]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 3.05176e-05, -0.0920601, 0, 0, 0, 0, 48, 15.9079 )
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 16 )
 }
 
 [sub_resource type="Curve2D" id=14]
@@ -98,7 +98,7 @@ _data = {
 [sub_resource type="Curve2D" id=19]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 8, -47.9079, 0, 0, 0, 0, 56, -63.9079 )
+"points": PoolVector2Array( 0, 0, 0, 0, 8, -48, 0, 0, 0, 0, 56, -64 )
 }
 
 [node name="Map" type="Node2D"]
@@ -106,9 +106,10 @@ script = ExtResource( 3 )
 
 [node name="Background" type="Sprite" parent="."]
 modulate = Color( 0.764706, 0.764706, 0.764706, 1 )
-position = Vector2( 256, -176 )
+position = Vector2( 24, -96 )
 z_index = -2
 texture = ExtResource( 5 )
+offset = Vector2( 232, -80 )
 
 [node name="Start" parent="." instance=ExtResource( 1 )]
 position = Vector2( 232, 216 )
@@ -137,6 +138,7 @@ LocationsToUnlock = PoolStringArray( "World2", "World3" )
 position = Vector2( 112, -88 )
 curve = SubResource( 2 )
 Directions = PoolStringArray( "Left" )
+Active = true
 
 [node name="World3" parent="World1" instance=ExtResource( 12 )]
 position = Vector2( -104, 0 )
@@ -150,11 +152,13 @@ Texture = ExtResource( 6 )
 ID = 2
 Pond = "Hawkins"
 Levels = PoolStringArray( "MovingOn", "MovingOn2", "DoubleJump", "WeirdMirror1", "Jumpington" )
+Active = true
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World1" parent="World2" instance=ExtResource( 12 )]
 curve = SubResource( 5 )
 Directions = PoolStringArray( "Right" )
+Active = true
 
 [node name="World3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 256, 32 )
@@ -174,6 +178,7 @@ Active = true
 [node name="World4" parent="World3" instance=ExtResource( 12 )]
 curve = SubResource( 9 )
 Directions = PoolStringArray( "Right" )
+Active = true
 
 [node name="World6" parent="World3" instance=ExtResource( 12 )]
 curve = SubResource( 10 )
@@ -192,11 +197,12 @@ LocationsToUnlock = PoolStringArray( "World5" )
 [node name="World3" parent="World4" instance=ExtResource( 12 )]
 curve = SubResource( 11 )
 Directions = PoolStringArray( "Left" )
+Active = true
 
 [node name="World5" parent="World4" instance=ExtResource( 12 )]
-position = Vector2( 0, 0.0920601 )
 curve = SubResource( 12 )
 Directions = PoolStringArray( "Right" )
+Active = true
 
 [node name="World5" parent="." instance=ExtResource( 1 )]
 position = Vector2( 352, 32 )
@@ -204,16 +210,19 @@ Texture = ExtResource( 8 )
 ID = 5
 Pond = "BelAir"
 Levels = PoolStringArray( "Mazemerize", "TheSquare", "PondInPond", "SideWind", "MiniMaze", "GettingAbout9" )
+Active = true
 LocationsToUnlock = PoolStringArray( "World6" )
 
 [node name="World4" parent="World5" instance=ExtResource( 12 )]
 position = Vector2( 7.99997, 8 )
 curve = SubResource( 14 )
 Directions = PoolStringArray( "Left" )
+Active = true
 
 [node name="World6" parent="World5" instance=ExtResource( 12 )]
 curve = SubResource( 16 )
 Directions = PoolStringArray( "Right" )
+Active = true
 
 [node name="World6" parent="." instance=ExtResource( 1 )]
 position = Vector2( 400, 16 )
@@ -221,12 +230,14 @@ Texture = ExtResource( 8 )
 ID = 6
 Pond = "BelAir"
 Levels = PoolStringArray( "LongWayShortWay5", "StuckInJumpLoop", "CrissCross" )
+Active = true
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World5" parent="World6" instance=ExtResource( 12 )]
 position = Vector2( -3.05176e-05, 0.27618 )
 curve = SubResource( 17 )
 Directions = PoolStringArray( "Left" )
+Active = true
 
 [node name="World7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 128, -64 )
@@ -246,6 +257,7 @@ Active = true
 [node name="World8" parent="World7" instance=ExtResource( 12 )]
 curve = SubResource( 18 )
 Directions = PoolStringArray( "Left" )
+Active = true
 
 [node name="World8" parent="." instance=ExtResource( 1 )]
 position = Vector2( 80, -48 )
@@ -253,12 +265,14 @@ Texture = ExtResource( 6 )
 ID = 8
 Pond = "Liffey"
 Levels = PoolStringArray( "3-3-4", "Trickery", "FillipeFilloppe", "Twins" )
+Active = true
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World7" parent="World8" instance=ExtResource( 12 )]
 position = Vector2( -8, 48 )
 curve = SubResource( 19 )
 Directions = PoolStringArray( "Right" )
+Active = true
 
 [node name="Pointer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 232, 216 )
