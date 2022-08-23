@@ -11,9 +11,6 @@ margin_bottom = 270.0
 mouse_filter = 1
 size_flags_horizontal = 4
 size_flags_vertical = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Buttons" type="VBoxContainer" parent="."]
 margin_left = 120.0
@@ -106,9 +103,6 @@ margin_right = 245.0
 margin_bottom = 38.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextLabel" type="RichTextLabel" parent="Buttons/MapButton/Labels"]
 margin_right = 194.0

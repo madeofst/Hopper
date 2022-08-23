@@ -130,7 +130,7 @@ position = Vector2( 152, 120 )
 Texture = ExtResource( 6 )
 ID = 1
 Pond = "Hawkins"
-Levels = PoolStringArray( "StartingOut", "SecondOfLy", "Up", "PointsPointsPoints6", "ArtAndSoul2" )
+Levels = PoolStringArray( "AFish", "Wandering", "SecondOfLy", "SimpleThrough", "Up", "ArtAndSoul2" )
 Active = true
 LocationsToUnlock = PoolStringArray( "World2", "World3" )
 

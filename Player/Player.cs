@@ -178,6 +178,7 @@ namespace Hopper
                             }
                             SwimTargetPosition += Movement;
                         }
+                        if (MovementNodes.Count == 20) break;
                     }
                 }
                 else

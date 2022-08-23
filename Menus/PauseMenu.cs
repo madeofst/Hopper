@@ -67,7 +67,7 @@ namespace Hopper
             }
             else if (Mode == PauseMenuMode.Stage)
             {
-                MapButton.GetNode<RichTextLabel>("Labels/TextLabel").Text = "Back to map";
+                MapButton.GetNode<RichTextLabel>("Labels/TextLabel").BbcodeText = "[right][shake rate=2 level=6]Back to map [/shake][/right]";
                 Buttons = new List<AnimatedButton>() 
                 {
                     RestartButton,
@@ -77,7 +77,7 @@ namespace Hopper
             }
             else if (Mode == PauseMenuMode.Editor)
             {
-                MapButton.GetNode<RichTextLabel>("Labels/TextLabel").Text = "To editor";
+                MapButton.GetNode<RichTextLabel>("Labels/TextLabel").BbcodeText = "[right][shake rate=2 level=6]To editor [/shake][/right]";
                 Buttons = new List<AnimatedButton>() 
                 {
                     RestartButton,
@@ -158,21 +158,12 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if (@event.IsActionPressed("ui_cancel") && Visible && Loaded && !Animating)
-            {   
-                AnimateHide();
-            }
-            else if (@event.IsActionPressed("ui_restart") && Visible && Loaded && !Animating)
+            if (Visible && Loaded && !Animating)
             {
-                EmitSignal(nameof(Restart));
-            }
-            else if (@event.IsActionPressed("ui_map") && Visible && Loaded && !Animating)
-            {
-                EmitSignal(nameof(Map));
-            }
-            else if (@event.IsActionPressed("ui_quit") && Visible && Loaded && !Animating)
-            {
-                EmitSignal(nameof(Quit));
+                if      (@event.IsActionPressed("ui_cancel"))   {AnimateHide();}
+                else if (@event.IsActionPressed("ui_restart"))  {EmitSignal(nameof(Restart));}
+                else if (@event.IsActionPressed("ui_map"))      {EmitSignal(nameof(Map));}
+                else if (@event.IsActionPressed("ui_quit"))     {EmitSignal(nameof(Quit));}
             }
         }
     }

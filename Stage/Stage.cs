@@ -128,10 +128,10 @@ namespace Hopper
                 PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
                 PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
                 PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
-
-                PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
-                PauseMenu.Connect(nameof(PauseMenu.Map), this, nameof(QuitToMap));
             }
+
+            PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
+            PauseMenu.Connect(nameof(PauseMenu.Map), this, nameof(QuitToMap));
             
             NewPlayer();           
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));
@@ -413,7 +413,7 @@ namespace Hopper
         {
             if (CurrentLevel != null)
             {
-                UpdateTimeRemaining();
+/*                 UpdateTimeRemaining();
 
                 if (Timer != null)
                 {
@@ -431,8 +431,8 @@ namespace Hopper
                         GameOver.ScoreLabel.Text = GameOver.Score.ToString();
                     }
                     QueueFree();
-                    if (!TempForTesting) HUD.Close();;
-                }
+                    if (!TempForTesting) HUD.Close();
+                } */
             }
         }
 

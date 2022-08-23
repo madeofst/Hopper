@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "StartingOut"
+Name = "AFish"
 Width = 7
 Height = 7
 TileSize = 32
-StartingHops = 4
-MaximumHops = 4
+StartingHops = 20
+MaximumHops = 20
 ScoreRequired = 100
 PlayerStartPosition = Vector2( 1, 3 )
-TileType = PoolIntArray( 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 4, 0, 0, 2, 0, 1, 4, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 )
+TileType = PoolIntArray( 0, 3, 3, 3, 0, 3, 3, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 3, 3, 3, 0, 3, 3 )
 TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
