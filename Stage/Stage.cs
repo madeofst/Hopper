@@ -473,6 +473,7 @@ namespace Hopper
             {
                 Map Map = GetNode<Map>("/root/Map");
                 Map.ConnectPauseSignals();
+                Map.UpdateActivationState(StageData.LevelReached);
                 Map.Show();
                 Map.SetProcessInput(true);
                 Map.GetNode<Pointer>("Pointer").SetProcessInput(true);

@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "Jumpington"
+Name = "___Test"
 Width = 7
 Height = 7
 TileSize = 32
-StartingHops = 9
-MaximumHops = 9
+StartingHops = 20
+MaximumHops = 20
 ScoreRequired = 0
-PlayerStartPosition = Vector2( 0, 6 )
-TileType = PoolIntArray( 3, 3, 5, 5, 5, 5, 3, 4, 3, 3, 5, 5, 1, 5, 3, 3, 5, 5, 5, 5, 5, 3, 3, 5, 5, 5, 5, 5, 5, 3, 5, 5, 5, 3, 5, 3, 3, 3, 3, 3, 3, 3, 5, 3, 5, 3, 3, 4, 3 )
+PlayerStartPosition = Vector2( 1, 4 )
+TileType = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 5, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )

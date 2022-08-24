@@ -30,13 +30,32 @@ namespace Hopper
         }
 
         private Sprite Sprite;
+        private Sprite ActivationSprite;
         private AnimationPlayer AnimationPlayer;
+        private AnimationPlayer ActivationAnimationPlayer;
 
         [Export]
         public bool Active;
 
         [Export]
-        public bool NewlyActivated;
+        private bool newlyActivated;
+
+        public bool NewlyActivated 
+        { 
+            get => newlyActivated; 
+            set
+            {
+                if (value)
+                {
+                    ActivationAnimationPlayer.Play("NewlyActivated");
+                }
+                else
+                {
+                    ActivationAnimationPlayer.Stop();
+                }
+                newlyActivated = value;  
+            } 
+        }
 
         [Export]
         public bool Complete;
@@ -53,6 +72,8 @@ namespace Hopper
         {
             Sprite = GetNode<Sprite>("Sprite");
             AnimationPlayer = Sprite.GetNode<AnimationPlayer>("AnimationPlayer");
+            ActivationSprite = GetNode<Sprite>("ActivationSprite");
+            ActivationAnimationPlayer = ActivationSprite.GetNode<AnimationPlayer>("AnimationPlayer");
             Sprite.Texture = Texture;
         }
 
@@ -92,6 +113,11 @@ namespace Hopper
                 AnimationPlayer.Play("Active");
             else
                 AnimationPlayer.Play("Inactive");
+        }
+
+        internal void UpdateActivationState(int levelReached)
+        {
+            if (levelReached > 0) ActivationAnimationPlayer.Play("Stopped");
         }
 
         public void UpdateLocationProgress(int levelReached)

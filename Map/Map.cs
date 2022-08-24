@@ -83,6 +83,11 @@ namespace Hopper
             Pointer.CurrentLocation.UpdateLocationProgress(LevelReached);
         }
 
+        public void UpdateActivationState(int LevelReached)
+        {
+            Pointer.CurrentLocation.UpdateActivationState(LevelReached);
+        }
+
         public override void _Process(float delta)
         {
             foreach (Location l in Locations)

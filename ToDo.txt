@@ -7,6 +7,7 @@ _________________________
     * Restarting level mid-movement in game - smoke animation should stop moving
     * Consider the infinite loop issue again!
     * Need a bounce-direction-splash animation
+    * Double spring onto 2 rocks needs an animation correction
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
@@ -21,7 +22,7 @@ _________________________
 
     -VISUAL DESIGN
     * are you sure you want to quit
-    * redesign boundary to make grid clearer
+    * Work out what's doing the newly activated color change
 
     -ANIMATIONS
     * Double jump tidy
