@@ -8,6 +8,7 @@ _________________________
     * Consider the infinite loop issue again!
     * Need a bounce-direction-splash animation
     * Double spring onto 2 rocks needs an animation correction
+    * Path from World 1 to World 3 needs to unlock after completing world 2
 
     -LEVEL EDITOR
     * Level editor - autosaving and updates
