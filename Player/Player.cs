@@ -178,7 +178,6 @@ namespace Hopper
                             }
                             SwimTargetPosition += Movement;
                         }
-                        if (MovementNodes.Count == 20) break;
                     }
                 }
                 else
@@ -186,7 +185,7 @@ namespace Hopper
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     break;
                 }
-
+                if (MovementNodes.Count == 20) break;
             } while (true);
 
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Stage/Stage.cs" type="Script" id=1]
-[ext_resource path="res://Stage/Resources/TestPondDrawing3.png" type="Texture" id=2]
+[ext_resource path="res://Stage/Resources/TestPondDrawing4.png" type="Texture" id=2]
 [ext_resource path="res://Menus/Resources/Blue.png" type="Texture" id=3]
 [ext_resource path="res://Shaders/WaterShader.tres" type="Material" id=9]
 [ext_resource path="res://Stage/Resources/Water.png" type="Texture" id=10]
@@ -66,6 +66,3 @@ mouse_filter = 2
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
