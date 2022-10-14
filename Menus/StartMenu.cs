@@ -7,7 +7,7 @@ namespace Hopper
 {
 	public class StartMenu : MarginContainer
 	{
-		public AudioStreamPlayer2D Music;
+		public AudioStreamPlayer Music;
 		private Tween Tween;
 		private TextureButton NewGameButton;
 		private Map Map;
@@ -16,7 +16,7 @@ namespace Hopper
 
 		public override void _Ready()
 		{
-			Music = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
+			Music = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 			Tween = GetNode<Tween>("Tween");
 			NewGameButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton");
 		}

@@ -271,4 +271,5 @@ rect_min_size = Vector2( 70, 30 )
 mouse_default_cursor_shape = 2
 text = "Back"
 script = ExtResource( 2 )
+
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="OnBackButtonPressed"]

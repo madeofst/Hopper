@@ -30,10 +30,10 @@ namespace Hopper
         public PauseMenu PauseMenu { get; private set; }
 
         //Audio
-        public AudioStreamPlayer2D Music { get; set; }
-        public AudioStreamPlayer2D FailLevel { get; private set; }
-        public AudioStreamPlayer2D SucceedLevel { get; private set; }
-        public AudioStreamPlayer2D GoalActivate { get; private set; }
+        public AudioStreamPlayer Music { get; set; }
+        public AudioStreamPlayer FailLevel { get; private set; }
+        public AudioStreamPlayer SucceedLevel { get; private set; }
+        public AudioStreamPlayer GoalActivate { get; private set; }
 
         //HUD
         private HUD HUD { get; set; }        
@@ -87,10 +87,10 @@ namespace Hopper
             LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
             PauseMenu = GetNode<PauseMenu>("../PauseMenu");
 
-            Music = GetNode<AudioStreamPlayer2D>("../AudioRepository/Music");
-            FailLevel = GetNode<AudioStreamPlayer2D>("../AudioRepository/FailLevel");
-            SucceedLevel = GetNode<AudioStreamPlayer2D>("../AudioRepository/SucceedLevel");
-            GoalActivate = GetNode<AudioStreamPlayer2D>("../AudioRepository/GoalActivate");
+            Music = GetNode<AudioStreamPlayer>("../AudioRepository/Music");
+            FailLevel = GetNode<AudioStreamPlayer>("../AudioRepository/FailLevel");
+            SucceedLevel = GetNode<AudioStreamPlayer>("../AudioRepository/SucceedLevel");
+            GoalActivate = GetNode<AudioStreamPlayer>("../AudioRepository/GoalActivate");
         }
 
         public void Init(StageData StageData,
