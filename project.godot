@@ -16,6 +16,7 @@ _global_script_class_icons={
 
 config/name="Hopper"
 run/main_scene="res://Menus/LoadingScreen.tscn"
+config/icon="res://Player/Resources/Frog1_32x32_front.png"
 
 [autoload]
 

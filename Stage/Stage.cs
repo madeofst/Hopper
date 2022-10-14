@@ -113,6 +113,23 @@ namespace Hopper
             }
             Position = position - new Vector2(240, 135);
 
+            if (StageData.Pond == "Hawkins")
+            {
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
+            }
+            else if (StageData.Pond == "BelAir")
+            {
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+            }
+            else if (StageData.Pond == "Liffey")
+            {
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+            }
+            else
+            {
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+            }
+
             HUD.LockPosition(Position);
 
             //Connect(nameof(Stage.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
