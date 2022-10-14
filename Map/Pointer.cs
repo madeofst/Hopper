@@ -26,7 +26,7 @@ namespace Hopper
         }
 
         private List<Location> Locations;
-        private List<PondLinkPath> Paths;
+        //private List<PondLinkPath> Paths;
 
         private AnimationTree AnimationTree;
         private AnimationNodeStateMachinePlayback AnimationState;

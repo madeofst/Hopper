@@ -64,7 +64,7 @@ namespace Hopper
         public string[] LocationsToUnlock;
 
         public int LevelReached;
-        private LocationTool tool;
+        //private LocationTool tool;
         private LocationProgress LocationProgress;
 
 

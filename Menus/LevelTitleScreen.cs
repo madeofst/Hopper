@@ -43,8 +43,8 @@ namespace Hopper
         public bool Animating { get; private set; }
         public bool Triggered { get; private set; }
 
-        private TitleElement StageID;
-        private RichTextLabel _StageIDLabel;
+        //private TitleElement StageID;
+        //private RichTextLabel _StageIDLabel;
 
         private HBoxContainer LevelButtons;
         private List<TextureButton> LevelSelectors = new List<TextureButton>();
