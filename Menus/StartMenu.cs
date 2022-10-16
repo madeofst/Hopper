@@ -86,7 +86,7 @@ namespace Hopper
 			{
 				HUD.Visible = false;
 			}
-			GetViewport().MoveChild(this, 2);
+			//GetViewport().MoveChild(this, 2);
 			Hide();
 		}
     }

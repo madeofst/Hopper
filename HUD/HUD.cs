@@ -10,7 +10,6 @@ namespace Hopper
         private RichTextLabel PopUp;
         private HopCounter HopCounter;
         private ScoreBox ScoreBox;
-        private MapCamera Camera;
 
         private LevelTitleScreen LevelTitleScreen;
 
@@ -30,7 +29,6 @@ namespace Hopper
             PopUp = GetNode<RichTextLabel>("PopUpText/RichTextLabel");
             HopCounter = GetNode<HopCounter>("HopCounter");
             ScoreBox = GetNode<ScoreBox>("ScoreBox");
-            Camera = GetNode<MapCamera>("../Map/MapCamera");
             Restart = GetNode<TouchScreenButton>("TouchButtons/Restart");
             TouchButtons = GetNode<Control>("TouchButtons");
         }
@@ -55,11 +53,7 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            if (Camera != null)
-            {
-                if (!PositionLocked && Camera.Name != null)
-                    RectPosition = Camera.Position - new Vector2(240, 135);
-            }
+
         }
 
         public void ShowPopUp(string text)

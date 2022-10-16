@@ -121,7 +121,7 @@ namespace Hopper
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
             MoveToTop(PauseMenu);
-            PauseMenu.SetPosition(Pointer.CurrentLocation.Position - new Vector2(240, 135));
+            //PauseMenu.SetPosition(Pointer.CurrentLocation.Position - new Vector2(240, 135));
             PauseMenu.Visible = true;
             PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
             PauseMenu.AnimateShow();
@@ -139,7 +139,7 @@ namespace Hopper
         private void MoveToTop(Node node = null)
         {
             if (node == null) node = this;
-            GetViewport().MoveChild(node, GetViewport().GetChildCount());
+            node.GetViewport().MoveChild(node, node.GetViewport().GetChildCount());
         }
     }
 }
