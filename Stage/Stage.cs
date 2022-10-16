@@ -177,7 +177,14 @@ namespace Hopper
             {
                 if (PuzzleMode)
                 {
-                    NewLevel(Levels[StageData.LevelReached]);
+                    if (StageData.LevelReached >= Levels.Length)
+                    {
+                        NewLevel(Levels[0]);
+                    }
+                    else
+                    {
+                        NewLevel(Levels[StageData.LevelReached]);
+                    }
                 }
                 else
                 {

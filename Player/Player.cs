@@ -370,6 +370,7 @@ namespace Hopper
             {
                 AnimationEndTile.SplashAnimation.Play("Land");
                 if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
+                if (AnimationEndTile.Type == Type.Score) AnimationEndTile.CrunchPartilces();
             }
         }
 

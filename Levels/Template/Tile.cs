@@ -112,5 +112,14 @@ namespace Hopper
         {
             GetNode<AnimationPlayer>("LilySprite/AnimationPlayer").Play("Idle");
         }
+
+        public void CrunchPartilces()
+        {
+            if (Type == Type.Score && BugSprite.Visible == true)
+            {
+                GetNode<CPUParticles2D>("CPUParticles2D").Emitting = true;
+                GetNode<CPUParticles2D>("CPUParticles2D2").Emitting = true;
+            }
+        }
     }
 }
