@@ -22,12 +22,12 @@ namespace Hopper
         private void AddMenusToTree()
         {
             AudioRepo.Visible = false;
-            GetTree().Root.AddChild(AudioRepo);
-            GetTree().Root.AddChild(StartMenu);
+            GetViewport().AddChild(AudioRepo);
+            GetViewport().AddChild(StartMenu);
             PauseMenu.Visible = false;
-            GetTree().Root.AddChild(PauseMenu);
+            GetViewport().AddChild(PauseMenu);
             LevelTitleScreen.Visible = false;
-            GetTree().Root.AddChild(LevelTitleScreen);
+            GetViewport().AddChild(LevelTitleScreen);
         }
     }
 }

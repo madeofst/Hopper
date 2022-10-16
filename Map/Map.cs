@@ -56,7 +56,7 @@ namespace Hopper
 
         private void QuitToMenu()
         {
-            StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
+            StartMenu StartMenu = GetNode<StartMenu>("/root/GameContainer/ViewportContainer/Viewport/StartMenu");
             Pointer.MoveToMenuPosition(StartMenu.RectPosition);
             Camera.MoveTo(Pointer.Position);
             PauseMenu.RectPosition = StartMenu.RectPosition;
@@ -139,7 +139,7 @@ namespace Hopper
         private void MoveToTop(Node node = null)
         {
             if (node == null) node = this;
-            GetTree().Root.MoveChild(node, GetTree().Root.GetChildCount());
+            GetViewport().MoveChild(node, GetViewport().GetChildCount());
         }
     }
 }

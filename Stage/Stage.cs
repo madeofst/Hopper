@@ -235,7 +235,7 @@ namespace Hopper
 
         private void BuildLevel(bool replay = false)
         {
-            GetTree().Root.MoveChild(HUD, GetTree().Root.GetChildCount());
+            GetViewport().MoveChild(HUD, GetViewport().GetChildCount());
             if (!replay)
             {
                 if (NextLevel == null) NextLevel = CurrentLevel;
@@ -423,7 +423,7 @@ namespace Hopper
         private void MoveToTop(Node node = null)
         {
             if (node == null) node = this;
-            GetTree().Root.MoveChild(node, GetTree().Root.GetChildCount());
+            GetViewport().MoveChild(node, GetViewport().GetChildCount());
         }
 
         public override void _Process(float delta)
@@ -443,7 +443,7 @@ namespace Hopper
                     if (!PuzzleMode)
                     {
                         GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
-                        GetTree().Root.AddChild(GameOver);
+                        GetViewport().AddChild(GameOver);
                         GameOver.Score = Player.TotalScore;
                         GameOver.ScoreLabel.Text = GameOver.Score.ToString();
                     }
@@ -488,7 +488,7 @@ namespace Hopper
             QueueFree();
             if (!TempForTesting)
             {
-                Map Map = GetNode<Map>("/root/Map");
+                Map Map = GetNode<Map>("/root/GameContainer/ViewportContainer/Viewport/Map");
                 Map.ConnectPauseSignals();
                 Map.UpdateActivationState(StageData.LevelReached);
                 Map.Show();
@@ -510,8 +510,8 @@ namespace Hopper
             if (!TempForTesting)
             {
                 HUD.Visible = false;
-                GetNode<Map>("/root/Map").QueueFree();  
-                GetNode<StartMenu>("/root/StartMenu").ShowMenu();
+                GetNode<Map>("/root/GameContainer/ViewportContainer/Viewport/Map").QueueFree();  
+                GetNode<StartMenu>("/root/GameContainer/ViewportContainer/Viewport/StartMenu").ShowMenu();
             }
         }
     }

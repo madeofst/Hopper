@@ -31,7 +31,7 @@ namespace Hopper
 		public void highScoresPressed()
 		{
 			HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
-			GetTree().Root.AddChild(table);
+			GetViewport().AddChild(table);
 			Music.Stop();
 			Hide();
 		}
@@ -40,7 +40,7 @@ namespace Hopper
 		{
 			EditorMode = true;
 			LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Editor/LevelEditor.tscn").Instance();
-			GetTree().Root.AddChild(editor);
+			GetViewport().AddChild(editor);
 			Music.Stop();
 			FadeOut();
 		}
@@ -64,11 +64,11 @@ namespace Hopper
 			{
 				Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
 				Map.Modulate = new Color(1, 1, 1, 0);
-				GetTree().Root.AddChildBelowNode(GetNode<LoadingScreen>("/root/LoadingScreen"), Map);
+				GetViewport().AddChildBelowNode(GetNode<LoadingScreen>("/root/GameContainer/ViewportContainer/Viewport/LoadingScreen"), Map);
 			}
 
 			HUD = (HUD)GD.Load<PackedScene>("res://HUD/HUD.tscn").Instance();
-			GetTree().Root.AddChild(HUD);
+			GetViewport().AddChild(HUD);
 			HUD.HideHopCounter();
 			HUD.HideScoreBox();
 			HUD.SetButtonToEnter();
@@ -84,7 +84,7 @@ namespace Hopper
 			{
 				HUD.Visible = false;
 			}
-			GetTree().Root.MoveChild(this, 2);
+			GetViewport().MoveChild(this, 2);
 			Hide();
 		}
     }

@@ -36,7 +36,7 @@ namespace Hopper
             Data.List = List;
 
             HighScoreTable table = (HighScoreTable)GD.Load<PackedScene>("res://HighScores/HighScoreTable.tscn").Instance();
-            GetTree().Root.AddChild(table);
+            GetViewport().AddChild(table);
             QueueFree();
 
         }

@@ -16,7 +16,7 @@ namespace Hopper
 
         public void ConnectNodesAndSignals()
         {
-            Player = GetNode<Player>("/root/Stage/Player");
+            Player = GetNode<Player>("/root/GameContainer/ViewportContainer/Viewport/ViewportContainer/Viewport/Stage/Player");
             MakeConnections();
         }
 

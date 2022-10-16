@@ -19,7 +19,7 @@ namespace Hopper
             Data = new HighScoreData();
             HighScores = Data.List;
 
-            Menu = GetNode<StartMenu>("/root/StartMenu");
+            Menu = GetNode<StartMenu>("/root/GameContainer/ViewportContainer/Viewport/ViewportContainer/Viewport/StartMenu");
 
             CallDeferred("GetChildReferences");
         }

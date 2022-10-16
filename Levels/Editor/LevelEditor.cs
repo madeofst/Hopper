@@ -23,7 +23,7 @@ namespace Hopper
         {
             Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
             levelFactory = new LevelFactory(Resources);
-            Menu = GetNode<StartMenu>("/root/StartMenu");
+            Menu = GetNode<StartMenu>("/root/GameContainer/ViewportContainer/Viewport/StartMenu");
             CallDeferred("Init");
         }
 
@@ -75,7 +75,7 @@ namespace Hopper
                 {
                     SaveCurrentLevel();
                     Stage TestStage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
-                    GetTree().Root.AddChild(TestStage);
+                    GetViewport().AddChild(TestStage);
                     TestStage.Init(new StageData(1, "", 0), new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
                 }
             }
@@ -150,7 +150,7 @@ namespace Hopper
         public void GoHome()
         {
             Menu.ShowMenu();
-            GetNode<HUD>("/root/HUD").QueueFree();
+            GetNode<HUD>("/root/GameContainer/ViewportContainer/Viewport/HUD").QueueFree();
             QueueFree();
         }
     }
