@@ -13,9 +13,11 @@ namespace Hopper
 		private Map Map;
 		private HUD HUD;
 		private bool EditorMode;
+		private Viewport MapViewport;
 
 		public override void _Ready()
 		{
+			MapViewport = GetNode<Viewport>("/root/MapContainer/ViewportContainer/Viewport");
 			Music = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 			Tween = GetNode<Tween>("Tween");
 			NewGameButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton");
@@ -64,7 +66,7 @@ namespace Hopper
 			{
 				Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
 				Map.Modulate = new Color(1, 1, 1, 0);
-				GetViewport().AddChildBelowNode(GetNode<LoadingScreen>("/root/GameContainer/ViewportContainer/Viewport/LoadingScreen"), Map);
+				MapViewport.AddChild(Map);
 			}
 
 			HUD = (HUD)GD.Load<PackedScene>("res://HUD/HUD.tscn").Instance();

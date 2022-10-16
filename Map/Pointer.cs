@@ -150,7 +150,7 @@ namespace Hopper
             SetProcessInput(false);
             Stage Stage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
             Stage.Visible = false;
-            GetViewport().AddChildBelowNode(Map, Stage);
+            GetTree().Root.AddChild(Stage);
             Stage.Connect(nameof(Stage.UnlockNextStage), 
                           Map, 
                           nameof(Map.UnlockStage), 

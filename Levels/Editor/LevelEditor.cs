@@ -23,7 +23,7 @@ namespace Hopper
         {
             Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
             levelFactory = new LevelFactory(Resources);
-            Menu = GetNode<StartMenu>("/root/GameContainer/ViewportContainer/Viewport/StartMenu");
+            Menu = GetNode<StartMenu>("/root/StartMenu");
             CallDeferred("Init");
         }
 
@@ -150,7 +150,7 @@ namespace Hopper
         public void GoHome()
         {
             Menu.ShowMenu();
-            GetNode<HUD>("/root/GameContainer/ViewportContainer/Viewport/HUD").QueueFree();
+            GetNode<HUD>("/root/HUD").QueueFree();
             QueueFree();
         }
     }

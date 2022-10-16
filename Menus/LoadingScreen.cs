@@ -9,9 +9,11 @@ namespace Hopper
         private PauseMenu PauseMenu;
         private LevelTitleScreen LevelTitleScreen;
         private AudioRepository AudioRepo;
+        private Node2D MapContainer;
 
         public override void _Ready()
         {
+            MapContainer = (Node2D)GD.Load<PackedScene>("res://Map/MapContainer.tscn").Instance();
             StartMenu = (StartMenu)GD.Load<PackedScene>("res://Menus/StartMenu.tscn").Instance();
             PauseMenu = (PauseMenu)GD.Load<PackedScene>("res://Menus/PauseMenu.tscn").Instance();
             LevelTitleScreen = (LevelTitleScreen)GD.Load<PackedScene>("res://Menus/LevelTitleScreen.tscn").Instance();
@@ -21,6 +23,7 @@ namespace Hopper
 
         private void AddMenusToTree()
         {
+            GetViewport().AddChild(MapContainer);
             AudioRepo.Visible = false;
             GetViewport().AddChild(AudioRepo);
             GetViewport().AddChild(StartMenu);

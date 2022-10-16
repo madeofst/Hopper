@@ -17,7 +17,7 @@ namespace Hopper
             WindowScale = (OS.WindowSize / GameSize).x;
             Pointer = GetNode<Pointer>("../Pointer");
             ActualCamPosition = GlobalPosition;
-            ViewportContainer = GetNode<ViewportContainer>("/root/GameContainer/ViewportContainer");
+            ViewportContainer = GetNode<ViewportContainer>("/root/MapContainer/ViewportContainer");
         }
         public override void _Process(float delta)
         {

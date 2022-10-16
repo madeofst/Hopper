@@ -15,7 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Hopper"
-run/main_scene="res://GameContainer.tscn"
+run/main_scene="res://Menus/LoadingScreen.tscn"
 config/icon="res://Player/Resources/Frog1_32x32_front.png"
 
 [autoload]
@@ -29,7 +29,7 @@ window/size/height=270
 window/size/test_width=480
 window/size/test_height=270
 window/dpi/allow_hidpi=true
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [global]

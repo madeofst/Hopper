@@ -35,8 +35,8 @@ namespace Hopper
 
         private void ConnectToPauseMenuAndHUD()
         {
-            HUD = GetNode<HUD>("../HUD");
-            PauseMenu = GetNode<PauseMenu>("../PauseMenu");
+            HUD = GetNode<HUD>("/root/HUD");
+            PauseMenu = GetNode<PauseMenu>("/root/PauseMenu");
             ConnectPauseSignals();
         }
 
@@ -56,7 +56,7 @@ namespace Hopper
 
         private void QuitToMenu()
         {
-            StartMenu StartMenu = GetNode<StartMenu>("/root/GameContainer/ViewportContainer/Viewport/StartMenu");
+            StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
             Pointer.MoveToMenuPosition(StartMenu.RectPosition);
             Camera.MoveTo(Pointer.Position);
             PauseMenu.RectPosition = StartMenu.RectPosition;

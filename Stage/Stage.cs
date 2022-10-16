@@ -111,7 +111,7 @@ namespace Hopper
             {
                 this.iLevel = StageData.LevelReached;
             }
-            Position = position - new Vector2(240, 135);
+            //Position = position - new Vector2(240, 135);
 
             if (StageData.Pond == "Hawkins")
             {
@@ -488,7 +488,7 @@ namespace Hopper
             QueueFree();
             if (!TempForTesting)
             {
-                Map Map = GetNode<Map>("/root/GameContainer/ViewportContainer/Viewport/Map");
+                Map Map = GetNode<Map>("/root/MapContainer/ViewportContainer/Viewport/Map");
                 Map.ConnectPauseSignals();
                 Map.UpdateActivationState(StageData.LevelReached);
                 Map.Show();
@@ -510,8 +510,8 @@ namespace Hopper
             if (!TempForTesting)
             {
                 HUD.Visible = false;
-                GetNode<Map>("/root/GameContainer/ViewportContainer/Viewport/Map").QueueFree();  
-                GetNode<StartMenu>("/root/GameContainer/ViewportContainer/Viewport/StartMenu").ShowMenu();
+                GetNode<Map>("/root/MapContainer/ViewportContainer/Viewport/Map").QueueFree();  
+                GetNode<StartMenu>("/root/StartMenu").ShowMenu();
             }
         }
     }
