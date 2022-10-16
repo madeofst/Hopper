@@ -323,15 +323,15 @@ namespace Hopper
         {
             Music.Stop();
             Player.ClearQueues();
-            if (iLevel >= Levels.Length - 1)
+/*             if (iLevel >= Levels.Length - 1)
             {
                 HUD.ShowPopUp("Game Complete");
             }
             else
             {
                 HUD.ShowPopUp("Level complete!");
-                SucceedLevel.Play();
-            }
+            } */
+            SucceedLevel.Play();
         }
 
         public void UpdateGoalStateAndScore(int currentScore, int currentLevelScore, int minScore)

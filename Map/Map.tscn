@@ -296,7 +296,7 @@ Directions = PoolStringArray( "Right" )
 position = Vector2( 232, 216 )
 
 [node name="MapCamera" type="Camera2D" parent="."]
-position = Vector2( 224, -24 )
+position = Vector2( 224, -112 )
 current = true
 script = ExtResource( 4 )
 

@@ -28,6 +28,9 @@ namespace Hopper
 		{
 			EditorMode = false;
 			if (!Tween.IsActive()) FadeOut();
+			LoadMap();
+            LoadHUD();
+			if (!EditorMode) Map.FadeIn();
 		}
 
 		public void highScoresPressed()
@@ -61,33 +64,38 @@ namespace Hopper
         }
 
 		public void AfterFade(object x, string key)
-		{
-			if (!EditorMode)
-			{
-				Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
-				Map.Modulate = new Color(1, 1, 1, 0);
-				MapViewport.AddChild(Map);
-			}
+        {
+            Music.Stop();
+            if (!EditorMode)
+            {
+                HUD.UnlockPosition();
+                HUD.Visible = true;
+            }
+            else
+            {
+                HUD.Visible = false;
+            }
+            //GetViewport().MoveChild(this, 2);
+            Hide();
+        }
 
-			HUD = (HUD)GD.Load<PackedScene>("res://HUD/HUD.tscn").Instance();
-			GetViewport().AddChild(HUD);
-			HUD.HideHopCounter();
-			HUD.HideScoreBox();
-			HUD.SetButtonToEnter();
+        private void LoadHUD()
+        {
+            HUD = (HUD)GD.Load<PackedScene>("res://HUD/HUD.tscn").Instance();
+            GetViewport().AddChild(HUD);
+            HUD.HideHopCounter();
+            HUD.HideScoreBox();
+            HUD.SetButtonToEnter();
+        }
 
-			Music.Stop();
-			if (!EditorMode)
-			{
-				HUD.UnlockPosition();
-				HUD.Visible = true;
-				Map.FadeIn();
-			}
-			else
-			{
-				HUD.Visible = false;
-			}
-			//GetViewport().MoveChild(this, 2);
-			Hide();
-		}
+        private void LoadMap()
+        {
+            if (!EditorMode)
+            {
+                Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
+                Map.Modulate = new Color(1, 1, 1, 0);
+                MapViewport.AddChild(Map);
+            }
+        }
     }
 }
