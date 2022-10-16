@@ -23,6 +23,7 @@ namespace Hopper
             Camera = GetNode<MapCamera>("MapCamera");
             CallDeferred(nameof(ConnectToPauseMenuAndHUD));
             CallDeferred(nameof(ActivateLocations));
+            Pointer.CurrentLocation.UnlockAllPaths();
         }
 
         private void ActivateLocations()
@@ -90,17 +91,6 @@ namespace Hopper
 
         public override void _Process(float delta)
         {
-            foreach (Location l in Locations)
-            {
-                if (Pointer.Position == l.Position)
-                {
-                    l.Scale = new Vector2(1.2f, 1.2f);
-                }
-                else
-                {
-                    l.Scale = new Vector2(1f, 1f);
-                }
-            }
         }
 
         public void FadeIn()

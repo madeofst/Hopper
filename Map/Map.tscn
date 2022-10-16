@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Map/Location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map/Pointer.tscn" type="PackedScene" id=2]
@@ -9,7 +9,15 @@
 [ext_resource path="res://Shaders/Transition/HM_Transition.tres" type="Material" id=7]
 [ext_resource path="res://Levels/Resources/LilyPad3_32x32.png" type="Texture" id=8]
 [ext_resource path="res://Levels/Resources/LilyPad_Jump_Ready.png" type="Texture" id=9]
+[ext_resource path="res://Map/Path_Start_to_World1.png" type="Texture" id=10]
+[ext_resource path="res://Map/Path_World1_to_World2.png" type="Texture" id=11]
 [ext_resource path="res://Map/PondLinkPath.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Map/Path_World2_to_World3.png" type="Texture" id=13]
+[ext_resource path="res://Map/Path_World3_to_World4.png" type="Texture" id=14]
+[ext_resource path="res://Map/Path_World3_to_World7.png" type="Texture" id=15]
+[ext_resource path="res://Map/Path_World4_to_World5.png" type="Texture" id=16]
+[ext_resource path="res://Map/Path_World5_to_World6.png" type="Texture" id=17]
+[ext_resource path="res://Map/Path_World7_to_World8.png" type="Texture" id=18]
 
 [sub_resource type="Curve2D" id=1]
 resource_local_to_scene = true
@@ -114,7 +122,7 @@ offset = Vector2( 232, -80 )
 [node name="Start" parent="." instance=ExtResource( 1 )]
 position = Vector2( 232, 216 )
 Levels = PoolStringArray(  )
-LocationsToUnlock = PoolStringArray(  )
+LocationsToUnlock = PoolStringArray( "World1" )
 
 [node name="World1" parent="Start" instance=ExtResource( 12 )]
 self_modulate = Color( 0.501961, 0.6, 1, 0.701961 )
@@ -122,7 +130,11 @@ material = ExtResource( 7 )
 position = Vector2( -232, -216 )
 curve = SubResource( 1 )
 Directions = PoolStringArray( "Left", "Up" )
-Active = true
+active = true
+
+[node name="Sprite" type="Sprite" parent="Start/World1"]
+position = Vector2( 206, 169 )
+texture = ExtResource( 10 )
 
 [node name="World1" parent="." instance=ExtResource( 1 )]
 position = Vector2( 152, 120 )
@@ -137,6 +149,10 @@ LocationsToUnlock = PoolStringArray( "World2" )
 position = Vector2( 112, -88 )
 curve = SubResource( 2 )
 Directions = PoolStringArray( "Left" )
+
+[node name="Sprite" type="Sprite" parent="World1/World2"]
+position = Vector2( -8, -208 )
+texture = ExtResource( 11 )
 
 [node name="World2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 104, 104 )
@@ -155,6 +171,10 @@ position = Vector2( -104, 0 )
 curve = SubResource( 7 )
 Directions = PoolStringArray( "Up" )
 
+[node name="Sprite" type="Sprite" parent="World2/World3"]
+position = Vector2( 256, -279 )
+texture = ExtResource( 13 )
+
 [node name="World3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 256, 32 )
 Texture = ExtResource( 8 )
@@ -172,9 +192,17 @@ Directions = PoolStringArray( "Down" )
 curve = SubResource( 9 )
 Directions = PoolStringArray( "Right" )
 
-[node name="World6" parent="World3" instance=ExtResource( 12 )]
+[node name="Sprite" type="Sprite" parent="World3/World4"]
+position = Vector2( 0, -208 )
+texture = ExtResource( 14 )
+
+[node name="World7" parent="World3" instance=ExtResource( 12 )]
 curve = SubResource( 10 )
 Directions = PoolStringArray( "Up", "Left" )
+
+[node name="Sprite" type="Sprite" parent="World3/World7"]
+position = Vector2( 0, -208 )
+texture = ExtResource( 15 )
 
 [node name="World4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 304, 16 )
@@ -192,6 +220,10 @@ Directions = PoolStringArray( "Left" )
 curve = SubResource( 12 )
 Directions = PoolStringArray( "Right" )
 
+[node name="Sprite" type="Sprite" parent="World4/World5"]
+position = Vector2( -48, -192 )
+texture = ExtResource( 16 )
+
 [node name="World5" parent="." instance=ExtResource( 1 )]
 position = Vector2( 352, 32 )
 Texture = ExtResource( 8 )
@@ -208,6 +240,10 @@ Directions = PoolStringArray( "Left" )
 [node name="World6" parent="World5" instance=ExtResource( 12 )]
 curve = SubResource( 16 )
 Directions = PoolStringArray( "Right" )
+
+[node name="Sprite" type="Sprite" parent="World5/World6"]
+position = Vector2( -95, -208 )
+texture = ExtResource( 17 )
 
 [node name="World6" parent="." instance=ExtResource( 1 )]
 position = Vector2( 400, 16 )
@@ -238,6 +274,10 @@ Directions = PoolStringArray( "Down", "Right" )
 [node name="World8" parent="World7" instance=ExtResource( 12 )]
 curve = SubResource( 18 )
 Directions = PoolStringArray( "Left" )
+
+[node name="Sprite" type="Sprite" parent="World7/World8"]
+position = Vector2( 129, -112 )
+texture = ExtResource( 18 )
 
 [node name="World8" parent="." instance=ExtResource( 1 )]
 position = Vector2( 80, -48 )

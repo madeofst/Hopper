@@ -9,12 +9,23 @@ namespace Hopper
         public string[] Directions;
 
         [Export]
-        public bool Active;
-/* 
-        [Export]
-        public string Start;
+        private bool active;
 
-        [Export]
-        public string End; */
+        public bool Active 
+        { 
+            get => active; 
+            set
+            {
+                active = value; 
+                Visible = false;
+                if (value == true) Visible = true;
+            } 
+        }
+
+        public override void _Ready()
+        {
+            Visible = false;
+        }
+
     }
 }

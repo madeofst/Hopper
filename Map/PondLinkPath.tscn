@@ -14,9 +14,6 @@ curve = SubResource( 1 )
 script = ExtResource( 1 )
 Directions = PoolStringArray(  )
 
-[node name="Line2D" type="Line2D" parent="."]
-joint_mode = 2
-
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotation = -1.5708
 rotate = false
