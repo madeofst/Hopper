@@ -429,6 +429,7 @@ namespace Hopper
                 CurrentMovementCurve = CurrentAnimationNode.Curve;
                 AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
                 PlayerAnimation.Stop();
+
                 PlayerAnimation.Play(PlayerAnimation.FindAnimation(CurrentAnimationNode.Animation));
                 //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
             }
@@ -521,6 +522,15 @@ namespace Hopper
                 AnimationEndTile != null && 
                 CurrentAnimationNode != null)
             {
+                if (MoveInputQueue.Count > 0)
+                {
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 10, 1 , 2f);
+                } 
+                else
+                {
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed - delta * 10, 1 , 2f);
+                } 
+
                 AnimationTimeElapsed += delta;
 
                 float animationLength;
