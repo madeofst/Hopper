@@ -93,6 +93,7 @@ namespace Hopper
                 LocationProgress.AddChild(LevelSprite);
             }
             LocationProgress.Init(LevelReached);
+            UpdateAnimationState();
         }
 
         public void UnlockAllPaths()
@@ -103,13 +104,13 @@ namespace Hopper
             }
         }
 
-        public override void _Process(float delta)
+        public void UpdateAnimationState()
         {
-            if (NewlyActivated) 
+            if (NewlyActivated)
                 AnimationPlayer.Play("New");
             else if (Complete)
                 AnimationPlayer.Play("Complete");
-            else if (Active) 
+            else if (Active)
                 AnimationPlayer.Play("Active");
             else
                 AnimationPlayer.Play("Inactive");
