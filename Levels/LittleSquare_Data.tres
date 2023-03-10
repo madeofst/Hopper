@@ -5,13 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "DefaultLevelName"
+Name = "LittleSquare"
 Width = 7
 Height = 7
 TileSize = 32
 StartingHops = 6
 MaximumHops = 6
-ScoreRequired = 100
+ScoreRequired = 200
 PlayerStartPosition = Vector2( 3, 4 )
 TileType = PoolIntArray( 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 1, 0, 0, 4, 4, 0, 0, 2, 0, 0, 4, 4, 0, 4, 0, 4, 0, 4, 4, 2, 0, 0, 0, 2, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4 )
 TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
