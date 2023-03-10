@@ -433,11 +433,11 @@ namespace Hopper
             GetViewport().MoveChild(node, GetViewport().GetChildCount());
         }
 
-        public override void _Process(float delta)
+/*         public override void _Process(float delta)
         {
             if (CurrentLevel != null)
             {
-/*                 UpdateTimeRemaining();
+                 UpdateTimeRemaining();
 
                 if (Timer != null)
                 {
@@ -456,9 +456,9 @@ namespace Hopper
                     }
                     QueueFree();
                     if (!TempForTesting) HUD.Close();
-                } */
+                } 
             }
-        }
+        } */
 
         private void Unpause()
         {

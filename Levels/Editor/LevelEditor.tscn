@@ -52,9 +52,6 @@ margin_right = 480.0
 margin_bottom = 16.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Play" type="Button" parent="MarginContainer"]
 margin_left = 224.0
@@ -418,6 +415,7 @@ margin_top = 22.0
 margin_right = 477.0
 margin_bottom = 265.0
 rect_min_size = Vector2( 150, 52.5 )
+mouse_filter = 1
 window_title = "Open a File"
 mode = 0
 filters = PoolStringArray( "*.tres" )

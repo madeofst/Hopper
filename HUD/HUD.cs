@@ -51,11 +51,6 @@ namespace Hopper
             QueueFree();
         }
 
-        public override void _Process(float delta)
-        {
-
-        }
-
         public void ShowPopUp(string text)
         {
             PopUp.BbcodeText = $"[center]{text}[/center]";

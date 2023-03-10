@@ -23,14 +23,14 @@ namespace Hopper
 			NewGameButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton");
 		}
 
-
 		public void newGamePressed()
 		{
 			EditorMode = false;
 			if (!Tween.IsActive()) FadeOut();
 			LoadMap();
             LoadHUD();
-			if (!EditorMode) Map.FadeIn();
+			if (!EditorMode) Map.FadeIn(); //TODO: might be able to remove this editor check?
+			if (EditorMode) GD.Print("This should never happen I don't think.");
 		}
 
 		public void highScoresPressed()
@@ -45,6 +45,7 @@ namespace Hopper
 		{
 			EditorMode = true;
 			LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Editor/LevelEditor.tscn").Instance();
+			LoadHUD();
 			GetViewport().AddChild(editor);
 			Music.Stop();
 			FadeOut();

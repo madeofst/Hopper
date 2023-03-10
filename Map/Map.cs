@@ -77,6 +77,7 @@ namespace Hopper
             Pointer.CurrentLocation.UnlockAllPaths();
             Pointer.CurrentLocation.NewlyActivated = false;
             Pointer.CurrentLocation.Complete = true;
+            Pointer.CurrentLocation.UpdateAnimationState();
         }
 
         public void UpdateLocationProgress(int LevelReached)
@@ -87,10 +88,6 @@ namespace Hopper
         public void UpdateActivationState(int LevelReached)
         {
             Pointer.CurrentLocation.UpdateActivationState(LevelReached);
-        }
-
-        public override void _Process(float delta)
-        {
         }
 
         public void FadeIn()
