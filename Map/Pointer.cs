@@ -66,7 +66,6 @@ namespace Hopper
                 float Offset = currentPathFollow.Offset + (MovementDirection * 160f * delta);
                 if (currentPathFollow.UnitOffset <= 1) currentPathFollow.Offset = Offset;
                 movementVector = (currentPathFollow.GlobalPosition - Position).Normalized();
-                //GD.Print(movementVector);
                 Position = currentPathFollow.GlobalPosition;
                 
                 if ((currentPathFollow.UnitOffset >= 1 && MovementDirection == 1) || 
@@ -81,7 +80,6 @@ namespace Hopper
                 {
                     AnimationTree.Set("parameters/Idle/blend_position", movementVector);
                     AnimationTree.Set("parameters/Jump/blend_position", movementVector);
-                    AnimationState.Travel("Jump");
                 }
             }
         }
@@ -112,6 +110,7 @@ namespace Hopper
             if (currentPath != null)
             {
                 currentPathFollow = currentPath.GetNode<PathFollow2D>("PathFollow2D");
+                AnimationState.Travel("Jump");
             }
         }
 

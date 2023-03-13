@@ -101,7 +101,9 @@ namespace Hopper
         {
             if (level.LevelName == null) level.LevelName = "DefaultLevelName";
             level.UpdateLevelData();
-            return ResourceSaver.Save($"res://Levels/{level.LevelName}_Data.tres", level.LevelData);
+            level.LevelData.TakeOverPath($"res://Levels/{level.LevelName}_Data.tres");
+            Error error = ResourceSaver.Save($"res://Levels/{level.LevelName}_Data.tres", level.LevelData);
+            return error;
         }
         
         public Level Generate(int width = defaultWidth, 

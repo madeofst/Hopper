@@ -71,24 +71,17 @@ namespace Hopper
             }
             else
             {
-                if (CurrentLevel != null)
-                {
-                    SaveCurrentLevel();
-                    Stage TestStage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
-                    GetViewport().AddChild(TestStage);
-                    TestStage.Init(new StageData(1, "", 0), new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
-                }
+                SaveCurrentLevel();
+                Stage TestStage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
+                GetViewport().AddChild(TestStage);
+                TestStage.Init(new StageData(1, "", 0), new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
             }
         }
 
         private void SaveCurrentLevel()
         {
-            if (CurrentLevel != null)
-            {
-                WriteParameterValues();
-                Error error = levelFactory.Save(CurrentLevel);
-                //GD.PrintErr(error);
-            }
+            WriteParameterValues();
+            levelFactory.Save(CurrentLevel);
         }
 
         private string CheckValidityOfLevel()

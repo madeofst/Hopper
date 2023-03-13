@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+Name = "HiddenSpiral6"
+Width = 7
+Height = 7
+TileSize = 32
+StartingHops = 8
+MaximumHops = 8
+ScoreRequired = 0
+PlayerStartPosition = Vector2( 0, 0 )
+TileType = PoolIntArray( 0, 4, 0, 0, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4, 6, 4, 0, 4, 0, 4, 6, 4, 5, 1, 4, 0, 4, 0, 4, 4, 0, 4, 6, 0, 4, 4, 0, 4, 0, 0, 4, 0, 0, 6, 4, 0, 4, 0, 0 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
