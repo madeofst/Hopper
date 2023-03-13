@@ -142,13 +142,13 @@ namespace Hopper
             {
                 Map.DisconnectPauseSignals();
 
-                PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
-                PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
-                PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+                LevelTitleScreen.LevelTitle.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+                LevelTitleScreen.Connect(nameof(LevelTitleScreen.Quit), this, nameof(QuitToMenu));
+                LevelTitleScreen.Connect(nameof(LevelTitleScreen.Unpause), this, nameof(Unpause));
             }
 
-            PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
-            PauseMenu.Connect(nameof(PauseMenu.Map), this, nameof(QuitToMap));
+            LevelTitleScreen.LevelTitle.MapButton.Connect("pressed", this, nameof(QuitToMap));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.Map), this, nameof(QuitToMap));
             
             NewPlayer();           
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));
@@ -393,11 +393,11 @@ namespace Hopper
 
         private void ConnectRestartButton(Level currentLevel)
         {
-            if (PauseMenu.RestartButton.IsConnected("pressed", this, nameof(RestartLevel))) PauseMenu.RestartButton.Disconnect("pressed", this, nameof(RestartLevel));
-            PauseMenu.RestartButton.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
+            if (LevelTitleScreen.LevelTitle.RestartButton.IsConnected("pressed", this, nameof(RestartLevel))) LevelTitleScreen.LevelTitle.RestartButton.Disconnect("pressed", this, nameof(RestartLevel));
+            LevelTitleScreen.LevelTitle.RestartButton.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
 
-            if (PauseMenu.IsConnected(nameof(PauseMenu.Restart), this, nameof(RestartLevel))) PauseMenu.Disconnect(nameof(PauseMenu.Restart), this, nameof(RestartLevel));
-            PauseMenu.Connect(nameof(PauseMenu.Restart), this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
+            if (LevelTitleScreen.IsConnected(nameof(LevelTitleScreen.Restart), this, nameof(RestartLevel))) LevelTitleScreen.Disconnect(nameof(LevelTitleScreen.Restart), this, nameof(RestartLevel));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.Restart), this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
 
             if (Player.IsConnected(nameof(Player.Restart), this, nameof(RestartLevel))) Player.Disconnect(nameof(Player.Restart), this, nameof(RestartLevel));
             Player.Connect(nameof(Player.Restart), this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
@@ -471,23 +471,23 @@ namespace Hopper
         {
             Paused = true;
             Player.Deactivate();
-            PauseMenu.SetPosition(Position);
-            MoveToTop(PauseMenu);
-            PauseMenu.Visible = true;
+            LevelTitleScreen.SetPosition(Position);
+            MoveToTop(LevelTitleScreen);
+            LevelTitleScreen.Visible = true;
             if (TempForTesting)
             {
-                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Editor);
+                LevelTitleScreen.LevelTitle.SetMode(LevelTitle.PauseMenuMode.Editor);
             }
             else
             {
-                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Stage);
+                LevelTitleScreen.LevelTitle.SetMode(LevelTitle.PauseMenuMode.Stage);
             }
-            PauseMenu.AnimateShow();
+            LevelTitleScreen.AnimateShow();
         }
 
         private void QuitToMap()
         {
-            if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
+            if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
             HUD.HideHopCounter();
             HUD.HideScoreBox();
             HUD.SetButtonToEnter();
@@ -512,8 +512,8 @@ namespace Hopper
         {
             HUD.Close();
             QueueFree();
-            PauseMenu.RectPosition = GetNode<StartMenu>("../StartMenu").RectPosition;
-            PauseMenu.AnimateHide();
+            LevelTitleScreen.RectPosition = GetNode<StartMenu>("../StartMenu").RectPosition;
+            LevelTitleScreen.AnimateHide();
             if (!TempForTesting)
             {
                 HUD.Visible = false;

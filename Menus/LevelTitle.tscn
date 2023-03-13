@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Shaders/Transition/HM_Transition.tres" type="Material" id=1]
+[ext_resource path="res://Levels/Template/MenuButtons.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Menus/Resources/BelAirPond.png" type="Texture" id=3]
+[ext_resource path="res://Menus/LevelTitle.cs" type="Script" id=4]
 
 [node name="LevelTitle" type="Control"]
 use_parent_material = true
 rect_min_size = Vector2( 480, 270 )
+script = ExtResource( 4 )
 
 [node name="PondName" type="TextureRect" parent="."]
 show_behind_parent = true
@@ -16,6 +19,8 @@ margin_right = 490.0
 margin_bottom = 378.0
 texture = ExtResource( 3 )
 stretch_mode = 6
+
+[node name="MenuButtons" parent="." instance=ExtResource( 2 )]
 
 [node name="LevelSelector" type="MarginContainer" parent="."]
 material = ExtResource( 1 )

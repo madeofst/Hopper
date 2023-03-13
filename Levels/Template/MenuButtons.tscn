@@ -11,19 +11,21 @@ margin_bottom = 270.0
 mouse_filter = 1
 size_flags_horizontal = 4
 size_flags_vertical = 4
+custom_constants/margin_top = 180
+custom_constants/margin_left = 240
 
 [node name="Buttons" type="VBoxContainer" parent="."]
-margin_left = 120.0
-margin_top = 74.0
-margin_right = 360.0
-margin_bottom = 196.0
+margin_left = 240.0
+margin_top = 188.0
+margin_right = 480.0
+margin_bottom = 262.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="RestartButton" type="Button" parent="Buttons"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_right = 240.0
-margin_bottom = 38.0
+margin_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 240, 0 )
@@ -40,9 +42,6 @@ margin_bottom = 38.0
 rect_pivot_offset = Vector2( 157, 17 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextLabel" type="RichTextLabel" parent="Buttons/RestartButton/Labels"]
 margin_top = 1.0
@@ -85,9 +84,9 @@ __meta__ = {
 
 [node name="MapButton" type="Button" parent="Buttons"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 42.0
+margin_top = 26.0
 margin_right = 240.0
-margin_bottom = 80.0
+margin_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 240, 0 )
@@ -144,9 +143,9 @@ __meta__ = {
 
 [node name="QuitButton" type="Button" parent="Buttons"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_top = 84.0
+margin_top = 52.0
 margin_right = 240.0
-margin_bottom = 122.0
+margin_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 240, 0 )

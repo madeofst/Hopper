@@ -3,7 +3,6 @@
 [ext_resource path="res://Fonts/DigitalDisco.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="DynamicFont" id=1]
-size = 32
 outline_color = Color( 0.607843, 0.941176, 0.419608, 1 )
 font_data = ExtResource( 1 )
 

@@ -45,6 +45,7 @@ namespace Hopper
 
         //private TitleElement StageID;
         //private RichTextLabel _StageIDLabel;
+        public LevelTitle LevelTitle { get; set; }
 
         private HBoxContainer LevelButtons;
         private List<TextureButton> LevelSelectors = new List<TextureButton>();
@@ -64,10 +65,20 @@ namespace Hopper
         [Signal]
         public delegate void SelectLevel();
 
+        [Signal]
+        public delegate void Unpause();
+        [Signal]
+        public delegate void Restart();
+        [Signal]
+        public delegate void Map();
+        [Signal]
+        public delegate void Quit();
+
         public override void _Ready()
         {
             Shader = (ShaderMaterial)Material;
             LevelButtons = GetNode<HBoxContainer>("LevelTitle/LevelSelector/LevelButtons");
+            LevelTitle = GetNode<LevelTitle>("LevelTitle");
         }
 
         public void Init(StageData StageData, int LevelCount, int iLevel, int maxHops, int reqScore)
@@ -169,13 +180,18 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if ((@event.IsActionPressed("ui_accept") ||
-                 @event is InputEventScreenTouch && @event.IsPressed()
-                 && !Animating && Visible))
+            if (!Animating && Visible)
             {
-                SetProcessInput(false);
-                AnimateHide();
+                if (@event.IsActionPressed("ui_accept") || @event is InputEventScreenTouch && @event.IsPressed())
+                {
+                    SetProcessInput(false);
+                    AnimateHide();
+                }
+                else if (@event.IsActionPressed("ui_restart"))  {EmitSignal(nameof(Restart));}
+                else if (@event.IsActionPressed("ui_map"))      {EmitSignal(nameof(Map));}
+                else if (@event.IsActionPressed("ui_quit"))     {EmitSignal(nameof(Quit));}
             }
+
         }
 
         private void MoveLevelSelection(Vector2 direction)
