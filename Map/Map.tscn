@@ -218,7 +218,7 @@ position = Vector2( 304, 16 )
 Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
-Levels = PoolStringArray( "Retrace", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
+Levels = PoolStringArray( "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
 Active = true
 LocationsToUnlock = PoolStringArray( "World5" )
 
