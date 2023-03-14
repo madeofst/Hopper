@@ -22,25 +22,23 @@ public class SingleHopCount : Control
         } 
     }
     public Tween Tween; 
-    public Sprite Sprite;
 
     public override void _Ready()
     {
         Tween = GetNode<Tween>("Tween");
-        Sprite = GetNode<Sprite>("Sprite");
     }
 
     public void SpringIntoView(float delay)
     {
         Visible = true;
-        Sprite.Scale = Vector2.Zero;
-        Tween.InterpolateProperty(Sprite, 
-                                  "scale", 
-                                  Vector2.Zero, 
+        RectScale = Vector2.Zero;
+        Tween.InterpolateProperty(this, 
+                                  "rect_scale", 
+                                  new Vector2(0.7f, 0.7f), 
                                   Vector2.One, 
-                                  0.5f, 
-                                  Tween.TransitionType.Elastic, 
-                                  Tween.EaseType.Out, 
+                                  0.3f, 
+                                  Tween.TransitionType.Expo, 
+                                  Tween.EaseType.In, 
                                   delay);
         Tween.Start();
     }

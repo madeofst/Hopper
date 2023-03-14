@@ -76,7 +76,7 @@ public class HopCounter : Control
         foreach (SingleHopCount h in ActiveHopCounters)
         {
             h.SpringIntoView(delay);
-            delay += 0.15f;
+            delay += 0.08f;
         }
     }
 

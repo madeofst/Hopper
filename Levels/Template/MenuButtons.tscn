@@ -40,9 +40,6 @@ margin_bottom = 38.0
 rect_pivot_offset = Vector2( 157, 17 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextLabel" type="RichTextLabel" parent="Buttons/RestartButton/Labels"]
 margin_top = 1.0

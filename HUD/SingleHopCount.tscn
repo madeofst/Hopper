@@ -6,10 +6,12 @@
 [node name="SingleHopCount" type="Control"]
 margin_right = 16.0
 margin_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 8, 8 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

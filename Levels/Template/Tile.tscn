@@ -258,7 +258,7 @@ anims/Splash = SubResource( 7 )
 
 [node name="BugSprite" type="Sprite" parent="."]
 visible = false
-position = Vector2( 16, 16 )
+position = Vector2( 16, 20 )
 texture = ExtResource( 8 )
 offset = Vector2( 0, -12 )
 hframes = 7
@@ -271,6 +271,7 @@ anims/Hover2 = SubResource( 9 )
 anims/Hover3 = SubResource( 10 )
 
 [node name="Label" type="RichTextLabel" parent="."]
+visible = false
 margin_top = 12.0
 margin_right = 32.0
 margin_bottom = 28.0
@@ -280,9 +281,6 @@ bbcode_enabled = true
 bbcode_text = "[center][/center]"
 scroll_active = false
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AudioFX1" type="AudioStreamPlayer" parent="."]
 mix_target = 2
