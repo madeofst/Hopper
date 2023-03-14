@@ -92,16 +92,8 @@ namespace Hopper
 
         public bool UpdateGoalState(int currentScore, Tile activatedGoalTile)
         {
-            if (currentScore >= ScoreRequired && !Grid.GoalTile.Activated)
-            {
-                Grid.ReplaceTile(Grid.GoalTile.GridPosition, activatedGoalTile);
-                return true;
-            }
-            else
-            {
-                activatedGoalTile.QueueFree();
-            }
-            return false;
+            Grid.ReplaceTile(Grid.GoalTile.GridPosition, activatedGoalTile);
+            return true;
         }
 
         private void UpdatePlayerStart(Vector2 gridPosition)

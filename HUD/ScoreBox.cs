@@ -4,25 +4,29 @@ using System;
 public class ScoreBox : Control
 {
     public ScoreLabel PlayerLevelScore { get; set; }
-    public ScoreLabel LevelMinScore { get; set; }
+    public ScoreLabel BugsRemaining { get; set; }
 
     public override void _Ready()
     {
         PlayerLevelScore = GetNode<ScoreLabel>("PlayerLevelScore");
-        LevelMinScore = GetNode<ScoreLabel>("LevelMinScore");
+        BugsRemaining = GetNode<ScoreLabel>("BugsRemaining");
     }
 
-    public void UpdatePlayerScore(int totalScore, int levelScore, int minScore)
+    public void UpdatePlayerScore(int levelScore)
     {
-        if (levelScore > minScore)
-            PlayerLevelScore.UpdateText(levelScore.ToString(), true);
+        if (levelScore <= 0)
+        {
+            BugsRemaining.UpdateText("0", true);
+        } 
         else
-            PlayerLevelScore.UpdateText(levelScore.ToString(), false);
+        {
+            BugsRemaining.UpdateText(levelScore.ToString(), true);
+        }
     }
 
     internal void Animate()
     {
         PlayerLevelScore.Shake();
-        LevelMinScore.Shake();
+        BugsRemaining.Shake();
     }
 }

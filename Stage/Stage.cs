@@ -273,7 +273,7 @@ namespace Hopper
                 }
             }
             ConnectRestartButton(NextLevel);
-            UpdateGoalStateAndScore(0, 0, NextLevel.ScoreRequired);
+            UpdateGoalStateAndScore(NextLevel.ScoreRequired);
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
             NextLevel = null;
@@ -330,18 +330,10 @@ namespace Hopper
         {
             Music.Stop();
             Player.ClearQueues();
-/*             if (iLevel >= Levels.Length - 1)
-            {
-                HUD.ShowPopUp("Game Complete");
-            }
-            else
-            {
-                HUD.ShowPopUp("Level complete!");
-            } */
             SucceedLevel.Play();
         }
 
-        public void UpdateGoalStateAndScore(int currentScore, int currentLevelScore, int minScore)
+        public void UpdateGoalStateAndScore(int updatedScore)
         {
             Level level = null;
             if (NextLevel != null) level = NextLevel;
@@ -349,15 +341,12 @@ namespace Hopper
 
             if (level != null)
             {
-                HUD.UpdateScore(currentScore, currentLevelScore, level.ScoreRequired);
-                if (!level.Grid.GoalTile.Activated)
+                HUD.UpdateScore(updatedScore);
+                if (!level.Grid.GoalTile.Activated && updatedScore <= 0)
                 {
-                    bool MinScoreReached = level.UpdateGoalState(currentLevelScore, Resources.GoalOnScene.Instance() as Tile);
-                    if (MinScoreReached && currentLevelScore != 0)
-                    {
-                        GoalActivate.Play();
-                        HUD.AnimateScoreBox();
-                    }
+                    level.UpdateGoalState(updatedScore, Resources.GoalOnScene.Instance() as Tile);
+                    GoalActivate.Play();
+                    HUD.AnimateScoreBox();
                 }
             }
         }
@@ -432,33 +421,6 @@ namespace Hopper
             if (node == null) node = this;
             GetViewport().MoveChild(node, GetViewport().GetChildCount());
         }
-
-/*         public override void _Process(float delta)
-        {
-            if (CurrentLevel != null)
-            {
-                 UpdateTimeRemaining();
-
-                if (Timer != null)
-                {
-                    if (Timer.Finished()) GameOver = true;
-                }
-
-                if (GameOver)
-                {
-                    Music.Stop();
-                    if (!PuzzleMode)
-                    {
-                        GameOver GameOver = (GameOver)GD.Load<PackedScene>("res://GameOver/GameOver.tscn").Instance();
-                        GetViewport().AddChild(GameOver);
-                        GameOver.Score = Player.TotalScore;
-                        GameOver.ScoreLabel.Text = GameOver.Score.ToString();
-                    }
-                    QueueFree();
-                    if (!TempForTesting) HUD.Close();
-                } 
-            }
-        } */
 
         private void Unpause()
         {

@@ -34,7 +34,7 @@ namespace Hopper
         [Signal]
         public delegate void IncrementLevel();
         [Signal]
-        public delegate void ScoreUpdated(int totalScore, int levelScore = 0, int minScore = 0);
+        public delegate void ScoreUpdated(int levelScore);
         [Signal]
         public delegate void HopCompleted(int hopsRemaining);
         [Signal]
@@ -111,7 +111,7 @@ namespace Hopper
             Grid = CurrentLevel.Grid;            
             GridPosition = CurrentLevel.PlayerStartPosition;
             HopsRemaining = CurrentLevel.StartingHops;
-            LevelScore = 0;
+            LevelScore = CurrentLevel.ScoreRequired;
 
             MoveInputQueue = new Queue<Vector2>();
 
@@ -449,15 +449,14 @@ namespace Hopper
         {
             if (CurrentTile.PointValue > 0)
             {
-                LevelScore += CurrentTile.PointValue;
-                TotalScore += CurrentTile.PointValue;
                 if (CurrentTile.Type == Type.Score) 
                 {
                     CurrentTile.BugSprite.Visible = false;
                     CurrentTile.PointValue = 0;
                     CurrentTile.Label.Visible = false;
+                    LevelScore -= 1;
+                    EmitSignal(nameof(ScoreUpdated), LevelScore);
                 }
-                EmitSignal(nameof(ScoreUpdated), TotalScore, LevelScore, CurrentLevel.ScoreRequired);
             }
         }
 

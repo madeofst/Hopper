@@ -93,9 +93,9 @@ namespace Hopper
             HopCounter.Visible = true;
         }
 
-        public void UpdateScore(int totalScore, int levelScore, int minScore)
+        public void UpdateScore(int updatedScore)
         {
-            ScoreBox.UpdatePlayerScore(totalScore, levelScore, minScore);
+            ScoreBox.UpdatePlayerScore(updatedScore);
         }
 
         public void SetButtonToRestart()
@@ -112,7 +112,7 @@ namespace Hopper
 
         public void UpdateMinScore(int score, bool postGoal)
         {
-            ScoreBox.LevelMinScore.UpdateText(score.ToString(), postGoal);
+            ScoreBox.BugsRemaining.UpdateText(score.ToString(), postGoal);
         }
 
         public void AnimateScoreBox()
