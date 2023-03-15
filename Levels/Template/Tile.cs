@@ -85,6 +85,7 @@ namespace Hopper
                     else
                     {
                         Type += 1;
+                        if (Type == Type.Score) PointValue = 1;
                         EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue);
                     }
                 }
@@ -92,14 +93,14 @@ namespace Hopper
                 {
                     EmitSignal(nameof(PlayerStartUpdated), GridPosition);
                 }
-                else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
+/*                 else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
                 {
                     if (PointValue < 1000) EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue + 100);
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
                 {
                     if (PointValue > 100)  EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue - 100);
-                }
+                } */
             }
         }
 

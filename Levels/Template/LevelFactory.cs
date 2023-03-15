@@ -11,10 +11,10 @@ namespace Hopper
         const int defaultWidth = 7;
         const int defaultHeight = 7;
         const int defaultTileSize = 32;
-        const int defaultStartingHops = 6;
+        const int defaultStartingHops = 10;
         const int defaultMaximumHops = 10;
-        const int defaultScoreRequired = 100;
-        const int defaultScore = 100;
+        const int defaultScoreRequired = 1;
+        const int defaultScore = 1;
         const int defaultX = 0;
         const int defaultY = 0;
         Vector2 defaultPlayerStartPosition;
