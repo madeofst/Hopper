@@ -39,7 +39,7 @@ namespace Hopper
         }
 
         public int FillDirection { get; private set; }
-        public int Speed { get; private set; }
+        public float Speed { get; private set; }
         public bool Animating { get; private set; }
         public bool Triggered { get; private set; }
 
@@ -122,7 +122,7 @@ namespace Hopper
         public void AnimateShow()
         {
             FillDirection = 1;
-            Speed = 1;
+            Speed = 1.5f;
             Animating = true;
         }
 
@@ -148,7 +148,7 @@ namespace Hopper
             if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
 
             if (Animating)
-            {           
+            {
                 Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));            
             }
             else

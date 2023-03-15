@@ -95,17 +95,17 @@ namespace Hopper
         public void AnimateShow()
         {
             FillDirection = 1;
-            Speed = 1;
+            Speed = 2;
             Animating = true;
 
             float delay = 0.2f;
             foreach (AnimatedButton b in Buttons)
             {
                 b.Modulate = new Color(b.Modulate, 0);
-                b.Tween.InterpolateProperty(b, "rect_scale", Vector2.Zero, Vector2.One, 0.9f, Tween.TransitionType.Elastic, Tween.EaseType.Out, delay);
+                b.Tween.InterpolateProperty(b, "rect_scale", Vector2.Zero, Vector2.One, 0.6f, Tween.TransitionType.Elastic, Tween.EaseType.Out, delay);
                 b.Tween.InterpolateProperty(b, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In, delay - 0.2f);
                 b.Tween.Start();
-                delay += 0.3f;
+                delay += 0.1f;
             }
             Buttons[0].GrabFocus();
         }
