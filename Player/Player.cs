@@ -428,8 +428,8 @@ namespace Hopper
                 CurrentAnimationNode = AnimationQueue.Dequeue();
                 CurrentMovementCurve = CurrentAnimationNode.Curve;
                 AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
-                PlayerAnimation.Stop();
 
+                PlayerAnimation.Stop();
                 PlayerAnimation.Play(PlayerAnimation.FindAnimation(CurrentAnimationNode.Animation));
                 //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
             }

@@ -58,10 +58,10 @@ JumpLength = 2
 position = Vector2( 16, 17 )
 texture = ExtResource( 2 )
 hframes = 7
-frame = 6
+frame = 5
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
-autoplay = "Idle"
+autoplay = "RESET"
 reset_on_save = false
 anims/RESET = SubResource( 2 )
 anims/Spring = SubResource( 1 )

@@ -15,11 +15,12 @@ hframes = 13
 frame = 1
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
+autoplay = "Activate"
 anims/Activate = ExtResource( 3 )
 anims/Idle = ExtResource( 4 )
 
 [node name="SplashSprite" parent="." index="2"]
-frame = 4
+frame = 3
 
 [node name="BugSprite" parent="." index="3"]
 frame = 17
