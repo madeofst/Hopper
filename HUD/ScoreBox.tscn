@@ -15,12 +15,10 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 70.0
+margin_left = 4.0
+margin_right = 74.0
 margin_bottom = 18.0
 texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PlayerLevelScore" type="RichTextLabel" parent="."]
 visible = false
@@ -36,23 +34,10 @@ text = "0"
 scroll_active = false
 script = ExtResource( 4 )
 
-[node name="-" type="RichTextLabel" parent="."]
-visible = false
-margin_left = 33.0
-margin_top = 1.78745
-margin_right = 38.0
-margin_bottom = 15.7874
-theme = ExtResource( 2 )
-text = "/"
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="BugsRemaining" type="RichTextLabel" parent="."]
-margin_left = 38.3879
+margin_left = 42.3879
 margin_top = 0.685017
-margin_right = 67.3879
+margin_right = 71.3879
 margin_bottom = 16.685
 rect_clip_content = false
 theme = ExtResource( 2 )

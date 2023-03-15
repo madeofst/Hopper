@@ -16,18 +16,18 @@ public class ScoreLabel : RichTextLabel
         PlainText = plainText;
         if (postGoal)
         {
-            BbcodeText = $"[color=#4ab3ff]{plainText}[/color]";
+            BbcodeText = $"[color=#d9f5f1]{plainText}[/color]";
         }
         else
         {
-            BbcodeText = $"[color=#ffffff]{plainText}[/color]";
+            BbcodeText = $"[color=#d9f5f1]{plainText}[/color]";
         }
     }
 
     public void Shake()
     {
         EmitSignal(nameof(ScoreAnimationStarted));
-        BbcodeText = $"[shake rate=35 level=10][color=#ff0000]{PlainText}[/color][/shake]";
+        BbcodeText = $"[shake rate=35 level=10][color=#6c9331]{PlainText}[/color][/shake]";
         timer = new milliTimer();
         timer.Start(0.4f);
         //GD.Print($"{this.Name} - {BbcodeText} - {timer.Remaining()}");
@@ -35,7 +35,7 @@ public class ScoreLabel : RichTextLabel
 
     public void EndShake()
     {
-        BbcodeText = $"[color=#4ab3ff]{PlainText}[/color]";
+        BbcodeText = $"[color=#d9f5f1]{PlainText}[/color]";
         EmitSignal(nameof(ScoreAnimationFinished));
     }
 

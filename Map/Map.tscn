@@ -280,7 +280,7 @@ position = Vector2( 128, -64 )
 Texture = ExtResource( 9 )
 ID = 7
 Pond = "Liffey"
-Levels = PoolStringArray( "BadStar", "EQ", "BouncyHouse", "UpOrDown" )
+Levels = PoolStringArray( "UpOrDown", "BadStar", "EQ", "BouncyHouse" )
 Active = true
 LocationsToUnlock = PoolStringArray( "World8" )
 
