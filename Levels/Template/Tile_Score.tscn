@@ -1,13 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Levels/Template/Tile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/CrunchPartcles.tscn" type="PackedScene" id=2]
+
+[sub_resource type="StreamTexture" id=1]
+resource_local_to_scene = true
+load_path = "res://.import/LilyPad1_32x32.png-543b4fb1e73ab15cf94b121452004192.stex"
 
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 2
 
 [node name="LilySprite" parent="." index="1"]
 position = Vector2( 16, 17 )
+texture = SubResource( 1 )
 
 [node name="BugSprite" parent="." index="3"]
 visible = true

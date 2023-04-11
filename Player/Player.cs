@@ -137,6 +137,16 @@ namespace Hopper
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     AnimationEndTile = Grid.GetTile(AnimationEndTile.GridPosition + Movement);
                 }
+                else if (AnimationEndTile.Type == Type.Direct)
+                {
+                    Movement = AnimationEndTile.BounceDirection;
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
+                    Vector2 NextTileLocation = AnimationEndTile.GridPosition + AnimationEndTile.BounceDirection;
+                    AnimationEndTile.BounceDirection = AnimationEndTile.BounceDirection.Rotated(Mathf.Pi / 2).Round();
+                    GD.Print($"New bounce direction {AnimationEndTile.BounceDirection}");
+                    AnimationEndTile = Grid.GetTile(NextTileLocation);
+
+                }
                 else if ((AnimationEndTile.Type == Type.Rock))
                 {
                     Movement = -Movement;
@@ -267,7 +277,7 @@ namespace Hopper
                 Movement = "Swim";
                 movementCurve = SwimCurve;
             }
-            else if (fromType == Type.Bounce || fromType == Type.Rock)
+            else if (fromType == Type.Bounce || fromType == Type.Rock || fromType == Type.Direct)
             {
                 Movement = "Bounce";
                 movementCurve = BounceCurve;

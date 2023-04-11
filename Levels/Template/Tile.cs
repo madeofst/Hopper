@@ -27,6 +27,8 @@ namespace Hopper
         public Vector2 Size = new Vector2(32, 32);
         [Export]
         public int JumpLength;
+        [Export]
+        public Vector2 BounceDirection;
 
         [Signal]
         public delegate void TileUpdated(Vector2 gridPosition, Type type, int Score);
@@ -64,6 +66,12 @@ namespace Hopper
             {
                 LilySprite.Frame = rand.Next(0, 4);
             }
+            else if (Type == Type.Direct)
+            {
+                BounceDirection = Vector2.Left;
+                GD.Print(BounceDirection.Angle() / Mathf.Tau * 4);
+            }
+
 
             Connect("mouse_entered", this, "OnMouseEnter");
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
@@ -78,7 +86,7 @@ namespace Hopper
             {
                 if (ev.ButtonIndex == (int)ButtonList.Left)
                 {
-                    if (Type == Type.Bounce) //TODO: The type here must always equal the max enum value
+                    if (Type == Type.Direct) //TODO: The type here must always equal the max enum value
                     {
                         EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue);
                     }
