@@ -8,7 +8,6 @@ Type = 2
 
 [node name="LilySprite" parent="." index="1"]
 position = Vector2( 16, 17 )
-offset = Vector2( 0, 0 )
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 autoplay = "Idle"
@@ -19,7 +18,7 @@ visible = true
 [node name="CPUParticles2D" parent="." index="6" instance=ExtResource( 2 )]
 z_index = 1
 emitting = false
-amount = 21
+amount = 15
 one_shot = true
 randomness = 0.32
 lifetime_randomness = 0.18
@@ -27,7 +26,7 @@ lifetime_randomness = 0.18
 [node name="CPUParticles2D2" parent="." index="7" instance=ExtResource( 2 )]
 z_index = 1
 emitting = false
-amount = 21
+amount = 15
 one_shot = true
 randomness = 0.34
 lifetime_randomness = 0.29
