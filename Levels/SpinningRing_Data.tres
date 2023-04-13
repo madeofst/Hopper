@@ -5,7 +5,7 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "DefaultLevelName"
+Name = "SpinningRing"
 Width = 7
 Height = 7
 TileSize = 32
