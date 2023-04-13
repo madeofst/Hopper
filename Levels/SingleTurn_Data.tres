@@ -5,7 +5,7 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "_DirectTileTest"
+Name = "SingleTurn"
 Width = 7
 Height = 7
 TileSize = 32

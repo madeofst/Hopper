@@ -69,7 +69,10 @@ namespace Hopper
             else if (Type == Type.Direct)
             {
                 //BounceDirection = Vector2.Right; //TODO: need to add bounce direction to leveldata
-                LilySprite.Frame = (int)(Mathf.PosMod(BounceDirection.Angle() + Mathf.Tau, Mathf.Tau) / Mathf.Tau * 4);
+                float Wrapped = Mathf.Wrap(BounceDirection.Angle(), 0, Mathf.Tau);
+                float FullAngle = ((Wrapped / Mathf.Tau) * 4);
+                int IntFullAngle = Mathf.RoundToInt(FullAngle);
+                LilySprite.Frame = IntFullAngle;
             }
 
 
