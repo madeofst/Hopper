@@ -70,6 +70,7 @@ namespace Hopper
             {
                 levelData.TileType[i] = tileType;
                 levelData.TilePointValue[i] = 0;
+                levelData.TileBounceDirection[i] = Vector2.Zero;
             }
             return levelData;
         }
@@ -105,7 +106,7 @@ namespace Hopper
             Error error = ResourceSaver.Save($"res://Levels/{level.LevelName}_Data.tres", level.LevelData);
             return error;
         }
-        
+        /* 
         public Level Generate(int width = defaultWidth, 
                               int height = defaultHeight, 
                               int tileSize = defaultTileSize, 
@@ -158,7 +159,7 @@ namespace Hopper
 
             return GetLevelScene(levelData);
         }
-
+ *//* 
         private Tile CalculateGoalTilePosition(RandomNumberGenerator rand, 
                                                Vector2 playerPosition, 
                                                int width,
@@ -257,8 +258,8 @@ namespace Hopper
             } 
             return null;
         }
-
-        private Tile[] CalculateScoreTilePositions(RandomNumberGenerator rand,
+ */
+/*         private Tile[] CalculateScoreTilePositions(RandomNumberGenerator rand,
                                                   Vector2 playerPosition,
                                                   int width,
                                                   int height,
@@ -316,6 +317,6 @@ namespace Hopper
                 }
             }
             return tiles;
-        }
+        } */
     }
 }

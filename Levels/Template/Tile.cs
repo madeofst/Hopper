@@ -68,8 +68,8 @@ namespace Hopper
             }
             else if (Type == Type.Direct)
             {
-                BounceDirection = Vector2.Right; //TODO: need to add bounce direction to leveldata
-                //GD.Print(BounceDirection.Angle() / Mathf.Tau * 4);
+                //BounceDirection = Vector2.Right; //TODO: need to add bounce direction to leveldata
+                LilySprite.Frame = (int)(Mathf.PosMod(BounceDirection.Angle() + Mathf.Tau, Mathf.Tau) / Mathf.Tau * 4);
             }
 
 
@@ -88,13 +88,14 @@ namespace Hopper
                 {
                     if (Type == Type.Direct) //TODO: The type here must always equal the max enum value
                     {
-                        EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue);
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue, BounceDirection);
                     }
                     else
                     {
                         Type += 1;
                         if (Type == Type.Score) PointValue = 1;
-                        EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue);
+                        if (Type == Type.Direct) BounceDirection = Vector2.Right;
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection);
                     }
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.Right)
@@ -103,11 +104,11 @@ namespace Hopper
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Direct)
                 {
-                    //EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue + 100);
+                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(Mathf.Pi / 2).Round());
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Direct)
                 {
-                    //EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue - 100);
+                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(-(Mathf.Pi / 2)).Round());
                 }
             }
         }

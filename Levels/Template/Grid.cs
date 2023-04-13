@@ -124,6 +124,12 @@ namespace Hopper
 
                     Tiles[x, y] = tempTile;
                     Tiles[x, y].PointValue = levelData.TilePointValue[i];
+                    if (levelData.TileBounceDirection == null)
+                    {
+                        //TODO:build bouncedirection array
+                        levelData.BuildBounceDirectionArray();
+                    }
+                    Tiles[x, y].BounceDirection = levelData.TileBounceDirection[i];
                     Tiles[x, y].GridPosition = new Vector2(x, y);
                     Tiles[x, y].Name = $"Tile{x}-{y}";
                     AddChild(Tiles[x, y]);
@@ -228,10 +234,11 @@ namespace Hopper
         }
 
         //For updating a tile in the editor (called by signal in Tile)
-        internal void UpdateTile(Vector2 gridPosition, Type type, int score)
+        internal void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection)
         {
             Tile newTile = Resources.LoadByType(type).Instance() as Tile;
             if (newTile.Type == Type.Score) newTile.PointValue = score;
+            if (newTile.Type == Type.Direct) newTile.BounceDirection = BounceDirection;
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
             ConnectTile(newTile);
             newTile.Editable = true;

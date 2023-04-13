@@ -188,7 +188,7 @@ namespace Hopper
                 }
                 else
                 {
-                    NewLevel(Player.GridPosition);
+                    //NewLevel(Player.GridPosition);
                 }
             }
         }
@@ -231,14 +231,14 @@ namespace Hopper
             }
         }
 
-        private void NewLevel(Vector2 playerPosition)
+/*         private void NewLevel(Vector2 playerPosition)
         {
             if (CurrentLevel != null) 
                 CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
                                                  playerPositionY: (int)playerPosition.y);
             BuildLevel();
-        }
+        } */
 
         private void BuildLevel(bool replay = false)
         {
@@ -306,7 +306,7 @@ namespace Hopper
                 }
                 else
                 {
-                    NewLevel(Player.GridPosition);
+                    //NewLevel(Player.GridPosition);
                 }
             }
         }
