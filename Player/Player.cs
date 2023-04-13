@@ -143,7 +143,10 @@ namespace Hopper
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     Vector2 NextTileLocation = AnimationEndTile.GridPosition + AnimationEndTile.BounceDirection;
                     AnimationEndTile.BounceDirection = AnimationEndTile.BounceDirection.Rotated(Mathf.Pi / 2).Round();
-                    GD.Print($"New bounce direction {AnimationEndTile.BounceDirection}");
+                    /* GD.Print($"New bounce direction {AnimationEndTile.BounceDirection}");
+                    GD.Print(AnimationEndTile.BounceDirection.Angle());
+                    GD.Print(Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau));
+                    GD.Print((int)(Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau) / Mathf.Tau * 4)); */
                     AnimationEndTile = Grid.GetTile(NextTileLocation);
 
                 }
@@ -381,6 +384,10 @@ namespace Hopper
                 AnimationEndTile.SplashAnimation.Play("Land");
                 if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
                 if (AnimationEndTile.Type == Type.Score) AnimationEndTile.CrunchPartilces();
+                if (AnimationEndTile.Type == Type.Direct)
+                {
+                    AnimationEndTile.LilySprite.Frame = (int)(Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau) / Mathf.Tau * 4);
+                }
             }
         }
 

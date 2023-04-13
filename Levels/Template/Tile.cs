@@ -68,8 +68,8 @@ namespace Hopper
             }
             else if (Type == Type.Direct)
             {
-                BounceDirection = Vector2.Left;
-                GD.Print(BounceDirection.Angle() / Mathf.Tau * 4);
+                BounceDirection = Vector2.Right; //TODO: need to add bounce direction to leveldata
+                //GD.Print(BounceDirection.Angle() / Mathf.Tau * 4);
             }
 
 
@@ -101,14 +101,14 @@ namespace Hopper
                 {
                     EmitSignal(nameof(PlayerStartUpdated), GridPosition);
                 }
-/*                 else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
+                else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Direct)
                 {
-                    if (PointValue < 1000) EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue + 100);
+                    //EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue + 100);
                 }
-                else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
+                else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Direct)
                 {
-                    if (PointValue > 100)  EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue - 100);
-                } */
+                    //EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue - 100);
+                }
             }
         }
 
