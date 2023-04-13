@@ -200,12 +200,16 @@ namespace Hopper
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     break;
                 }
-                if (MovementNodes.Count == 20) break;
+                if (MovementNodes.Count == 100)
+                {
+                    GD.Print("Movement nodes exhausted.");
+                    break;
+                }
             } while (true);
 
 
             PrintNodes(MovementNodes);
-            if (MovementNodes.Count >= 20)
+            if (MovementNodes.Count >= 100)
             {
                 EmitSignal(nameof(HopsExhausted));
             }
