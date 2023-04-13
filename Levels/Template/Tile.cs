@@ -27,6 +27,8 @@ namespace Hopper
         public Vector2 Size = new Vector2(32, 32);
         [Export]
         public int JumpLength;
+        [Export]
+        public Vector2 BounceDirection;
 
         [Signal]
         public delegate void TileUpdated(Vector2 gridPosition, Type type, int Score);
@@ -64,6 +66,15 @@ namespace Hopper
             {
                 LilySprite.Frame = rand.Next(0, 4);
             }
+            else if (Type == Type.Direct)
+            {
+                //BounceDirection = Vector2.Right; //TODO: need to add bounce direction to leveldata
+                float Wrapped = Mathf.Wrap(BounceDirection.Angle(), 0, Mathf.Tau);
+                float FullAngle = ((Wrapped / Mathf.Tau) * 4);
+                int IntFullAngle = Mathf.RoundToInt(FullAngle);
+                LilySprite.Frame = IntFullAngle;
+            }
+
 
             Connect("mouse_entered", this, "OnMouseEnter");
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
@@ -78,29 +89,30 @@ namespace Hopper
             {
                 if (ev.ButtonIndex == (int)ButtonList.Left)
                 {
-                    if (Type == Type.Bounce) //TODO: The type here must always equal the max enum value
+                    if (Type == Type.Direct) //TODO: The type here must always equal the max enum value
                     {
-                        EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue);
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue, BounceDirection);
                     }
                     else
                     {
                         Type += 1;
                         if (Type == Type.Score) PointValue = 1;
-                        EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue);
+                        if (Type == Type.Direct) BounceDirection = Vector2.Right;
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection);
                     }
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.Right)
                 {
                     EmitSignal(nameof(PlayerStartUpdated), GridPosition);
                 }
-/*                 else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Score)
+                else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Direct)
                 {
-                    if (PointValue < 1000) EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue + 100);
+                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(Mathf.Pi / 2).Round());
                 }
-                else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Score)
+                else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Direct)
                 {
-                    if (PointValue > 100)  EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue - 100);
-                } */
+                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(-(Mathf.Pi / 2)).Round());
+                }
             }
         }
 

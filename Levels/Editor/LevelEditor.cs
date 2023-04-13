@@ -113,7 +113,7 @@ namespace Hopper
         {
             PlayerStartX.Text = (CurrentLevel.PlayerStartPosition.x - 1).ToString();
             PlayerStartY.Text = (CurrentLevel.PlayerStartPosition.y - 1).ToString();
-            StartingHops.Text = CurrentLevel.StartingHops.ToString();
+            StartingHops.Text = CurrentLevel.StartingHops.ToString();  //TODO: remove starting hops
             MaximumHops.Text = CurrentLevel.MaximumHops.ToString();
             ScoreRequired.Text = CurrentLevel.ScoreRequired.ToString();
         }
@@ -129,7 +129,7 @@ namespace Hopper
         }
 
         //Randomize
-        private void NewRandomLevel()
+/*         private void NewRandomLevel()
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = levelFactory.Generate();
@@ -138,7 +138,7 @@ namespace Hopper
             PopulateParameterValues();
             CurrentLevel.Connect(nameof(Level.LevelParametersUpdated), this, nameof(PopulateParameterValues));
             CurrentLevel.Editable = true;
-        }
+        } */
 
         public void GoHome()
         {

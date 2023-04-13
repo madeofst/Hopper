@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Stage/ResourceRepository.cs" type="Script" id=1]
 [ext_resource path="res://Levels/Template/Tile_Goal_Off.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Levels/Template/Tile_Water.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/Template/Tile_Jump_Ready.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Levels/Template/Tile_Bounce.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Levels/Template/Tile_Direct.tscn" type="PackedScene" id=10]
 
 [node name="ResourceRepository" type="Node2D"]
 script = ExtResource( 1 )
@@ -20,3 +21,4 @@ RockScene = ExtResource( 4 )
 WaterScene = ExtResource( 7 )
 JumpScene = ExtResource( 8 )
 BounceScene = ExtResource( 9 )
+DirectScene = ExtResource( 10 )

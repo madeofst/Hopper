@@ -137,6 +137,21 @@ namespace Hopper
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     AnimationEndTile = Grid.GetTile(AnimationEndTile.GridPosition + Movement);
                 }
+                else if (AnimationEndTile.Type == Type.Direct)
+                {
+                    Movement = AnimationEndTile.BounceDirection;
+                    MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
+                    Vector2 NextTileLocation = AnimationEndTile.GridPosition + AnimationEndTile.BounceDirection;
+                    //GD.Print($"Old bounce direction: {AnimationEndTile.BounceDirection}");
+                    AnimationEndTile.BounceDirection = AnimationEndTile.BounceDirection.Rotated(Mathf.Pi / 2).Round();
+                    //GD.Print($"New bounce direction: {AnimationEndTile.BounceDirection}");
+                    /* GD.Print($"New bounce direction {AnimationEndTile.BounceDirection}");
+                    GD.Print(AnimationEndTile.BounceDirection.Angle());
+                    GD.Print(Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau));
+                    GD.Print((int)(Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau) / Mathf.Tau * 4)); */
+                    AnimationEndTile = Grid.GetTile(NextTileLocation);
+
+                }
                 else if ((AnimationEndTile.Type == Type.Rock))
                 {
                     Movement = -Movement;
@@ -267,7 +282,7 @@ namespace Hopper
                 Movement = "Swim";
                 movementCurve = SwimCurve;
             }
-            else if (fromType == Type.Bounce || fromType == Type.Rock)
+            else if (fromType == Type.Bounce || fromType == Type.Rock || fromType == Type.Direct)
             {
                 Movement = "Bounce";
                 movementCurve = BounceCurve;
@@ -371,6 +386,18 @@ namespace Hopper
                 AnimationEndTile.SplashAnimation.Play("Land");
                 if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
                 if (AnimationEndTile.Type == Type.Score) AnimationEndTile.CrunchPartilces();
+                if (AnimationEndTile.Type == Type.Direct)
+                {
+                    /* GD.Print($"Bounce direction: {AnimationEndTile.BounceDirection}");
+                    GD.Print($"Bounce angle: {AnimationEndTile.BounceDirection.Angle()}");
+                    GD.Print($"360 angle: {Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau)}"); */
+
+                    //Implicitly adds a frame by adding Hframes (rather than Hframes - 1)
+                    /* GD.Print($"Start frame: {AnimationEndTile.LilySprite.Frame}");
+                    GD.Print($"Start frame + 3 + 1: {AnimationEndTile.LilySprite.Frame + AnimationEndTile.LilySprite.Hframes}");
+                    GD.Print($"Remainder when divided by 3: {(AnimationEndTile.LilySprite.Frame + AnimationEndTile.LilySprite.Hframes + 1) % (AnimationEndTile.LilySprite.Hframes)}"); */
+                    AnimationEndTile.LilySprite.Frame = (AnimationEndTile.LilySprite.Frame + AnimationEndTile.LilySprite.Hframes + 1) % (AnimationEndTile.LilySprite.Hframes);
+                }
             }
         }
 

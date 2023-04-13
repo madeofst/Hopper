@@ -80,6 +80,7 @@ namespace Hopper
                 {
                     LevelData.TileType[i] = Grid.Tiles[x, y].Type;
                     LevelData.TilePointValue[i] = Grid.Tiles[x, y].PointValue;
+                    LevelData.TileBounceDirection[i] = Grid.Tiles[x, y].BounceDirection;
                     i++;
                 }
             }

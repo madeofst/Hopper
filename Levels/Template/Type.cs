@@ -8,6 +8,7 @@ namespace Hopper
         Rock,
         Water,
         Jump,
-        Bounce
+        Bounce,
+        Direct
     }
 }

@@ -21,6 +21,8 @@ namespace Hopper
         public PackedScene JumpScene { get; private set; }
         [Export]
         public PackedScene BounceScene { get; private set; }
+        [Export]
+        public PackedScene DirectScene { get; private set; }
 
         public ResourceRepository()
         {
@@ -48,6 +50,8 @@ namespace Hopper
                     return JumpScene;
                 case Type.Bounce:
                     return BounceScene;
+                case Type.Direct:
+                    return DirectScene;
             }
             return null;
         }
