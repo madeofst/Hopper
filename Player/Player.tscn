@@ -63,7 +63,7 @@
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.17801, 0.125 ), 1.76397, 1.76397, 0, 0, Vector2( 0.356021, 0.506818 ), 0.0, 0.0, 0, 0, Vector2( 0.640199, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0 ), 0.0, 1.65657, 0, 0, Vector2( 0.280488, 0.563636 ), 0.0887451, 0.0887451, 0, 0, Vector2( 0.640199, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Curve" id=48]
 max_value = 1.5
