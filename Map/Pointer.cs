@@ -68,6 +68,8 @@ namespace Hopper
                 movementVector = (currentPathFollow.GlobalPosition - Position).Normalized();
                 Position = currentPathFollow.GlobalPosition;
                 
+                //GD.Print(Position);
+
                 if ((currentPathFollow.UnitOffset >= 1 && MovementDirection == 1) || 
                     (currentPathFollow.UnitOffset <= 0 && MovementDirection == -1))
                 {
@@ -116,6 +118,7 @@ namespace Hopper
 
         private List<PondLinkPath> GetPaths()
         {
+            //GD.Print(CurrentLocation.GetChildren());
             return CurrentLocation.GetChildren().OfType<PondLinkPath>().ToList();
         }
 

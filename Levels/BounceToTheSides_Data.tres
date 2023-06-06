@@ -5,14 +5,14 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "CrissCross"
+Name = "BounceToTheSides"
 Width = 7
 Height = 7
 TileSize = 32
 TileBounceDirection = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-StartingHops = 7
-MaximumHops = 7
-ScoreRequired = 1
-PlayerStartPosition = Vector2( 6, 3 )
-TileType = PoolIntArray( 0, 0, 0, 4, 0, 0, 0, 0, 2, 0, 0, 4, 4, 0, 0, 3, 4, 0, 2, 4, 0, 1, 4, 2, 4, 4, 5, 0, 0, 3, 4, 0, 2, 4, 0, 0, 2, 0, 0, 4, 4, 0, 0, 0, 0, 4, 0, 0, 0 )
-TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+StartingHops = 9
+MaximumHops = 9
+ScoreRequired = 2
+PlayerStartPosition = Vector2( 3, 1 )
+TileType = PoolIntArray( 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1, 0, 2, 3, 0, 5, 3, 5, 0, 5, 0, 3, 2, 0, 0, 3, 0, 2, 0, 3, 0, 5, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+TilePointValue = PoolIntArray( 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
