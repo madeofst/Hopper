@@ -371,7 +371,7 @@ position = Vector2( 192, -128 )
 Texture = ExtResource( 19 )
 ID = 9
 Pond = "Liffey"
-Levels = PoolStringArray( "SpinnerOne", "SpinnerTwo", "SingleTurn", "InvertedT", "UseIt", "TwoSpinIsland", "TwoSpinIslandPartTwo" )
+Levels = PoolStringArray( "SpinnerOne", "SpinnerTwo", "LessObviousRoute", "ScenicBounce", "UseIt", "SingleTurn", "TwoSpinIsland", "TwoSpinIslandPartTwo", "InvertedT" )
 Active = true
 LocationsToUnlock = PoolStringArray(  )
 
