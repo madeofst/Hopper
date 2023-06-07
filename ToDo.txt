@@ -4,6 +4,7 @@ _________________________
 
     // Fixes
     -MAIN GAME
+    * Fix goal behind player when jumping out of water from top
     * Edit audio FX for jump noise so that it is more instantaneous
     * Crash when rapidly switching between stages on level title screen
     * Restarting level mid-movement in game - smoke animation should stop moving

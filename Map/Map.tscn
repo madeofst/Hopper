@@ -212,7 +212,7 @@ position = Vector2( 104, 104 )
 Texture = ExtResource( 6 )
 ID = 2
 Pond = "Hawkins"
-Levels = PoolStringArray( "MovingOnNew", "MovingOn2New", "RockBounceLesson", "BounceToTheSides" )
+Levels = PoolStringArray( "MovingOnNew", "MovingOn2New", "RockBounceLesson", "WallBounce", "BounceToTheSides" )
 Active = true
 LocationsToUnlock = PoolStringArray( "World3" )
 
@@ -257,7 +257,7 @@ position = Vector2( 256, 32 )
 Texture = ExtResource( 8 )
 ID = 3
 Pond = "BelAir"
-Levels = PoolStringArray( "WideChannel_3", "WideChannel_4", "Arrowhead", "LittleSquare", "BlueLine" )
+Levels = PoolStringArray( "SimplePondInPond", "DifferentLengths", "UnderSwim", "UnderwaterTurning", "LittleSquare" )
 Active = true
 LocationsToUnlock = PoolStringArray( "World4", "World7" )
 
@@ -290,7 +290,7 @@ position = Vector2( 304, 16 )
 Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
-Levels = PoolStringArray( "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
+Levels = PoolStringArray( "BlueLine", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
 Active = true
 LocationsToUnlock = PoolStringArray( "World5" )
 
