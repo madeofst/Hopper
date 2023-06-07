@@ -121,8 +121,8 @@ namespace Hopper
             {
                 Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
                 Map.Modulate = new Color(1, 1, 1, 0);
-				Map.Init(SaveData);
                 MapViewport.AddChild(Map);
+				Map.Init(SaveData);
             }
         }
     }

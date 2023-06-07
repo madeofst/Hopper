@@ -84,7 +84,7 @@ namespace Hopper
 
             foreach (PondLinkPath p in GetChildren().OfType<PondLinkPath>())
             {
-                if (!LocationsToUnlock.Contains(p.Name))
+                if (!LocationsToUnlock.Any(loc => loc.Equals(p.Name)))
                 {
                     p.Active = true;
                 }
@@ -94,7 +94,7 @@ namespace Hopper
             {
                 foreach (PondLinkPath p in l.GetChildren().OfType<PondLinkPath>())
                 {
-                    if (this.Name == p.Name && !LocationsToUnlock.Contains(l.Name))
+                    if ((this.Name == p.Name) && (!LocationsToUnlock.Any(loc => loc.Equals(p.Name))))
                     {
                         p.Active = true;
                     }

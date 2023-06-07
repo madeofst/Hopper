@@ -63,12 +63,15 @@ namespace Hopper
         private void SaveState()
         {
             SaveData SaveData = ResourceLoader.Load<SaveData>("res://Saving/DefaultSaveFile.tres");
-            SaveData.CurrentLocationId = Pointer.CurrentLocation.ID;
+            
             SaveData.Init(Locations.Count);
+            SaveData.CurrentLocationId = Pointer.CurrentLocation.ID;
+
             for (int i = 0; i < Locations.Count; i++)
             {
                 LocationData LocationData = ResourceLoader.Load<LocationData>("res://Saving/DefaultLocationDataFile.tres");
                 LocationData.ID = Locations[i].ID;
+                LocationData.CurrentLocationName = Locations[i].Name;
                 LocationData.Active = Locations[i].Active;
                 LocationData.NewlyActivated = Locations[i].NewlyActivated;
                 LocationData.Complete = Locations[i].Complete;
@@ -77,6 +80,7 @@ namespace Hopper
                 ResourceSaver.Save($"user://LocationDataSaveFile{i}.tres", LocationData);
                 SaveData.LocationDataList[i] = ResourceLoader.Load<LocationData>($"user://LocationDataSaveFile{i}.tres");
             }
+
             SaveData.TakeOverPath("user://SaveFile.tres");
             ResourceSaver.Save("user://SaveFile.tres", SaveData);
         }

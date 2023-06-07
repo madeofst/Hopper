@@ -5,7 +5,8 @@
 [resource]
 script = ExtResource( 1 )
 ID = 0
+CurrentLocationName = null
 Active = false
-newlyActivated = false
+NewlyActivated = false
 Complete = false
 LevelReached = 0

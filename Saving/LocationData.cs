@@ -8,6 +8,9 @@ namespace Hopper
         public int ID { get; set; }
 
         [Export]
+        public string CurrentLocationName { get; set; }
+
+        [Export]
         public bool Active { get; set; }
 
         [Export]

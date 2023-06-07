@@ -237,7 +237,6 @@ Texture = ExtResource( 6 )
 ID = 10
 Pond = "Hawkins"
 Levels = PoolStringArray( "WeirdMirror1", "Jumpington" )
-newlyActivated = true
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World2" parent="World10" instance=ExtResource( 12 )]
