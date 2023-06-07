@@ -27,10 +27,13 @@ namespace Hopper
             AudioRepo.Visible = false;
             GetViewport().AddChild(AudioRepo);
             GetViewport().AddChild(StartMenu);
+            StartMenu.UpdateLoadButton();
             PauseMenu.Visible = false;
             GetViewport().AddChild(PauseMenu);
             LevelTitleScreen.Visible = false;
             GetViewport().AddChild(LevelTitleScreen);
         }
+
+
     }
 }

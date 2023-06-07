@@ -13,10 +13,11 @@ namespace Hopper
         private PauseMenu PauseMenu;
         private Tween Tween;
         private MapCamera Camera;
-        
-        public override void _Ready()
+
+        public void Init(SaveData SaveData)
         {
             Locations = GetChildren().OfType<Location>().ToList<Location>();
+            LoadSavedData(SaveData);
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
             Tween = GetNode<Tween>("Tween");
@@ -26,11 +27,68 @@ namespace Hopper
             Pointer.CurrentLocation.UnlockAllPaths();
         }
 
+        private void LoadSavedData(SaveData SaveData)
+        {
+            foreach (LocationData ld in SaveData.LocationDataList)
+            {
+                Location location = FindLocationByID(ld.ID);
+                if (location == null)
+                {
+                    GD.Print("Location not found.");
+                }
+                else
+                {
+                    location.Active = ld.Active;
+                    location.NewlyActivated = ld.NewlyActivated;
+                    location.Complete = ld.Complete;
+                    location.LevelReached = ld.LevelReached;
+                }
+            }
+        }
+
+        private Location FindLocationByID(int id)
+        {
+            foreach (Location l in Locations)
+            {
+                if (l.ID == id) return l;
+            }
+            return null;
+        }
+
+        public void ConnectSaveSignal(Stage Stage)
+        {
+            Stage.Connect(nameof(Stage.SaveState), this, nameof(SaveState));
+        }
+
+        private void SaveState()
+        {
+            SaveData SaveData = ResourceLoader.Load<SaveData>("res://Saving/DefaultSaveFile.tres");
+            SaveData.CurrentLocationId = Pointer.CurrentLocation.ID;
+            SaveData.Init(Locations.Count);
+            for (int i = 0; i < Locations.Count; i++)
+            {
+                LocationData LocationData = ResourceLoader.Load<LocationData>("res://Saving/DefaultLocationDataFile.tres");
+                LocationData.ID = Locations[i].ID;
+                LocationData.Active = Locations[i].Active;
+                LocationData.NewlyActivated = Locations[i].NewlyActivated;
+                LocationData.Complete = Locations[i].Complete;
+                LocationData.LevelReached = Locations[i].LevelReached;
+                LocationData.TakeOverPath($"user://LocationDataSaveFile{i}.tres");
+                ResourceSaver.Save($"user://LocationDataSaveFile{i}.tres", LocationData);
+                SaveData.LocationDataList[i] = ResourceLoader.Load<LocationData>($"user://LocationDataSaveFile{i}.tres");
+            }
+            SaveData.TakeOverPath("user://SaveFile.tres");
+            ResourceSaver.Save("user://SaveFile.tres", SaveData);
+        }
+
         private void ActivateLocations()
         {
             foreach (Location l in Locations)
             {
-                if (l.Active) l.Activate(Pointer.Start);
+                if (l.Active) 
+                {
+                    l.Activate(Locations); //TODO: this may need to be another position
+                }
             }
         }
 
@@ -58,6 +116,7 @@ namespace Hopper
         private void QuitToMenu()
         {
             StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
+            StartMenu.UpdateLoadButton();
             Pointer.MoveToMenuPosition(StartMenu.RectPosition);
             Camera.MoveTo(Pointer.Position);
             PauseMenu.RectPosition = StartMenu.RectPosition;
@@ -72,10 +131,14 @@ namespace Hopper
             foreach (var s in StagesToUnlock)
             {
                 Location l = GetNode<Location>((string)s);
-                if (l.Active == false) l.Activate(Pointer.CurrentLocation);
+                if (l.Active == false)
+                {
+                    l.Active = true;
+                    l.Activate(Locations);
+                }
             }
             Pointer.CurrentLocation.UnlockAllPaths();
-            Pointer.CurrentLocation.NewlyActivated = false;
+            Pointer.CurrentLocation.NewlyActivated = false; //TODO: need to make this happen when even one level has been completed
             Pointer.CurrentLocation.Complete = true;
             Pointer.CurrentLocation.UpdateAnimationState();
         }

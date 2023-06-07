@@ -63,6 +63,7 @@ namespace Hopper
         [Export]
         public string[] LocationsToUnlock;
 
+        [Export]
         public int LevelReached;
         //private LocationTool tool;
         private LocationProgress LocationProgress;
@@ -77,13 +78,27 @@ namespace Hopper
             Sprite.Texture = Texture;
         }
 
-        public void Activate(Location CurrentStage)
+        public void Activate(List<Location> Locations)
         {
-            Active = true;
-            NewlyActivated = true;
+            if (LevelReached == 0) NewlyActivated = true;
+
             foreach (PondLinkPath p in GetChildren().OfType<PondLinkPath>())
             {
-                if (p.Name == CurrentStage.Name) p.Active = true;
+                if (!LocationsToUnlock.Contains(p.Name))
+                {
+                    p.Active = true;
+                }
+            }
+
+            foreach (Location l in Locations)
+            {
+                foreach (PondLinkPath p in l.GetChildren().OfType<PondLinkPath>())
+                {
+                    if (this.Name == p.Name && !LocationsToUnlock.Contains(l.Name))
+                    {
+                        p.Active = true;
+                    }
+                }
             }
             
             LocationProgress = GetNode<LocationProgress>("LocationProgress");
@@ -94,6 +109,16 @@ namespace Hopper
             }
             LocationProgress.Init(LevelReached);
             UpdateAnimationState();
+        }
+
+
+        private Location FindLocationByName(List<Location> Locations, string LocationName)
+        {
+            foreach (Location l in Locations)
+            {
+                if (l.Name == LocationName) return l;
+            }
+            return null;
         }
 
         public void UnlockAllPaths()
@@ -124,7 +149,7 @@ namespace Hopper
         public void UpdateLocationProgress(int levelReached)
         {
             LevelReached = levelReached;
-            LocationProgress.Update(levelReached);
+            LocationProgress.Update(levelReached); //FIXME: Location progress null on world 11 after 1st level
         }
     }
 }

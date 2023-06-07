@@ -6,6 +6,9 @@ namespace Hopper
     public class ResourceRepository : Node2D
     {
         [Export]
+        public bool DEVMODE;
+
+        [Export]
         public PackedScene LilyScene { get; set; }
         [Export]
         public PackedScene GoalOffScene { get; private set; }

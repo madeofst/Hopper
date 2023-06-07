@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Saving/LocationData.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+ID = 5
+Active = true
+newlyActivated = false
+Complete = true
+LevelReached = 6

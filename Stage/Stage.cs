@@ -74,6 +74,8 @@ namespace Hopper
         public delegate void UnlockNextStage();
         [Signal]
         public delegate void UpdateLocationProgress();
+        [Signal]
+        public delegate void SaveState();
 
         public override void _Ready()
         {
@@ -145,6 +147,8 @@ namespace Hopper
                 PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
                 PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
                 PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+
+                Map.ConnectSaveSignal(this);
             }
 
             PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
@@ -282,9 +286,6 @@ namespace Hopper
 
         public void IncrementLevel()
         {
-            if (iLevel == StageData.LevelReached) UpdateLevelReached();
-            iLevel++;
-            
             if (TempForTesting)
             {
                 QueueFree();
@@ -294,6 +295,10 @@ namespace Hopper
             {
                 if (PuzzleMode)
                 {
+                    //Level reach will be 1 higher than available levels when complete
+                    if (iLevel == StageData.LevelReached) UpdateLevelReached();
+                    iLevel++;
+
                     if (iLevel >= Levels.Length)
                     {
                         EmitSignal(nameof(UnlockNextStage));
@@ -303,6 +308,7 @@ namespace Hopper
                     {
                         NewLevel(Levels[iLevel]);
                     }
+                    EmitSignal(nameof(SaveState));
                 }
                 else
                 {
@@ -480,7 +486,9 @@ namespace Hopper
             {
                 HUD.Visible = false;
                 GetNode<Map>("/root/MapContainer/ViewportContainer/Viewport/Map").QueueFree();  
-                GetNode<StartMenu>("/root/StartMenu").ShowMenu();
+                StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
+                StartMenu.UpdateLoadButton();
+                StartMenu.ShowMenu();
             }
         }
     }

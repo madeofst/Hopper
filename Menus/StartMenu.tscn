@@ -5,10 +5,10 @@
 [ext_resource path="res://Menus/StartMenu.cs" type="Script" id=3]
 [ext_resource path="res://Menus/Resources/NewGameButton_highlighted.png" type="Texture" id=4]
 [ext_resource path="res://Menus/Resources/NewGameButton_clicked.png" type="Texture" id=5]
-[ext_resource path="res://HighScores/Resources/HighScoresButton_highlighted.png" type="Texture" id=6]
-[ext_resource path="res://HighScores/Resources/HighScoresButton_clicked.png" type="Texture" id=7]
+[ext_resource path="res://Menus/Resources/LoadGameButton_clicked.png" type="Texture" id=6]
+[ext_resource path="res://Menus/Resources/LoadGameButton_selected.png" type="Texture" id=7]
 [ext_resource path="res://Music/Menu_short.ogg" type="AudioStream" id=8]
-[ext_resource path="res://HighScores/Resources/HighScoresButton_unselected.png" type="Texture" id=9]
+[ext_resource path="res://Menus/Resources/LoadGameButton_unselected.png" type="Texture" id=9]
 [ext_resource path="res://Menus/Resources/Menu.png" type="Texture" id=10]
 [ext_resource path="res://Menus/Resources/NewGameButton_unselected.png" type="Texture" id=11]
 [ext_resource path="res://Stage/Resources/TestPondDrawing.png" type="Texture" id=12]
@@ -86,8 +86,8 @@ custom_constants/separation = 35
 alignment = 1
 
 [node name="CenterContainer3" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 193.0
-margin_right = 287.0
+margin_left = 122.0
+margin_right = 216.0
 margin_bottom = 23.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -100,11 +100,11 @@ mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 11 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 11 )
 texture_focused = ExtResource( 4 )
 script = ExtResource( 2 )
 
 [node name="CenterContainer4" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-visible = false
 margin_left = 251.0
 margin_right = 358.0
 margin_bottom = 23.0
@@ -112,13 +112,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HighScoresButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4"]
+[node name="LoadButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4"]
 margin_right = 107.0
 margin_bottom = 23.0
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 9 )
-texture_pressed = ExtResource( 7 )
-texture_hover = ExtResource( 6 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 7 )
+texture_disabled = ExtResource( 9 )
+texture_focused = ExtResource( 7 )
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 margin_top = 67.0
@@ -147,6 +149,6 @@ stream = ExtResource( 8 )
 autoplay = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton" to="." method="newGamePressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4/HighScoresButton" to="." method="highScoresPressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4/LoadButton" to="." method="LoadPressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="." method="EditorPressed"]
 [connection signal="tween_completed" from="Tween" to="." method="AfterFade"]

@@ -39,7 +39,7 @@ namespace Hopper
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            Start = GetNode<Location>("../Start");
+            Start = GetNode<Location>("../Start");  //TODO: This needs to be updated on load
             AnimationTree = GetNode<AnimationTree>("AnimationTree");
             AnimationState = (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback");
             CurrentLocation = Start;
@@ -48,6 +48,11 @@ namespace Hopper
         public void SetLocations(List<Location> locations)
         {
             Locations = locations;
+        }
+
+        public void SetCurrentLocation(Location location)
+        {
+            CurrentLocation = location;
         }
 
         public void MoveToMenuPosition(Vector2 position)
