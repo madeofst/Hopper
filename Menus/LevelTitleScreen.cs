@@ -115,7 +115,6 @@ namespace Hopper
 
         public void UpdateFocus(string name)
         {
-            GD.Print(name);
             EmitSignal(nameof(SelectLevel), int.Parse(name));
         }
 
@@ -180,7 +179,7 @@ namespace Hopper
 
         private void MoveLevelSelection(Vector2 direction)
         {
-            GD.Print($"Select {direction}");
+            //GD.Print($"Select {direction}");
         }
 
         public void ClickToHide()

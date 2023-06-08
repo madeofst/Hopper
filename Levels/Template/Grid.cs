@@ -9,7 +9,7 @@ namespace Hopper
         public ulong Time;
         public void PrintTime(string desc = "")
         {
-            GD.Print($"{desc} - {Time}");
+            //GD.Print($"{desc} - {Time}");
         }
 
         private bool editable = false;

@@ -24,7 +24,6 @@ namespace Hopper
             get => texture; 
             set
             {
-                GD.Print("Try update texture");
                 texture = value;
             }
         }

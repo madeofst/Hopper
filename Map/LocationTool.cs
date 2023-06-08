@@ -18,7 +18,6 @@ namespace Hopper
 
         public void UpdateTexture(Texture texture)
         {
-            GD.Print("Update Texture");
             Stage.GetNode<Sprite>("Sprite").Texture = texture;
         }
 
