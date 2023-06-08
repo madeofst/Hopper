@@ -11,6 +11,7 @@ namespace Hopper
 		private Tween Tween;
 		private TextureButton NewGameButton;
 		public TextureButton LoadButton;
+		public Button EditorButton;
 		private Map Map;
 		private HUD HUD;
 		private bool EditorMode;
@@ -24,7 +25,17 @@ namespace Hopper
 			Tween = GetNode<Tween>("Tween");
 			NewGameButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton");
 			LoadButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4/LoadButton");
+			EditorButton = GetNode<Button>("MarginContainer/VBoxContainer/MarginContainer/Button");
 			DEVMODE = GetNode<ResourceRepository>("/root/ResourceRepository").DEVMODE;
+
+			if (DEVMODE)
+			{
+				EditorButton.Show();
+			}
+			else
+			{
+				EditorButton.Hide();
+			}
 		}
 
 		public void newGamePressed()
