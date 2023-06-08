@@ -9,8 +9,8 @@ namespace Hopper
 	{
 		public AudioStreamPlayer Music;
 		private Tween Tween;
-		private TextureButton NewGameButton;
-		public TextureButton LoadButton;
+		private Button NewGameButton;
+		public Button LoadButton;
 		public Button EditorButton;
 		private Map Map;
 		private HUD HUD;
@@ -23,9 +23,9 @@ namespace Hopper
 			MapViewport = GetNode<Viewport>("/root/MapContainer/ViewportContainer/Viewport");
 			Music = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 			Tween = GetNode<Tween>("Tween");
-			NewGameButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer3/NewGameButton");
-			LoadButton = GetNode<TextureButton>("MarginContainer/VBoxContainer/HBoxContainer/CenterContainer4/LoadButton");
-			EditorButton = GetNode<Button>("MarginContainer/VBoxContainer/MarginContainer/Button");
+			NewGameButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/NewGameButton");
+			LoadButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/LoadButton");
+			EditorButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/EditorButton");
 			DEVMODE = GetNode<ResourceRepository>("/root/ResourceRepository").DEVMODE;
 
 			if (DEVMODE)
@@ -38,7 +38,7 @@ namespace Hopper
 			}
 		}
 
-		public void newGamePressed()
+		public void NewGamePressed()
 		{
 			EditorMode = false;
 			if (!Tween.IsActive()) FadeOut();
@@ -70,11 +70,13 @@ namespace Hopper
             File SaveFile = new File();
             if (!SaveFile.FileExists("user://SaveFile.tres"))
             {
-                LoadButton.GetParent<Control>().Hide();
+                LoadButton.Hide();
+				NewGameButton.GrabFocus();
             }
 			else
 			{
-				LoadButton.GetParent<Control>().Show();
+				LoadButton.Show();
+				LoadButton.GrabFocus();
 			}
         }
 
@@ -97,7 +99,6 @@ namespace Hopper
         internal void ShowMenu()
         {
 			Modulate = new Color (1, 1, 1, 1);
-			NewGameButton.GrabFocus();
             Show();
         }
 
