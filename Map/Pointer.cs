@@ -152,12 +152,15 @@ namespace Hopper
 
         private void LoadStage()
         {
+            SetProcessInput(false);
+            
             Map Map = GetNode<Map>("..");
             Map.SetProcessInput(false);
-            SetProcessInput(false);
+
             Stage Stage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
             Stage.Visible = false;
             GetTree().Root.AddChild(Stage);
+            
             Stage.Connect(nameof(Stage.UnlockNextStage), 
                           Map, 
                           nameof(Map.UnlockStage), 
@@ -165,6 +168,7 @@ namespace Hopper
             Stage.Connect(nameof(Stage.UpdateLocationProgress),
                           Map,
                           nameof(Map.UpdateLocationProgress));
+                          
             Stage.Init(new StageData(CurrentLocation.ID, CurrentLocation.Pond, CurrentLocation.LevelReached), 
                        CurrentLocation.Levels, 
                        Position, 

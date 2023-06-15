@@ -431,7 +431,7 @@ namespace Hopper
             if (animationName.Left(4) == "Goal")
             {
                 CheckGoal();
-                EmitSignal(nameof(IncrementLevel)); //TODO: this happens at the end of the set of levels
+                EmitSignal(nameof(IncrementLevel)); //TODO: this happens when a level is completed
             }
             else if (CurrentAnimationNode != null)
             {                

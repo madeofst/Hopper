@@ -6,7 +6,6 @@ namespace Hopper
 {
     public class LevelTitleScreen : Control
     {
-
         private string PondLabel 
         { 
             set
@@ -58,11 +57,13 @@ namespace Hopper
         [Signal]
         public delegate void ActivatePlayer();
         [Signal]
-        public delegate void LoadNextLevel();
+        public delegate void TitleScreenLoaded();
         [Signal]
         public delegate void StartMusic();
         [Signal]
         public delegate void SelectLevel();
+        [Signal]
+        public delegate void Unpause();
 
         public override void _Ready()
         {
@@ -141,7 +142,7 @@ namespace Hopper
             if ((FillDirection == 1 && fill >= 1) && !Triggered)
             {
                 Triggered = true;
-                EmitSignal(nameof(LoadNextLevel));
+                EmitSignal(nameof(TitleScreenLoaded));
             }
 
             if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
@@ -173,6 +174,7 @@ namespace Hopper
                  && !Animating && Visible))
             {
                 SetProcessInput(false);
+                EmitSignal(nameof(Unpause));
                 AnimateHide();
             }
         }

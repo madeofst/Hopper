@@ -168,9 +168,10 @@ namespace Hopper
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
 
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Appear));
-            LevelTitleScreen.Connect(nameof(LevelTitleScreen.LoadNextLevel), this, nameof(BuildLevel), new Godot.Collections.Array { false });
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.TitleScreenLoaded), this, nameof(OnTitleScreenLoaded), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.SelectLevel), this, nameof(NewLevel));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.Unpause), this, nameof(Unpause));
 
             if (tempStageForTesting)
             {
@@ -209,24 +210,11 @@ namespace Hopper
         private void NewLevel(string levelName, bool replay = false)
         {
             NextLevel = levelFactory.Load(levelName, true);
-            InitialiseLevelLoad(NextLevel, replay);
-        }
-
-        private void InitialiseLevelLoad(Level level, bool replay)
-        {
+            
             HUD.Visible = true;
             if (!replay && !TempForTesting)
             {
-                MoveToTop(LevelTitleScreen);
-                LevelTitleScreen.SetPosition(Position);
-                LevelTitleScreen.Init(StageData,
-                                      Levels.Length, 
-                                      iLevel + 1, 
-                                      level.LevelData.MaximumHops, 
-                                      level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
-                LevelTitleScreen.AnimateShow();
-                if (HUD.TouchButtons.Visible) 
-                    HUD.TouchButtons.Visible = false; //FIXME: not sure why but this creates an error !is_inside_tree = true
+                InitialiseLevelTitle(NextLevel);
             }
             else
             {
@@ -235,14 +223,41 @@ namespace Hopper
             }
         }
 
-/*         private void NewLevel(Vector2 playerPosition)
+        private void InitialiseLevelTitle(Level level)
         {
-            if (CurrentLevel != null) 
-                CurrentLevel.QueueFree();
-            CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
-                                                 playerPositionY: (int)playerPosition.y);
-            BuildLevel();
-        } */
+            MoveToTop(LevelTitleScreen);
+            MoveToTop(HUD);
+            LevelTitleScreen.SetPosition(Position);
+            LevelTitleScreen.Init(StageData,
+                                  Levels.Length,
+                                  iLevel + 1,
+                                  level.LevelData.MaximumHops,
+                                  level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
+            LevelTitleScreen.AnimateShow();
+            if (HUD.TouchButtons.Visible)
+                HUD.TouchButtons.Visible = false; //FIXME: not sure why but this creates an error !is_inside_tree = true
+        }
+
+        /*         private void NewLevel(Vector2 playerPosition)
+                {
+                    if (CurrentLevel != null) 
+                        CurrentLevel.QueueFree();
+                    CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
+                                                         playerPositionY: (int)playerPosition.y);
+                    BuildLevel();
+                } */
+
+        private void OnTitleScreenLoaded(bool replay = false)
+        {
+            if (Paused)
+            {
+
+            }
+            else
+            {
+                BuildLevel(replay);
+            }
+        }
 
         private void BuildLevel(bool replay = false)
         {
@@ -262,7 +277,7 @@ namespace Hopper
             HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
             HUD.CountInActiveHops();
             Player.Init(NextLevel, replay);
-            MoveToTop(HUD);
+            //MoveToTop(HUD);
 
             if (!PuzzleMode && !TempForTesting)
             {
@@ -439,18 +454,19 @@ namespace Hopper
         {
             Paused = true;
             Player.Deactivate();
-            PauseMenu.SetPosition(Position);
-            MoveToTop(PauseMenu);
-            PauseMenu.Visible = true;
+            
             if (TempForTesting)
             {
+                PauseMenu.SetPosition(Position);
+                MoveToTop(PauseMenu);
+                PauseMenu.Visible = true;
                 PauseMenu.SetMode(PauseMenu.PauseMenuMode.Editor);
+                PauseMenu.AnimateShow();
             }
             else
             {
-                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Stage);
+                InitialiseLevelTitle(CurrentLevel);
             }
-            PauseMenu.AnimateShow();
         }
 
         private void QuitToMap()
