@@ -547,50 +547,52 @@ namespace Hopper
 
         public override void _PhysicsProcess(float delta)
         {
+            AnimationNode an = CurrentAnimationNode;
+
             if (!RestartingLevel && 
                 CurrentTile != null && 
                 AnimationEndTile != null && 
-                CurrentAnimationNode != null)
+                an != null)
             {
                 if (MoveInputQueue.Count > 0)
                 {
-                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 10, 1 , 2f);
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 10, 1f , 2f);
                 } 
                 else
                 {
-                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed - delta * 10, 1 , 2f);
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed - delta * 10, 1f , 2f);
                 } 
 
                 AnimationTimeElapsed += delta;
 
                 float animationLength;
-                if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim" &&
-                    CurrentAnimationNode.Animation.ResourceName.Right(CurrentAnimationNode.Animation.ResourceName.Length-4) != "Turn")
+                if (an.Animation.ResourceName.Left(4) == "Swim" &&
+                    an.Animation.ResourceName.Right(an.Animation.ResourceName.Length - 4) != "Turn")
                 {
-                    animationLength = SwimDistanceRationCurve.Interpolate((CurrentAnimationNode.Movement.Length())/6);
+                    animationLength = SwimDistanceRationCurve.Interpolate((an.Movement.Length()) / 6);
                 }
                 else
                 {
-                    animationLength = CurrentAnimationNode.Animation.Length;
+                    animationLength = an.Animation.Length;
                 }
                 
                 float totalDistance = (AnimationEndTile.GlobalPosition - CurrentTile.GlobalPosition).Length();
                 float distanceRemaining = (AnimationEndTile.GlobalPosition - GlobalPosition).Length();
                 float distanceTravelled = totalDistance - distanceRemaining;
-                float timeRatio = AnimationTimeElapsed/animationLength;
+                float timeRatio = AnimationTimeElapsed / animationLength;
                 float pixelsToMove = (totalDistance * CurrentMovementCurve.Interpolate(timeRatio)) - distanceTravelled;
                 GlobalPosition = GlobalPosition.MoveToward(AnimationEndTile.GlobalPosition, pixelsToMove);
                 
-                //GD.Print($"{CurrentAnimationNode.Animation.ResourceName} -AniLen {animationLength} -TotDis {totalDistance} -DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
+                //GD.Print($"{an.Animation.ResourceName} -AniLen {animationLength} -TotDis {totalDistance} -DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
                 //GD.Print($"-DisTra {distanceTravelled} -DisRem {distanceTravelled} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
 
+                
                 if (GlobalPosition == AnimationEndTile.GlobalPosition &&
-                    (CurrentAnimationNode.Curve == SwimCurve ||
-                    CurrentAnimationNode.Curve == DiveCurve) &&
-                    CurrentAnimationNode.Animation.ResourceName.Right(CurrentAnimationNode.Animation.ResourceName.Length-4) != "Turn")
+                    (an.Curve == SwimCurve || an.Curve == DiveCurve) &&
+                    an.Animation.ResourceName.Right(an.Animation.ResourceName.Length - 4) != "Turn")
                 {
                     if (AnimationEndTile.IsInsideTree() == false) AnimationEndTile.QueueFree();
-                    AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
+                    AfterAnimation(an.Animation.ResourceName);
                 }
             }
         }
@@ -629,7 +631,8 @@ namespace Hopper
             if (Active && 
                 MoveInputQueue.Count <= HopsRemaining && 
                 !currentResourceName.Contains("Swim") &&
-                !currentResourceName.Contains("Splash"))
+                !currentResourceName.Contains("Splash") &&
+                !currentResourceName.Contains("Bounce"))
             {
                 if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);
                 else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Map/Location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map/Pointer.tscn" type="PackedScene" id=2]
@@ -8,7 +8,7 @@
 [ext_resource path="res://Levels/Resources/LilyPad1_32x32.png" type="Texture" id=6]
 [ext_resource path="res://Shaders/Transition/HM_Transition.tres" type="Material" id=7]
 [ext_resource path="res://Levels/Resources/LilyPad3_32x32.png" type="Texture" id=8]
-[ext_resource path="res://Levels/Resources/LilyPad_Jump_Ready.png" type="Texture" id=9]
+[ext_resource path="res://Levels/Resources/LilyPad4_32x32.png" type="Texture" id=9]
 [ext_resource path="res://Map/Path_Start_to_World1.png" type="Texture" id=10]
 [ext_resource path="res://Map/Path_World1_to_World2.png" type="Texture" id=11]
 [ext_resource path="res://Map/PondLinkPath.tscn" type="PackedScene" id=12]
@@ -18,8 +18,7 @@
 [ext_resource path="res://Map/Path_World4_to_World5.png" type="Texture" id=16]
 [ext_resource path="res://Map/Path_World5_to_World6.png" type="Texture" id=17]
 [ext_resource path="res://Map/Path_World7_to_World8.png" type="Texture" id=18]
-[ext_resource path="res://Map/World1.png" type="Texture" id=19]
-[ext_resource path="res://Levels/Resources/Water_32x32.png" type="Texture" id=20]
+[ext_resource path="res://Map/Path_World2_to_World10.png" type="Texture" id=19]
 [ext_resource path="res://Levels/Resources/LilyPad2_32x32.png" type="Texture" id=21]
 
 [sub_resource type="Curve2D" id=1]
@@ -121,7 +120,7 @@ _data = {
 [sub_resource type="Curve2D" id=20]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 128, -64, 0, 0, 0, 0, 151, -66, 0, 0, 0, 0, 165, -68, 0, 0, 0, 0, 179, -75, 0, 0, 0, 0, 186, -83, 0, 0, 0, 0, 192, -95, 0, 0, 0, 0, 192, -128 )
+"points": PoolVector2Array( 0, 0, 0, 0, 128, -64, 0, 0, 0, 0, 151, -66, 0, 0, 0, 0, 165, -68, 0, 0, 0, 0, 179, -75, 0, 0, 0, 0, 186, -83, 0, 0, 0, 0, 192, -95, 0, 0, 0, 0, 195, -145 )
 }
 
 [sub_resource type="Curve2D" id=19]
@@ -133,7 +132,7 @@ _data = {
 [sub_resource type="Curve2D" id=21]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0515137, 32.9613, 0, 0, 0, 0, -6, 45, 0, 0, 0, 0, -13, 53, 0, 0, 0, 0, -27, 60, 0, 0, 0, 0, -43, 62, 0, 0, 0, 0, -64, 64 )
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.7953, 15.6041, 0, 0, 0, 0, -3, 50, 0, 0, 0, 0, -8, 61, 0, 0, 0, 0, -18, 71, 0, 0, 0, 0, -30, 77, 0, 0, 0, 0, -46, 79, 0, 0, 0, 0, -55, 80, 0, 0, 0, 0, -67, 81 )
 }
 
 [sub_resource type="Curve2D" id=24]
@@ -231,6 +230,10 @@ texture = ExtResource( 13 )
 curve = SubResource( 22 )
 Directions = PoolStringArray( "Left" )
 
+[node name="Sprite" type="Sprite" parent="World2/World10"]
+position = Vector2( 153, -280 )
+texture = ExtResource( 19 )
+
 [node name="World10" parent="." instance=ExtResource( 1 )]
 position = Vector2( 57, 120 )
 Texture = ExtResource( 6 )
@@ -249,7 +252,7 @@ position = Vector2( 256, 32 )
 Texture = ExtResource( 8 )
 ID = 3
 Pond = "BelAir"
-Levels = PoolStringArray( "SimplePondInPond", "DifferentLengths", "UnderSwim", "UnderwaterTurning", "LittleSquare" )
+Levels = PoolStringArray( "SimplePondInPond", "DifferentLengths", "UnderSwim", "UnderInsteadOfIn", "UnderwaterTurning", "LittleSquare" )
 LocationsToUnlock = PoolStringArray( "World4", "World7" )
 
 [node name="World2" parent="World3" instance=ExtResource( 12 )]
@@ -278,7 +281,7 @@ position = Vector2( 304, 16 )
 Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
-Levels = PoolStringArray( "BlueLine", "DivingIn1", "DivingIn1a", "DivingIn6", "DivingInEfficiently1", "SideToSide" )
+Levels = PoolStringArray( "CrissCross", "TheSquare2", "PondInPond", "StuckInJumpLoop", "BlueLine" )
 LocationsToUnlock = PoolStringArray( "World5" )
 
 [node name="World3" parent="World4" instance=ExtResource( 12 )]
@@ -298,7 +301,7 @@ position = Vector2( 352, 32 )
 Texture = ExtResource( 8 )
 ID = 5
 Pond = "BelAir"
-Levels = PoolStringArray( "Mazemerize", "TheSquare", "PondInPond", "SideWind", "MiniMaze", "GettingAbout9" )
+Levels = PoolStringArray(  )
 LocationsToUnlock = PoolStringArray( "World6" )
 
 [node name="World4" parent="World5" instance=ExtResource( 12 )]
@@ -319,7 +322,7 @@ position = Vector2( 400, 16 )
 Texture = ExtResource( 8 )
 ID = 6
 Pond = "BelAir"
-Levels = PoolStringArray( "LongWayShortWay5", "StuckInJumpLoop", "CrissCross" )
+Levels = PoolStringArray(  )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World5" parent="World6" instance=ExtResource( 12 )]
@@ -329,10 +332,10 @@ Directions = PoolStringArray( "Left" )
 
 [node name="World7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 128, -64 )
-Texture = ExtResource( 9 )
+Texture = ExtResource( 21 )
 ID = 7
 Pond = "Liffey"
-Levels = PoolStringArray( "UpOrDown", "BounceOne", "OutsideTheBox", "BadStar" )
+Levels = PoolStringArray( "UpOrDown", "BounceOne", "BadStar", "OutsideTheBox" )
 LocationsToUnlock = PoolStringArray( "World8", "World9" )
 
 [node name="World3" parent="World7" instance=ExtResource( 12 )]
@@ -355,10 +358,10 @@ Directions = PoolStringArray( "Up" )
 
 [node name="World8" parent="." instance=ExtResource( 1 )]
 position = Vector2( 80, -48 )
-Texture = ExtResource( 6 )
+Texture = ExtResource( 21 )
 ID = 8
 Pond = "Liffey"
-Levels = PoolStringArray( "SimplerTrickery", "Twins", "3-3-4", "FillipeFilloppe" )
+Levels = PoolStringArray( "SimplerTrickery", "Twins", "3-3-4_2", "FillipeFilloppe2" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World7" parent="World8" instance=ExtResource( 12 )]
@@ -367,11 +370,11 @@ curve = SubResource( 19 )
 Directions = PoolStringArray( "Right" )
 
 [node name="World9" parent="." instance=ExtResource( 1 )]
-position = Vector2( 192, -128 )
-Texture = ExtResource( 19 )
+position = Vector2( 195, -145 )
+Texture = ExtResource( 9 )
 ID = 9
 Pond = "Liffey"
-Levels = PoolStringArray( "SpinnerOne", "SpinnerTwo", "LessObviousRoute", "ScenicBounce" )
+Levels = PoolStringArray( "SpinnerOne", "SpinnerTwo", "LessObviousRoute", "ThereAndBackAgain", "SpinCity", "SingleTurn" )
 LocationsToUnlock = PoolStringArray( "World11" )
 
 [node name="World7" parent="World9" instance=ExtResource( 12 )]
@@ -384,11 +387,11 @@ curve = SubResource( 24 )
 Directions = PoolStringArray( "Up", "Right" )
 
 [node name="World11" parent="." instance=ExtResource( 1 )]
-position = Vector2( 224, -155 )
-Texture = ExtResource( 20 )
+position = Vector2( 227, -172 )
+Texture = ExtResource( 9 )
 ID = 11
 Pond = "Liffey"
-Levels = PoolStringArray( "UseIt", "SingleTurn", "TwoSpinIsland", "TwoSpinIslandPartTwo" )
+Levels = PoolStringArray( "ScenicBounce", "UseIt", "TwoSpinIsland", "TwoSpinIslandPartTwo" )
 LocationsToUnlock = PoolStringArray( "World12" )
 
 [node name="World9" parent="World11" instance=ExtResource( 12 )]
@@ -400,8 +403,8 @@ curve = SubResource( 26 )
 Directions = PoolStringArray( "Up", "Right" )
 
 [node name="World12" parent="." instance=ExtResource( 1 )]
-position = Vector2( 275, -165 )
-Texture = ExtResource( 21 )
+position = Vector2( 278, -182 )
+Texture = ExtResource( 9 )
 ID = 12
 Pond = "Liffey"
 Levels = PoolStringArray( "InvertedT", "ThePointedStar" )

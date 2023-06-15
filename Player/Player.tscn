@@ -60,6 +60,7 @@
 [ext_resource path="res://Player/Resources/PlayerGoalBounceUp.tres" type="Animation" id=58]
 [ext_resource path="res://Player/Resources/PlayerGoalBounceRight.tres" type="Animation" id=59]
 [ext_resource path="res://Player/Resources/PlayerGoalBounceLeft.tres" type="Animation" id=60]
+[ext_resource path="res://Player/Resources/PlayerGoalJumpDownExit.tres" type="Animation" id=61]
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
@@ -243,55 +244,6 @@ tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0.63 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=62]
-resource_name = "GoalJumpDownExit"
-length = 0.49
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 144, 145, 146, 75, 76, 77, 78 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( -0.00262947, 0, 0.28 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "EmitMoveToTop"
-}, {
-"args": [  ],
-"method": "TriggerExitSplashAnimation"
-}, {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.49 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
@@ -671,6 +623,7 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="Node2D"]
+visible = false
 position = Vector2( 2, 0 )
 script = ExtResource( 2 )
 JumpCurve = SubResource( 47 )
@@ -725,7 +678,7 @@ anims/GoalDoubleJumpLeft = SubResource( 57 )
 anims/GoalDoubleJumpRight = SubResource( 58 )
 anims/GoalDoubleJumpUp = SubResource( 59 )
 anims/GoalJumpDown = ExtResource( 52 )
-anims/GoalJumpDownExit = SubResource( 62 )
+anims/GoalJumpDownExit = ExtResource( 61 )
 anims/GoalJumpLeft = SubResource( 54 )
 anims/GoalJumpLeftExit = SubResource( 60 )
 anims/GoalJumpRight = SubResource( 53 )

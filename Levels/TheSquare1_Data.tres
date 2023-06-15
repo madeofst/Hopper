@@ -5,14 +5,14 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
-Name = "Jumpington"
+Name = "TheSquare1"
 Width = 7
 Height = 7
 TileSize = 32
 TileBounceDirection = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
-StartingHops = 6
-MaximumHops = 6
-ScoreRequired = 0
-PlayerStartPosition = Vector2( 2, 6 )
-TileType = PoolIntArray( 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 5, 5, 3, 5, 5, 3 )
-TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+StartingHops = 5
+MaximumHops = 5
+ScoreRequired = 1
+PlayerStartPosition = Vector2( 0, 0 )
+TileType = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 5, 0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 5, 3, 4, 2, 4, 1, 0, 0, 0, 4, 0, 0, 0, 0, 5, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )

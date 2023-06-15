@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 ID = 8
-CurrentLocationName = null
+CurrentLocationName = "World8"
 Active = true
 NewlyActivated = false
 Complete = true
