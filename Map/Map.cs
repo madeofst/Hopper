@@ -10,7 +10,6 @@ namespace Hopper
         public HUD HUD;
         public List<Location> Locations;
         public Pointer Pointer;
-        private PauseMenu PauseMenu;
         private Tween Tween;
         private MapCamera Camera;
 
@@ -99,33 +98,26 @@ namespace Hopper
         private void ConnectToPauseMenuAndHUD()
         {
             HUD = GetNode<HUD>("/root/HUD");
-            PauseMenu = GetNode<PauseMenu>("/root/PauseMenu");
             ConnectPauseSignals();
         }
 
         public void ConnectPauseSignals()
         {
-            PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
-            PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
-            PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+            HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
         }
 
         public void DisconnectPauseSignals()
         {
-            PauseMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
-            PauseMenu.Disconnect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
-            PauseMenu.Disconnect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
+            HUD.OverlayMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
         }
 
-        private void QuitToMenu()
+        public void QuitToMenu()
         {
             StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
             StartMenu.UpdateLoadButton();
             Pointer.MoveToMenuPosition(StartMenu.RectPosition);
             Camera.MoveTo(Pointer.Position);
-            PauseMenu.RectPosition = StartMenu.RectPosition;
             HUD.Close();
-            PauseMenu.AnimateHide();
             QueueFree();
             StartMenu.ShowMenu();
         }
@@ -170,24 +162,13 @@ namespace Hopper
         }
 
         private void Pause()
-        
         {
             Pointer.SetProcessInput(false);
             SetProcessInput(false);
-            MoveToTop(PauseMenu);
-            //PauseMenu.SetPosition(Pointer.CurrentLocation.Position - new Vector2(240, 135));
-            PauseMenu.Visible = true;
-            PauseMenu.SetMode(PauseMenu.PauseMenuMode.Map);
-            PauseMenu.AnimateShow();
         }
 
         private void Unpause()
         {
-            if (PauseMenu.Mode == PauseMenu.PauseMenuMode.Map)
-            {
-                Pointer.SetProcessInput(true);
-                SetProcessInput(true);
-            }
         }
 
         private void MoveToTop(Node node = null)

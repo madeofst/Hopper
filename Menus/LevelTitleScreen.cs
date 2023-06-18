@@ -64,6 +64,10 @@ namespace Hopper
         public delegate void SelectLevel();
         [Signal]
         public delegate void Unpause();
+        [Signal]
+        public delegate void BackToMap();
+        [Signal]
+        public delegate void QuitToMenu();
 
         public override void _Ready()
         {
@@ -145,11 +149,17 @@ namespace Hopper
                 EmitSignal(nameof(TitleScreenLoaded));
             }
 
-            if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0)) Animating = false;
-
             if (Animating)
             {
-                Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));            
+                if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0))
+                {
+                    Animating = false;
+                }
+                else
+                {
+                    GD.Print($"{Shader} {Shader.GetShaderParam("fill").ToString()} fill + {delta * Speed * FillDirection}");
+                    Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));            
+                }
             }
             else
             {
@@ -170,12 +180,20 @@ namespace Hopper
         public override void _Input(InputEvent @event)
         {
             if ((@event.IsActionPressed("ui_accept") ||
-                 @event is InputEventScreenTouch && @event.IsPressed()
-                 && !Animating && Visible))
+                 @event is InputEventScreenTouch && @event.IsPressed())
+                 && !Animating && Visible)
             {
                 SetProcessInput(false);
                 EmitSignal(nameof(Unpause));
                 AnimateHide();
+            }
+            else if (@event.IsActionPressed("ui_map"))
+            {
+                EmitSignal("BackToMap");
+            }
+            else if (@event.IsActionPressed("ui_quit"))
+            {
+                EmitSignal("QuitToMenu");
             }
         }
 

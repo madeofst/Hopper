@@ -14,6 +14,7 @@ namespace Hopper
         private LevelTitleScreen LevelTitleScreen;
 
         public Control TouchButtons;
+        public OverlayMenu OverlayMenu;
 
         //Touch controls
         public TouchScreenButton Restart;
@@ -31,6 +32,7 @@ namespace Hopper
             ScoreBox = GetNode<ScoreBox>("ScoreBox");
             Restart = GetNode<TouchScreenButton>("TouchButtons/Restart");
             TouchButtons = GetNode<Control>("TouchButtons");
+            OverlayMenu = GetNode<OverlayMenu>("OverlayMenu");
         }
 
         private void ConnectToLevelTitle()

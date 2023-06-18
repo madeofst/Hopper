@@ -50,6 +50,8 @@ namespace Hopper
         [Signal]
         public delegate void Restart();
         [Signal]
+        public delegate void BackToMap();
+        [Signal]
         public delegate void Quit();
         [Signal]
         public delegate void PlayFailSound();
@@ -626,6 +628,10 @@ namespace Hopper
             else if (Active && @event.IsActionPressed("ui_quit"))
             {
                 EmitSignal(nameof(Quit));
+            }
+            else if (Active && @event.IsActionPressed("ui_map"))
+            {
+                EmitSignal(nameof(BackToMap));
             }
             string currentResourceName = CurrentAnimationNode == null ? "" : CurrentAnimationNode.Animation.ResourceName;
             if (Active && 

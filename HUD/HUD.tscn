@@ -17,7 +17,7 @@
 [ext_resource path="res://HUD/Resources/RightArrow.png" type="Texture" id=15]
 [ext_resource path="res://HUD/Resources/Quit.png" type="Texture" id=16]
 [ext_resource path="res://HUD/Resources/Restart.png" type="Texture" id=17]
-[ext_resource path="res://Menus/MenuButtonPanel.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Menus/OverlayMenu.tscn" type="PackedScene" id=18]
 
 [sub_resource type="DynamicFont" id=1]
 outline_size = 1
@@ -144,6 +144,7 @@ margin_right = 456.262
 margin_bottom = 41.5206
 
 [node name="PopUpText" parent="." instance=ExtResource( 11 )]
+visible = false
 margin_top = 252.0
 margin_right = -3.05176e-05
 margin_bottom = 0.0
@@ -207,7 +208,6 @@ pressed = ExtResource( 15 )
 action = "ui_right"
 visibility_mode = 1
 
-[node name="MenuButtonPanel" parent="." instance=ExtResource( 18 )]
-margin_left = 386.0
-margin_right = 0.0
-margin_bottom = -13.0
+[node name="OverlayMenu" parent="." instance=ExtResource( 18 )]
+
+[editable path="OverlayMenu"]

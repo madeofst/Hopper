@@ -113,6 +113,10 @@ namespace Hopper
             {
                 if (PointerOnStage()) LoadStage();
             }
+            else if (@event.IsActionPressed("ui_quit"))
+            {
+                GetParent<Map>().QuitToMenu();
+            }
 
             if (currentPath != null)
             {
@@ -175,6 +179,8 @@ namespace Hopper
                        false, 
                        "", 
                        Map);
+
+            //Map.HUD.OverlayMenu.ChangeMode(OverlayMenuMode.LevelTitle);
         }
 
         private bool PointerOnStart()

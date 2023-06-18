@@ -27,7 +27,6 @@ namespace Hopper
         
         //Menus
         public LevelTitleScreen LevelTitleScreen { get; private set; }
-        public PauseMenu PauseMenu { get; private set; }
 
         //Audio
         public AudioStreamPlayer Music { get; set; }
@@ -87,7 +86,6 @@ namespace Hopper
             Background = GetNode<TextureRect>("Background");
             HUD = GetNode<HUD>("../HUD"); 
             LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
-            PauseMenu = GetNode<PauseMenu>("../PauseMenu");
 
             Music = GetNode<AudioStreamPlayer>("../AudioRepository/Music");
             FailLevel = GetNode<AudioStreamPlayer>("../AudioRepository/FailLevel");
@@ -142,18 +140,9 @@ namespace Hopper
 
             if (Map != null)
             {
-                Map.DisconnectPauseSignals();
-
-                PauseMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
-                PauseMenu.Connect(nameof(PauseMenu.Quit), this, nameof(QuitToMenu));
-                PauseMenu.Connect(nameof(PauseMenu.Unpause), this, nameof(Unpause));
-
                 Map.ConnectSaveSignal(this);
             }
 
-            PauseMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
-            PauseMenu.Connect(nameof(PauseMenu.Map), this, nameof(QuitToMap));
-            
             NewPlayer();           
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));
             Player.Connect(nameof(Player.GoalReached), this, nameof(GoalReached));
@@ -164,6 +153,7 @@ namespace Hopper
             Player.Connect(nameof(Player.TileChanged), this, nameof(UpdateTile));
             Player.Connect(nameof(Player.MoveBehind), this, nameof(MovePlayerBehind));
             Player.Connect(nameof(Player.MoveToTop), this, nameof(MovePlayerToTop));
+            Player.Connect(nameof(Player.BackToMap), this, nameof(QuitToMap));
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
 
@@ -172,6 +162,8 @@ namespace Hopper
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.SelectLevel), this, nameof(NewLevel));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.Unpause), this, nameof(Unpause));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.BackToMap), this, nameof(QuitToMap));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.QuitToMenu), this, nameof(QuitToMenu));
 
             if (tempStageForTesting)
             {
@@ -227,6 +219,7 @@ namespace Hopper
         {
             MoveToTop(LevelTitleScreen);
             MoveToTop(HUD);
+            HUD.OverlayMenu.ChangeMode(OverlayMenuMode.LevelTitle);
             LevelTitleScreen.SetPosition(Position);
             LevelTitleScreen.Init(StageData,
                                   Levels.Length,
@@ -292,6 +285,7 @@ namespace Hopper
                 }
             }
             ConnectRestartButton(NextLevel);
+            ConnectOverlayMenu(NextLevel);
             UpdateGoalStateAndScore(NextLevel.ScoreRequired);
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
@@ -383,7 +377,6 @@ namespace Hopper
         public void RestartLevel(string levelName, bool fail = false)
         {
             Player.RestartingLevel = true;
-            if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
             NewLevel(levelName, true);
             if (fail) HUD.ShowPopUp("Try again!");
             Player.Appear();
@@ -403,14 +396,24 @@ namespace Hopper
 
         private void ConnectRestartButton(Level currentLevel)
         {
-            if (PauseMenu.RestartButton.IsConnected("pressed", this, nameof(RestartLevel))) PauseMenu.RestartButton.Disconnect("pressed", this, nameof(RestartLevel));
-            PauseMenu.RestartButton.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
-
-            if (PauseMenu.IsConnected(nameof(PauseMenu.Restart), this, nameof(RestartLevel))) PauseMenu.Disconnect(nameof(PauseMenu.Restart), this, nameof(RestartLevel));
-            PauseMenu.Connect(nameof(PauseMenu.Restart), this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
-
-            if (Player.IsConnected(nameof(Player.Restart), this, nameof(RestartLevel))) Player.Disconnect(nameof(Player.Restart), this, nameof(RestartLevel));
+            if (Player.IsConnected(nameof(Player.Restart), this, nameof(RestartLevel))) 
+                Player.Disconnect(nameof(Player.Restart), this, nameof(RestartLevel));
             Player.Connect(nameof(Player.Restart), this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
+        }
+
+        private void ConnectOverlayMenu(Level currentLevel)
+        {
+            if (HUD.OverlayMenu.RestartButton.IsConnected("pressed", this, nameof(RestartLevel)))
+                HUD.OverlayMenu.RestartButton.Disconnect("pressed", this, nameof(RestartLevel));
+            HUD.OverlayMenu.RestartButton.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
+
+            if (HUD.OverlayMenu.QuitButton.IsConnected("pressed", this, nameof(QuitToMenu)))
+                HUD.OverlayMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
+            HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+
+            if (HUD.OverlayMenu.MapButton.IsConnected("pressed", this, nameof(QuitToMap)))
+                HUD.OverlayMenu.MapButton.Disconnect("pressed", this, nameof(QuitToMap));
+            HUD.OverlayMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
         }
 
         private void ScoreAnimationFinished()   { ScoreAnimFinished = true; }
@@ -445,6 +448,7 @@ namespace Hopper
 
         private void Unpause()
         {
+            HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Stage);
             MoveToTop(HUD);
             Player.Activate();
             Paused = false;
@@ -455,15 +459,7 @@ namespace Hopper
             Paused = true;
             Player.Deactivate();
             
-            if (TempForTesting)
-            {
-                PauseMenu.SetPosition(Position);
-                MoveToTop(PauseMenu);
-                PauseMenu.Visible = true;
-                PauseMenu.SetMode(PauseMenu.PauseMenuMode.Editor);
-                PauseMenu.AnimateShow();
-            }
-            else
+            if (!TempForTesting)
             {
                 InitialiseLevelTitle(CurrentLevel);
             }
@@ -471,11 +467,13 @@ namespace Hopper
 
         private void QuitToMap()
         {
-            if (PauseMenu.Visible == true) PauseMenu.AnimateHide();
+            if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
+
             HUD.HideHopCounter();
             HUD.HideScoreBox();
             HUD.SetButtonToEnter();
             HUD.UnlockPosition();
+            HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Map);
             QueueFree();
             if (!TempForTesting)
             {
@@ -494,10 +492,10 @@ namespace Hopper
 
         public void QuitToMenu()
         {
+            if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
+
             HUD.Close();
             QueueFree();
-            PauseMenu.RectPosition = GetNode<StartMenu>("../StartMenu").RectPosition;
-            PauseMenu.AnimateHide();
             if (!TempForTesting)
             {
                 HUD.Visible = false;

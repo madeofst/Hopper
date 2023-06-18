@@ -42,6 +42,7 @@ namespace Hopper
 		{
 			EditorMode = false;
 			if (!Tween.IsActive()) FadeOut();
+
 			if (DEVMODE)
 			{
 				LoadMap(ResourceLoader.Load<SaveData>("res://Saving/DevMode/SaveFile.tres"));
@@ -50,19 +51,24 @@ namespace Hopper
 			{
 				LoadMap(ResourceLoader.Load<SaveData>("res://Saving/DefaultSaveFile.tres"));
 			}
+
             LoadHUD();
-			if (!EditorMode) Map.FadeIn(); //TODO: might be able to remove this editor check?
-			if (EditorMode) GD.Print("This should never happen I don't think.");
+			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Map);
+
+			Map.FadeIn();
 		}
 
 		public void LoadPressed()
 		{
 			EditorMode = false;
 			if (!Tween.IsActive()) FadeOut();
+
 			LoadMap(ResourceLoader.Load<SaveData>("user://SaveFile.tres"));
+
             LoadHUD();
-			if (!EditorMode) Map.FadeIn(); //TODO: might be able to remove this editor check?
-			if (EditorMode) GD.Print("This should never happen I don't think.");
+			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Map);
+
+			Map.FadeIn();
 		}
 
         public void UpdateLoadButton()
@@ -85,6 +91,7 @@ namespace Hopper
 			EditorMode = true;
 			LevelEditor editor = (LevelEditor)GD.Load<PackedScene>("res://Levels/Editor/LevelEditor.tscn").Instance();
 			LoadHUD();
+			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Menu);
 			GetViewport().AddChild(editor);
 			Music.Stop();
 			FadeOut();
@@ -98,6 +105,7 @@ namespace Hopper
 
         internal void ShowMenu()
         {
+			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Menu);
 			Modulate = new Color (1, 1, 1, 1);
             Show();
         }

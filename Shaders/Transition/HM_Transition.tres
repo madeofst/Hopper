@@ -39,7 +39,7 @@ void fragment(){
 
 [resource]
 shader = SubResource( 1 )
-shader_param/fill = 1.0
+shader_param/fill = 0.0
 shader_param/color = Color( 1, 1, 1, 0 )
 shader_param/texture_size = Vector2( 500, 500 )
 shader_param/pixelSize = 1

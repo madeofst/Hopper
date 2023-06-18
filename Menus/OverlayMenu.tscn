@@ -1,0 +1,112 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Menus/QuitButton.cs" type="Script" id=1]
+[ext_resource path="res://Menus/Resources/OverlayMenuButtonNormal.tres" type="StyleBox" id=2]
+[ext_resource path="res://Menus/Resources/OverlayMenuButtonPressed.tres" type="StyleBox" id=3]
+[ext_resource path="res://Fonts/DigitalDiscoSimple.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Menus/OverlayMenu.cs" type="Script" id=5]
+[ext_resource path="res://Menus/RestartButton.cs" type="Script" id=6]
+[ext_resource path="res://Menus/MapButton.cs" type="Script" id=7]
+
+[sub_resource type="Theme" id=5]
+Button/colors/font_color = Color( 0.141176, 0.2, 0.160784, 1 )
+Button/colors/font_color_focus = Color( 0.141176, 0.2, 0.160784, 1 )
+Button/colors/font_color_hover = Color( 0.878431, 0.878431, 0.878431, 1 )
+Button/colors/font_color_pressed = Color( 0.878431, 0.878431, 0.878431, 1 )
+Button/fonts/font = ExtResource( 4 )
+Button/styles/focus = ExtResource( 2 )
+Button/styles/hover = ExtResource( 2 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 3 )
+MarginContainer/constants/margin_bottom = 5
+MarginContainer/constants/margin_left = 5
+MarginContainer/constants/margin_right = 5
+MarginContainer/constants/margin_top = 5
+RichTextLabel/fonts/normal_font = ExtResource( 4 )
+
+[node name="OverlayMenu" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 5 )
+script = ExtResource( 5 )
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 475.0
+margin_bottom = 265.0
+alignment = 2
+
+[node name="Restart" type="Button" parent="Buttons"]
+margin_left = 445.0
+margin_top = 192.0
+margin_right = 470.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 25, 20 )
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "R"
+script = ExtResource( 6 )
+
+[node name="Label" type="RichTextLabel" parent="Buttons/Restart"]
+visible = false
+margin_left = -98.0
+margin_top = 2.0
+margin_bottom = 22.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "[right]Restart [/right]"
+text = "Restart "
+
+[node name="Map" type="Button" parent="Buttons"]
+margin_left = 445.0
+margin_top = 216.0
+margin_right = 470.0
+margin_bottom = 236.0
+rect_min_size = Vector2( 25, 20 )
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "M"
+script = ExtResource( 7 )
+
+[node name="Label" type="RichTextLabel" parent="Buttons/Map"]
+visible = false
+margin_left = -98.0
+margin_top = 2.0
+margin_bottom = 22.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "[right]Back to Map [/right]"
+text = "Back to Map "
+
+[node name="Quit" type="Button" parent="Buttons"]
+margin_left = 445.0
+margin_top = 240.0
+margin_right = 470.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 25, 20 )
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Q"
+script = ExtResource( 1 )
+
+[node name="Label" type="RichTextLabel" parent="Buttons/Quit"]
+visible = false
+margin_left = -98.0
+margin_top = 2.0
+margin_bottom = 22.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "[right]Quit to menu [/right]"
+text = "Quit to menu "
+
+[connection signal="focus_exited" from="Buttons/Restart" to="Buttons/Restart" method="HideLabel"]
+[connection signal="mouse_entered" from="Buttons/Restart" to="Buttons/Restart" method="ShowLabel"]
+[connection signal="mouse_exited" from="Buttons/Restart" to="Buttons/Restart" method="HideLabel"]
+[connection signal="mouse_entered" from="Buttons/Map" to="Buttons/Map" method="ShowLabel"]
+[connection signal="mouse_exited" from="Buttons/Map" to="Buttons/Map" method="HideLabel"]
+[connection signal="mouse_entered" from="Buttons/Quit" to="Buttons/Quit" method="ShowLabel"]
+[connection signal="mouse_exited" from="Buttons/Quit" to="Buttons/Quit" method="HideLabel"]
