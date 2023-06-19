@@ -49,6 +49,18 @@ tracks/1/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 5
@@ -58,13 +70,15 @@ JumpLength = 2
 position = Vector2( 16, 17 )
 texture = ExtResource( 2 )
 hframes = 7
-frame = 5
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 autoplay = "RESET"
 reset_on_save = false
 anims/RESET = SubResource( 2 )
 anims/Spring = SubResource( 1 )
+
+[node name="SplashSprite" parent="." index="2"]
+frame = 4
 
 [node name="BugSprite" parent="." index="3"]
 frame = 7

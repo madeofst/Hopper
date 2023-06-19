@@ -422,7 +422,10 @@ namespace Hopper
 
         public void SkipToNextQueuedAnimation()
         {
-            if (MoveInputQueue.Count > 0 || AnimationQueue.Count > 0)
+            if (AnimationQueue.Count > 0 && 
+               (AnimationEndTile.Type == Type.Rock ||
+                AnimationEndTile.Type == Type.Bounce ||
+                AnimationEndTile.Type == Type.Direct))
             {
                 AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
             }
@@ -450,6 +453,10 @@ namespace Hopper
                     if (!CheckGoal())
                     {
                         CheckHopsRemaining();
+                    }
+                    else
+                    {
+                        GD.Print("Goal reached when it shouldn't be or something.");
                     }
                     AnimationEndTile = null;
                     CurrentAnimationNode = null;
@@ -554,6 +561,7 @@ namespace Hopper
         public override void _PhysicsProcess(float delta)
         {
             AnimationNode an = CurrentAnimationNode;
+            float MaxAnimationSpeed = 2.2f;
 
             if (!RestartingLevel && 
                 CurrentTile != null && 
@@ -562,11 +570,11 @@ namespace Hopper
             {
                 if (MoveInputQueue.Count > 0)
                 {
-                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 10, 1f , 2f);
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 10, 1f , MaxAnimationSpeed);
                 } 
                 else
                 {
-                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed - delta * 10, 1f , 2f);
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed - delta * 10, 1f , MaxAnimationSpeed);
                 } 
 
                 AnimationTimeElapsed += delta;
@@ -579,7 +587,7 @@ namespace Hopper
                 }
                 else
                 {
-                    animationLength = an.Animation.Length;
+                    animationLength = an.Animation.Length / PlayerAnimation.PlaybackSpeed;
                 }
                 
                 float totalDistance = (AnimationEndTile.GlobalPosition - CurrentTile.GlobalPosition).Length();
@@ -592,8 +600,8 @@ namespace Hopper
                 if (timeRatio > 0.99) CurrentAnimationNearEnd = true;
 
                 //GD.Print($"{an.Animation.ResourceName} -AniLen {animationLength} -TotDis {totalDistance} -DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
-                //GD.Print($"-DisTra {distanceTravelled} -DisRem {distanceTravelled} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
-
+                //GD.Print($"-DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
+                //GD.Print($"DR{distanceRemaining}_TR {timeRatio}_S{PlayerAnimation.PlaybackSpeed}");
                 
                 if (GlobalPosition == AnimationEndTile.GlobalPosition &&
                     (an.Curve == SwimCurve || an.Curve == DiveCurve) &&
@@ -628,16 +636,24 @@ namespace Hopper
             string currentResourceName = CurrentAnimationNode == null ? "" : CurrentAnimationNode.Animation.ResourceName;
             if ((Active && MoveInputQueue.Count <= HopsRemaining) && 
                 (
-                    (CurrentAnimationNearEnd) ||
-                    (!currentResourceName.Contains("Swim") &&
+                   (CurrentAnimationNearEnd) ||
+                   (!currentResourceName.Contains("Swim") &&
                     !currentResourceName.Contains("Splash") &&
                     !currentResourceName.Contains("Bounce"))
                 ))
             {
-                if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);
+                if      (@event.IsActionPressed("ui_left"))  MoveInputQueue.Enqueue(Vector2.Left);
                 else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);
-                else if (@event.IsActionPressed("ui_up")) MoveInputQueue.Enqueue(Vector2.Up);
-                else if (@event.IsActionPressed("ui_down")) MoveInputQueue.Enqueue(Vector2.Down);
+                else if (@event.IsActionPressed("ui_up"))    MoveInputQueue.Enqueue(Vector2.Up);
+                else if (@event.IsActionPressed("ui_down"))  MoveInputQueue.Enqueue(Vector2.Down);
+
+/*                 if (@event.IsActionPressed("ui_left")  ||
+                    @event.IsActionPressed("ui_right") ||
+                    @event.IsActionPressed("ui_up")   ||
+                    @event.IsActionPressed("ui_down"))
+                    {
+                        if (@event is InputEventKey eventKey) GD.Print(OS.GetScancodeString(eventKey.PhysicalScancode));
+                    } */
             }
         }
 
