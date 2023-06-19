@@ -61,6 +61,16 @@
 [ext_resource path="res://Player/Resources/PlayerGoalBounceRight.tres" type="Animation" id=59]
 [ext_resource path="res://Player/Resources/PlayerGoalBounceLeft.tres" type="Animation" id=60]
 [ext_resource path="res://Player/Resources/PlayerGoalJumpDownExit.tres" type="Animation" id=61]
+[ext_resource path="res://Player/Resources/PlayerGoalJumpUp.tres" type="Animation" id=62]
+[ext_resource path="res://Player/Resources/PlayerGoalJumpUpExit.tres" type="Animation" id=63]
+[ext_resource path="res://Player/Resources/PlayerGoalDoubleJumpUp.tres" type="Animation" id=64]
+[ext_resource path="res://Player/Resources/PlayerGoalJumpLeft.tres" type="Animation" id=65]
+[ext_resource path="res://Player/Resources/PlayerGoalDoubleJumpLeft.tres" type="Animation" id=66]
+[ext_resource path="res://Player/Resources/PlayerGoalJumpLeftExit.tres" type="Animation" id=67]
+[ext_resource path="res://Player/Resources/PlayerGoalJumpRight.tres" type="Animation" id=68]
+[ext_resource path="res://Player/Resources/PlayerGoalJumpRightExit.tres" type="Animation" id=69]
+[ext_resource path="res://Player/Resources/PlayerGoalDoubleJumpRight.tres" type="Animation" id=70]
+[ext_resource path="res://Player/Resources/PlayerGoalDoubleJumpDown.tres" type="Animation" id=71]
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
@@ -75,455 +85,6 @@ resource_name = "DoubleBounceRightSplash"
 
 [sub_resource type="Animation" id=45]
 resource_name = "DoubleBounceUpSplash"
-
-[sub_resource type="Animation" id=56]
-resource_local_to_scene = true
-resource_name = "GoalDoubleJumpDown"
-length = 0.63
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 108, 109, 110, 111, 112, 113, 114, 115, 116 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.42 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.63 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=57]
-resource_name = "GoalDoubleJumpLeft"
-length = 0.63
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 135, 136, 137, 138, 139, 140, 141, 142, 143 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.42 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.63 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=58]
-resource_name = "GoalDoubleJumpRight"
-length = 0.63
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 126, 127, 128, 129, 130, 131, 132, 133, 134 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.42 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.63 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=59]
-resource_name = "GoalDoubleJumpUp"
-length = 0.63
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42, 0.49, 0.56 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 117, 118, 119, 120, 121, 122, 123, 124, 125 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.42 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.63 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=54]
-resource_name = "GoalJumpLeft"
-length = 0.49
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 93, 94, 95, 96, 97, 98, 99 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/keys = {
-"times": PoolRealArray( 0.28 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.49 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=60]
-resource_name = "GoalJumpLeftExit"
-length = 0.49
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 165, 166, 167, 96, 97, 98, 99 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.001, 0.28 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerExitSplashAnimation"
-}, {
-"args": [  ],
-"method": "EmitMoveToTop"
-}, {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.49 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=53]
-resource_name = "GoalJumpRight"
-length = 0.49
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 86, 87, 88, 89, 90, 91, 92 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/keys = {
-"times": PoolRealArray( 0.28 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.49 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=61]
-resource_name = "GoalJumpRightExit"
-length = 0.49
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 158, 159, 160, 89, 90, 91, 92 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.001, 0.28 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerExitSplashAnimation"
-}, {
-"args": [  ],
-"method": "EmitMoveToTop"
-}, {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.49 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=55]
-resource_name = "GoalJumpUp"
-length = 0.49
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 79, 80, 81, 82, 83, 84, 85 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.28 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.49 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-
-[sub_resource type="Animation" id=63]
-resource_name = "GoalJumpUpExit"
-length = 0.49
-step = 0.07
-tracks/0/type = "value"
-tracks/0/path = NodePath("PlayerSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.07, 0.14, 0.21, 0.28, 0.35, 0.42 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 151, 152, 153, 82, 83, 84, 85 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.001, 0.28 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "TriggerExitSplashAnimation"
-}, {
-"args": [  ],
-"method": "EmitMoveToTop"
-}, {
-"args": [  ],
-"method": "TriggerSplashAnimation"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.49 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
 
 [sub_resource type="Animation" id=46]
 length = 0.001
@@ -623,6 +184,7 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="Node2D"]
+visible = false
 position = Vector2( 2, 0 )
 script = ExtResource( 2 )
 JumpCurve = SubResource( 47 )
@@ -633,7 +195,6 @@ BounceCurve = ExtResource( 38 )
 SwimDistanceRationCurve = SubResource( 48 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
-visible = false
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )
@@ -673,18 +234,18 @@ anims/GoalBounceDown = ExtResource( 57 )
 anims/GoalBounceLeft = ExtResource( 60 )
 anims/GoalBounceRight = ExtResource( 59 )
 anims/GoalBounceUp = ExtResource( 58 )
-anims/GoalDoubleJumpDown = SubResource( 56 )
-anims/GoalDoubleJumpLeft = SubResource( 57 )
-anims/GoalDoubleJumpRight = SubResource( 58 )
-anims/GoalDoubleJumpUp = SubResource( 59 )
+anims/GoalDoubleJumpDown = ExtResource( 71 )
+anims/GoalDoubleJumpLeft = ExtResource( 66 )
+anims/GoalDoubleJumpRight = ExtResource( 70 )
+anims/GoalDoubleJumpUp = ExtResource( 64 )
 anims/GoalJumpDown = ExtResource( 52 )
 anims/GoalJumpDownExit = ExtResource( 61 )
-anims/GoalJumpLeft = SubResource( 54 )
-anims/GoalJumpLeftExit = SubResource( 60 )
-anims/GoalJumpRight = SubResource( 53 )
-anims/GoalJumpRightExit = SubResource( 61 )
-anims/GoalJumpUp = SubResource( 55 )
-anims/GoalJumpUpExit = SubResource( 63 )
+anims/GoalJumpLeft = ExtResource( 65 )
+anims/GoalJumpLeftExit = ExtResource( 67 )
+anims/GoalJumpRight = ExtResource( 68 )
+anims/GoalJumpRightExit = ExtResource( 69 )
+anims/GoalJumpUp = ExtResource( 62 )
+anims/GoalJumpUpExit = ExtResource( 63 )
 anims/IdleDown = ExtResource( 3 )
 anims/IdleLeft = ExtResource( 5 )
 anims/IdleRight = ExtResource( 4 )
@@ -713,11 +274,12 @@ anims/SwimUp = ExtResource( 30 )
 anims/SwimUpTurn = ExtResource( 36 )
 
 [node name="FXSprite" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 49 )
 centered = false
 offset = Vector2( -16, -42 )
 hframes = 12
-frame = 6
+frame = 10
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="FXSprite"]
 autoplay = "Idle"

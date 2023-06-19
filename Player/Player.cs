@@ -336,7 +336,6 @@ namespace Hopper
 
             // Build the string and return the node (or null)
             Animation animation = PlayerAnimation.GetAnimation($"{Goal}{Length}{Movement}{Direction}{Suffix}");
-            //GD.Print($"Built string = '{Goal}{Length}{Movement}{Direction}{Suffix}'");
 
             AnimationNode node = null;
             if (animation != null)
@@ -422,10 +421,10 @@ namespace Hopper
 
         public void SkipToNextQueuedAnimation()
         {
-            if (AnimationQueue.Count > 0 && 
-               (AnimationEndTile.Type == Type.Rock ||
+            if (AnimationQueue.Count > 0 || MoveInputQueue.Count > 0)
+/*                (AnimationEndTile.Type == Type.Rock ||
                 AnimationEndTile.Type == Type.Bounce ||
-                AnimationEndTile.Type == Type.Direct))
+                AnimationEndTile.Type == Type.Direct)) */
             {
                 AfterAnimation(CurrentAnimationNode.Animation.ResourceName);
             }
@@ -436,10 +435,10 @@ namespace Hopper
             AnimationTimeElapsed = 0;
             if (AnimationEndTile != null) GridPosition = AnimationEndTile.GridPosition;
 
-            if (animationName.Left(4) == "Goal")
+            if (animationName.Contains("Goal"))
             {
                 CheckGoal();
-                EmitSignal(nameof(IncrementLevel)); //TODO: this happens when a level is completed
+                LoadNextLevel();
             }
             else if (CurrentAnimationNode != null)
             {                
@@ -462,6 +461,11 @@ namespace Hopper
                     CurrentAnimationNode = null;
                 }
             }
+        }
+
+        private void LoadNextLevel()
+        {
+            EmitSignal(nameof(IncrementLevel));
         }
 
         private void PlayNextAnimation()
@@ -568,9 +572,14 @@ namespace Hopper
                 AnimationEndTile != null && 
                 an != null)
             {
-                if (MoveInputQueue.Count > 0)
+                if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Goal")
                 {
-                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 10, 1f , MaxAnimationSpeed);
+                    PlayerAnimation.PlaybackSpeed = 1f;
+                    //GD.Print("Set goal speed.");
+                }
+                else if (MoveInputQueue.Count > 0)
+                {
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 5, 1f , MaxAnimationSpeed);
                 } 
                 else
                 {
@@ -597,11 +606,11 @@ namespace Hopper
                 float pixelsToMove = (totalDistance * CurrentMovementCurve.Interpolate(timeRatio)) - distanceTravelled;
                 GlobalPosition = GlobalPosition.MoveToward(AnimationEndTile.GlobalPosition, pixelsToMove);
                 
-                if (timeRatio > 0.99) CurrentAnimationNearEnd = true;
+                if (timeRatio > 0.9) CurrentAnimationNearEnd = true;
 
                 //GD.Print($"{an.Animation.ResourceName} -AniLen {animationLength} -TotDis {totalDistance} -DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
                 //GD.Print($"-DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
-                //GD.Print($"DR{distanceRemaining}_TR {timeRatio}_S{PlayerAnimation.PlaybackSpeed}");
+                //GD.Print($"DR{distanceRemaining}_   TR {timeRatio}");
                 
                 if (GlobalPosition == AnimationEndTile.GlobalPosition &&
                     (an.Curve == SwimCurve || an.Curve == DiveCurve) &&
