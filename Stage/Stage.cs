@@ -157,7 +157,6 @@ namespace Hopper
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
 
-            LevelTitleScreen.Connect(nameof(LevelTitleScreen.ActivatePlayer), Player, nameof(Player.Appear));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.TitleScreenLoaded), this, nameof(OnTitleScreenLoaded), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.SelectLevel), this, nameof(NewLevel));
@@ -218,7 +217,6 @@ namespace Hopper
         private void InitialiseLevelTitle(Level level)
         {
             MoveToTop(LevelTitleScreen);
-            MoveToTop(HUD);
             HUD.OverlayMenu.ChangeMode(OverlayMenuMode.LevelTitle);
             LevelTitleScreen.SetPosition(Position);
             LevelTitleScreen.Init(StageData,
@@ -227,38 +225,21 @@ namespace Hopper
                                   level.LevelData.MaximumHops,
                                   level.LevelData.ScoreRequired); //FIXME: Need to change iLevel to get its number from the Level itself
             LevelTitleScreen.AnimateShow();
-            if (HUD.TouchButtons.Visible)
-                HUD.TouchButtons.Visible = false; //FIXME: not sure why but this creates an error !is_inside_tree = true
+            
+            //FIXME: not sure why but this creates an error !is_inside_tree = true
+            if (HUD.TouchButtons.Visible) HUD.TouchButtons.Visible = false; 
         }
-
-        /*         private void NewLevel(Vector2 playerPosition)
-                {
-                    if (CurrentLevel != null) 
-                        CurrentLevel.QueueFree();
-                    CurrentLevel = levelFactory.Generate(playerPositionX: (int)playerPosition.x, 
-                                                         playerPositionY: (int)playerPosition.y);
-                    BuildLevel();
-                } */
 
         private void OnTitleScreenLoaded(bool replay = false)
         {
-            if (Paused)
-            {
-
-            }
-            else
-            {
-                BuildLevel(replay);
-            }
+            MoveToTop(HUD);
+            if (!Paused) BuildLevel(replay);
         }
 
         private void BuildLevel(bool replay = false)
         {
-            GetViewport().MoveChild(HUD, GetViewport().GetChildCount());
-            if (!replay)
-            {
-                if (NextLevel == null) NextLevel = CurrentLevel;
-            }
+            MoveToTop(HUD);
+            if (!replay && NextLevel == null) NextLevel = CurrentLevel;
 
             AddChildBelowNode(Background, NextLevel);
             NextLevel.Connect(nameof(Level.LevelBuilt), HUD, nameof(HUD.SetMaxHops));
@@ -270,7 +251,6 @@ namespace Hopper
             HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
             HUD.CountInActiveHops();
             Player.Init(NextLevel, replay);
-            //MoveToTop(HUD);
 
             if (!PuzzleMode && !TempForTesting)
             {
@@ -403,9 +383,9 @@ namespace Hopper
 
         private void ConnectOverlayMenu(Level currentLevel)
         {
-            if (HUD.OverlayMenu.RestartButton.IsConnected("pressed", this, nameof(RestartLevel)))
-                HUD.OverlayMenu.RestartButton.Disconnect("pressed", this, nameof(RestartLevel));
-            HUD.OverlayMenu.RestartButton.Connect("pressed", this, nameof(RestartLevel), new Godot.Collections.Array() { currentLevel.LevelName, false } );
+            if (HUD.OverlayMenu.RestartButton.IsConnected("pressed", Player, nameof(Player.RestartPressed)))
+                HUD.OverlayMenu.RestartButton.Disconnect("pressed", Player, nameof(Player.RestartPressed));
+            HUD.OverlayMenu.RestartButton.Connect("pressed", Player, nameof(Player.RestartPressed));
 
             if (HUD.OverlayMenu.QuitButton.IsConnected("pressed", this, nameof(QuitToMenu)))
                 HUD.OverlayMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
@@ -450,19 +430,15 @@ namespace Hopper
         {
             HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Stage);
             MoveToTop(HUD);
-            Player.Activate();
+            Player.Appear();
             Paused = false;
         }
 
         private void Pause()
         {
             Paused = true;
-            Player.Deactivate();
             
-            if (!TempForTesting)
-            {
-                InitialiseLevelTitle(CurrentLevel);
-            }
+            if (!TempForTesting) InitialiseLevelTitle(CurrentLevel);
         }
 
         private void QuitToMap()

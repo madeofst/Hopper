@@ -92,6 +92,8 @@ namespace Hopper
             } 
         }
 
+        public bool CurrentAnimationNearEnd { get; private set; }
+
         public override void _Ready()
         {
             Name = "Player";
@@ -99,6 +101,7 @@ namespace Hopper
 
         public void Init(Level currentLevel, bool replay) //Called each time a new level starts
         {
+            Deactivate();
             PlayerSprite = GetNode<Sprite>("PlayerSprite");
             PlayerAnimation = GetNode<AnimationPlayer>("PlayerSprite/AnimationPlayer");
             PlayerFX = GetNode<AnimationPlayer>("FXSprite/AnimationPlayer");
@@ -459,6 +462,7 @@ namespace Hopper
             if (HopsRemaining > -1)
             {
                 CurrentAnimationNode = AnimationQueue.Dequeue();
+                CurrentAnimationNearEnd = false;
                 CurrentMovementCurve = CurrentAnimationNode.Curve;
                 AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
 
@@ -585,6 +589,8 @@ namespace Hopper
                 float pixelsToMove = (totalDistance * CurrentMovementCurve.Interpolate(timeRatio)) - distanceTravelled;
                 GlobalPosition = GlobalPosition.MoveToward(AnimationEndTile.GlobalPosition, pixelsToMove);
                 
+                if (timeRatio > 0.99) CurrentAnimationNearEnd = true;
+
                 //GD.Print($"{an.Animation.ResourceName} -AniLen {animationLength} -TotDis {totalDistance} -DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
                 //GD.Print($"-DisTra {distanceTravelled} -DisRem {distanceTravelled} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
 
@@ -603,27 +609,12 @@ namespace Hopper
         {
             if (Active && @event.IsActionPressed("ui_cancel"))
             {   
+                Deactivate();
                 EmitSignal(nameof(Pause));
             }
             else if (Active && @event.IsActionPressed("ui_restart"))
             {
-                if (CurrentAnimationNode != null)
-                {
-                    //GD.Print(CurrentAnimationNode.Animation.ResourceName.Left(4));
-                    if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim" ||
-                        CurrentAnimationNode.Animation.ResourceName.Left(5) == "Splash")
-                    {
-                        SendRestartSignal();
-                    }
-                    else
-                    {
-                        Smoke();
-                    }
-                }
-                else
-                {
-                    Smoke();
-                }
+                RestartPressed();
             }
             else if (Active && @event.IsActionPressed("ui_quit"))
             {
@@ -633,12 +624,15 @@ namespace Hopper
             {
                 EmitSignal(nameof(BackToMap));
             }
+
             string currentResourceName = CurrentAnimationNode == null ? "" : CurrentAnimationNode.Animation.ResourceName;
-            if (Active && 
-                MoveInputQueue.Count <= HopsRemaining && 
-                !currentResourceName.Contains("Swim") &&
-                !currentResourceName.Contains("Splash") &&
-                !currentResourceName.Contains("Bounce"))
+            if ((Active && MoveInputQueue.Count <= HopsRemaining) && 
+                (
+                    (CurrentAnimationNearEnd) ||
+                    (!currentResourceName.Contains("Swim") &&
+                    !currentResourceName.Contains("Splash") &&
+                    !currentResourceName.Contains("Bounce"))
+                ))
             {
                 if (@event.IsActionPressed("ui_left")) MoveInputQueue.Enqueue(Vector2.Left);
                 else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);
@@ -647,8 +641,36 @@ namespace Hopper
             }
         }
 
-        public void Activate()      { Active = true; }
-        public void Deactivate()    { Active = false; }
+        public void RestartPressed()
+        {
+            if (CurrentAnimationNode != null)
+            {
+                if (CurrentAnimationNode.Animation.ResourceName.Left(4) == "Swim" ||
+                    CurrentAnimationNode.Animation.ResourceName.Left(5) == "Splash")
+                {
+                    SendRestartSignal();
+                }
+                else
+                {
+                    Smoke();
+                }
+            }
+            else
+            {
+                Smoke();
+            }
+        }
+
+        public void Activate()      
+        { 
+            SetProcessInput(true);
+            Active = true; 
+        }
+        public void Deactivate()    
+        { 
+            SetProcessInput(false);
+            Active = false; 
+        }
 
         public void EmitMoveToTop()     { EmitSignal(nameof(MoveToTop)); }
         public void EmitMoveBehind()    { EmitSignal(nameof(MoveBehind)); }

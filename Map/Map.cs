@@ -103,6 +103,8 @@ namespace Hopper
 
         public void ConnectPauseSignals()
         {
+            if (HUD.OverlayMenu.QuitButton.IsConnected("pressed", this, nameof(QuitToMenu)))
+                DisconnectPauseSignals();
             HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
         }
 
@@ -158,7 +160,7 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if (@event.IsActionPressed("ui_cancel")) Pause();
+            //if (@event.IsActionPressed("ui_cancel")) Pause();
         }
 
         private void Pause()

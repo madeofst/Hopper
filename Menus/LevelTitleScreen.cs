@@ -1,6 +1,7 @@
 using Godot;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Hopper
 {
@@ -36,6 +37,8 @@ namespace Hopper
                 stageID = value;
             }
         }
+        public StageData StageData { get; private set; }
+        private int iLevel { get; set; }
 
         public int FillDirection { get; private set; }
         public float Speed { get; private set; }
@@ -54,8 +57,6 @@ namespace Hopper
         public delegate void ShowTouchButtons();
         [Signal]
         public delegate void ShowScoreBox();
-        [Signal]
-        public delegate void ActivatePlayer();
         [Signal]
         public delegate void TitleScreenLoaded();
         [Signal]
@@ -77,9 +78,13 @@ namespace Hopper
 
         public void Init(StageData StageData, int LevelCount, int iLevel, int maxHops, int reqScore)
         {
+            StopInput();
+            Animating = true;
             Visible = true;
             PondLabel = StageData.Pond;
             StageIDLabel = StageData.ID;
+            this.StageData = StageData;
+            this.iLevel = iLevel;
 
             LevelSelectors.Clear();
             foreach (Node n in LevelButtons.GetChildren())
@@ -94,11 +99,8 @@ namespace Hopper
                 b.Name = i.ToString();
                 LevelButtons.AddChild(b);
                 LevelSelectors.Add(b);
-                if (iLevel == i + 1) LevelSelectors[i].GrabFocus();
                 b.Connect(nameof(LevelSelectButton.ChangeFocus), this, nameof(UpdateFocus));
             }
-
-            UpdateLevelReached(StageData.LevelReached);
         }
 
         public void UpdateLevelReached(int LevelReached)
@@ -109,18 +111,24 @@ namespace Hopper
                 {
                     b.FocusMode = FocusModeEnum.All;
                     b.TextureNormal = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");
+                    b.Disabled = false;
+                    if (int.Parse(b.Name) == iLevel - 1) b.GrabFocus();
                 }
                 else
                 {
                     b.FocusMode = FocusModeEnum.None;
                     b.Disabled = true;
                 }
+                b.Visible = true;
             }
         }
 
         public void UpdateFocus(string name)
         {
-            EmitSignal(nameof(SelectLevel), int.Parse(name));
+            if (!Animating)
+            {
+                EmitSignal(nameof(SelectLevel), int.Parse(name));
+            }
         }
 
         public void AnimateShow()
@@ -134,6 +142,7 @@ namespace Hopper
         {
             EmitSignal(nameof(StartMusic));
 
+            foreach (LevelSelectButton b in LevelSelectors) b.Visible = false;
             FillDirection = -1;
             Speed = 3;
             Animating = true;
@@ -154,10 +163,11 @@ namespace Hopper
                 if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0))
                 {
                     Animating = false;
+                    if (FillDirection == 1 && fill >= 1) StartInput();
                 }
                 else
                 {
-                    GD.Print($"{Shader} {Shader.GetShaderParam("fill").ToString()} fill + {delta * Speed * FillDirection}");
+                    //GD.Print($"{Shader} {Shader.GetShaderParam("fill").ToString()} fill + {delta * Speed * FillDirection}");
                     Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));            
                 }
             }
@@ -167,33 +177,57 @@ namespace Hopper
                 {
                     Visible = false;
                     Triggered = false;
-                    EmitSignal(nameof(ActivatePlayer));
+                    EmitSignal(nameof(Unpause));
                     EmitSignal(nameof(ShowTouchButtons));
                 }
                 else if (FillDirection == 1 && fill >= 1)
                 {
-                    SetProcessInput(true);
+                    
                 }
             }
         }
 
         public override void _Input(InputEvent @event)
         {
-            if ((@event.IsActionPressed("ui_accept") ||
-                 @event is InputEventScreenTouch && @event.IsPressed())
-                 && !Animating && Visible)
+            if (!Animating && Visible)
             {
-                SetProcessInput(false);
-                EmitSignal(nameof(Unpause));
-                AnimateHide();
+                if ((@event.IsActionPressed("ui_accept") ||
+                    @event is InputEventScreenTouch && @event.IsPressed()))
+                {
+                    StopInput();
+                    AnimateHide();
+                }
+                else if (@event.IsActionPressed("ui_map"))
+                {
+                    StopInput();
+                    EmitSignal("BackToMap");
+                }
+                else if (@event.IsActionPressed("ui_quit"))
+                {
+                    StopInput();
+                    EmitSignal("QuitToMenu");
+                }
+                else if (@event.IsActionPressed("ui_cancel"))
+                {
+                    StopInput();
+                    EmitSignal("BackToMap");
+                }
             }
-            else if (@event.IsActionPressed("ui_map"))
+        }
+
+        private void StartInput()
+        {
+            UpdateLevelReached(StageData.LevelReached);
+            SetProcessInput(true);
+        }
+
+        private void StopInput()
+        {
+            SetProcessInput(false);
+            foreach (TextureButton b in LevelSelectors)
             {
-                EmitSignal("BackToMap");
-            }
-            else if (@event.IsActionPressed("ui_quit"))
-            {
-                EmitSignal("QuitToMenu");
+                b.Disabled = true;
+                b.FocusMode = FocusModeEnum.None;
             }
         }
 
@@ -204,7 +238,7 @@ namespace Hopper
 
         public void ClickToHide()
         {
-            SetProcessInput(false);
+            StopInput();
             if (!Animating & Visible) AnimateHide();
         }
     }

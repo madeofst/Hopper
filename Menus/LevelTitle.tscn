@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Shaders/Transition/HM_Transition.tres" type="Material" id=1]
 [ext_resource path="res://Menus/Resources/BelAirPond.png" type="Texture" id=3]
 
 [node name="LevelTitle" type="Control"]
@@ -18,12 +17,10 @@ texture = ExtResource( 3 )
 stretch_mode = 6
 
 [node name="LevelSelector" type="MarginContainer" parent="."]
-material = ExtResource( 1 )
-use_parent_material = true
 margin_left = -10.0
-margin_top = -122.0
+margin_top = -123.0
 margin_right = 86.0
-margin_bottom = -74.0
+margin_bottom = 187.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_constants/margin_top = 310
