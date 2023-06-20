@@ -21,14 +21,17 @@ autoplay = "Idle"
 visible = true
 
 [node name="CPUParticles2D" parent="." index="6" instance=ExtResource( 2 )]
+position = Vector2( 16.2542, 10.9297 )
 z_index = 1
 emitting = false
-amount = 15
+amount = 12
 one_shot = true
 randomness = 0.32
 lifetime_randomness = 0.18
+linear_accel = -25.81
 
 [node name="CPUParticles2D2" parent="." index="7" instance=ExtResource( 2 )]
+position = Vector2( 16.2542, 10.9297 )
 z_index = 1
 emitting = false
 amount = 15
@@ -36,3 +39,4 @@ one_shot = true
 randomness = 0.34
 lifetime_randomness = 0.29
 direction = Vector2( -1, -0.6 )
+linear_accel = -25.81
