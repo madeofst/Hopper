@@ -478,6 +478,7 @@ namespace Hopper
                 AnimationEndTile = Grid.GetTile(CurrentTile.GridPosition + CurrentAnimationNode.Movement);
 
                 PlayerAnimation.Stop();
+                PlayerAnimation.PlaybackSpeed = 1f;
                 PlayerAnimation.Play(PlayerAnimation.FindAnimation(CurrentAnimationNode.Animation));
                 //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
             }
@@ -565,7 +566,7 @@ namespace Hopper
         public override void _PhysicsProcess(float delta)
         {
             AnimationNode an = CurrentAnimationNode;
-            float MaxAnimationSpeed = 2.2f;
+            float MaxAnimationSpeed = 3f;
 
             if (!RestartingLevel && 
                 CurrentTile != null && 
@@ -579,7 +580,7 @@ namespace Hopper
                 }
                 else if (MoveInputQueue.Count > 0)
                 {
-                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 5, 1f , MaxAnimationSpeed);
+                    PlayerAnimation.PlaybackSpeed = Mathf.Clamp(PlayerAnimation.PlaybackSpeed + delta * 10, 1f , MaxAnimationSpeed);
                 } 
                 else
                 {
