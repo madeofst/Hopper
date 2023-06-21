@@ -16,14 +16,19 @@ namespace Hopper
         public void Init(SaveData SaveData)
         {
             Locations = GetChildren().OfType<Location>().ToList<Location>();
+            
             LoadSavedData(SaveData);
+
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
-            Tween = GetNode<Tween>("Tween");
+            Pointer.CurrentLocation = FindLocationByID(SaveData.CurrentLocationId);
+
             Camera = GetNode<MapCamera>("MapCamera");
+            Camera.Connect(nameof(MapCamera.CameraArrived), this, nameof(ActivateInitialLocations));
+
+            Tween = GetNode<Tween>("Tween");
+
             CallDeferred(nameof(ConnectToPauseMenuAndHUD));
-            CallDeferred(nameof(ActivateLocations));
-            Pointer.CurrentLocation.UnlockAllPaths();
         }
 
         private void LoadSavedData(SaveData SaveData)
@@ -37,10 +42,9 @@ namespace Hopper
                 }
                 else
                 {
-                    location.Active = ld.Active;
-                    location.NewlyActivated = ld.NewlyActivated;
                     location.Complete = ld.Complete;
                     location.LevelReached = ld.LevelReached;
+                    if (ld.Active) location.Activate(Locations);
                 }
             }
         }
@@ -84,14 +88,11 @@ namespace Hopper
             ResourceSaver.Save("user://SaveFile.tres", SaveData);
         }
 
-        private void ActivateLocations()
+        private void ActivateInitialLocations()
         {
-            foreach (Location l in Locations)
+            if (Pointer.CurrentLocation.Complete)
             {
-                if (l.Active) 
-                {
-                    l.Activate(Locations); //TODO: this may need to be another position
-                }
+                UnlockStage(Pointer.CurrentLocation.LocationsToUnlock);
             }
         }
 
@@ -126,19 +127,26 @@ namespace Hopper
 
         public void UnlockStage(string[] StagesToUnlock)
         {
-            foreach (var s in StagesToUnlock)
-            {
-                Location l = GetNode<Location>((string)s);
-                if (l.Active == false)
-                {
-                    l.Active = true;
-                    l.Activate(Locations);
-                }
-            }
-            Pointer.CurrentLocation.UnlockAllPaths();
             Pointer.CurrentLocation.NewlyActivated = false; //TODO: need to make this happen when even one level has been completed
             Pointer.CurrentLocation.Complete = true;
             Pointer.CurrentLocation.UpdateAnimationState();
+
+            Pointer.CurrentLocation.UnlockAllPaths();
+            
+            Pointer.SetProcessInput(true);
+        }
+
+        public void ActivateLocation(string[] LocationName)
+        {
+            Location Location = Locations.Find(l => l.Name == LocationName[0]);
+            if (Location != null)
+            {
+                Location.Activate(Locations);
+            }
+            else
+            {
+                GD.Print("Location not found.");
+            }
         }
 
         public void UpdateLocationProgress(int LevelReached)
@@ -155,7 +163,6 @@ namespace Hopper
         {
             Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In);
 			Tween.Start();
-            Pointer.Position = Pointer.Start.Position;
         }
 
         public override void _Input(InputEvent @event)

@@ -9,23 +9,68 @@ namespace Hopper
         public string[] Directions;
 
         [Export]
-        private bool active;
+        private bool active = false;
+
+        [Signal]
+        public delegate void PathAnimated();
 
         public bool Active 
         { 
             get => active; 
             set
             {
-                active = value; 
-                Visible = false;
-                if (value == true) Visible = true;
+                active = value;
+                if (Shader != null) Shader.SetShaderParam("fill", 1f);
+                Visible = true;
             } 
         }
+
+        private ShaderMaterial Shader;
+        private bool Animating = false;
+        private float FillDirection;
+        private float Speed;
 
         public override void _Ready()
         {
             Visible = false;
+            Shader = (ShaderMaterial)Material;
+            if (Shader != null ) Shader.SetShaderParam("fill", 0f);
         }
 
+        internal void AnimateReveal()
+        {
+            if (Shader != null)
+            {
+                Shader.SetShaderParam("fill", 0f);
+                FillDirection = 1;
+                Speed = 1f;
+                Animating = true;
+            }
+            else
+            {
+                Active = true;
+            }
+            Visible = true;
+        }
+
+        public override void _PhysicsProcess(float delta)
+        {
+            if (Shader != null)
+            {
+                float fill = (float)Shader.GetShaderParam("fill");
+
+                if ((FillDirection == 1 && fill >= 1) && Animating)
+                {
+                    Animating = false;
+                    active = true;
+                    EmitSignal(nameof(PathAnimated), new Godot.Collections.Array{Name});
+                }
+
+                if (Animating)
+                {
+                    Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));
+                }
+            }
+        }
     }
 }

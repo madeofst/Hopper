@@ -290,8 +290,8 @@ namespace Hopper
 
                     if (iLevel >= Levels.Length)
                     {
-                        EmitSignal(nameof(UnlockNextStage));
-                        QuitToMap(); 
+                        bool StageComplete = true;
+                        QuitToMap(StageComplete); 
                     }
                     else 
                     {
@@ -441,7 +441,9 @@ namespace Hopper
             if (!TempForTesting) InitialiseLevelTitle(CurrentLevel);
         }
 
-        private void QuitToMap()
+        private void QuitToMap() { QuitToMap(false); }
+
+        private void QuitToMap(bool StageComplete)
         {
             if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
 
@@ -458,7 +460,14 @@ namespace Hopper
                 Map.UpdateActivationState(StageData.LevelReached);
                 Map.Show();
                 Map.SetProcessInput(true);
-                Map.GetNode<Pointer>("Pointer").SetProcessInput(true);
+                if (StageComplete)
+                {
+                    EmitSignal(nameof(UnlockNextStage));
+                } 
+                else
+                {
+                    Map.Pointer.SetProcessInput(true);
+                }
             }
             else
             {

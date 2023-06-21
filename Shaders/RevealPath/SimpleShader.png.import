@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Path_World2_to_World10.png-4737f47b3244c7130961a59fb9206c93.stex"
+path="res://.import/SimpleShader.png-4df5fc4b2154247a640e46f410d7e816.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/Path_World2_to_World10.png"
-dest_files=[ "res://.import/Path_World2_to_World10.png-4737f47b3244c7130961a59fb9206c93.stex" ]
+source_file="res://Shaders/RevealPath/SimpleShader.png"
+dest_files=[ "res://.import/SimpleShader.png-4df5fc4b2154247a640e46f410d7e816.stex" ]
 
 [params]
 

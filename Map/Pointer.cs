@@ -22,7 +22,9 @@ namespace Hopper
                 return null;
             } 
             set
-            {} 
+            {
+                Position = value.Position;
+            } 
         }
 
         private List<Location> Locations;
@@ -42,7 +44,7 @@ namespace Hopper
             Start = GetNode<Location>("../Start");  //TODO: This needs to be updated on load
             AnimationTree = GetNode<AnimationTree>("AnimationTree");
             AnimationState = (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback");
-            CurrentLocation = Start;
+            //CurrentLocation = Start;
         }
 
         public void SetLocations(List<Location> locations)
@@ -58,8 +60,8 @@ namespace Hopper
         public void MoveToMenuPosition(Vector2 position)
         {
             //This just helps the visual transition from map to menu
-            CurrentLocation = Start;
-            Position = position;
+            //CurrentLocation = Start;
+            //Position = position;
         }
 
         public override void _PhysicsProcess(float delta)

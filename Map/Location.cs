@@ -50,7 +50,7 @@ namespace Hopper
                 }
                 else
                 {
-                    ActivationAnimationPlayer.Stop();
+                    ActivationAnimationPlayer.Play("Stopped");
                 }
                 newlyActivated = value;  
             } 
@@ -79,6 +79,8 @@ namespace Hopper
 
         public void Activate(List<Location> Locations)
         {
+            Active = true;
+            
             if (LevelReached == 0) NewlyActivated = true;
 
             foreach (PondLinkPath p in GetChildren().OfType<PondLinkPath>())
@@ -124,7 +126,7 @@ namespace Hopper
         {
             foreach (PondLinkPath p in GetChildren().OfType<PondLinkPath>())
             {
-                p.Active = true;
+                p.AnimateReveal();
             }
         }
 
@@ -142,7 +144,7 @@ namespace Hopper
 
         internal void UpdateActivationState(int levelReached)
         {
-            if (levelReached > 0) ActivationAnimationPlayer.Play("Stopped");
+            if (levelReached > 0) NewlyActivated = false;
         }
 
         public void UpdateLocationProgress(int levelReached)

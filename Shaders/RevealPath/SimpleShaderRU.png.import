@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Path_World2_to_World10.png-4737f47b3244c7130961a59fb9206c93.stex"
+path="res://.import/SimpleShaderRU.png-a18412b6557eaa3c073bf9ab5cd62b47.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/Path_World2_to_World10.png"
-dest_files=[ "res://.import/Path_World2_to_World10.png-4737f47b3244c7130961a59fb9206c93.stex" ]
+source_file="res://Shaders/RevealPath/SimpleShaderRU.png"
+dest_files=[ "res://.import/SimpleShaderRU.png-a18412b6557eaa3c073bf9ab5cd62b47.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
