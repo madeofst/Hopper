@@ -127,12 +127,11 @@ namespace Hopper
 
         public void UnlockStage(string[] StagesToUnlock)
         {
-            Pointer.CurrentLocation.NewlyActivated = false; //TODO: need to make this happen when even one level has been completed
-            Pointer.CurrentLocation.Complete = true;
-            Pointer.CurrentLocation.UpdateAnimationState();
-
-            Pointer.CurrentLocation.UnlockAllPaths();
-            
+            if (!Pointer.CurrentLocation.Complete)
+            {
+                Pointer.CurrentLocation.MarkComplete();
+                Pointer.CurrentLocation.UnlockAllPaths();
+            }
             Pointer.SetProcessInput(true);
         }
 

@@ -130,6 +130,14 @@ namespace Hopper
             }
         }
 
+
+        public void MarkComplete()
+        {
+            NewlyActivated = false; //TODO: need to make this happen when even one level has been completed
+            Complete = true;
+            UpdateAnimationState();
+        }
+
         public void UpdateAnimationState()
         {
             if (NewlyActivated)
