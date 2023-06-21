@@ -335,6 +335,7 @@ namespace Hopper
             }            
 
             // Build the string and return the node (or null)
+            //GD.Print($"{Goal}{Length}{Movement}{Direction}{Suffix}");
             Animation animation = PlayerAnimation.GetAnimation($"{Goal}{Length}{Movement}{Direction}{Suffix}");
 
             AnimationNode node = null;
@@ -479,6 +480,8 @@ namespace Hopper
 
                 PlayerAnimation.Stop();
                 PlayerAnimation.PlaybackSpeed = 1f;
+
+                if (CurrentAnimationNode.Animation.ResourceName.Contains("Goal")) Deactivate();
                 PlayerAnimation.Play(PlayerAnimation.FindAnimation(CurrentAnimationNode.Animation));
                 //GD.Print($"Node - {CurrentAnimationNode.Animation.ResourceName} - {CurrentAnimationNode.Movement} - {CurrentAnimationNode.Curve.ResourceName}");
             }

@@ -165,11 +165,6 @@ namespace Hopper
 			Tween.Start();
         }
 
-        public override void _Input(InputEvent @event)
-        {
-            //if (@event.IsActionPressed("ui_cancel")) Pause();
-        }
-
         private void Pause()
         {
             Pointer.SetProcessInput(false);

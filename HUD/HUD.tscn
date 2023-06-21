@@ -209,5 +209,21 @@ action = "ui_right"
 visibility_mode = 1
 
 [node name="OverlayMenu" parent="." instance=ExtResource( 18 )]
+mouse_filter = 1
+
+[node name="Restart" parent="OverlayMenu/Buttons" index="0"]
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+
+[node name="Map" parent="OverlayMenu/Buttons" index="1"]
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+
+[node name="Quit" parent="OverlayMenu/Buttons" index="2"]
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
 
 [editable path="OverlayMenu"]

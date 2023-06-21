@@ -217,7 +217,7 @@ namespace Hopper
 
         private void StartInput()
         {
-            UpdateLevelReached(StageData.LevelReached);
+            //UpdateLevelReached(StageData.LevelReached);
             SetProcessInput(true);
         }
 

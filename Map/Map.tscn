@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Map/Location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map/Pointer.tscn" type="PackedScene" id=2]
@@ -23,6 +23,9 @@
 [ext_resource path="res://Levels/Resources/LilyPad2_32x32.png" type="Texture" id=21]
 [ext_resource path="res://Shaders/RevealPath/SimpleShaderLD.png" type="Texture" id=22]
 [ext_resource path="res://Shaders/RevealPath/SimpleShaderRD.png" type="Texture" id=23]
+[ext_resource path="res://Map/Path_World7_to_World9.png" type="Texture" id=24]
+[ext_resource path="res://Map/Path_World9_to_World11.png" type="Texture" id=25]
+[ext_resource path="res://Map/Path_World11_to_World12.png" type="Texture" id=26]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -367,6 +370,49 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -48, 16 )
 }
 
+[sub_resource type="Shader" id=43]
+code = "shader_type canvas_item;
+
+uniform float fill : hint_range(-0.01,1.0) = -0.01;
+uniform vec4 color : hint_color;
+uniform sampler2D heightMap;
+uniform vec2 texture_size;
+uniform int pixelSize = 1;
+
+void fragment(){
+	
+	COLOR = textureLod(TEXTURE, UV, 0.0);
+		
+	vec2 size = texture_size;
+	
+	float xRes = size.x;
+	float yRes = size.y;
+	
+	float xFactor = xRes / float(pixelSize);
+	float yFactor = yRes / float(pixelSize);
+	
+	float grid_uv_x = round(UV.x * xFactor) / xFactor;
+	float grid_uv_y = round(UV.y * yFactor) / yFactor;
+	vec2 uvB = vec2(grid_uv_x, grid_uv_y);
+	
+	vec4 colour = texture(TEXTURE, UV);
+	float h = texture(heightMap, uvB).x;
+	h = clamp(floor(h + fill), 0.0, 1.0);
+	
+	//COLOR = vec4(colour.x, colour.y, colour.z, 1);
+	COLOR = vec4(COLOR.x, COLOR.y, COLOR.z, colour.a*h);
+	
+	//COLOR = text;
+}"
+
+[sub_resource type="ShaderMaterial" id=44]
+shader = SubResource( 43 )
+shader_param/fill = 1.0
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/texture_size = Vector2( 500, 500 )
+shader_param/pixelSize = 1
+shader_param/heightMap = ExtResource( 20 )
+
 [sub_resource type="Curve2D" id=20]
 resource_local_to_scene = true
 _data = {
@@ -385,6 +431,49 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.7953, 15.6041, 0, 0, 0, 0, -3, 50, 0, 0, 0, 0, -8, 61, 0, 0, 0, 0, -18, 71, 0, 0, 0, 0, -30, 77, 0, 0, 0, 0, -46, 79, 0, 0, 0, 0, -55, 80, 0, 0, 0, 0, -67, 81 )
 }
 
+[sub_resource type="Shader" id=45]
+code = "shader_type canvas_item;
+
+uniform float fill : hint_range(-0.01,1.0) = -0.01;
+uniform vec4 color : hint_color;
+uniform sampler2D heightMap;
+uniform vec2 texture_size;
+uniform int pixelSize = 1;
+
+void fragment(){
+	
+	COLOR = textureLod(TEXTURE, UV, 0.0);
+		
+	vec2 size = texture_size;
+	
+	float xRes = size.x;
+	float yRes = size.y;
+	
+	float xFactor = xRes / float(pixelSize);
+	float yFactor = yRes / float(pixelSize);
+	
+	float grid_uv_x = round(UV.x * xFactor) / xFactor;
+	float grid_uv_y = round(UV.y * yFactor) / yFactor;
+	vec2 uvB = vec2(grid_uv_x, grid_uv_y);
+	
+	vec4 colour = texture(TEXTURE, UV);
+	float h = texture(heightMap, uvB).x;
+	h = clamp(floor(h + fill), 0.0, 1.0);
+	
+	//COLOR = vec4(colour.x, colour.y, colour.z, 1);
+	COLOR = vec4(COLOR.x, COLOR.y, COLOR.z, colour.a*h);
+	
+	//COLOR = text;
+}"
+
+[sub_resource type="ShaderMaterial" id=46]
+shader = SubResource( 45 )
+shader_param/fill = 1.0
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/texture_size = Vector2( 500, 500 )
+shader_param/pixelSize = 1
+shader_param/heightMap = ExtResource( 20 )
+
 [sub_resource type="Curve2D" id=24]
 resource_local_to_scene = true
 _data = {
@@ -396,6 +485,14 @@ resource_local_to_scene = true
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -32, 27 )
 }
+
+[sub_resource type="ShaderMaterial" id=47]
+shader = SubResource( 45 )
+shader_param/fill = 1.0
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/texture_size = Vector2( 500, 500 )
+shader_param/pixelSize = 1
+shader_param/heightMap = ExtResource( 20 )
 
 [sub_resource type="Curve2D" id=26]
 resource_local_to_scene = true
@@ -627,9 +724,15 @@ texture = ExtResource( 18 )
 offset = Vector2( -9, 5 )
 
 [node name="World9" parent="World7" instance=ExtResource( 12 )]
+material = SubResource( 44 )
 position = Vector2( -128, 64 )
 curve = SubResource( 20 )
 Directions = PoolStringArray( "Up" )
+
+[node name="Sprite" type="Sprite" parent="World7/World9"]
+use_parent_material = true
+position = Vector2( 170, -99 )
+texture = ExtResource( 24 )
 
 [node name="World8" parent="." instance=ExtResource( 1 )]
 position = Vector2( 80, -48 )
@@ -658,8 +761,14 @@ curve = SubResource( 21 )
 Directions = PoolStringArray( "Down" )
 
 [node name="World11" parent="World9" instance=ExtResource( 12 )]
+material = SubResource( 46 )
 curve = SubResource( 24 )
 Directions = PoolStringArray( "Up", "Right" )
+
+[node name="Sprite" type="Sprite" parent="World9/World11"]
+use_parent_material = true
+position = Vector2( 16, -13 )
+texture = ExtResource( 25 )
 
 [node name="World11" parent="." instance=ExtResource( 1 )]
 position = Vector2( 227, -172 )
@@ -674,8 +783,14 @@ curve = SubResource( 25 )
 Directions = PoolStringArray( "Down", "Left" )
 
 [node name="World12" parent="World11" instance=ExtResource( 12 )]
+material = SubResource( 47 )
 curve = SubResource( 26 )
 Directions = PoolStringArray( "Up", "Right" )
+
+[node name="Sprite" type="Sprite" parent="World11/World12"]
+use_parent_material = true
+position = Vector2( 27, -5 )
+texture = ExtResource( 26 )
 
 [node name="World12" parent="." instance=ExtResource( 1 )]
 position = Vector2( 278, -182 )
@@ -708,3 +823,6 @@ script = ExtResource( 4 )
 [connection signal="PathAnimated" from="World4/World5" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World5/World6" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World7/World8" to="." method="ActivateLocation"]
+[connection signal="PathAnimated" from="World7/World9" to="." method="ActivateLocation"]
+[connection signal="PathAnimated" from="World9/World11" to="." method="ActivateLocation"]
+[connection signal="PathAnimated" from="World11/World12" to="." method="ActivateLocation"]

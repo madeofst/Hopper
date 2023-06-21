@@ -232,6 +232,7 @@ namespace Hopper
 
         private void OnTitleScreenLoaded(bool replay = false)
         {
+            UpdateLevelReached();
             MoveToTop(HUD);
             if (!Paused) BuildLevel(replay);
         }
@@ -284,8 +285,9 @@ namespace Hopper
             {
                 if (PuzzleMode)
                 {
-                    //Level reach will be 1 higher than available levels when complete
-                    if (iLevel == StageData.LevelReached) UpdateLevelReached();
+                    //Level reached will be 1 higher than available levels when complete
+                    if (iLevel == StageData.LevelReached) StageData.LevelReached++;
+                    EmitSignal(nameof(UpdateLocationProgress), StageData.LevelReached);
                     iLevel++;
 
                     if (iLevel >= Levels.Length)
@@ -308,9 +310,7 @@ namespace Hopper
 
         private void UpdateLevelReached()
         {
-            StageData.LevelReached++;
             LevelTitleScreen.UpdateLevelReached(StageData.LevelReached);
-            EmitSignal(nameof(UpdateLocationProgress), StageData.LevelReached);
         }
 
         //Working with player
@@ -430,7 +430,14 @@ namespace Hopper
         {
             HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Stage);
             MoveToTop(HUD);
-            Player.Appear();
+            if (Player.HopsRemaining == CurrentLevel.MaximumHops)
+            {
+                Player.Appear();
+            } 
+            else
+            {
+                Player.Activate();
+            }
             Paused = false;
         }
 
