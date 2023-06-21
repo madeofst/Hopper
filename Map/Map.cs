@@ -127,7 +127,7 @@ namespace Hopper
 
         public void UnlockStage(string[] StagesToUnlock)
         {
-            if (!Pointer.CurrentLocation.Complete)
+            if (!Pointer.CurrentLocation.Complete || Pointer.CurrentLocation.Name == "Start")
             {
                 Pointer.CurrentLocation.MarkComplete();
                 Pointer.CurrentLocation.UnlockAllPaths();
