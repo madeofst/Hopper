@@ -169,8 +169,7 @@ namespace Hopper
             
             Stage.Connect(nameof(Stage.UnlockNextStage), 
                           Map, 
-                          nameof(Map.UnlockStage), 
-                          new Godot.Collections.Array{CurrentLocation.LocationsToUnlock});
+                          nameof(Map.UnlockConnectedStages));
             Stage.Connect(nameof(Stage.UpdateLocationProgress),
                           Map,
                           nameof(Map.UpdateLocationProgress));

@@ -34,5 +34,16 @@ namespace Hopper
             }
         }
 
+        public void ClearSprites()
+        {
+            if (LevelSprites != null)
+            {
+                foreach (Sprite s in LevelSprites)
+                {
+                    s.QueueFree();
+                }
+                LevelSprites = new List<Sprite>();
+            }
+        }
     }
 }

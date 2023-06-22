@@ -138,10 +138,7 @@ namespace Hopper
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
-            if (Map != null)
-            {
-                Map.ConnectSaveSignal(this);
-            }
+            if (Map != null) Map.ConnectSaveSignal(this);
 
             NewPlayer();           
             Player.Connect(nameof(Player.Pause), this, nameof(Pause));

@@ -65,7 +65,7 @@ namespace Hopper
         [Export]
         public int LevelReached;
         //private LocationTool tool;
-        private LocationProgress LocationProgress;
+        public LocationProgress LocationProgress;
 
 
         public override void _Ready()
@@ -75,6 +75,7 @@ namespace Hopper
             ActivationSprite = GetNode<Sprite>("ActivationSprite");
             ActivationAnimationPlayer = ActivationSprite.GetNode<AnimationPlayer>("AnimationPlayer");
             Sprite.Texture = Texture;
+            LocationProgress = GetNode<LocationProgress>("LocationProgress");
         }
 
         public void Activate(List<Location> Locations)
@@ -102,7 +103,8 @@ namespace Hopper
                 }
             }
             
-            LocationProgress = GetNode<LocationProgress>("LocationProgress");
+
+
             foreach (string level in Levels)
             {
                 Sprite LevelSprite = (Sprite)GD.Load<PackedScene>("res://Map/LevelSprite.tscn").Instance();
@@ -122,14 +124,13 @@ namespace Hopper
             return null;
         }
 
-        public void UnlockAllPaths()
+        public void UnlockPaths(List<string> LocationsToUnlock)
         {
             foreach (PondLinkPath p in GetChildren().OfType<PondLinkPath>())
             {
-                p.AnimateReveal();
+                if (LocationsToUnlock.Contains(p.Name)) p.AnimateReveal();
             }
         }
-
 
         public void MarkComplete()
         {
