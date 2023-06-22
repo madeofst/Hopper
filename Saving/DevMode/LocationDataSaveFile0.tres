@@ -8,5 +8,5 @@ ID = 0
 CurrentLocationName = "Start"
 Active = false
 NewlyActivated = false
-Complete = false
+Complete = true
 LevelReached = 0
