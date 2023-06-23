@@ -44,6 +44,7 @@ namespace Hopper
             Start = GetNode<Location>("../Start");  //TODO: This needs to be updated on load
             AnimationTree = GetNode<AnimationTree>("AnimationTree");
             AnimationState = (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback");
+            SetProcessInput(false);
             //CurrentLocation = Start;
         }
 

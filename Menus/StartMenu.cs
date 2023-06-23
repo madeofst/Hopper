@@ -40,6 +40,9 @@ namespace Hopper
 
 		public void NewGamePressed()
 		{
+			NewGameButton.Disabled = true;
+			LoadButton.Disabled = true;
+
 			EditorMode = false;
 			if (!Tween.IsActive()) FadeOut();
 
@@ -60,6 +63,9 @@ namespace Hopper
 
 		public void LoadPressed()
 		{
+			NewGameButton.Disabled = true;
+			LoadButton.Disabled = true;
+
 			EditorMode = false;
 			if (!Tween.IsActive()) FadeOut();
 
@@ -108,6 +114,9 @@ namespace Hopper
 			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Menu);
 			Modulate = new Color (1, 1, 1, 1);
             Show();
+
+			NewGameButton.Disabled = false;
+			LoadButton.Disabled = false;
         }
 
 		public void AfterFade(object x, string key)

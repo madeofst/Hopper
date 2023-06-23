@@ -16,7 +16,7 @@ namespace Hopper
         public void Init(SaveData SaveData)
         {
             Locations = GetChildren().OfType<Location>().ToList<Location>();
-            
+
             Pointer = GetNode<Pointer>("Pointer");
             Pointer.SetLocations(Locations);
             Pointer.CurrentLocation = FindLocationByID(SaveData.CurrentLocationId);
@@ -93,22 +93,33 @@ namespace Hopper
             {
                 UnlockConnectedStages();
             }
+            else
+            {
+                Pointer.SetProcessInput(true);
+            }
         }
 
         public void UnlockConnectedStages()
         {
             List<string> LocationsToUnlock = GetListOfNewlyActivatedLinkedLocations();
-            foreach (string name in LocationsToUnlock)
+
+            if (LocationsToUnlock.Count > 0)
             {
-                Location l = FindLocationByName(name);
-                l.LocationProgress.ClearSprites();
-                l.NewlyActivated = false;
+                foreach (string name in LocationsToUnlock)
+                {
+                    Location l = FindLocationByName(name);
+                    l.LocationProgress.ClearSprites();
+                    l.NewlyActivated = false;
+                }
+
+                Pointer.CurrentLocation.MarkComplete();
+                Pointer.CurrentLocation.UnlockPaths(LocationsToUnlock);
+            }
+            else
+            {
+                Pointer.SetProcessInput(true);
             }
 
-            Pointer.CurrentLocation.MarkComplete();
-            Pointer.CurrentLocation.UnlockPaths(LocationsToUnlock);
-         
-            Pointer.SetProcessInput(true);
         }
 
         private List<string> GetListOfNewlyActivatedLinkedLocations()
@@ -142,6 +153,7 @@ namespace Hopper
             if (Location != null)
             {
                 Location.Activate(Locations);
+                Pointer.SetProcessInput(true);
             }
             else
             {

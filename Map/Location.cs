@@ -103,8 +103,6 @@ namespace Hopper
                 }
             }
             
-
-
             foreach (string level in Levels)
             {
                 Sprite LevelSprite = (Sprite)GD.Load<PackedScene>("res://Map/LevelSprite.tscn").Instance();
