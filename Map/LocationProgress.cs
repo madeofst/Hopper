@@ -28,7 +28,7 @@ namespace Hopper
 
         public void Update(int LevelReached)
         {
-            for(int i = 0; i < LevelReached; i++)
+            for(int i = 0; i < LevelReached && i < LevelSprites.Count; i++)
             {
                 LevelSprites[i].Frame = 1;
             }
