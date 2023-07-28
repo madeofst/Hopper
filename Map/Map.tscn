@@ -609,7 +609,7 @@ position = Vector2( 256, 32 )
 Texture = ExtResource( 8 )
 ID = 3
 Pond = "BelAir"
-Levels = PoolStringArray( "SimplePondInPond1", "DifferentLengths2", "UnderInsteadOfIn", "NewCrossBack", "UnderwaterTurning1", "LittleSquare" )
+Levels = PoolStringArray( "SimplePondInPond1", "DifferentLengths2", "UnderInsteadOfIn", "NewCrossBack", "TheSquare3", "LittleSquare" )
 LocationsToUnlock = PoolStringArray( "World4", "World7" )
 
 [node name="World2" parent="World3" instance=ExtResource( 12 )]
@@ -644,7 +644,7 @@ position = Vector2( 304, 16 )
 Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
-Levels = PoolStringArray( "FourFishingHoles1", "TheSquare3", "CrissCross", "PondInPond", "StuckInJumpLoop", "BlueLine" )
+Levels = PoolStringArray( "FourFishingHoles1", "CrissCross", "PondInPond", "StuckInJumpLoop", "BlueLine" )
 LocationsToUnlock = PoolStringArray( "World5" )
 
 [node name="World3" parent="World4" instance=ExtResource( 12 )]
@@ -667,7 +667,7 @@ position = Vector2( 352, 32 )
 Texture = ExtResource( 8 )
 ID = 5
 Pond = "BelAir"
-Levels = PoolStringArray(  )
+Levels = PoolStringArray( "UnderwaterTurning1" )
 LocationsToUnlock = PoolStringArray( "World6" )
 
 [node name="World4" parent="World5" instance=ExtResource( 12 )]
@@ -797,7 +797,7 @@ position = Vector2( 278, -182 )
 Texture = ExtResource( 9 )
 ID = 12
 Pond = "Liffey"
-Levels = PoolStringArray( "OffsetSpinPair", "InvertedT", "ThePointedStar", "Lucky13" )
+Levels = PoolStringArray( "OffsetSpinPair", "InvertedT", "ThePointedStar", "Lucky13", "HardLines" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World11" parent="World12" instance=ExtResource( 12 )]
