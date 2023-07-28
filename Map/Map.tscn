@@ -752,7 +752,7 @@ position = Vector2( 195, -145 )
 Texture = ExtResource( 9 )
 ID = 9
 Pond = "Liffey"
-Levels = PoolStringArray( "SpinnerOne", "SpinnerTwo", "LessObviousRoute", "ThereAndBackAgain", "SpinCity", "SingleTurn" )
+Levels = PoolStringArray( "TripleSpin", "FourPointSpins", "ThereAndBackAgain", "SpinCity", "SingleTurn" )
 LocationsToUnlock = PoolStringArray( "World11" )
 
 [node name="World7" parent="World9" instance=ExtResource( 12 )]
