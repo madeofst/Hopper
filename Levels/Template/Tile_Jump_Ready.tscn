@@ -77,9 +77,6 @@ reset_on_save = false
 anims/RESET = SubResource( 2 )
 anims/Spring = SubResource( 1 )
 
-[node name="SplashSprite" parent="." index="2"]
-frame = 4
-
 [node name="BugSprite" parent="." index="3"]
 frame = 7
 

@@ -7,7 +7,6 @@
 [ext_resource path="res://Player/Resources/IdleLeft.tres" type="Animation" id=5]
 [ext_resource path="res://Player/Resources/IdleUp.tres" type="Animation" id=6]
 [ext_resource path="res://Player/Resources/DoubleJumpCurve.tres" type="Curve" id=7]
-[ext_resource path="res://Player/Resources/DiveCurve.tres" type="Curve" id=8]
 [ext_resource path="res://Player/Resources/PlayerJumpUpSplash.tres" type="Animation" id=9]
 [ext_resource path="res://Player/Resources/PlayerJumpLeftSplash.tres" type="Animation" id=10]
 [ext_resource path="res://Player/Resources/PlayerJumpDown.tres" type="Animation" id=11]
@@ -74,6 +73,10 @@
 
 [sub_resource type="Curve" id=47]
 resource_name = "JumpCurve"
+_data = [ Vector2( 0, 0 ), 0.0, 1.65657, 0, 0, Vector2( 0.278049, 0.563636 ), 0.191143, 0.191143, 0, 0, Vector2( 0.458537, 0.736364 ), 1.36667, 1.36667, 0, 0, Vector2( 0.634146, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=52]
+resource_name = "DiveCurve"
 _data = [ Vector2( 0, 0 ), 0.0, 1.65657, 0, 0, Vector2( 0.278049, 0.563636 ), 0.191143, 0.191143, 0, 0, Vector2( 0.458537, 0.736364 ), 1.36667, 1.36667, 0, 0, Vector2( 0.634146, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Curve" id=48]
@@ -184,18 +187,16 @@ tracks/4/keys = {
 }
 
 [node name="Player" type="Node2D"]
-visible = false
 position = Vector2( 2, 0 )
 script = ExtResource( 2 )
 JumpCurve = SubResource( 47 )
 DoubleJumpCurve = ExtResource( 7 )
 SwimCurve = ExtResource( 34 )
-DiveCurve = ExtResource( 8 )
+DiveCurve = SubResource( 52 )
 BounceCurve = ExtResource( 38 )
 SwimDistanceRationCurve = SubResource( 48 )
 
 [node name="PlayerSprite" type="Sprite" parent="."]
-visible = false
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -42 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Levels/Template/TileRectangle.tres" type="Shape2D" id=1]
 [ext_resource path="res://HUD/Counter.cs" type="Script" id=2]
@@ -116,6 +116,21 @@ tracks/1/keys = {
 "stream": ExtResource( 9 )
 } ],
 "times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 13 ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -244,14 +259,17 @@ anims/Jump = SubResource( 2 )
 anims/Land = SubResource( 3 )
 
 [node name="SplashSprite" type="Sprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.784314 )
 position = Vector2( 0, 1 )
 texture = ExtResource( 7 )
 offset = Vector2( 16, -1 )
 hframes = 14
-frame = 13
+frame = 10
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SplashSprite"]
+autoplay = "Idle"
 anims/Exit = SubResource( 4 )
+anims/Idle = SubResource( 11 )
 anims/Jump = SubResource( 5 )
 anims/Land = SubResource( 6 )
 anims/Splash = SubResource( 7 )

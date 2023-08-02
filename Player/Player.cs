@@ -318,6 +318,7 @@ namespace Hopper
             else if (!current.Submerged && next.Submerged)
             {
                 Suffix = "Splash";
+                movementCurve = DiveCurve;
             }
             else if (current.Submerged && !next.Submerged)
             {
@@ -617,7 +618,7 @@ namespace Hopper
                 //GD.Print($"DR{distanceRemaining}_   TR {timeRatio}");
                 
                 if (GlobalPosition == AnimationEndTile.GlobalPosition &&
-                    (an.Curve == SwimCurve || an.Curve == DiveCurve) &&
+                    (an.Curve == SwimCurve) &&
                     an.Animation.ResourceName.Right(an.Animation.ResourceName.Length - 4) != "Turn")
                 {
                     if (AnimationEndTile.IsInsideTree() == false) AnimationEndTile.QueueFree();
