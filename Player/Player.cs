@@ -178,7 +178,7 @@ namespace Hopper
                     else
                     {
                         Vector2 SwimTargetPosition = AnimationEndTile.GridPosition + Movement;
-                        while (MovementNodes.Count < 20)
+                        while (MovementNodes.Count < 100)
                         {
                             if (!Grid.WithinGrid(SwimTargetPosition) || Grid.GetTile(SwimTargetPosition).Type == Type.Rock)
                             {
@@ -205,7 +205,7 @@ namespace Hopper
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     break;
                 }
-                if (MovementNodes.Count == 100)
+                if (MovementNodes.Count >= 100)
                 {
                     GD.Print("Movement nodes exhausted.");
                     break;
@@ -370,7 +370,7 @@ namespace Hopper
             int i = 1;
             foreach (MovementNode n in movementNodes)
             {
-                //GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
+                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
                 i++;
             }
         }
