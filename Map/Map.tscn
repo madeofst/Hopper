@@ -739,7 +739,7 @@ position = Vector2( 80, -48 )
 Texture = ExtResource( 21 )
 ID = 8
 Pond = "Liffey"
-Levels = PoolStringArray( "TrickierTrickery", "Twins", "FillipeFilloppe2" )
+Levels = PoolStringArray( "FillipeFilloppe2", "Twins", "TrickierTrickery" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World7" parent="World8" instance=ExtResource( 12 )]
