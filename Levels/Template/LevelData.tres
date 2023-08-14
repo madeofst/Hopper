@@ -5,12 +5,13 @@
 [resource]
 resource_name = "LevelData"
 script = ExtResource( 1 )
+Name = null
 Width = 0
 Height = 0
 TileSize = 0
-StartingHops = 0
+TileBounceDirection = null
 MaximumHops = 0
 ScoreRequired = 0
 PlayerStartPosition = Vector2( 0, 0 )
-TileType = PoolIntArray(  )
+TileType = null
 TilePointValue = null

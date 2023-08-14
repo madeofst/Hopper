@@ -7,10 +7,10 @@ namespace Hopper
     public class Grid : Control
     {
         public ulong Time;
-        public void PrintTime(string desc = "")
+/*         public void PrintTime(string desc = "")
         {
             //GD.Print($"{desc} - {Time}");
-        }
+        } */
 
         private bool editable = false;
         public bool Editable
@@ -234,7 +234,7 @@ namespace Hopper
         }
 
         //For updating a tile in the editor (called by signal in Tile)
-        internal void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection)
+        public void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection)
         {
             Tile newTile = Resources.LoadByType(type).Instance() as Tile;
             if (newTile.Type == Type.Score) newTile.PointValue = score;

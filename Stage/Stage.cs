@@ -7,7 +7,7 @@ namespace Hopper
     {
         //Classes for loading stuff
         private ResourceRepository Resources { get; set; }
-        private LevelFactory levelFactory { get; set; }
+        private LevelFactory LevelFactory { get; set; }
         
         //Visuals
         private TextureRect WaterShader { get; set; }
@@ -20,10 +20,13 @@ namespace Hopper
         //Pond
         private Pond Pond { get; set; }
 
+        //Boss
+        private Boss Boss { get; set; }
+
         //Level
         public Level CurrentLevel { get; set; }
         public Level NextLevel { get; set; }
-        private Grid Grid { get; set; }
+        public Grid Grid { get; set; }
         
         //Menus
         public LevelTitleScreen LevelTitleScreen { get; private set; }
@@ -79,7 +82,7 @@ namespace Hopper
         public override void _Ready()
         {
             Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
-            levelFactory = new LevelFactory(Resources);
+            LevelFactory = new LevelFactory(Resources);
             
             WaterShader = GetNode<TextureRect>("WaterShader");
             Water = GetNode<TextureRect>("Water");
@@ -153,6 +156,7 @@ namespace Hopper
             Player.Connect(nameof(Player.BackToMap), this, nameof(QuitToMap));
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
+            Player.Connect(nameof(Player.BossMove), this, nameof(BossMove));
 
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.TitleScreenLoaded), this, nameof(OnTitleScreenLoaded), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
@@ -191,13 +195,13 @@ namespace Hopper
         private void NewLevel(int levelID)
         {
             iLevel = levelID;
-            NextLevel = levelFactory.Load(Levels[iLevel], true);
+            NextLevel = LevelFactory.Load(Levels[iLevel], true);
             BuildLevel(false);
         }
 
         private void NewLevel(string levelName, bool replay = false)
         {
-            NextLevel = levelFactory.Load(levelName, true);
+            NextLevel = LevelFactory.Load(levelName, true);
             
             HUD.Visible = true;
             if (!replay && !TempForTesting)
@@ -269,6 +273,9 @@ namespace Hopper
             CurrentLevel = NextLevel;
             NextLevel = null;
             Visible = true;
+
+            Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
+            AddChildBelowNode(Background, Boss);
         }
 
         public void IncrementLevel()
@@ -310,7 +317,13 @@ namespace Hopper
             LevelTitleScreen.UpdateLevelReached(StageData.LevelReached);
         }
 
+        private void BossMove()
+        {
+            if (Boss != null) Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining);
+        }
+
         //Working with player
+
         private void NewPlayer()
         {
             Player = (Player)GD.Load<PackedScene>("res://Player/Player.tscn").Instance();
@@ -354,6 +367,7 @@ namespace Hopper
         public void RestartLevel(string levelName, bool fail = false)
         {
             Player.RestartingLevel = true;
+            Boss.QueueFree();
             NewLevel(levelName, true);
             if (fail) HUD.ShowPopUp("Try again!");
             Player.Appear();

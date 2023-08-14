@@ -55,6 +55,8 @@ namespace Hopper
         public delegate void Quit();
         [Signal]
         public delegate void PlayFailSound();
+        [Signal]
+        public delegate void BossMove();
 
         //Player general parameters
         public int HopsRemaining { get; set; } = 3;
@@ -367,12 +369,12 @@ namespace Hopper
 
         private void PrintNodes(Queue<MovementNode> movementNodes)
         {
-            int i = 1;
+/*             int i = 1;
             foreach (MovementNode n in movementNodes)
             {
                 GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
                 i++;
-            }
+            } */
         }
 
         private Vector2 GetJumpDistance(Vector2 movementDirection)
@@ -461,6 +463,8 @@ namespace Hopper
                     }
                     AnimationEndTile = null;
                     CurrentAnimationNode = null;
+
+                    EmitSignal(nameof(BossMove));
                 }
             }
         }
