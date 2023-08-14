@@ -24,9 +24,9 @@ namespace Hopper
 
         [Export]
         public Vector2[] TileBounceDirection { get; set; }
-
+/* 
         [Export]
-        public int StartingHops { get; set; }
+        public int StartingHops { get; set; } */
 
         [Export]
         public int MaximumHops { get; set; }

@@ -42,9 +42,6 @@ mouse_filter = 2
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_top = 6.0
@@ -86,12 +83,12 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Controls"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 113.0
-margin_bottom = 248.0
+margin_right = 95.0
+margin_bottom = 251.0
 size_flags_vertical = 0
 
 [node name="NewButtons" type="HBoxContainer" parent="Controls/VBoxContainer"]
-margin_right = 103.0
+margin_right = 85.0
 margin_bottom = 16.0
 
 [node name="Lilies" type="Button" parent="Controls/VBoxContainer/NewButtons"]
@@ -190,18 +187,19 @@ __meta__ = {
 
 [node name="PlayerStartHeading" type="RichTextLabel" parent="Controls/VBoxContainer"]
 margin_top = 80.0
-margin_right = 103.0
-margin_bottom = 92.0
+margin_right = 85.0
+margin_bottom = 97.0
 rect_min_size = Vector2( 10, 12 )
 size_flags_vertical = 4
 theme = ExtResource( 5 )
 text = "Player Start:"
+fit_content_height = true
 scroll_active = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Controls/VBoxContainer"]
-margin_top = 96.0
+margin_top = 101.0
 margin_right = 66.0
-margin_bottom = 122.0
+margin_bottom = 127.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 __meta__ = {
@@ -255,20 +253,10 @@ text = "0"
 max_length = 1
 placeholder_alpha = 1.0
 
-[node name="HopsHeading" type="RichTextLabel" parent="Controls/VBoxContainer"]
-margin_top = 126.0
-margin_right = 103.0
-margin_bottom = 138.0
-rect_min_size = Vector2( 10, 12 )
-size_flags_vertical = 4
-theme = ExtResource( 5 )
-text = "Hops:"
-scroll_active = false
-
 [node name="HBoxContainer2" type="HBoxContainer" parent="Controls/VBoxContainer"]
-margin_top = 142.0
-margin_right = 103.0
-margin_bottom = 168.0
+margin_top = 131.0
+margin_right = 78.0
+margin_bottom = 157.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = SubResource( 7 )
@@ -276,86 +264,66 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartingHopsLabel" type="RichTextLabel" parent="Controls/VBoxContainer/HBoxContainer2"]
-margin_top = 5.0
-margin_right = 22.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 22, 15 )
-size_flags_vertical = 4
-theme = ExtResource( 5 )
-text = "Min:"
-scroll_active = false
-
-[node name="StartingHops" type="LineEdit" parent="Controls/VBoxContainer/HBoxContainer2"]
-margin_left = 26.0
-margin_right = 48.0
-margin_bottom = 26.0
-rect_min_size = Vector2( 0, 10 )
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme = ExtResource( 5 )
-custom_constants/minimum_spaces = 3
-text = "10"
-max_length = 2
-expand_to_text_length = true
-placeholder_alpha = 1.0
-
 [node name="MaximumHopsLabel" type="RichTextLabel" parent="Controls/VBoxContainer/HBoxContainer2"]
-margin_left = 52.0
 margin_top = 5.0
-margin_right = 77.0
+margin_right = 50.0
 margin_bottom = 21.0
-rect_min_size = Vector2( 25, 16 )
+rect_min_size = Vector2( 50, 16 )
 size_flags_vertical = 4
 theme = ExtResource( 5 )
-text = "Max:"
+text = "Max hops:"
 scroll_active = false
 
 [node name="MaximumHops" type="LineEdit" parent="Controls/VBoxContainer/HBoxContainer2"]
-margin_left = 81.0
-margin_right = 103.0
+margin_left = 54.0
+margin_right = 78.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 0, 10 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource( 5 )
 custom_constants/minimum_spaces = 5
-text = "10"
+text = "20"
 max_length = 2
 expand_to_text_length = true
 placeholder_alpha = 1.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Controls/VBoxContainer"]
-margin_top = 172.0
-margin_right = 103.0
-margin_bottom = 218.0
+[node name="VBoxContainer" type="HBoxContainer" parent="Controls/VBoxContainer"]
+margin_top = 161.0
+margin_right = 85.0
+margin_bottom = 187.0
 
 [node name="ScoreRequiredLabel" type="RichTextLabel" parent="Controls/VBoxContainer/VBoxContainer"]
-margin_right = 103.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 25, 16 )
+margin_top = 4.0
+margin_right = 57.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 55, 0 )
+size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource( 5 )
-text = "Score required:"
+text = "Score req:"
+fit_content_height = true
 scroll_active = false
 
 [node name="ScoreRequired" type="LineEdit" parent="Controls/VBoxContainer/VBoxContainer"]
-margin_top = 20.0
-margin_right = 60.0
-margin_bottom = 46.0
-rect_min_size = Vector2( 0, 10 )
+margin_left = 61.0
+margin_right = 85.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 20, 0 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource( 5 )
-custom_constants/minimum_spaces = 25
-text = "100"
-max_length = 6
+custom_constants/minimum_spaces = 7
+text = "0"
+max_length = 2
+expand_to_text_length = true
 placeholder_alpha = 1.0
 
 [node name="Home" type="Button" parent="Controls/VBoxContainer"]
-margin_top = 222.0
+margin_top = 191.0
 margin_right = 40.0
-margin_bottom = 238.0
+margin_bottom = 241.0
+rect_min_size = Vector2( 0, 50 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0

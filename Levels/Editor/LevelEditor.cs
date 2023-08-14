@@ -8,21 +8,21 @@ namespace Hopper
         private StartMenu Menu { get; set; }
 
         private ResourceRepository Resources { get; set; }
-        private LevelFactory levelFactory { get; set; }
+        private LevelFactory LevelFactory { get; set; }
         private Level CurrentLevel { get; set; }
         private Stage TestStage { get; set; }
 
         //Parameter edit boxes
         private LineEdit PlayerStartX { get; set; }
         private LineEdit PlayerStartY { get; set; }
-        private LineEdit StartingHops { get; set; }
+        //private LineEdit StartingHops { get; set; }
         private LineEdit MaximumHops { get; set; }
         private LineEdit ScoreRequired { get; set; }
 
         public override void _Ready()
         {
             Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
-            levelFactory = new LevelFactory(Resources);
+            LevelFactory = new LevelFactory(Resources);
             Menu = GetNode<StartMenu>("/root/StartMenu");
             CallDeferred("Init");
         }
@@ -31,7 +31,7 @@ namespace Hopper
         {
             PlayerStartX = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer/PlayerStartX");
             PlayerStartY = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer/PlayerStartY");
-            StartingHops = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer2/StartingHops");
+            //StartingHops = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer2/StartingHops");
             MaximumHops = GetNode<LineEdit>("Controls/VBoxContainer/HBoxContainer2/MaximumHops");
             ScoreRequired = GetNode<LineEdit>("Controls/VBoxContainer/VBoxContainer/ScoreRequired");
         }
@@ -40,7 +40,7 @@ namespace Hopper
         private void NewBlankLevel(int FillWith = 0)
         {   
             if (CurrentLevel != null) CurrentLevel.QueueFree();
-            CurrentLevel = levelFactory.New((Type)FillWith);
+            CurrentLevel = LevelFactory.New((Type)FillWith);
             AddChild(CurrentLevel);
             CurrentLevel.Build(Resources);
             PopulateParameterValues();
@@ -82,7 +82,7 @@ namespace Hopper
         private void SaveCurrentLevel()
         {
             WriteParameterValues();
-            levelFactory.Save(CurrentLevel);
+            LevelFactory.Save(CurrentLevel);
         }
 
         private string CheckValidityOfLevel()
@@ -102,7 +102,7 @@ namespace Hopper
         private void LoadSelectedFile(string path)
         {
             if (CurrentLevel != null) CurrentLevel.QueueFree();
-            CurrentLevel = levelFactory.Load(path);
+            CurrentLevel = LevelFactory.Load(path);
             AddChild(CurrentLevel);
             CurrentLevel.Build(Resources);
             PopulateParameterValues();
@@ -114,7 +114,7 @@ namespace Hopper
         {
             PlayerStartX.Text = (CurrentLevel.PlayerStartPosition.x - 1).ToString();
             PlayerStartY.Text = (CurrentLevel.PlayerStartPosition.y - 1).ToString();
-            StartingHops.Text = CurrentLevel.StartingHops.ToString();  //TODO: remove starting hops
+            //StartingHops.Text = CurrentLevel.StartingHops.ToString();  //TODO: remove starting hops
             MaximumHops.Text = CurrentLevel.MaximumHops.ToString();
             ScoreRequired.Text = CurrentLevel.ScoreRequired.ToString();
         }
@@ -124,7 +124,7 @@ namespace Hopper
             CurrentLevel.PlayerStartPosition = new Vector2(
                 Int16.Parse(PlayerStartX.Text), 
                 Int16.Parse(PlayerStartY.Text));
-            CurrentLevel.StartingHops = Int16.Parse(StartingHops.Text);
+            //CurrentLevel.StartingHops = Int16.Parse(StartingHops.Text);
             CurrentLevel.MaximumHops = Int16.Parse(MaximumHops.Text);
             CurrentLevel.ScoreRequired = Int16.Parse(ScoreRequired.Text);
         }

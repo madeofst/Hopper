@@ -20,7 +20,7 @@ namespace Hopper
         }
 
         //New params which relate to save file
-        public int StartingHops { get; set; }
+        //public int StartingHops { get; set; }
         public int MaximumHops { get; set; }
         public int ScoreRequired { get; set; }
         public Vector2 PlayerStartPosition { get; set; }
@@ -43,7 +43,7 @@ namespace Hopper
         public void Build(ResourceRepository resources)
         {
             LevelName = LevelData.Name;
-            StartingHops = LevelData.StartingHops;
+            //StartingHops = LevelData.StartingHops;
             MaximumHops = LevelData.MaximumHops;
             ScoreRequired = LevelData.ScoreRequired;
             PlayerStartPosition = LevelData.PlayerStartPosition + Vector2.One;
@@ -61,7 +61,6 @@ namespace Hopper
             foreach (Tile t in Grid.Tiles)
             {
                 Grid.ConnectTile(t);
-                
             }
         }
 
@@ -85,7 +84,7 @@ namespace Hopper
                 }
             }
             LevelData.Name = LevelName;
-            LevelData.StartingHops = StartingHops;
+            //LevelData.StartingHops = StartingHops;
             LevelData.MaximumHops = MaximumHops;
             LevelData.ScoreRequired = ScoreRequired;
             LevelData.PlayerStartPosition = PlayerStartPosition;
@@ -103,5 +102,6 @@ namespace Hopper
             EmitSignal(nameof(LevelParametersUpdated));
             //GD.Print("LevelParametersUpdated");
         }
+
     }
 }

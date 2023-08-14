@@ -11,7 +11,7 @@ namespace Hopper
         const int defaultWidth = 7;
         const int defaultHeight = 7;
         const int defaultTileSize = 32;
-        const int defaultStartingHops = 10;
+        //const int defaultStartingHops = 10;
         const int defaultMaximumHops = 10;
         const int defaultScoreRequired = 1;
         const int defaultScore = 1;
@@ -61,7 +61,7 @@ namespace Hopper
             levelData.Width = width;
             levelData.Height = height;
             levelData.TileSize = tileSize;
-            levelData.StartingHops = defaultStartingHops;
+            //levelData.StartingHops = defaultStartingHops;
             levelData.MaximumHops = defaultMaximumHops;
             levelData.ScoreRequired = defaultScoreRequired;
             levelData.PlayerStartPosition = defaultPlayerStartPosition;

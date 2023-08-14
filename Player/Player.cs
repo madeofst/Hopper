@@ -115,7 +115,7 @@ namespace Hopper
             CurrentLevel = currentLevel;
             Grid = CurrentLevel.Grid;            
             GridPosition = CurrentLevel.PlayerStartPosition;
-            HopsRemaining = CurrentLevel.StartingHops;
+            HopsRemaining = CurrentLevel.MaximumHops;
             LevelScore = CurrentLevel.ScoreRequired;
 
             MoveInputQueue = new Queue<Vector2>();
