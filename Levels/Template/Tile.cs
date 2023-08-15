@@ -126,7 +126,7 @@ namespace Hopper
             GetNode<AnimationPlayer>("LilySprite/AnimationPlayer").Play("Idle");
         }
 
-        public void CrunchPartilces()
+        public void Eat()
         {
             if (Type == Type.Score && BugSprite.Visible == true)
             {
@@ -134,5 +134,13 @@ namespace Hopper
                 GetNode<CPUParticles2D>("CPUParticles2D2").Emitting = true;
             }
         }
+
+        public void SetAsEaten()
+        {
+            BugSprite.Visible = false;
+            PointValue = 0;
+            Label.Visible = false;
+        }
+
     }
 }

@@ -1,27 +1,64 @@
 using Godot;
 using Godot.Collections;
+using System.Collections.Generic;
+using System;
 
 namespace Hopper
 {
     public class BossBattleData : Resource
     {
         [Export]
+        public string LevelName { get; set; }
+        [Export]
         public Array<int> TileChangeData { get; set; }
+        private readonly int NoOfElements = 8;
      
-        public void Init()
+        public void Init(string levelName)
         {
+            LevelName = levelName;
             TileChangeData = new Array<int>();
         }
 
-        public void AddTileChange(int[] changeData)
+        public Error Save()
         {
-            TileChangeData.Add(changeData[0]);
-            TileChangeData.Add(changeData[1]);
-            TileChangeData.Add(changeData[2]);
-            TileChangeData.Add(changeData[3]);
-            TileChangeData.Add(changeData[4]);
-            TileChangeData.Add(changeData[5]);
-            TileChangeData.Add(changeData[6]);
+            //Assumes all required data saved in TileChangeData
+            if (LevelName == null) LevelName = "DefaultLevelName";
+            TakeOverPath($"res://Levels/{LevelName}_BossData.tres");
+            Error error = ResourceSaver.Save($"res://Levels/{LevelName}_BossData.tres", this);
+            return error;
+        }
+
+
+        public void AddTileChange(TileChangeInstruction tileChangeInstruction)
+        {
+            int[] instructions = tileChangeInstruction.Serialize();
+
+            foreach (int i in instructions)
+            {
+                TileChangeData.Add(i);
+            }
+        }
+
+        public List<TileChangeInstruction> Deserialize()
+        {
+            List<TileChangeInstruction> InstructionList = new List<TileChangeInstruction>();
+
+            for (int i = 0; i < TileChangeData.Count / NoOfElements; i++)
+            {
+                int i2 = i * NoOfElements;
+                InstructionList.Add(new TileChangeInstruction(
+                    actionOnTurn:       TileChangeData[i2],
+                    tileGridPosition:   new Vector2(TileChangeData[i2 + 1], 
+                                                    TileChangeData[i2 + 2]),
+                    tileType:           (Type)TileChangeData[i2 + 3],
+                    score:              TileChangeData[i2 + 4],
+                    eaten:              Convert.ToBoolean(TileChangeData[i2 + 5]),
+                    bounceDirection:    new Vector2(TileChangeData[i2 + 6], 
+                                                    TileChangeData[i2 + 7])
+                ));
+            }
+
+            return InstructionList;
         }
     }
 }

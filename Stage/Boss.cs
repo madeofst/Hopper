@@ -5,51 +5,85 @@ using System.Linq;
 
 namespace Hopper
 {
-    public class TileChangeInstruction
-    {
-        public int ActionOnTurn;
-        public Vector2 TileGridPosition;
-        public Type TileType;
-        public int Score;
-        public Vector2 BounceDirection;
-    }
-
     public class Boss : Node2D
     {
         private Grid Grid;
-        private BossBattleData TestResource;
         List<TileChangeInstruction> tileChangeInstructions;
+
+        string CurrentBossLevelName = "Boss1";
 
         public override void _Ready()
         {
             SetGrid();
-
-            TestResource = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
-
-            // Create resource
-            TestResource.Init();
-            TestResource.AddTileChange(new int[] {0, 1, 1, (int)Type.Rock, 0, 0, 0});
-            TestResource.AddTileChange(new int[] {1, 1, 1, (int)Type.Jump, 0, 0, 0});
-            TestResource.AddTileChange(new int[] {0, 2, 2, (int)Type.Jump, 0, 0, 0});
-            TestResource.AddTileChange(new int[] {1, 2, 2, (int)Type.Rock, 0, 0, 0});
+            //CreateBossTestData();
+            //CreateBossTestData1();
 
             //Load resource
-            tileChangeInstructions = new List<TileChangeInstruction>();
-            int noOfElements = 7;
-            for (int i = 0; i < TestResource.TileChangeData.Count / noOfElements; i++)
-            {
-                int i2 = i * noOfElements;
-                tileChangeInstructions.Add( new TileChangeInstruction() 
-                    {
-                        ActionOnTurn = TestResource.TileChangeData[i2],
-                        TileGridPosition = new Vector2(TestResource.TileChangeData[i2 + 1], 
-                                                       TestResource.TileChangeData[i2 + 2]),
-                        TileType = (Type)TestResource.TileChangeData[i2 + 3],
-                        Score = TestResource.TileChangeData[i2 + 4],
-                        BounceDirection = new Vector2(TestResource.TileChangeData[i2 + 5], 
-                                                      TestResource.TileChangeData[i2 + 6]),
-                    });
-            }
+            tileChangeInstructions = LoadBossData(CurrentBossLevelName);
+        }
+
+        private void CreateBossTestData1()
+        {
+            // Create resource
+            BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
+            BossData.Init(CurrentBossLevelName);
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       0,
+                    tileGridPosition:   new Vector2(4, 4),
+                    tileType:           Type.Score,
+                    score:              1,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 0)
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(4, 4),
+                    tileType:           Type.Bounce,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(-1, 0)
+                ));
+            BossData.Save();
+        }
+
+        private void CreateBossTestData()
+        {
+            // Create resource
+            BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
+            BossData.Init("DefaultLevelName");
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       0,
+                    tileGridPosition:   new Vector2(1, 1),
+                    tileType:           Type.Score,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 0)
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(1, 1),
+                    tileType:           Type.Direct,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(-1, 0)
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       0,
+                    tileGridPosition:   new Vector2(2, 2),
+                    tileType:           Type.Direct,
+                    score:              0,
+                    eaten:              false,                    
+                    bounceDirection:    new Vector2(1, 0)
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(2, 2),
+                    tileType:           Type.Score,
+                    score:              0,
+                    eaten:              false,                    
+                    bounceDirection:    new Vector2(0, 0)
+                ));
+            BossData.Save();
         }
 
         public void SetGrid()
@@ -61,7 +95,7 @@ namespace Hopper
         public void UpdateTile(TileChangeInstruction tci)
         {
             //Vector2 gridPosition, Type type, int score, Vector2 BounceDirection
-            Grid.UpdateTile(tci.TileGridPosition, tci.TileType, tci.Score, tci.BounceDirection);
+            Grid.UpdateTile(tci.TileGridPosition, tci.TileType, tci.Score, tci.BounceDirection, tci.Eaten);
         }
 
         public void Move(int HopsCompleted)
@@ -81,6 +115,28 @@ namespace Hopper
                 if (I.ActionOnTurn > turn) turn = I.ActionOnTurn;
             }
             return turn + 1;
+        }
+        
+        public List<TileChangeInstruction> LoadBossData(string levelName)
+        {
+            string path = $"res://Levels/{levelName}_BossData.tres"; 
+            BossBattleData bossData = ResourceLoader.Load<BossBattleData>(path);
+            if (bossData == null) return null;
+            return bossData.Deserialize();
+        }
+
+        public void UpdateInstruction(Vector2 playerGridPosition, int HopsCompleted, bool eaten)
+        {
+            int turn = (HopsCompleted - 1) % LastTurnForLoop();
+
+            for (int i = 0; i < tileChangeInstructions.Count; i++)
+            {
+                if (tileChangeInstructions[i].ActionOnTurn == turn &&
+                    tileChangeInstructions[i].TileGridPosition == playerGridPosition)
+                {
+                    tileChangeInstructions[i].Eaten = eaten;
+                }
+            }
         }
     }
 }

@@ -319,6 +319,7 @@ namespace Hopper
 
         private void BossMove()
         {
+            GD.Print("Do boss move.");
             if (Boss != null) Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining);
         }
 
@@ -347,6 +348,13 @@ namespace Hopper
             if (level != null)
             {
                 HUD.UpdateScore(updatedScore);
+                
+                if (Boss != null)
+                {
+                    GD.Print("Updated the tile change instruction list here.");
+                    Boss.UpdateInstruction(Player.GridPosition, CurrentLevel.MaximumHops - Player.HopsRemaining, true);
+                }
+
                 if (!level.Grid.GoalTile.Activated && updatedScore <= 0)
                 {
                     level.UpdateGoalState(updatedScore, Resources.GoalOnScene.Instance() as Tile);

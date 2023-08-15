@@ -234,7 +234,7 @@ namespace Hopper
         }
 
         //For updating a tile in the editor (called by signal in Tile)
-        public void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection)
+        public void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection, bool eaten = false)
         {
             Tile newTile = Resources.LoadByType(type).Instance() as Tile;
             if (newTile.Type == Type.Score) newTile.PointValue = score;
@@ -243,6 +243,7 @@ namespace Hopper
             ConnectTile(newTile);
             newTile.Editable = true;
             ReplaceTile(gridPosition, newTile);
+            if (eaten) newTile.SetAsEaten(); //must be after tile added to scenetree
         }
 
         internal void ReplaceTile(Vector2 gridPosition, Tile newTile)

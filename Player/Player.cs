@@ -397,7 +397,7 @@ namespace Hopper
             {
                 AnimationEndTile.SplashAnimation.Play("Land");
                 if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
-                if (AnimationEndTile.Type == Type.Score) AnimationEndTile.CrunchPartilces();
+                if (AnimationEndTile.Type == Type.Score) AnimationEndTile.Eat(); 
                 if (AnimationEndTile.Type == Type.Direct)
                 {
                     /* GD.Print($"Bounce direction: {AnimationEndTile.BounceDirection}");
@@ -508,9 +508,7 @@ namespace Hopper
             {
                 if (CurrentTile.Type == Type.Score) 
                 {
-                    CurrentTile.BugSprite.Visible = false;
-                    CurrentTile.PointValue = 0;
-                    CurrentTile.Label.Visible = false;
+                    CurrentTile.SetAsEaten();
                     LevelScore -= 1;
                     EmitSignal(nameof(ScoreUpdated), LevelScore);
                 }
@@ -601,7 +599,7 @@ namespace Hopper
                 if (an.Animation.ResourceName.Left(4) == "Swim" &&
                     an.Animation.ResourceName.Right(an.Animation.ResourceName.Length - 4) != "Turn")
                 {
-                    animationLength = SwimDistanceRationCurve.Interpolate((an.Movement.Length()) / 6);
+                    animationLength = SwimDistanceRationCurve.Interpolate(an.Movement.Length() / 6);
                 }
                 else
                 {
