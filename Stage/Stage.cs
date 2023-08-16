@@ -275,6 +275,7 @@ namespace Hopper
             {
                 Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
                 AddChildBelowNode(Background, Boss);
+                ModulateBackgrounds();
             }
 
             UpdateGoalStateAndScore(NextLevel.ScoreRequired);
@@ -284,6 +285,15 @@ namespace Hopper
             Visible = true;
 
 
+        }
+
+        private void ModulateBackgrounds()
+        {
+           var backgrounds = GetTree().GetNodesInGroup("ModulateForBoss");
+           foreach (TextureRect t in backgrounds)
+           {
+                t.Modulate = Color.Color8(194, 149, 149);
+           }
         }
 
         public void IncrementLevel()
