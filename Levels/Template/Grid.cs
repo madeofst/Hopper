@@ -65,7 +65,7 @@ namespace Hopper
             if (WithinGrid(position))
                 return Tiles[(int)position.x, (int)position.y];
             else
-                throw new NotImplementedException();
+                return null;
         }
 
         public override void _Ready()

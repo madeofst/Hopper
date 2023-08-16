@@ -57,6 +57,8 @@ namespace Hopper
         public delegate void PlayFailSound();
         [Signal]
         public delegate void BossMove();
+        [Signal]
+        public delegate void UpdateTileInstruction(Tile tile);
 
         //Player general parameters
         public int HopsRemaining { get; set; } = 3;
@@ -127,16 +129,27 @@ namespace Hopper
             ResetAnimation();
         }
 
-        private void CalculateMovement(Vector2 Movement)
+        public void CalculateMovement(Vector2 Movement, bool Free = false)
         {
             Queue<MovementNode> MovementNodes = new Queue<MovementNode>();
             bool Submerged = false;
+
             MovementNodes.Enqueue(new MovementNode(CurrentTile, Movement, Submerged));
 
-            Vector2 JumpVector = GetJumpDistance(Movement);
-            Vector2 JumpTargetPosition = GridPosition + JumpVector;
+            Vector2 JumpVector;
+            Vector2 JumpTargetPosition;            
+            if (!Free || (Free && CurrentTile.Type != Type.Water && CurrentTile.Type != Type.Goal))
+            {
+                JumpVector = GetJumpDistance(Movement);
+                JumpTargetPosition = GridPosition + JumpVector;
+            }
+            else
+            {
+                JumpVector = Vector2.Zero;
+                JumpTargetPosition = GridPosition;
+            }
             AnimationEndTile = Grid.GetTile(Grid.LimitToBounds(JumpTargetPosition));
-            
+
             do
             {
                 if (AnimationEndTile.Type == Type.Bounce)
@@ -149,17 +162,10 @@ namespace Hopper
                     Movement = AnimationEndTile.BounceDirection;
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                     Vector2 NextTileLocation = AnimationEndTile.GridPosition + AnimationEndTile.BounceDirection;
-                    //GD.Print($"Old bounce direction: {AnimationEndTile.BounceDirection}");
-                    AnimationEndTile.BounceDirection = AnimationEndTile.BounceDirection.Rotated(Mathf.Pi / 2).Round();
-                    //GD.Print($"New bounce direction: {AnimationEndTile.BounceDirection}");
-                    /* GD.Print($"New bounce direction {AnimationEndTile.BounceDirection}");
-                    GD.Print(AnimationEndTile.BounceDirection.Angle());
-                    GD.Print(Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau));
-                    GD.Print((int)(Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau) / Mathf.Tau * 4)); */
+                    AnimationEndTile.RotateBounceDirection();
                     AnimationEndTile = Grid.GetTile(NextTileLocation);
-
                 }
-                else if ((AnimationEndTile.Type == Type.Rock))
+                else if (AnimationEndTile.Type == Type.Rock)
                 {
                     Movement = -Movement;
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
@@ -172,7 +178,7 @@ namespace Hopper
                 {
                     Submerged = true;
                     MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
-                    if ((Grid.GetTile(AnimationEndTile.GridPosition + Movement).Type == Type.Rock)) 
+                    if (Grid.GetTile(AnimationEndTile.GridPosition + Movement).Type == Type.Rock) 
                     {
                         MovementNodes.Enqueue(new MovementNode(AnimationEndTile, Movement, Submerged));
                         Movement = -Movement;
@@ -222,11 +228,11 @@ namespace Hopper
             }
             else
             {
-                CreateAnimationSequence(MovementNodes);
+                CreateAnimationSequence(MovementNodes, Free);
             }
         }
 
-        private void CreateAnimationSequence(Queue<MovementNode> movementNodes)
+        private void CreateAnimationSequence(Queue<MovementNode> movementNodes, bool free = false)
         {
             AnimationQueue = new Queue<AnimationNode>();
             MovementNode current = null;
@@ -244,7 +250,8 @@ namespace Hopper
                 }
                 next = movementNodes.Dequeue();
 
-                AnimationNode nextAnimationNode = NextAnimationNode(current, next);
+                AnimationNode nextAnimationNode = NextAnimationNode(current, next, free);
+
                 if (nextAnimationNode != null)
                 {
                     AnimationQueue.Enqueue(nextAnimationNode);
@@ -267,11 +274,11 @@ namespace Hopper
             }
             CurrentTile.SplashAnimation.Play("Jump");
 
-            UpdateHopsRemaining(-1);
+            if (!free) UpdateHopsRemaining(-1);
             PlayNextAnimation();
         }
 
-        private AnimationNode NextAnimationNode(MovementNode current, MovementNode next)
+        private AnimationNode NextAnimationNode(MovementNode current, MovementNode next, bool free)
         {
             string Goal = null;
             string Length = null;
@@ -293,7 +300,8 @@ namespace Hopper
                 Movement = "Swim";
                 movementCurve = SwimCurve;
             }
-            else if (fromType == Type.Bounce || fromType == Type.Rock || fromType == Type.Direct)
+            else if (fromType == Type.Bounce || fromType == Type.Rock || fromType == Type.Direct ||
+                     current.Tile.GridPosition == next.Tile.GridPosition)
             {
                 Movement = "Bounce";
                 movementCurve = BounceCurve;
@@ -345,7 +353,7 @@ namespace Hopper
             if (animation != null)
             {
                 //GD.Print($"Animation name = '{animation.ResourceName}'");
-                node = new AnimationNode(animation, next.Tile.GridPosition - current.Tile.GridPosition, movementCurve);
+                node = new AnimationNode(animation, next.Tile.GridPosition - current.Tile.GridPosition, movementCurve, free);
             }
 
             return node;
@@ -369,12 +377,12 @@ namespace Hopper
 
         private void PrintNodes(Queue<MovementNode> movementNodes)
         {
-/*             int i = 1;
+            int i = 1;
             foreach (MovementNode n in movementNodes)
             {
-                GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
+                //GD.Print($"Node {i} - {n.Tile.GridPosition} - {n.MovementDirection} - {n.Submerged}");
                 i++;
-            } */
+            }
         }
 
         private Vector2 GetJumpDistance(Vector2 movementDirection)
@@ -400,19 +408,12 @@ namespace Hopper
                 if (AnimationEndTile.Type == Type.Score) AnimationEndTile.Eat(); 
                 if (AnimationEndTile.Type == Type.Direct)
                 {
-                    /* GD.Print($"Bounce direction: {AnimationEndTile.BounceDirection}");
-                    GD.Print($"Bounce angle: {AnimationEndTile.BounceDirection.Angle()}");
-                    GD.Print($"360 angle: {Mathf.PosMod(AnimationEndTile.BounceDirection.Angle() + Mathf.Tau, Mathf.Tau)}"); */
-
-                    //Implicitly adds a frame by adding Hframes (rather than Hframes - 1)
-                    /* GD.Print($"Start frame: {AnimationEndTile.LilySprite.Frame}");
-                    GD.Print($"Start frame + 3 + 1: {AnimationEndTile.LilySprite.Frame + AnimationEndTile.LilySprite.Hframes}");
-                    GD.Print($"Remainder when divided by 3: {(AnimationEndTile.LilySprite.Frame + AnimationEndTile.LilySprite.Hframes + 1) % (AnimationEndTile.LilySprite.Hframes)}"); */
-                    AnimationEndTile.LilySprite.Frame = (AnimationEndTile.LilySprite.Frame + AnimationEndTile.LilySprite.Hframes + 1) % (AnimationEndTile.LilySprite.Hframes);
-                }
+                    AnimationEndTile.RotateBounceDirectionVisual(); 
+                    EmitSignal(nameof(UpdateTileInstruction), AnimationEndTile);
+                } 
             }
         }
-
+        
         public void TriggerSplashAnimation()
         {
             if (AnimationEndTile != null) AnimationEndTile.SplashAnimation.Play("Splash");
@@ -434,7 +435,7 @@ namespace Hopper
             }
         }
 
-        public void AfterAnimation(string animationName) //TODO: Need to review this part of the procedure
+        public void AfterAnimation(string animationName, bool fromBossMove = false) //TODO: Need to review this part of the procedure
         {
             AnimationTimeElapsed = 0;
             if (AnimationEndTile != null) GridPosition = AnimationEndTile.GridPosition;
@@ -453,18 +454,27 @@ namespace Hopper
                 else
                 {
                     UpdateScore();
+
                     if (!CheckGoal())
                     {
-                        CheckHopsRemaining();
+                        if (!fromBossMove && !CurrentAnimationNode.Free)
+                            EmitSignal(nameof(BossMove));
                     }
                     else
                     {
                         GD.Print("Goal reached when it shouldn't be or something.");
                     }
-                    AnimationEndTile = null;
-                    CurrentAnimationNode = null;
 
-                    EmitSignal(nameof(BossMove));
+                    if (AnimationEndTile != null)
+                    {
+                        if (AnimationEndTile.GridPosition == GridPosition &&
+                            AnimationEndTile.Type != Type.Water)
+                        {
+                            CheckHopsRemaining();
+                            AnimationEndTile = null;
+                            CurrentAnimationNode = null;
+                        }
+                    }
                 }
             }
         }

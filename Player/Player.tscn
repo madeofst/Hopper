@@ -288,4 +288,4 @@ anims/Appear = SubResource( 51 )
 anims/Idle = ExtResource( 51 )
 anims/Smoke = ExtResource( 50 )
 
-[connection signal="animation_finished" from="PlayerSprite/AnimationPlayer" to="." method="AfterAnimation"]
+[connection signal="animation_finished" from="PlayerSprite/AnimationPlayer" to="." method="AfterAnimation" binds= [ false ]]

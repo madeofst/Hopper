@@ -157,6 +157,7 @@ namespace Hopper
             Player.Connect(nameof(Player.Quit), this, nameof(QuitToMenu));
             Player.Connect(nameof(Player.PlayFailSound), FailLevel, "play");
             Player.Connect(nameof(Player.BossMove), this, nameof(BossMove));
+            Player.Connect(nameof(Player.UpdateTileInstruction), this, nameof(UpdateTileInstruction));
 
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.TitleScreenLoaded), this, nameof(OnTitleScreenLoaded), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
@@ -274,8 +275,13 @@ namespace Hopper
             NextLevel = null;
             Visible = true;
 
-            Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
-            AddChildBelowNode(Background, Boss);
+            File file = new File();
+            if (file.FileExists(CurrentLevel.LevelData.ResourcePath.Replace("_Data","_BossData")))
+            {
+                Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
+                AddChildBelowNode(Background, Boss);
+            }
+
         }
 
         public void IncrementLevel()
@@ -317,10 +323,58 @@ namespace Hopper
             LevelTitleScreen.UpdateLevelReached(StageData.LevelReached);
         }
 
+        private void UpdateTileInstruction(Tile tile)
+        {
+            if (Boss != null)
+            {
+                Boss.UpdateInstruction(tile, CurrentLevel.MaximumHops - Player.HopsRemaining, false);
+            }
+        }
+
         private void BossMove()
         {
-            GD.Print("Do boss move.");
-            if (Boss != null) Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining);
+            //GD.Print("Do boss move.");
+            if (Boss != null)
+            {
+                Vector2 playerPositionOnChangedTile = Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining, Player.GridPosition);
+
+                //TODO: replace Player.CurrentAnimationNode.Movement with appropriate movement depending on the tile type that pops up
+                Tile tile = Grid.GetTile(playerPositionOnChangedTile);
+                if (tile != null) // Player is on one of changed tiles
+                {
+                    if (tile.Type == Type.Bounce || tile.Type == Type.Rock) 
+                    {
+                        Player.CalculateMovement(Player.CurrentAnimationNode.Movement, true);
+                    }
+                    else if (tile.Type == Type.Water)
+                    {
+                        Player.CalculateMovement(Player.CurrentAnimationNode.Movement, true);
+                    }
+                    else if (tile.Type == Type.Direct)
+                    {
+                        Player.CalculateMovement(tile.BounceDirection, true);
+                        tile.RotateBounceDirection();
+                        UpdateTileInstruction(tile);
+                        tile.RotateBounceDirectionVisual();
+                    }
+                    else if (tile.Type == Type.Score)
+                    {
+                        tile.Eat();
+                        Player.AfterAnimation(Player.CurrentAnimationNode.Animation.ResourceName, true);
+                    }
+                    else if (tile.Type == Type.Goal)
+                    {
+                        //need to set active status
+                        //dive in goal
+                    }
+                    else //Type.Jump || Type.Lily 
+                    {
+                        //nothing
+                    }
+
+                }
+
+            }
         }
 
         //Working with player
@@ -351,8 +405,9 @@ namespace Hopper
                 
                 if (Boss != null)
                 {
-                    GD.Print("Updated the tile change instruction list here.");
-                    Boss.UpdateInstruction(Player.GridPosition, CurrentLevel.MaximumHops - Player.HopsRemaining, true);
+                    //GD.Print("Updated the tile change instruction list here.");
+                    // This is only changing the eaten value of a score tile that has just appeared
+                    Boss.UpdateInstruction(Grid.GetTile(Player.GridPosition), CurrentLevel.MaximumHops - Player.HopsRemaining, true);
                 }
 
                 if (!level.Grid.GoalTile.Activated && updatedScore <= 0)
@@ -375,7 +430,7 @@ namespace Hopper
         public void RestartLevel(string levelName, bool fail = false)
         {
             Player.RestartingLevel = true;
-            Boss.QueueFree();
+            if (Boss!= null) Boss.QueueFree();
             NewLevel(levelName, true);
             if (fail) HUD.ShowPopUp("Try again!");
             Player.Appear();

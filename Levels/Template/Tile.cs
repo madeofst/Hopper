@@ -31,7 +31,7 @@ namespace Hopper
         public Vector2 BounceDirection;
 
         [Signal]
-        public delegate void TileUpdated(Vector2 gridPosition, Type type, int Score);
+        public delegate void TileUpdated(Vector2 gridPosition, Type type, int Score, Vector2 bounceDirection, bool eaten = false); //TODO: need to fix this now I've changed the parameters
         [Signal]
         public delegate void PlayerStartUpdated(Vector2 gridPosition);
 
@@ -91,14 +91,14 @@ namespace Hopper
                 {
                     if (Type == Type.Direct) //TODO: The type here must always equal the max enum value
                     {
-                        EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue, BounceDirection);
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type.Lily, PointValue, BounceDirection, false);
                     }
                     else
                     {
                         Type += 1;
                         if (Type == Type.Score) PointValue = 1;
                         if (Type == Type.Direct) BounceDirection = Vector2.Right;
-                        EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection);
+                        EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection, false);
                     }
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.Right)
@@ -107,11 +107,11 @@ namespace Hopper
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelUp && Type == Type.Direct)
                 {
-                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(Mathf.Pi / 2).Round());
+                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(Mathf.Pi / 2).Round(), false);
                 }
                 else if (ev.ButtonIndex == (int)ButtonList.WheelDown && Type == Type.Direct)
                 {
-                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(-(Mathf.Pi / 2)).Round());
+                    EmitSignal(nameof(TileUpdated), GridPosition, Type, PointValue, BounceDirection.Rotated(-(Mathf.Pi / 2)).Round(), false);
                 }
             }
         }
@@ -142,5 +142,20 @@ namespace Hopper
             Label.Visible = false;
         }
 
+        public Vector2 RotateBounceDirection()
+        {
+            BounceDirection = BounceDirection.Rotated(Mathf.Pi / 2).Round();
+            return BounceDirection;
+        }
+
+        public void RotateBounceDirectionVisual()
+        {
+            LilySprite.Frame = (LilySprite.Frame + LilySprite.Hframes + 1) % LilySprite.Hframes;
+        }
+
+        public void UpdateBounceDirection(Vector2 updatedBounceDirection)
+        {
+            BounceDirection = updatedBounceDirection;
+        }
     }
 }
