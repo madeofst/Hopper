@@ -11,7 +11,7 @@ namespace Hopper
         public string LevelName { get; set; }
         [Export]
         public Array<int> TileChangeData { get; set; }
-        private readonly int NoOfElements = 8;
+        private readonly int NoOfElements = 9;
      
         public void Init(string levelName)
         {
@@ -54,7 +54,8 @@ namespace Hopper
                     score:              TileChangeData[i2 + 4],
                     eaten:              Convert.ToBoolean(TileChangeData[i2 + 5]),
                     bounceDirection:    new Vector2(TileChangeData[i2 + 6], 
-                                                    TileChangeData[i2 + 7])
+                                                    TileChangeData[i2 + 7]),
+                    activated:          Convert.ToBoolean(TileChangeData[i2 + 8])
                 ));
             }
 

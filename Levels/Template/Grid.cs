@@ -37,7 +37,7 @@ namespace Hopper
         public Vector2 TileSize;
 
         public Tile[,] Tiles;
-        public Tile GoalTile
+/*         public Tile GoalTile
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Hopper
                 }
                 return null;
             }
-        }
+        } */
         //public Tile PlayerTile;
 
         [Signal]
@@ -234,14 +234,23 @@ namespace Hopper
         }
 
         //For updating a tile in the editor (called by signal in Tile)
-        public void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection, bool eaten = false)
+        public void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection, bool eaten = false, bool activated = false)
         {
-            Tile newTile = Resources.LoadByType(type).Instance() as Tile;
-            if (newTile.Type == Type.Score) newTile.PointValue = score;
-            if (newTile.Type == Type.Direct) newTile.BounceDirection = BounceDirection;
+            Tile newTile;
+            if (activated)
+            {
+                newTile = Resources.GoalOnScene.Instance() as Tile;
+            }
+            else
+            {
+                newTile = Resources.LoadByType(type).Instance() as Tile;
+                if (newTile.Type == Type.Score) newTile.PointValue = score;
+                if (newTile.Type == Type.Direct) newTile.BounceDirection = BounceDirection;
+            }
+            
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
             ConnectTile(newTile);
-            newTile.Editable = true;
+            newTile.Editable = true;        //TODO: probably need to be careful now that this method is used in-game
             ReplaceTile(gridPosition, newTile);
             if (eaten) newTile.SetAsEaten(); //must be after tile added to scenetree
         }

@@ -269,18 +269,20 @@ namespace Hopper
             }
             ConnectRestartButton(NextLevel);
             ConnectOverlayMenu(NextLevel);
+
+            File file = new File();
+            if (file.FileExists(NextLevel.LevelData.ResourcePath.Replace("_Data","_BossData")))
+            {
+                Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
+                AddChildBelowNode(Background, Boss);
+            }
+
             UpdateGoalStateAndScore(NextLevel.ScoreRequired);
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
             NextLevel = null;
             Visible = true;
 
-            File file = new File();
-            if (file.FileExists(CurrentLevel.LevelData.ResourcePath.Replace("_Data","_BossData")))
-            {
-                Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
-                AddChildBelowNode(Background, Boss);
-            }
 
         }
 
@@ -364,8 +366,7 @@ namespace Hopper
                     }
                     else if (tile.Type == Type.Goal)
                     {
-                        //need to set active status
-                        //dive in goal
+                        Player.CalculateMovement(Player.CurrentAnimationNode.Movement, true);
                     }
                     else //Type.Jump || Type.Lily 
                     {
@@ -407,14 +408,18 @@ namespace Hopper
                 {
                     //GD.Print("Updated the tile change instruction list here.");
                     // This is only changing the eaten value of a score tile that has just appeared
-                    Boss.UpdateInstruction(Grid.GetTile(Player.GridPosition), CurrentLevel.MaximumHops - Player.HopsRemaining, true);
+                    Boss.UpdateInstruction(Grid.GetTile(Player.GridPosition), level.MaximumHops - Player.HopsRemaining, true);
                 }
 
-                if (!level.Grid.GoalTile.Activated && updatedScore <= 0)
+                if (updatedScore <= 0)
                 {
-                    level.UpdateGoalState(updatedScore, Resources.GoalOnScene.Instance() as Tile);
-                    GoalActivate.Play();
-                    HUD.AnimateScoreBox();
+                    if (Boss != null) Boss.UpdateGoalInstructions(true);
+                    if (!level.GoalActive && updatedScore <= 0)
+                    {
+                        level.UpdateGoalState(updatedScore);
+                        GoalActivate.Play();
+                        HUD.AnimateScoreBox();
+                    }
                 }
             }
         }

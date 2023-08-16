@@ -5,6 +5,8 @@ namespace Hopper
 {
     public class Level : Node2D
     {
+        private ResourceRepository Resources { get; set; }
+
         public LevelData LevelData { get; set; }
         public Grid Grid { get; set; }
 
@@ -26,6 +28,8 @@ namespace Hopper
         public Vector2 PlayerStartPosition { get; set; }
         public string LevelName { get; set; }
 
+        public bool GoalActive { get; set; } = false;
+
         [Signal]
         public delegate void LevelParametersUpdated();
 
@@ -36,6 +40,7 @@ namespace Hopper
 
         public override void _Ready()
         {
+            Resources = GetNode<ResourceRepository>("/root/ResourceRepository");
             Name = "Level";
             Grid = GetNode<Grid>("Grid");
         }
@@ -90,9 +95,13 @@ namespace Hopper
             LevelData.PlayerStartPosition = PlayerStartPosition;
         }
 
-        public bool UpdateGoalState(int currentScore, Tile activatedGoalTile)
+        public bool UpdateGoalState(int currentScore)
         {
-            Grid.ReplaceTile(Grid.GoalTile.GridPosition, activatedGoalTile);
+            GoalActive = true;
+            foreach (Tile t in Grid.Tiles)
+            {
+                if (t.Type == Type.Goal) Grid.ReplaceTile(t.GridPosition, Resources.GoalOnScene.Instance() as Tile);
+            }
             return true;
         }
 

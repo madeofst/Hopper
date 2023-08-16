@@ -11,8 +11,9 @@ namespace Hopper
         public int Score;
         public bool Eaten;
         public Vector2 BounceDirection;
+        public bool Activated;
 
-        public TileChangeInstruction(int actionOnTurn, Vector2 tileGridPosition, Type tileType, int score, bool eaten, Vector2 bounceDirection)
+        public TileChangeInstruction(int actionOnTurn, Vector2 tileGridPosition, Type tileType, int score, bool eaten, Vector2 bounceDirection, bool activated)
         {
             ActionOnTurn = actionOnTurn;
             TileGridPosition = tileGridPosition;
@@ -20,6 +21,7 @@ namespace Hopper
             Score = score;
             Eaten = eaten;
             BounceDirection = bounceDirection;
+            Activated = activated;
         }
 
         public int[] Serialize()
@@ -30,7 +32,8 @@ namespace Hopper
                 (int)TileType, 
                 Score, 
                 Convert.ToInt32(Eaten),
-                (int)BounceDirection.x, (int)BounceDirection.y
+                (int)BounceDirection.x, (int)BounceDirection.y,
+                Convert.ToInt32(Activated)
             };
         }
     }
