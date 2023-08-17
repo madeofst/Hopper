@@ -8,7 +8,7 @@ namespace Hopper
     public class Boss : Node2D
     {
         private Grid Grid;
-        List<TileChangeInstruction> tileChangeInstructions;
+        List<TileChangeInstruction> TileChangeInstructions;
 
         string CurrentBossLevelName = "Boss2";
 
@@ -16,54 +16,18 @@ namespace Hopper
         {
             SetGrid();
             //CreateBossTestData();
-            //CreateBossTestData1();
+            CreateBossTestData1();
             CreateBossTestData2();
-
-            tileChangeInstructions = LoadBossData(CurrentBossLevelName);
-        }
-
-        private void CreateBossTestData2()
-        {
-            // Create resource
-            BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
-            BossData.Init(CurrentBossLevelName);
-            BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       2,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Goal,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(1, 0),
-                    activated:          false
-                ));
-            BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       5,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(0, 0),
-                    activated:          false
-                ));
-            BossData.Save();
+            CreateBossTestData3();
         }
 
         private void CreateBossTestData1()
         {
             // Create resource
             BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
-            BossData.Init(CurrentBossLevelName);
+            BossData.Init("Boss1");
             BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       0,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(0, 0),
-                    activated:          false
-                ));
-            BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       1,
                     tileGridPosition:   new Vector2(4, 4),
                     tileType:           Type.Score,
                     score:              1,
@@ -72,25 +36,33 @@ namespace Hopper
                     activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       2,
+                    actionOnTurn:       1,
                     tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Jump,
+                    tileType:           Type.Bounce,
                     score:              0,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, 0),
                     activated:          false
                 ));
+            BossData.Save();
+        }
+
+        private void CreateBossTestData2()
+        {
+            // Create resource
+            BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
+            BossData.Init("Boss2");
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       3,
+                    actionOnTurn:       0,
                     tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
-                    score:              0,
+                    tileType:           Type.Score,
+                    score:              1,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, 0),
                     activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       4,
+                    actionOnTurn:       1,
                     tileGridPosition:   new Vector2(4, 4),
                     tileType:           Type.Water,
                     score:              0,
@@ -98,17 +70,34 @@ namespace Hopper
                     bounceDirection:    new Vector2(0, 0),
                     activated:          false
                 ));
+            BossData.Save();
+        }
+
+        private void CreateBossTestData3()
+        {
+            // Create resource
+            BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
+            BossData.Init("Boss3");
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       5,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
+                    actionOnTurn:       0,
+                    tileGridPosition:   new Vector2(2, 4),
+                    tileType:           Type.Jump,
                     score:              0,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, 0),
                     activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       6,
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(2, 4),
+                    tileType:           Type.Bounce,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 0),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       0,
                     tileGridPosition:   new Vector2(4, 4),
                     tileType:           Type.Bounce,
                     score:              0,
@@ -117,63 +106,27 @@ namespace Hopper
                     activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       7,
+                    actionOnTurn:       1,
                     tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
+                    tileType:           Type.Jump,
                     score:              0,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, 0),
                     activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       8,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Rock,
+                    actionOnTurn:       0,
+                    tileGridPosition:   new Vector2(6, 4),
+                    tileType:           Type.Jump,
                     score:              0,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, 0),
                     activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       9,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(0, 0),
-                    activated:          false
-                ));
-            BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       10,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Direct,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(-1, 0),
-                    activated:          false
-                ));
-            BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       11,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(0, 0),
-                    activated:          false
-                ));
-            BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       12,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Goal,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(0, 0),
-                    activated:          false
-                ));
-            BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       13,
-                    tileGridPosition:   new Vector2(4, 4),
-                    tileType:           Type.Lily,
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(6, 4),
+                    tileType:           Type.Bounce,
                     score:              0,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, 0),
@@ -242,7 +195,7 @@ namespace Hopper
         {
             Vector2 playerPositionOnChangedTile = new Vector2(-1, -1);
             int lastTurnForLoop = LastTurnForLoop();
-            foreach (TileChangeInstruction I in tileChangeInstructions)
+            foreach (TileChangeInstruction I in TileChangeInstructions)
             {
                 if (I.ActionOnTurn == hopsCompleted % lastTurnForLoop)
                 {
@@ -256,19 +209,21 @@ namespace Hopper
         private int LastTurnForLoop()
         {
             int turn = 0;
-            foreach (TileChangeInstruction I in tileChangeInstructions)
+            foreach (TileChangeInstruction I in TileChangeInstructions)
             {
                 if (I.ActionOnTurn > turn) turn = I.ActionOnTurn;
             }
             return turn + 1;
         }
         
-        public List<TileChangeInstruction> LoadBossData(string levelName)
+        public List<TileChangeInstruction> Load(string levelName)
         {
             string path = $"res://Levels/{levelName}_BossData.tres"; 
             BossBattleData bossData = ResourceLoader.Load<BossBattleData>(path);
             if (bossData == null) return null;
-            return bossData.Deserialize();
+
+            TileChangeInstructions = bossData.Deserialize();
+            return TileChangeInstructions;
         }
 
         public void UpdateInstruction(Tile tile, int hopsCompleted, bool eaten)
@@ -277,14 +232,14 @@ namespace Hopper
             while (hops >= 0)
             {
                 int turn = hops % LastTurnForLoop();
-                for (int i = 0; i < tileChangeInstructions.Count; i++)
+                for (int i = 0; i < TileChangeInstructions.Count; i++)
                 {
-                    if (tileChangeInstructions[i].ActionOnTurn == turn &&
-                        tileChangeInstructions[i].TileGridPosition == tile.GridPosition &&
-                        tileChangeInstructions[i].TileType == tile.Type)
+                    if (TileChangeInstructions[i].ActionOnTurn == turn &&
+                        TileChangeInstructions[i].TileGridPosition == tile.GridPosition &&
+                        TileChangeInstructions[i].TileType == tile.Type)
                     {
-                        tileChangeInstructions[i].Eaten = eaten;
-                        tileChangeInstructions[i].BounceDirection = tile.BounceDirection;
+                        TileChangeInstructions[i].Eaten = eaten;
+                        TileChangeInstructions[i].BounceDirection = tile.BounceDirection;
                     }
                 }
                 hops--;
@@ -293,11 +248,11 @@ namespace Hopper
 
         public void UpdateGoalInstructions(bool activated)
         {
-            for (int i = 0; i < tileChangeInstructions.Count; i++)
+            for (int i = 0; i < TileChangeInstructions.Count; i++)
             {
-                if (tileChangeInstructions[i].TileType == Type.Goal)
+                if (TileChangeInstructions[i].TileType == Type.Goal)
                 {
-                    tileChangeInstructions[i].Activated = true;
+                    TileChangeInstructions[i].Activated = true;
                 }
             }
         }

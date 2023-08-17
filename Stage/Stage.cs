@@ -274,6 +274,7 @@ namespace Hopper
             if (file.FileExists(NextLevel.LevelData.ResourcePath.Replace("_Data","_BossData")))
             {
                 Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
+                Boss.Load(NextLevel.LevelName);
                 AddChildBelowNode(Background, Boss);
                 ModulateBackgrounds();
             }
