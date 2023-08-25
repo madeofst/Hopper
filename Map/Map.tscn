@@ -616,7 +616,7 @@ position = Vector2( 104, 104 )
 Texture = ExtResource( 6 )
 ID = 2
 Pond = "Hawkins"
-Levels = PoolStringArray( "MovingOnNew", "JumpAround1", "RockBounceLesson1", "AroundAndABounce", "BounceToTheSides" )
+Levels = PoolStringArray( "MovingOnNew_1", "JumpAround1", "RockBounceLesson1", "AroundAndABounce", "BounceToTheSides" )
 LocationsToUnlock = PoolStringArray( "World3", "World10" )
 
 [node name="World1" parent="World2" instance=ExtResource( 12 )]

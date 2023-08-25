@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Stage/BossBattleData.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+LevelName = "Boss4"
+TileChangeData = [ 1, 2, 2, 7, 0, 0, 1, 0, 0, 1, 6, 2, 7, 0, 0, 0, 1, 0, 1, 2, 6, 7, 0, 0, 0, -1, 0, 1, 6, 6, 7, 0, 0, -1, 0, 0, 3, 2, 2, 4, 0, 0, 0, 0, 0, 3, 6, 2, 4, 0, 0, 0, 0, 0, 3, 2, 6, 4, 0, 0, 0, 0, 0, 3, 6, 6, 4, 0, 0, 0, 0, 0 ]

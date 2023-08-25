@@ -10,7 +10,7 @@ namespace Hopper
         private Grid Grid;
         List<TileChangeInstruction> TileChangeInstructions;
 
-        string CurrentBossLevelName = "Boss2";
+        string CurrentBossLevelName = "Boss4";
 
         public override void _Ready()
         {
@@ -19,6 +19,7 @@ namespace Hopper
             CreateBossTestData1();
             CreateBossTestData2();
             CreateBossTestData3();
+            CreateBossTestData4();
         }
 
         private void CreateBossTestData1()
@@ -127,6 +128,86 @@ namespace Hopper
                     actionOnTurn:       1,
                     tileGridPosition:   new Vector2(6, 4),
                     tileType:           Type.Bounce,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 0),
+                    activated:          false
+                ));
+            BossData.Save();
+        }
+
+        private void CreateBossTestData4()
+        {
+            // Create resource
+            BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
+            BossData.Init("Boss4");
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(2, 2),
+                    tileType:           Type.Direct,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(1, 0),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(6, 2),
+                    tileType:           Type.Direct,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 1),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(2, 6),
+                    tileType:           Type.Direct,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, -1),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       1,
+                    tileGridPosition:   new Vector2(6, 6),
+                    tileType:           Type.Direct,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(-1, 0),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       3,
+                    tileGridPosition:   new Vector2(2, 2),
+                    tileType:           Type.Water,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 0),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       3,
+                    tileGridPosition:   new Vector2(6, 2),
+                    tileType:           Type.Water,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 0),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       3,
+                    tileGridPosition:   new Vector2(2, 6),
+                    tileType:           Type.Water,
+                    score:              0,
+                    eaten:              false,
+                    bounceDirection:    new Vector2(0, 0),
+                    activated:          false
+                ));
+            BossData.AddTileChange(new TileChangeInstruction(
+                    actionOnTurn:       3,
+                    tileGridPosition:   new Vector2(6, 6),
+                    tileType:           Type.Water,
                     score:              0,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, 0),
