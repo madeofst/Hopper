@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Levels/Template/TileRectangle.tres" type="Shape2D" id=1]
 [ext_resource path="res://HUD/Counter.cs" type="Script" id=2]
@@ -10,9 +10,14 @@
 [ext_resource path="res://Levels/Resources/Dragonfly Sprite Sheet.png" type="Texture" id=8]
 [ext_resource path="res://Music/FX/FX Exit splash.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Music/FX/FX Simple jump.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Levels/Resources/Water_32x32.png" type="Texture" id=11]
+[ext_resource path="res://Shaders/Transition/SlideUpAndAcross.tres" type="Material" id=12]
+[ext_resource path="res://Levels/Resources/Shadow_32x32.png" type="Texture" id=13]
+[ext_resource path="res://Levels/Resources/Black_32x32.png" type="Texture" id=14]
+[ext_resource path="res://Shaders/Transition/SlideUpAndAcrossSimultaneous.tres" type="Material" id=15]
+[ext_resource path="res://Levels/Resources/BossTileIndicator_32x32.png" type="Texture" id=16]
 
-[sub_resource type="Animation" id=1]
-resource_name = "Idle"
+[sub_resource type="Animation" id=13]
 length = 0.07
 step = 0.07
 tracks/0/type = "value"
@@ -242,21 +247,90 @@ tracks/0/keys = {
 "values": [ 17, 14, 15, 16 ]
 }
 
+[sub_resource type="Animation" id=14]
+resource_name = "Highlight"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"update": 0,
+"values": [  ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [node name="Tile" type="Area2D"]
 script = ExtResource( 6 )
 Type = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 16, 16 )
 shape = ExtResource( 1 )
 
+[node name="BackgroundSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 16, 16 )
+texture = ExtResource( 13 )
+
+[node name="WaterSprite" type="Sprite" parent="."]
+visible = false
+material = ExtResource( 12 )
+position = Vector2( 16, 16 )
+texture = ExtResource( 11 )
+
 [node name="LilySprite" type="Sprite" parent="."]
+material = ExtResource( 12 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="LilySprite"]
 autoplay = "Idle"
-anims/Idle = SubResource( 1 )
+anims/Idle = SubResource( 13 )
 anims/Jump = SubResource( 2 )
 anims/Land = SubResource( 3 )
 
@@ -277,6 +351,7 @@ anims/Splash = SubResource( 7 )
 
 [node name="BugSprite" type="Sprite" parent="."]
 visible = false
+material = ExtResource( 12 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 8 )
 offset = Vector2( 0, -12 )
@@ -288,6 +363,24 @@ frame = 14
 anims/Hover1 = SubResource( 8 )
 anims/Hover2 = SubResource( 9 )
 anims/Hover3 = SubResource( 10 )
+
+[node name="ShadowSprite" type="Sprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.533333 )
+material = ExtResource( 15 )
+position = Vector2( 16, 16 )
+texture = ExtResource( 14 )
+
+[node name="BossIndicatorSprite" type="Sprite" parent="."]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.843137 )
+position = Vector2( 16, 16 )
+texture = ExtResource( 16 )
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BossIndicatorSprite"]
+autoplay = "RESET"
+anims/Highlight = SubResource( 14 )
+anims/RESET = SubResource( 15 )
 
 [node name="Label" type="RichTextLabel" parent="."]
 margin_top = 12.0
@@ -303,3 +396,7 @@ script = ExtResource( 2 )
 [node name="AudioFX1" type="AudioStreamPlayer" parent="."]
 mix_target = 2
 bus = "FX"
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_all_completed" from="Tween" to="." method="AfterSlide"]

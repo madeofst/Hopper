@@ -128,6 +128,10 @@ namespace Hopper
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
             }
+            else if (StageData.Pond == "Boss")
+            {
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/BossPond.png");
+            }
             else
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
@@ -249,6 +253,8 @@ namespace Hopper
             NextLevel.Build(Resources);           
             Grid = NextLevel.Grid;
             
+            Grid.Connect(nameof(Grid.TileSlidUp), this, nameof(CalculatePlayerMovementAfterBossMove));
+            
             HUD.ShowScoreBox();
             HUD.SetButtonToRestart();
             HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
@@ -276,7 +282,10 @@ namespace Hopper
                 Boss = (Boss)GD.Load<PackedScene>("res://Stage/Boss.tscn").Instance();
                 Boss.Load(NextLevel.LevelName);
                 AddChildBelowNode(Background, Boss);
-                ModulateBackgrounds();
+                Player.BossMode = true;
+                Grid.BossMode = true;      
+                UpdateBossIndicators(NextLevel);          
+                //ModulateBackgrounds();
             }
 
             UpdateGoalStateAndScore(NextLevel.ScoreRequired);
@@ -285,17 +294,16 @@ namespace Hopper
             NextLevel = null;
             Visible = true;
 
-
         }
-
+/* 
         private void ModulateBackgrounds()
         {
            var backgrounds = GetTree().GetNodesInGroup("ModulateForBoss");
            foreach (TextureRect t in backgrounds)
            {
-                t.Modulate = Color.Color8(194, 149, 149);
+                t.Modulate = Color.Color8(194, 149, 149, 0);
            }
-        }
+        } */
 
         public void IncrementLevel()
         {
@@ -346,22 +354,36 @@ namespace Hopper
 
         private void BossMove()
         {
-            //GD.Print("Do boss move.");
             if (Boss != null)
             {
-                Vector2 playerPositionOnChangedTile = Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining, Player.GridPosition);
+                int TileCount = Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining);
 
-                //TODO: replace Player.CurrentAnimationNode.Movement with appropriate movement depending on the tile type that pops up
-                Tile tile = Grid.GetTile(playerPositionOnChangedTile);
-                if (tile != null) // Player is on one of changed tiles
+                if (TileCount == 0) CalculatePlayerMovementAfterBossMove(new Vector2(-1, -1));
+            }
+        }
+
+        private void UpdateBossIndicators(Level level)
+        {
+            if (Boss != null)
+            {
+                Boss.UpdateIndicatorAnimations(level.MaximumHops - Player.HopsRemaining, "Highlight");
+            }
+        }
+
+        private void CalculatePlayerMovementAfterBossMove(Vector2 TileGridPosition)
+        {
+            Tile tile = Grid.GetTile(TileGridPosition);
+            if (tile != null)
+            {
+                if (tile.GridPosition == Player.GridPosition) // Player is on one of changed tiles
                 {
                     if (tile.Type == Type.Bounce || tile.Type == Type.Rock) 
                     {
-                        Player.CalculateMovement(Player.CurrentAnimationNode.Movement, true);
+                        Player.CalculateMovement(Player.PreviousAnimationNode.Movement, true);
                     }
                     else if (tile.Type == Type.Water)
                     {
-                        Player.CalculateMovement(Player.CurrentAnimationNode.Movement, true);
+                        Player.CalculateMovement(Player.PreviousAnimationNode.Movement, true);
                     }
                     else if (tile.Type == Type.Direct)
                     {
@@ -373,22 +395,22 @@ namespace Hopper
                     else if (tile.Type == Type.Score)
                     {
                         tile.Eat();
-                        Player.AfterAnimation(Player.CurrentAnimationNode.Animation.ResourceName, true);
+                        Player.AfterAnimation(Player.PreviousAnimationNode.Animation.ResourceName, true);
                     }
                     else if (tile.Type == Type.Goal)
                     {
-                        Player.CalculateMovement(Player.CurrentAnimationNode.Movement, true);
+                        Player.CalculateMovement(Player.PreviousAnimationNode.Movement, true);
                     }
                     else //Type.Jump || Type.Lily 
                     {
                         //nothing
                     }
-
                 }
-
             }
+            Player.CheckHopsAndFinaliseAnimation(); //TODO: may be called multiple times wrongly but that might be ok
+            UpdateBossIndicators(CurrentLevel);
+            Player.Activate();
         }
-
         //Working with player
 
         private void NewPlayer()

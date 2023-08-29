@@ -35,25 +35,16 @@ namespace Hopper
         public Vector2 Offset;
         public Vector2 Size;
         public Vector2 TileSize;
+        public bool BossMode = false;
 
         public Tile[,] Tiles;
-/*         public Tile GoalTile
-        {
-            get
-            {
-                foreach (Tile t in Tiles)
-                {
-                    if (t.Type == Type.Goal) return t;
-                }
-                return null;
-            }
-        } */
-        //public Tile PlayerTile;
 
         [Signal]
         public delegate void NextLevel();
         [Signal]
         public delegate void ConnectTileRightClick();
+        [Signal]
+        public delegate void TileSlidUp(Vector2 gridPosition);
 
         public Grid()
         {
@@ -171,7 +162,13 @@ namespace Hopper
         public void ConnectTile(Tile tile)
         {
             tile.Connect(nameof(Tile.TileUpdated), this, nameof(UpdateTile));
+            tile.Connect(nameof(Tile.TileSlidUp), this, nameof(AfterTileSlidUp));
             EmitSignal(nameof(ConnectTileRightClick), tile);
+        }
+
+        private void AfterTileSlidUp(Vector2 gridPosition)
+        {
+            EmitSignal(nameof(TileSlidUp), gridPosition);
         }
 
         public Vector2 LimitToBounds(Vector2 Position)
@@ -233,7 +230,13 @@ namespace Hopper
             if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
         }
 
-        //For updating a tile in the editor (called by signal in Tile)
+        public void UpdateTile(TileChangeInstruction tci)
+        {
+            UpdateTile(tci.TileGridPosition, tci.TileType, tci.Score, tci.BounceDirection, tci.Eaten, tci.Activated);
+            GetTile(tci.TileGridPosition).SlideUp();
+        }
+
+        //For updating a tile in the editor (called by signal in Tile) and boss moves
         public void UpdateTile(Vector2 gridPosition, Type type, int score, Vector2 BounceDirection, bool eaten = false, bool activated = false)
         {
             Tile newTile;
@@ -247,21 +250,29 @@ namespace Hopper
                 if (newTile.Type == Type.Score) newTile.PointValue = score;
                 if (newTile.Type == Type.Direct) newTile.BounceDirection = BounceDirection;
             }
-            
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
+            
             ConnectTile(newTile);
-            newTile.Editable = true;        //TODO: probably need to be careful now that this method is used in-game
+            newTile.Editable = true;            //TODO: probably need to be careful now that this method is used in-game
             ReplaceTile(gridPosition, newTile);
-            if (eaten) newTile.SetAsEaten(); //must be after tile added to scenetree
+            if (eaten) newTile.SetAsEaten();    //must be after tile added to scenetree
         }
 
         internal void ReplaceTile(Vector2 gridPosition, Tile newTile)
         {
             newTile.GridPosition = gridPosition;
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
+            
             Tiles[(int)gridPosition.x, (int)gridPosition.y].QueueFree();
             Tiles[(int)gridPosition.x, (int)gridPosition.y] = newTile;
+
             AddChild(newTile);
+
+            if (BossMode && newTile.Type != Type.Goal && !newTile.Activated) 
+            {
+                newTile.WaterSprite.Visible = true;
+                newTile.BackgroundSprite.Visible = true;
+            }
         }
 
         public bool HasOneGoal()

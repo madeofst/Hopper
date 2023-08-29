@@ -93,6 +93,10 @@ ui_map={
  ]
 }
 
+[mono]
+
+project/assembly_name="Hopper"
+
 [rendering]
 
 quality/driver/driver_name="GLES2"

@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
-LevelName = "Boss1"
-TileChangeData = [ 1, 4, 4, 2, 1, 0, 0, 0, 0, 0, 4, 4, 6, 0, 0, 0, 0, 0 ]
+LevelName = "Boss5"
+TileChangeData = [ 1, 4, 5, 0, 0, 0, 0, 0, 0, 1, 6, 2, 2, 1, 0, 0, 0, 0, 3, 4, 5, 2, 1, 0, 0, 0, 0, 3, 6, 2, 0, 0, 0, 0, 0, 0 ]

@@ -66,12 +66,14 @@ namespace Hopper
         public int LevelScore { get; set; } = 0;
         public bool Active { get; private set; } = false;
         public bool RestartingLevel = false;
+        public bool BossMode = false;
 
         private Vector2 _GridPosition;
         private Tile AnimationEndTile;
         public Queue<Vector2> MoveInputQueue;
         private Queue<AnimationNode> AnimationQueue;
         public AnimationNode CurrentAnimationNode { get; private set; }
+        public AnimationNode PreviousAnimationNode { get; private set; }
         public float AnimationTimeElapsed = 0;
     
         public Vector2 GridPosition
@@ -438,46 +440,59 @@ namespace Hopper
         public void AfterAnimation(string animationName, bool fromBossMove = false) //TODO: Need to review this part of the procedure
         {
             AnimationTimeElapsed = 0;
-            if (AnimationEndTile != null) GridPosition = AnimationEndTile.GridPosition;
-
-            if (animationName.Contains("Goal"))
+            
+            if (CurrentLevel != null)
             {
-                CheckGoal();
-                LoadNextLevel();
-            }
-            else if (CurrentAnimationNode != null)
-            {                
-                if (AnimationQueue.Count > 0)
-                {
-                    PlayNextAnimation();
-                }
-                else
-                {
-                    UpdateScore();
+                if (AnimationEndTile != null) GridPosition = AnimationEndTile.GridPosition;
 
-                    if (!CheckGoal())
+                if (animationName.Contains("Goal"))
+                {
+                    CheckGoal();
+                    LoadNextLevel();
+                }
+                else if (HopsRemaining < CurrentLevel.MaximumHops)
+                {                
+                    if (AnimationQueue.Count > 0)
                     {
-                        if (!fromBossMove && !CurrentAnimationNode.Free)
-                            EmitSignal(nameof(BossMove));
+                        PlayNextAnimation();
                     }
                     else
                     {
-                        GD.Print("Goal reached when it shouldn't be or something.");
-                    }
+                        UpdateScore();
 
-                    if (AnimationEndTile != null)
-                    {
-                        if (AnimationEndTile.GridPosition == GridPosition &&
-                            AnimationEndTile.Type != Type.Water)
+                        if (!CheckGoal())
                         {
-                            CheckHopsRemaining();
-                            AnimationEndTile = null;
-                            CurrentAnimationNode = null;
+                            if (!fromBossMove && !CurrentAnimationNode.Free)
+                                EmitSignal(nameof(BossMove));
+
+                            CheckHopsAndFinaliseAnimation();
+                        }
+                        else
+                        {
+                            GD.Print("Goal reached when it shouldn't be or something.");
                         }
                     }
                 }
             }
         }
+
+        public void CheckHopsAndFinaliseAnimation()
+        {
+            //TODO: check if I need to come back to this after the boss move has been completed
+            if (AnimationEndTile != null)
+            {
+                if (AnimationEndTile.GridPosition == GridPosition &&
+                    AnimationEndTile.Type != Type.Water)
+                {
+                    CheckHopsRemaining();
+                    AnimationEndTile = null;
+                    PreviousAnimationNode = CurrentAnimationNode;
+                    CurrentAnimationNode = null;
+                    //EmitSignal(nameof(AllMovementComplete));
+                }
+            }
+        }
+
 
         private void LoadNextLevel()
         {
@@ -574,6 +589,7 @@ namespace Hopper
             {
                 if(CurrentAnimationNode == null && MoveInputQueue.Count > 0)
                 {
+                    if(BossMode) Deactivate();
                     CalculateMovement(MoveInputQueue.Dequeue());
                 }
             }
@@ -660,13 +676,13 @@ namespace Hopper
             }
 
             string currentResourceName = CurrentAnimationNode == null ? "" : CurrentAnimationNode.Animation.ResourceName;
-            if ((Active && MoveInputQueue.Count <= HopsRemaining) && 
-                (
-                   (CurrentAnimationNearEnd) ||
-                   (!currentResourceName.Contains("Swim") &&
-                    !currentResourceName.Contains("Splash") &&
-                    !currentResourceName.Contains("Bounce"))
-                ))
+
+            if (Active && 
+                MoveInputQueue.Count <= HopsRemaining && 
+               ((BossMode && CurrentAnimationNode == null) || !BossMode) &&
+               (CurrentAnimationNearEnd || (!currentResourceName.Contains("Swim") &&
+                                            !currentResourceName.Contains("Splash") &&
+                                            !currentResourceName.Contains("Bounce"))))
             {
                 if      (@event.IsActionPressed("ui_left"))  MoveInputQueue.Enqueue(Vector2.Left);
                 else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);

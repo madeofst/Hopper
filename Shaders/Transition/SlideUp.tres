@@ -1,0 +1,36 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float image_size_px = 32.0;
+
+uniform float slide_up_progress : hint_range(0.0, 1.0, 0.01);
+uniform float slide_across_progress : hint_range(0.0, 1.0, 0.01);
+
+void vertex() {
+	VERTEX.y = VERTEX.y + image_size_px - (slide_up_progress * image_size_px);
+	VERTEX.x = VERTEX.x + (slide_across_progress * image_size_px);
+}
+
+void fragment() {
+	COLOR = texture(TEXTURE, UV);
+	
+	//Fade out as it slides
+	//COLOR.a = COLOR.a * (slide_up_progress / 1.0);
+	//COLOR.a = COLOR.a * ((1.0 - slide_across_progress) / 1.0);
+
+	//Hide anything outside the original image square
+	if (UV.y > slide_up_progress) COLOR.a = 0.0;
+	if (UV.x > (1.0 - slide_across_progress)) COLOR.a = 0.0;
+}
+
+
+"
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/image_size_px = 32.0
+shader_param/slide_up_progress = 32.0
+shader_param/slide_across_progress = 0.0

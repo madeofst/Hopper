@@ -869,8 +869,8 @@ Directions = PoolStringArray( "Down", "Left" )
 position = Vector2( 195, -352 )
 Texture = ExtResource( 27 )
 ID = 13
-Pond = "Lair"
-Levels = PoolStringArray( "Boss1", "Boss2", "Boss3" )
+Pond = "Boss"
+Levels = PoolStringArray( "Boss5", "Boss1", "Boss2", "Boss3" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World9" parent="Boss1" instance=ExtResource( 12 )]
