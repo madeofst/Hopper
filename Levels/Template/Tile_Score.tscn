@@ -10,14 +10,14 @@ load_path = "res://.import/LilyPad1_32x32.png-543b4fb1e73ab15cf94b121452004192.s
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 2
 
-[node name="LilySprite" parent="." index="1"]
+[node name="LilySprite" parent="." index="3"]
 position = Vector2( 16, 17 )
 texture = SubResource( 1 )
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 autoplay = "Idle"
 
-[node name="BugSprite" parent="." index="3"]
+[node name="BugSprite" parent="." index="5"]
 visible = true
 
 [node name="CPUParticles2D" parent="." index="6" instance=ExtResource( 2 )]

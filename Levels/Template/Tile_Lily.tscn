@@ -4,11 +4,11 @@
 
 [node name="Tile" instance=ExtResource( 1 )]
 
-[node name="LilySprite" parent="." index="1"]
+[node name="LilySprite" parent="." index="3"]
 position = Vector2( 16, 17 )
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 autoplay = "Idle"
 
-[node name="BugSprite" parent="." index="3"]
+[node name="BugSprite" parent="." index="5"]
 frame = 17

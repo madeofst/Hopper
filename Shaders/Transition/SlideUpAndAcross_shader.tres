@@ -1,0 +1,45 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+//uniform float num_frames;
+//uniform float frame;
+uniform float image_height_px = 32.0;
+uniform float image_width_px = 32.0;
+uniform float offset = 0;
+
+uniform float slide_up_progress : hint_range(0.0, 1.0, 0.01);
+uniform float slide_across_progress : hint_range(0.0, 1.0, 0.01);
+
+void vertex() {
+	VERTEX.y += 32.0 - (slide_up_progress * 32.0);
+	
+	if (slide_across_progress != 0.0) VERTEX.y += 1.0;
+	VERTEX.x += (slide_across_progress * 32.0);
+}
+
+void fragment() {
+	COLOR = texture(TEXTURE, UV);
+	
+	//if (UV.x > (UV.x / num_frames) + (frame * 1.0/(num_frames))){}
+	
+	//Fade out as it slides
+	//COLOR.a = COLOR.a * (slide_up_progress / 1.0);
+	//COLOR.a = COLOR.a * ((1.0 - slide_across_progress) / 1.0);
+
+	//Hide anything outside the original image square
+	float offset_adjusted = offset / image_height_px;
+	float ratio = (image_height_px / 32.0);
+	float slide_up_progress_adjusted = (slide_up_progress / ratio) + (0.5 - (0.5 / ratio));
+	if (slide_across_progress == 0.0 &&
+		UV.y > slide_up_progress_adjusted - offset_adjusted) COLOR.a = 0.0;
+//	if (UV.y > slide_up_progress) COLOR.a = 0.0;
+	
+	float horiz_ratio = (image_width_px / 32.0);
+	float slide_across_progress_adjusted = (slide_across_progress / horiz_ratio) + (0.5 - (0.5 / horiz_ratio));
+	if (UV.x > (1.0 - slide_across_progress_adjusted)) COLOR.a = 0.0;
+}
+
+
+"

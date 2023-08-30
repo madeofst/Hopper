@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Levels/Resources/Water_32x32.png" type="Texture" id=1]
+[ext_resource path="res://Shaders/Transition/SlideUpAndAcross.tres" type="Material" id=2]
+
+[node name="WaterSprite" type="Sprite"]
+visible = false
+material = ExtResource( 2 )
+position = Vector2( 15.9833, 16.0259 )
+scale = Vector2( 1.00104, 0.99838 )
+texture = ExtResource( 1 )

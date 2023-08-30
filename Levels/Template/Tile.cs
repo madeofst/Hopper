@@ -93,7 +93,10 @@ namespace Hopper
 
             Connect("mouse_entered", this, "OnMouseEnter");
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
-            if (Type == Type.Goal && Activated == true) LilySpriteAnimator.Play("Activate");
+            if (Type == Type.Goal && Activated == true)
+            {
+                LilySpriteAnimator.Play("Activate");
+            }
         }
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
@@ -185,15 +188,39 @@ namespace Hopper
             }
             else if (Type == Type.Score)
             {
+                (BugSprite.Material as ShaderMaterial).SetShaderParam("offset", -8f);
                 BugSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Dragonfly Single Frame.png");
                 BugSprite.Hframes = 1;
                 BugSprite.Vframes = 1;
                 BugSprite.Frame = 0;
-                BugAnimation.Play($"Hover{rand.Next(1, 3)}");
             }
 
-            (LilySprite.Material as ShaderMaterial).SetShaderParam("slide_up_progress", 0);
-            Tween.InterpolateProperty(LilySprite.Material,
+            var LilySpriteMaterial = LilySprite.Material as ShaderMaterial;
+            if (LilySprite.Texture != null)
+            {
+                LilySpriteMaterial.SetShaderParam("image_height_px", (float)LilySprite.Texture.GetSize().y);
+            }
+
+            LilySpriteMaterial.SetShaderParam("slide_up_progress", 0);
+            Tween.InterpolateProperty(LilySpriteMaterial,
+                                      "shader_param/slide_up_progress", 
+                                      0,
+                                      1, 
+                                      0.3f, 
+                                      Tween.TransitionType.Linear, 
+                                      Tween.EaseType.In);
+            
+            (WaterSprite.Material as ShaderMaterial).SetShaderParam("slide_up_progress", 0);
+            Tween.InterpolateProperty(WaterSprite.Material,
+                                      "shader_param/slide_up_progress", 
+                                      0,
+                                      1, 
+                                      0.3f, 
+                                      Tween.TransitionType.Linear, 
+                                      Tween.EaseType.In);
+
+            (BugSprite.Material as ShaderMaterial).SetShaderParam("slide_up_progress", 0);
+            Tween.InterpolateProperty(BugSprite.Material,
                                       "shader_param/slide_up_progress", 
                                       0,
                                       1, 
@@ -246,12 +273,37 @@ namespace Hopper
                 LilySprite.Vframes = 1;
                 LilySprite.Frame = 0;
             }
+            else if (Type == Type.Goal && Activated)
+            {
+                (LilySprite.Material as ShaderMaterial).SetShaderParam("image_width_px", 64f);
+                LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/UpdatedPalette/LilyPad_Goal_Animate_{LilySprite.Frame + 1}.png");
+                LilySprite.Hframes = 1;
+                LilySprite.Vframes = 1;
+                LilySprite.Frame = 0;
+            }
 
             TileChangeInstruction = I;
             WaterSprite.Visible = true;
             BackgroundSprite.Visible = true;
             (LilySprite.Material as ShaderMaterial).SetShaderParam("slide_across_progress", 0);
             Tween.InterpolateProperty(LilySprite.Material,
+                                      "shader_param/slide_across_progress", 
+                                      0,
+                                      1, 
+                                      0.2f, 
+                                      Tween.TransitionType.Linear, 
+                                      Tween.EaseType.In);
+            (WaterSprite.Material as ShaderMaterial).SetShaderParam("slide_across_progress", 0);
+            Tween.InterpolateProperty(WaterSprite.Material,
+                                      "shader_param/slide_across_progress", 
+                                      0,
+                                      1, 
+                                      0.2f, 
+                                      Tween.TransitionType.Linear, 
+                                      Tween.EaseType.In);
+
+            (BugSprite.Material as ShaderMaterial).SetShaderParam("slide_across_progress", 0);
+            Tween.InterpolateProperty(BugSprite.Material,
                                       "shader_param/slide_across_progress", 
                                       0,
                                       1, 

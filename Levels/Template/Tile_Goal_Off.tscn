@@ -1,97 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Levels/Template/Tile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Resources/UpdatedPalette/LilyPad_Goal_Off2.png" type="Texture" id=2]
 
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-
-//uniform float num_frames;
-//uniform float frame;
-uniform float image_size_px = 32.0;
-
-uniform float slide_up_progress : hint_range(0.0, 1.0, 0.01);
-uniform float slide_across_progress : hint_range(0.0, 1.0, 0.01);
-
-void vertex() {
-	VERTEX.y += image_size_px - (slide_up_progress * image_size_px);
-	
-	if (slide_across_progress != 0.0) VERTEX.y += 1.0;
-	VERTEX.x += (slide_across_progress * image_size_px);
-}
-
-void fragment() {
-	COLOR = texture(TEXTURE, UV);
-	
-	//if (UV.x > (UV.x / num_frames) + (frame * 1.0/(num_frames))){}
-	
-	//Fade out as it slides
-	//COLOR.a = COLOR.a * (slide_up_progress / 1.0);
-	//COLOR.a = COLOR.a * ((1.0 - slide_across_progress) / 1.0);
-
-	//Hide anything outside the original image square
-	if (UV.y > slide_up_progress) COLOR.a = 0.0;
-	if (UV.x > (1.0 - slide_across_progress)) COLOR.a = 0.0;
-}
-
-
-"
-
-[sub_resource type="ShaderMaterial" id=2]
-resource_local_to_scene = true
-shader = SubResource( 1 )
-shader_param/image_size_px = 32.0
-shader_param/slide_up_progress = 1.0
-shader_param/slide_across_progress = 0.0
-
-[sub_resource type="Shader" id=3]
-code = "shader_type canvas_item;
-
-uniform float image_size_px = 32.0;
-
-uniform float progress : hint_range(0.0, 1.0, 0.01);
-
-void vertex() {
-	VERTEX.y = VERTEX.y + image_size_px - (progress * image_size_px);
-	VERTEX.x = VERTEX.x + (progress * image_size_px);
-}
-
-void fragment() {
-	COLOR = texture(TEXTURE, UV);
-	
-	//Fade out as it slides
-	//COLOR.a = COLOR.a * (slide_up_progress / 1.0);
-	//COLOR.a = COLOR.a * ((1.0 - slide_across_progress) / 1.0);
-
-	//Hide anything outside the original image square
-	if (UV.y > progress) COLOR.a = 0.0;
-	if (UV.x > (1.0 - progress)) COLOR.a = 0.0;
-}
-
-
-"
-
-[sub_resource type="ShaderMaterial" id=4]
-resource_local_to_scene = true
-shader = SubResource( 3 )
-shader_param/image_size_px = 32.0
-shader_param/progress = 0.0
-
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 1
 
-[node name="WaterSprite" parent="." index="2"]
-material = SubResource( 2 )
-
 [node name="LilySprite" parent="." index="3"]
-material = SubResource( 2 )
 texture = ExtResource( 2 )
-
-[node name="BugSprite" parent="." index="5"]
-material = SubResource( 2 )
-
-[node name="ShadowSprite" parent="." index="6"]
-material = SubResource( 4 )
-
-[node name="BossIndicatorSprite" parent="." index="7"]
-visible = false

@@ -6,9 +6,9 @@
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 3
 
-[node name="LilySprite" parent="." index="1"]
+[node name="LilySprite" parent="." index="3"]
 texture = ExtResource( 2 )
 hframes = 4
 
-[node name="BugSprite" parent="." index="3"]
+[node name="BugSprite" parent="." index="5"]
 frame = 17

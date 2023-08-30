@@ -254,11 +254,11 @@ namespace Hopper
             
             ConnectTile(newTile);
             newTile.Editable = true;            //TODO: probably need to be careful now that this method is used in-game
-            ReplaceTile(gridPosition, newTile);
+            ReplaceTile(gridPosition, newTile, true);
             if (eaten) newTile.SetAsEaten();    //must be after tile added to scenetree
         }
 
-        internal void ReplaceTile(Vector2 gridPosition, Tile newTile)
+        internal void ReplaceTile(Vector2 gridPosition, Tile newTile, bool InitiatedByBoss = false)
         {
             newTile.GridPosition = gridPosition;
             newTile.Name = $"Tile{gridPosition.x}-{gridPosition.y}";
@@ -268,8 +268,10 @@ namespace Hopper
 
             AddChild(newTile);
 
-            if (BossMode && newTile.Type != Type.Goal && !newTile.Activated) 
+            if (InitiatedByBoss)
             {
+                AnimationPlayer LilySpriteAnimator = newTile.GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
+                if (newTile.Type == Type.Goal && newTile.Activated) LilySpriteAnimator.Play("Idle");
                 newTile.WaterSprite.Visible = true;
                 newTile.BackgroundSprite.Visible = true;
             }

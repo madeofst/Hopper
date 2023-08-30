@@ -6,7 +6,7 @@
 [node name="Tile" instance=ExtResource( 1 )]
 Type = 7
 
-[node name="LilySprite" parent="." index="1"]
+[node name="LilySprite" parent="." index="3"]
 position = Vector2( 16, 1 )
 texture = ExtResource( 2 )
 hframes = 4

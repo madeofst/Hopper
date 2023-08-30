@@ -7,15 +7,25 @@
 [ext_resource path="res://Music/FX/FX Splash.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Levels/Template/Tile.cs" type="Script" id=6]
 [ext_resource path="res://Levels/Resources/LilyPad_32x32_ripples.png" type="Texture" id=7]
-[ext_resource path="res://Levels/Resources/Dragonfly Sprite Sheet.png" type="Texture" id=8]
+[ext_resource path="res://Levels/Template/BugSprite.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Music/FX/FX Exit splash.ogg" type="AudioStream" id=9]
 [ext_resource path="res://Music/FX/FX Simple jump.ogg" type="AudioStream" id=10]
-[ext_resource path="res://Levels/Resources/Water_32x32.png" type="Texture" id=11]
+[ext_resource path="res://Shaders/Transition/SlideUpAndAcross_shader.tres" type="Shader" id=11]
 [ext_resource path="res://Shaders/Transition/SlideUpAndAcross.tres" type="Material" id=12]
 [ext_resource path="res://Levels/Resources/Shadow_32x32.png" type="Texture" id=13]
 [ext_resource path="res://Levels/Resources/Black_32x32.png" type="Texture" id=14]
 [ext_resource path="res://Shaders/Transition/SlideUpAndAcrossSimultaneous.tres" type="Material" id=15]
 [ext_resource path="res://Levels/Resources/BossTileIndicator_32x32.png" type="Texture" id=16]
+[ext_resource path="res://Levels/Template/WaterSprite.tscn" type="PackedScene" id=17]
+
+[sub_resource type="ShaderMaterial" id=16]
+resource_local_to_scene = true
+shader = ExtResource( 11 )
+shader_param/image_height_px = 32.0
+shader_param/image_width_px = 32.0
+shader_param/offset = 0.0
+shader_param/slide_up_progress = 1.0
+shader_param/slide_across_progress = 0.0
 
 [sub_resource type="Animation" id=13]
 length = 0.07
@@ -199,53 +209,14 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 )
 }
 
-[sub_resource type="Animation" id=8]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 14, 15, 16, 17 ]
-}
-
-[sub_resource type="Animation" id=9]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 8, 9, 10, 7 ]
-}
-
-[sub_resource type="Animation" id=10]
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 17, 14, 15, 16 ]
-}
+[sub_resource type="ShaderMaterial" id=17]
+resource_local_to_scene = true
+shader = ExtResource( 11 )
+shader_param/image_height_px = 32.0
+shader_param/image_width_px = 32.0
+shader_param/offset = 0.0
+shader_param/slide_up_progress = 1.0
+shader_param/slide_across_progress = 0.0
 
 [sub_resource type="Animation" id=14]
 resource_name = "Highlight"
@@ -316,12 +287,8 @@ visible = false
 position = Vector2( 16, 16 )
 texture = ExtResource( 13 )
 
-[node name="WaterSprite" type="Sprite" parent="."]
-visible = false
-material = ExtResource( 12 )
-position = Vector2( 15.9833, 16.0259 )
-scale = Vector2( 1.00104, 0.99838 )
-texture = ExtResource( 11 )
+[node name="WaterSprite" parent="." instance=ExtResource( 17 )]
+material = SubResource( 16 )
 
 [node name="LilySprite" type="Sprite" parent="."]
 material = ExtResource( 12 )
@@ -349,20 +316,8 @@ anims/Jump = SubResource( 5 )
 anims/Land = SubResource( 6 )
 anims/Splash = SubResource( 7 )
 
-[node name="BugSprite" type="Sprite" parent="."]
-visible = false
-material = ExtResource( 12 )
-position = Vector2( 16, 20 )
-texture = ExtResource( 8 )
-offset = Vector2( 0, -12 )
-hframes = 7
-vframes = 4
-frame = 14
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BugSprite"]
-anims/Hover1 = SubResource( 8 )
-anims/Hover2 = SubResource( 9 )
-anims/Hover3 = SubResource( 10 )
+[node name="BugSprite" parent="." instance=ExtResource( 8 )]
+material = SubResource( 17 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 self_modulate = Color( 1, 1, 1, 0.294118 )
@@ -371,6 +326,7 @@ position = Vector2( 16, 16 )
 texture = ExtResource( 14 )
 
 [node name="BossIndicatorSprite" type="Sprite" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.843137 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 16 )
