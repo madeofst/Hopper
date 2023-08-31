@@ -146,7 +146,7 @@ namespace Hopper
                     tileType:           Type.Goal,
                     score:              0,
                     eaten:              false,
-                    bounceDirection:    new Vector2(1, 0),
+                    bounceDirection:    new Vector2(0, 0),
                     activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
@@ -155,8 +155,8 @@ namespace Hopper
                     tileType:           Type.Goal,
                     score:              0,
                     eaten:              false,
-                    bounceDirection:    new Vector2(1, 0),
-                    activated:          true
+                    bounceDirection:    new Vector2(0, 0),
+                    activated:          false
                 ));
             BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       2,
@@ -234,7 +234,7 @@ namespace Hopper
                     actionOnTurn:       1,
                     tileGridPosition:   new Vector2(6, 2),
                     tileType:           Type.Score,
-                    score:              0,
+                    score:              1,
                     eaten:              false,
                     bounceDirection:    new Vector2(0, -1),
                     activated:          false

@@ -397,7 +397,7 @@ namespace Hopper
                         tile.Eat();
                         Player.AfterAnimation(Player.PreviousAnimationNode.Animation.ResourceName, true);
                     }
-                    else if (tile.Type == Type.Goal)
+                    else if (tile.Type == Type.Goal && tile.Activated)
                     {
                         Player.CalculateMovement(Player.PreviousAnimationNode.Movement, true);
                     }

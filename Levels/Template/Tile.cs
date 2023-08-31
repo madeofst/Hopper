@@ -93,7 +93,7 @@ namespace Hopper
 
             Connect("mouse_entered", this, "OnMouseEnter");
             AnimationPlayer LilySpriteAnimator = GetNode<AnimationPlayer>("LilySprite/AnimationPlayer");
-            if (Type == Type.Goal && Activated == true)
+            if (Type == Type.Goal && Activated)
             {
                 LilySpriteAnimator.Play("Activate");
             }
@@ -194,6 +194,10 @@ namespace Hopper
                 BugSprite.Vframes = 1;
                 BugSprite.Frame = 0;
             }
+/*             else if (Type == Type.Goal && Activated)
+            {
+                GetNode<AnimationPlayer>("LilySprite/AnimationPlayer").Play("Idle");
+            } */
 
             var LilySpriteMaterial = LilySprite.Material as ShaderMaterial;
             if (LilySprite.Texture != null)
