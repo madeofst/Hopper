@@ -45,6 +45,8 @@ namespace Hopper
         public delegate void ConnectTileRightClick();
         [Signal]
         public delegate void TileSlidUp(Vector2 gridPosition);
+        [Signal]
+        public delegate void TileEaten();
 
         public Grid()
         {
@@ -161,10 +163,17 @@ namespace Hopper
 
         public void ConnectTile(Tile tile)
         {
+            tile.Connect(nameof(Tile.Eaten), this, nameof(CallTileEaten));
             tile.Connect(nameof(Tile.TileUpdated), this, nameof(UpdateTile));
             tile.Connect(nameof(Tile.TileSlidUp), this, nameof(AfterTileSlidUp));
             EmitSignal(nameof(ConnectTileRightClick), tile);
         }
+
+        private void CallTileEaten()
+        {
+            EmitSignal(nameof(TileEaten));
+        }
+
 
         private void AfterTileSlidUp(Vector2 gridPosition)
         {

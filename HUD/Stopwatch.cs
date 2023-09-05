@@ -16,7 +16,7 @@ namespace Hopper
 
         public void ConnectNodesAndSignals()
         {
-            Stage = GetNode<Stage>("/root/Stage");
+            Stage = GetNode<Stage>("//root/StageContainer/ViewportContainer/Viewport/Stage");
             MakeConnections();
         }
 

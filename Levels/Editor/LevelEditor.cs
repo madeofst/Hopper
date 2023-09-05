@@ -73,7 +73,7 @@ namespace Hopper
             {
                 SaveCurrentLevel();
                 Stage TestStage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
-                GetViewport().AddChild(TestStage);
+                GetNode<Viewport>("/root/StageContainer/ViewportContainer/Viewport").AddChild(TestStage);
                 TestStage.Init(new StageData(1, "", 0), new string[]{}, Position + new Vector2(240, 135), true, CurrentLevel.LevelName);
                 GetNode<HUD>("../HUD").OverlayMenu.ChangeMode(OverlayMenuMode.Stage);
             }

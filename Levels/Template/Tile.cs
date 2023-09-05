@@ -36,6 +36,8 @@ namespace Hopper
         public delegate void PlayerStartUpdated(Vector2 gridPosition);
         [Signal]
         public delegate void TileSlidUp(Vector2 gridPosition);
+        [Signal]
+        public delegate void Eaten();
 
         //Children in the tree
         public CollisionShape2D CollisionShape;
@@ -84,11 +86,7 @@ namespace Hopper
             }
             else if (Type == Type.Direct)
             {
-                //BounceDirection = Vector2.Right; //TODO: need to add bounce direction to leveldata
-                float Wrapped = Mathf.Wrap(BounceDirection.Angle(), 0, Mathf.Tau);
-                float FullAngle = Wrapped / Mathf.Tau * 4;
-                int IntFullAngle = Mathf.RoundToInt(FullAngle);
-                LilySprite.Frame = IntFullAngle;
+                DetermineIdleFrameFromBounceDirection();
             }
 
             Connect("mouse_entered", this, "OnMouseEnter");
@@ -98,6 +96,15 @@ namespace Hopper
                 LilySpriteAnimator.Play("Activate");
             }
         }
+
+        private void DetermineIdleFrameFromBounceDirection()
+        {
+            float Wrapped = Mathf.Wrap(BounceDirection.Angle(), 0, Mathf.Tau);
+            float FullAngle = Wrapped / Mathf.Tau * 4;
+            int IntFullAngle = Mathf.RoundToInt(FullAngle);
+            LilySprite.Frame = IntFullAngle;
+        }
+
 
         public override void _InputEvent(Godot.Object viewport, InputEvent @event, int shapeIdx)
         {
@@ -150,6 +157,7 @@ namespace Hopper
             {
                 GetNode<CPUParticles2D>("CPUParticles2D").Emitting = true;
                 GetNode<CPUParticles2D>("CPUParticles2D2").Emitting = true;
+                EmitSignal(nameof(Eaten));
             }
         }
 
@@ -335,11 +343,7 @@ namespace Hopper
                     LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/Director_32x32.png");
                     LilySprite.Hframes = 4;
                     LilySprite.Vframes = 1;
-                    
-                    float Wrapped = Mathf.Wrap(BounceDirection.Angle(), 0, Mathf.Tau);
-                    float FullAngle = Wrapped / Mathf.Tau * 4;
-                    int IntFullAngle = Mathf.RoundToInt(FullAngle);
-                    LilySprite.Frame = IntFullAngle;
+                    DetermineIdleFrameFromBounceDirection();
                     LilySprite.Position = new Vector2(LilySprite.Position.x, LilySprite.Position.y - 16);
                 }
                 else if (Type == Type.Score)

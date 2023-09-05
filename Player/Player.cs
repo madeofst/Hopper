@@ -462,8 +462,11 @@ namespace Hopper
 
                         if (!CheckGoal())
                         {
-                            if (!fromBossMove && !CurrentAnimationNode.Free)
-                                EmitSignal(nameof(BossMove));
+                            if (CurrentAnimationNode != null)
+                            {
+                                if (!fromBossMove && !CurrentAnimationNode.Free)
+                                    EmitSignal(nameof(BossMove));
+                            }
 
                             CheckHopsAndFinaliseAnimation();
                         }

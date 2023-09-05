@@ -166,8 +166,8 @@ namespace Hopper
 
             Stage Stage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
             Stage.Visible = false;
-            GetTree().Root.AddChild(Stage);
-            
+            GetNode<Viewport>("/root/StageContainer/ViewportContainer/Viewport").AddChild(Stage);
+
             Stage.Connect(nameof(Stage.UnlockNextStage), 
                           Map, 
                           nameof(Map.UnlockConnectedStages));

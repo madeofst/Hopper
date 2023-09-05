@@ -20,6 +20,8 @@ namespace Hopper
         //Pond
         private Pond Pond { get; set; }
 
+        private ShakyCamera ShakyCamera { get; set; }
+
         //Boss
         private Boss Boss { get; set; }
 
@@ -69,7 +71,11 @@ namespace Hopper
         public int iLevel { get; set; }
         public string[] Levels { get; set; }
 
+        [Export]
+        public float BugTrauma { get; set; }
+
         //Signals
+
         [Signal]
         public delegate void TimeUpdate(float timeRemaining);
         [Signal]
@@ -87,13 +93,16 @@ namespace Hopper
             WaterShader = GetNode<TextureRect>("WaterShader");
             Water = GetNode<TextureRect>("Water");
             Background = GetNode<TextureRect>("Background");
-            HUD = GetNode<HUD>("../HUD"); 
-            LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
+            HUD = GetNode<HUD>("/root/HUD"); 
+            LevelTitleScreen = GetNode<LevelTitleScreen>("/root/LevelTitleScreen");
 
-            Music = GetNode<AudioStreamPlayer>("../AudioRepository/Music");
-            FailLevel = GetNode<AudioStreamPlayer>("../AudioRepository/FailLevel");
-            SucceedLevel = GetNode<AudioStreamPlayer>("../AudioRepository/SucceedLevel");
-            GoalActivate = GetNode<AudioStreamPlayer>("../AudioRepository/GoalActivate");
+            Music = GetNode<AudioStreamPlayer>("/root/AudioRepository/Music");
+            FailLevel = GetNode<AudioStreamPlayer>("/root/AudioRepository/FailLevel");
+            SucceedLevel = GetNode<AudioStreamPlayer>("/root/AudioRepository/SucceedLevel");
+            GoalActivate = GetNode<AudioStreamPlayer>("/root/AudioRepository/GoalActivate");
+
+            ShakyCamera = GetNode<ShakyCamera>("Camera2D");
+            ShakyCamera.Current = true;
         }
 
         public void Init(StageData StageData,
@@ -141,7 +150,7 @@ namespace Hopper
 
             //Connect(nameof(Stage.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
 
-            ScoreBox ScoreBox = GetNode<ScoreBox>("../HUD/ScoreBox"); //FIXME: this basically defeats the object of signaling up I think
+            ScoreBox ScoreBox = GetNode<ScoreBox>("/root/HUD/ScoreBox"); //FIXME: this basically defeats the object of signaling up I think
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
             ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
@@ -254,6 +263,7 @@ namespace Hopper
             Grid = NextLevel.Grid;
             
             Grid.Connect(nameof(Grid.TileSlidUp), this, nameof(CalculatePlayerMovementAfterBossMove));
+            Grid.Connect(nameof(Grid.TileEaten), this, nameof(BugShake));
             
             HUD.ShowScoreBox();
             HUD.SetButtonToRestart();
@@ -288,6 +298,7 @@ namespace Hopper
                 //ModulateBackgrounds();
             }
 
+            GetNode<Node2D>("/root/StageContainer").Visible = true;
             UpdateGoalStateAndScore(NextLevel.ScoreRequired);
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
@@ -436,7 +447,7 @@ namespace Hopper
             if (level != null)
             {
                 HUD.UpdateScore(updatedScore);
-                
+
                 if (Boss != null)
                 {
                     //GD.Print("Updated the tile change instruction list here.");
@@ -456,6 +467,17 @@ namespace Hopper
                 }
             }
         }
+
+        private void BugShake()
+        {
+            //ShakyCamera.ApplyTrauma(BugTrauma);
+        }
+
+        private void BounceShake()
+        {
+            ShakyCamera.ApplyTrauma(BugTrauma);
+        }
+
 
         public void OnHopsExhausted()
         {
@@ -566,6 +588,7 @@ namespace Hopper
         {
             if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
 
+            GetNode<Node2D>("/root/StageContainer").Visible = false;
             HUD.HideHopCounter();
             HUD.HideScoreBox();
             HUD.SetButtonToEnter();
@@ -597,6 +620,8 @@ namespace Hopper
         public void QuitToMenu()
         {
             if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
+
+            GetNode<Node2D>("/root/StageContainer").Visible = false;
 
             HUD.Close();
             QueueFree();
