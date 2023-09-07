@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Map/Location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map/Pointer.tscn" type="PackedScene" id=2]
@@ -15,17 +15,13 @@
 [ext_resource path="res://Map/Path_World2_to_World3.png" type="Texture" id=13]
 [ext_resource path="res://Map/Path_World3_to_World4.png" type="Texture" id=14]
 [ext_resource path="res://Map/Path_World3_to_World7.png" type="Texture" id=15]
-[ext_resource path="res://Map/Path_World4_to_World5.png" type="Texture" id=16]
-[ext_resource path="res://Map/Path_World5_to_World6.png" type="Texture" id=17]
 [ext_resource path="res://Map/Path_World7_to_World8.png" type="Texture" id=18]
 [ext_resource path="res://Map/Path_World2_to_World10.png" type="Texture" id=19]
 [ext_resource path="res://Shaders/RevealPath/SimpleShaderRU.png" type="Texture" id=20]
 [ext_resource path="res://Levels/Resources/LilyPad2_32x32.png" type="Texture" id=21]
 [ext_resource path="res://Shaders/RevealPath/SimpleShaderLD.png" type="Texture" id=22]
-[ext_resource path="res://Shaders/RevealPath/SimpleShaderRD.png" type="Texture" id=23]
 [ext_resource path="res://Map/Path_World7_to_World9.png" type="Texture" id=24]
 [ext_resource path="res://Map/Path_World9_to_World11.png" type="Texture" id=25]
-[ext_resource path="res://Map/Path_World11_to_World12.png" type="Texture" id=26]
 [ext_resource path="res://Levels/Resources/UpdatedPalette/LilyPad_Goal_Off2.png" type="Texture" id=27]
 [ext_resource path="res://Map/Path_World9_to_Boss.png" type="Texture" id=28]
 [ext_resource path="res://Shaders/RevealPath/RevealPathU.tres" type="Material" id=29]
@@ -243,81 +239,6 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 3.05176e-05, 0, 0, 0, 0, 0, -48, 16 )
 }
 
-[sub_resource type="Shader" id=36]
-code = "shader_type canvas_item;
-
-uniform float fill : hint_range(-0.01,1.0) = -0.01;
-uniform vec4 color : hint_color;
-uniform sampler2D heightMap;
-uniform vec2 texture_size;
-uniform int pixelSize = 1;
-
-void fragment(){
-	
-	COLOR = textureLod(TEXTURE, UV, 0.0);
-		
-	vec2 size = texture_size;
-	
-	float xRes = size.x;
-	float yRes = size.y;
-	
-	float xFactor = xRes / float(pixelSize);
-	float yFactor = yRes / float(pixelSize);
-	
-	float grid_uv_x = round(UV.x * xFactor) / xFactor;
-	float grid_uv_y = round(UV.y * yFactor) / yFactor;
-	vec2 uvB = vec2(grid_uv_x, grid_uv_y);
-	
-	vec4 colour = texture(TEXTURE, UV);
-	float h = texture(heightMap, uvB).x;
-	h = clamp(floor(h + fill), 0.0, 1.0);
-	
-	//COLOR = vec4(colour.x, colour.y, colour.z, 1);
-	COLOR = vec4(COLOR.x, COLOR.y, COLOR.z, colour.a*h);
-	
-	//COLOR = text;
-}"
-
-[sub_resource type="ShaderMaterial" id=37]
-shader = SubResource( 36 )
-shader_param/fill = 1.0
-shader_param/color = Color( 1, 1, 1, 1 )
-shader_param/texture_size = Vector2( 500, 500 )
-shader_param/pixelSize = 1
-shader_param/heightMap = ExtResource( 23 )
-
-[sub_resource type="Curve2D" id=12]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 16 )
-}
-
-[sub_resource type="Curve2D" id=14]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -8, -8, 0, 0, 0, 0, -56, -24 )
-}
-
-[sub_resource type="ShaderMaterial" id=38]
-shader = SubResource( 32 )
-shader_param/fill = 1.0
-shader_param/color = Color( 1, 1, 1, 1 )
-shader_param/texture_size = Vector2( 500, 500 )
-shader_param/pixelSize = 1
-shader_param/heightMap = ExtResource( 20 )
-
-[sub_resource type="Curve2D" id=16]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -3.05176e-05, 0, 0, 0, 0, 0, 48, -16 )
-}
-
-[sub_resource type="Curve2D" id=17]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, -0.27618, 0, 0, 0, 0, -48, 15.7238 )
-}
-
 [sub_resource type="Curve2D" id=15]
 resource_local_to_scene = true
 _data = {
@@ -496,26 +417,6 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -32, 27 )
 }
 
-[sub_resource type="ShaderMaterial" id=47]
-shader = SubResource( 45 )
-shader_param/fill = 1.0
-shader_param/color = Color( 1, 1, 1, 1 )
-shader_param/texture_size = Vector2( 500, 500 )
-shader_param/pixelSize = 1
-shader_param/heightMap = ExtResource( 20 )
-
-[sub_resource type="Curve2D" id=26]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 51, -10 )
-}
-
-[sub_resource type="Curve2D" id=27]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -51, 10 )
-}
-
 [sub_resource type="Curve2D" id=49]
 resource_local_to_scene = true
 _data = {
@@ -661,58 +562,10 @@ Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
 Levels = PoolStringArray( "Good Food Day", "Wood For Trees", "Two Thirds", "Looper", "Blue Line" )
-LocationsToUnlock = PoolStringArray( "World5" )
+LocationsToUnlock = PoolStringArray(  )
 
 [node name="World3" parent="World4" instance=ExtResource( 12 )]
 curve = SubResource( 11 )
-Directions = PoolStringArray( "Left" )
-
-[node name="World5" parent="World4" instance=ExtResource( 12 )]
-material = SubResource( 37 )
-curve = SubResource( 12 )
-Directions = PoolStringArray( "Right" )
-
-[node name="Sprite" type="Sprite" parent="World4/World5"]
-use_parent_material = true
-position = Vector2( 15, 3 )
-texture = ExtResource( 16 )
-offset = Vector2( 9, 6 )
-
-[node name="World5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 352, 32 )
-Texture = ExtResource( 8 )
-ID = 5
-Pond = "BelAir"
-Levels = PoolStringArray( "UnderwaterTurning1" )
-LocationsToUnlock = PoolStringArray( "World6" )
-
-[node name="World4" parent="World5" instance=ExtResource( 12 )]
-position = Vector2( 7.99997, 8 )
-curve = SubResource( 14 )
-Directions = PoolStringArray( "Left" )
-
-[node name="World6" parent="World5" instance=ExtResource( 12 )]
-material = SubResource( 38 )
-curve = SubResource( 16 )
-Directions = PoolStringArray( "Right" )
-
-[node name="Sprite" type="Sprite" parent="World5/World6"]
-use_parent_material = true
-position = Vector2( 15, -3 )
-texture = ExtResource( 17 )
-offset = Vector2( 9, -5 )
-
-[node name="World6" parent="." instance=ExtResource( 1 )]
-position = Vector2( 400, 16 )
-Texture = ExtResource( 8 )
-ID = 6
-Pond = "BelAir"
-Levels = PoolStringArray(  )
-LocationsToUnlock = PoolStringArray(  )
-
-[node name="World5" parent="World6" instance=ExtResource( 12 )]
-position = Vector2( -3.05176e-05, 0.27618 )
-curve = SubResource( 17 )
 Directions = PoolStringArray( "Left" )
 
 [node name="World7" parent="." instance=ExtResource( 1 )]
@@ -808,28 +661,6 @@ LocationsToUnlock = PoolStringArray(  )
 curve = SubResource( 25 )
 Directions = PoolStringArray( "Down", "Left" )
 
-[node name="World12" parent="World11" instance=ExtResource( 12 )]
-material = SubResource( 47 )
-curve = SubResource( 26 )
-Directions = PoolStringArray( "Up", "Right" )
-
-[node name="Sprite" type="Sprite" parent="World11/World12"]
-use_parent_material = true
-position = Vector2( 27, -5 )
-texture = ExtResource( 26 )
-
-[node name="World12" parent="." instance=ExtResource( 1 )]
-position = Vector2( 278, -182 )
-Texture = ExtResource( 9 )
-ID = 12
-Pond = "Idwal"
-Levels = PoolStringArray(  )
-LocationsToUnlock = PoolStringArray(  )
-
-[node name="World11" parent="World12" instance=ExtResource( 12 )]
-curve = SubResource( 27 )
-Directions = PoolStringArray( "Down", "Left" )
-
 [node name="Boss1" parent="." instance=ExtResource( 1 )]
 position = Vector2( 195, -352 )
 Texture = ExtResource( 27 )
@@ -859,10 +690,7 @@ script = ExtResource( 4 )
 [connection signal="PathAnimated" from="World2/World10" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World3/World4" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World3/World7" to="." method="ActivateLocation"]
-[connection signal="PathAnimated" from="World4/World5" to="." method="ActivateLocation"]
-[connection signal="PathAnimated" from="World5/World6" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World7/World8" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World7/World9" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World9/World11" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World9/Boss1" to="." method="ActivateLocation"]
-[connection signal="PathAnimated" from="World11/World12" to="." method="ActivateLocation"]
