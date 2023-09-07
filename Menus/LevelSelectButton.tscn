@@ -1,8 +1,66 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Menus/Resources/ExampleLeaf1.png" type="Texture" id=1]
 [ext_resource path="res://Menus/Resources/ExampleLeaf2.png" type="Texture" id=2]
 [ext_resource path="res://Menus/LevelSelectButton.cs" type="Script" id=3]
+[ext_resource path="res://Menus/Resources/ExampleLeafConnecter1.png" type="Texture" id=4]
+[ext_resource path="res://Menus/Resources/ExampleLeafConnecter2.png" type="Texture" id=5]
+[ext_resource path="res://Shaders/RevealPath/SimpleShaderRD.png" type="Texture" id=6]
+[ext_resource path="res://Shaders/RevealPath/SimpleShaderR.png" type="Texture" id=7]
+
+[sub_resource type="Shader" id=1]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform float fill : hint_range(-0.01,1.0) = -0.01;
+uniform vec4 color : hint_color;
+uniform sampler2D heightMap;
+uniform vec2 texture_size;
+uniform int pixelSize = 1;
+
+void fragment(){
+	
+	COLOR = textureLod(TEXTURE, UV, 0.0);
+		
+	vec2 size = texture_size;
+	
+	float xRes = size.x;
+	float yRes = size.y;
+	
+	float xFactor = xRes / float(pixelSize);
+	float yFactor = yRes / float(pixelSize);
+	
+	float grid_uv_x = round(UV.x * xFactor) / xFactor;
+	float grid_uv_y = round(UV.y * yFactor) / yFactor;
+	vec2 uvB = vec2(grid_uv_x, grid_uv_y);
+	
+	vec4 colour = texture(TEXTURE, UV);
+	float h = texture(heightMap, uvB).x;
+	h = clamp(floor(h + fill), 0.0, 1.0);
+	
+	//COLOR = vec4(colour.x, colour.y, colour.z, 1);
+	COLOR = vec4(COLOR.x, COLOR.y, COLOR.z, colour.a*h);
+	
+	//COLOR = text;
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/fill = -0.01
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/texture_size = Vector2( 500, 500 )
+shader_param/pixelSize = 1
+shader_param/heightMap = ExtResource( 7 )
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/fill = 0.0
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/texture_size = Vector2( 500, 500 )
+shader_param/pixelSize = 1
+shader_param/heightMap = ExtResource( 6 )
 
 [node name="LevelSelectButton" type="TextureButton"]
 visible = false
@@ -15,4 +73,15 @@ texture_normal = ExtResource( 1 )
 texture_focused = ExtResource( 2 )
 script = ExtResource( 3 )
 
+[node name="Branch1" type="Sprite" parent="."]
+material = SubResource( 4 )
+position = Vector2( -2, 24 )
+texture = ExtResource( 4 )
+
+[node name="Branch2" type="Sprite" parent="."]
+material = SubResource( 3 )
+position = Vector2( -2, 24 )
+texture = ExtResource( 5 )
+
 [connection signal="focus_entered" from="." to="." method="GotFocus"]
+[connection signal="pressed" from="." to="." method="GotFocus"]

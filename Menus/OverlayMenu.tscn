@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Menus/QuitButton.cs" type="Script" id=1]
 [ext_resource path="res://Menus/Resources/OverlayMenuButtonNormal.tres" type="StyleBox" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Menus/OverlayMenu.cs" type="Script" id=5]
 [ext_resource path="res://Menus/RestartButton.cs" type="Script" id=6]
 [ext_resource path="res://Menus/MapButton.cs" type="Script" id=7]
+[ext_resource path="res://Menus/LevelSelectOverlayButton.cs" type="Script" id=8]
 
 [sub_resource type="Theme" id=5]
 Button/colors/font_color = Color( 0.141176, 0.2, 0.160784, 1 )
@@ -39,9 +40,9 @@ alignment = 2
 
 [node name="Restart" type="Button" parent="Buttons"]
 margin_left = 445.0
-margin_top = 192.0
+margin_top = 168.0
 margin_right = 470.0
-margin_bottom = 212.0
+margin_bottom = 188.0
 rect_min_size = Vector2( 25, 20 )
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -58,6 +59,28 @@ size_flags_vertical = 2
 bbcode_enabled = true
 bbcode_text = "[right]Restart [/right]"
 text = "Restart "
+
+[node name="LevelSelect" type="Button" parent="Buttons"]
+margin_left = 445.0
+margin_top = 192.0
+margin_right = 470.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 25, 20 )
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "L"
+script = ExtResource( 8 )
+
+[node name="Label" type="RichTextLabel" parent="Buttons/LevelSelect"]
+visible = false
+margin_left = -98.0
+margin_top = 2.0
+margin_bottom = 22.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "[right]Level select [/right]"
+text = "Level select "
 
 [node name="Map" type="Button" parent="Buttons"]
 margin_left = 445.0
@@ -106,6 +129,9 @@ text = "Quit to menu "
 [connection signal="focus_exited" from="Buttons/Restart" to="Buttons/Restart" method="HideLabel"]
 [connection signal="mouse_entered" from="Buttons/Restart" to="Buttons/Restart" method="ShowLabel"]
 [connection signal="mouse_exited" from="Buttons/Restart" to="Buttons/Restart" method="HideLabel"]
+[connection signal="focus_exited" from="Buttons/LevelSelect" to="Buttons/LevelSelect" method="HideLabel"]
+[connection signal="mouse_entered" from="Buttons/LevelSelect" to="Buttons/LevelSelect" method="ShowLabel"]
+[connection signal="mouse_exited" from="Buttons/LevelSelect" to="Buttons/LevelSelect" method="HideLabel"]
 [connection signal="mouse_entered" from="Buttons/Map" to="Buttons/Map" method="ShowLabel"]
 [connection signal="mouse_exited" from="Buttons/Map" to="Buttons/Map" method="HideLabel"]
 [connection signal="mouse_entered" from="Buttons/Quit" to="Buttons/Quit" method="ShowLabel"]

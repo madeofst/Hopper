@@ -14,13 +14,21 @@ namespace Hopper
                 Color colour = new Color();
                 if (value == "Hawkins")
                 {
-                    colour = Color.Color8(36, 51, 41);
+                    colour = Color.Color8(171, 191, 112);
                 }
                 else if (value == "BelAir")
                 {
                     colour = Color.Color8(245, 197, 168);
                 }
-                else //(value == "Liffey")
+                else if (value == "Liffey")
+                {
+                    colour = Color.Color8(211, 137, 142);
+                }
+                else if (value == "Idwal")
+                {
+                    colour = Color.Color8(131, 191, 222);
+                }
+                else
                 {
                     colour = Color.Color8(217, 165, 232);
                 }
@@ -44,9 +52,12 @@ namespace Hopper
         public float Speed { get; private set; }
         public bool Animating { get; private set; }
         public bool Triggered { get; private set; }
+        public int? LevelUnlocked { get; set; } = null;
+        private int LevelReached { get; set; }
 
         //private TitleElement StageID;
         //private RichTextLabel _StageIDLabel;
+
 
         private HBoxContainer LevelButtons;
         private List<TextureButton> LevelSelectors = new List<TextureButton>();
@@ -64,7 +75,7 @@ namespace Hopper
         [Signal]
         public delegate void SelectLevel();
         [Signal]
-        public delegate void Unpause();
+        public delegate void Resume();
         [Signal]
         public delegate void BackToMap();
         [Signal]
@@ -100,19 +111,35 @@ namespace Hopper
                 LevelButtons.AddChild(b);
                 LevelSelectors.Add(b);
                 b.Connect(nameof(LevelSelectButton.ChangeFocus), this, nameof(UpdateFocus));
+                b.Connect(nameof(LevelSelectButton.AnimationComplete), this, nameof(SetButtonFocus));
             }
         }
 
-        public void UpdateLevelReached(int LevelReached)
+        public void UpdateLevelReached(int levelReached)
         {
-            foreach (TextureButton b in LevelSelectors)
+            LevelReached = levelReached;
+            foreach (LevelSelectButton b in LevelSelectors)
             {
-                if (int.Parse(b.Name) <= LevelReached)
-                {
-                    b.FocusMode = FocusModeEnum.All;
-                    b.TextureNormal = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");
-                    b.Disabled = false;
-                    if (int.Parse(b.Name) == iLevel - 1) b.GrabFocus();
+                int LevelNumber = int.Parse(b.Name);
+                if (LevelNumber <= LevelReached)
+                {                   
+                    if (LevelNumber == LevelUnlocked && LevelNumber != 0)
+                    {
+                        b.AnimateBranch();
+                    }
+                    else
+                    {
+                        bool ShowBranches = false;
+                        if (LevelNumber != 0) ShowBranches = true;
+                        b.SetAsAccessible(ShowBranches);
+                    }
+                    
+                    if (LevelNumber % 2 == 0)
+                    {
+                        b.GetNode<Sprite>("Branch1").FlipV = true;
+                        b.GetNode<Sprite>("Branch2").FlipV = true;
+                    }
+
                 }
                 else
                 {
@@ -121,6 +148,32 @@ namespace Hopper
                 }
                 b.Visible = true;
             }
+
+            if (LevelUnlocked == null || LevelReached == 0) SetButtonFocus();
+            LevelUnlocked = null;
+        }
+
+        private void SetButtonFocus()
+        {
+            foreach (LevelSelectButton b in LevelSelectors)
+            {
+                int LevelNumber = int.Parse(b.Name);
+                if (LevelNumber <= LevelReached)
+                {
+                    b.FocusMode = FocusModeEnum.All;
+                }
+                else
+                {
+                    b.FocusMode = FocusModeEnum.None;
+                }
+
+                if (LevelNumber == (iLevel - 1) ||
+                   (LevelNumber == (LevelSelectors.Count - 1) && iLevel > LevelSelectors.Count)) 
+                {
+                    b.GrabFocus();
+                }
+            }
+            StartInput();
         }
 
         public void UpdateFocus(string name)
@@ -152,37 +205,31 @@ namespace Hopper
         {
             float fill = (float)Shader.GetShaderParam("fill");
 
-            if ((FillDirection == 1 && fill >= 1) && !Triggered)
-            {
-                Triggered = true;
-                EmitSignal(nameof(TitleScreenLoaded));
-            }
-
             if (Animating)
             {
                 if ((FillDirection == 1 && fill >= 1) || (FillDirection == -1 && fill <= 0))
                 {
                     Animating = false;
-                    if (FillDirection == 1 && fill >= 1) StartInput();
                 }
                 else
                 {
-                    //GD.Print($"{Shader} {Shader.GetShaderParam("fill").ToString()} fill + {delta * Speed * FillDirection}");
                     Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));            
                 }
             }
             else
             {
+                if (FillDirection == 1 && fill >= 1 && !Triggered)
+                {
+                    Triggered = true;
+                    EmitSignal(nameof(TitleScreenLoaded));
+                }
+
                 if (FillDirection == -1 && fill <= 0 && Visible == true)
                 {
                     Visible = false;
                     Triggered = false;
-                    EmitSignal(nameof(Unpause));
+                    EmitSignal(nameof(Resume));
                     EmitSignal(nameof(ShowTouchButtons));
-                }
-                else if (FillDirection == 1 && fill >= 1)
-                {
-                    
                 }
             }
         }
@@ -191,8 +238,8 @@ namespace Hopper
         {
             if (!Animating && Visible)
             {
-                if ((@event.IsActionPressed("ui_accept") ||
-                    @event is InputEventScreenTouch && @event.IsPressed()))
+                if (@event.IsActionPressed("ui_accept") ||
+                    @event is InputEventScreenTouch && @event.IsPressed())
                 {
                     StopInput();
                     AnimateHide();
@@ -210,7 +257,7 @@ namespace Hopper
                 else if (@event.IsActionPressed("ui_cancel"))
                 {
                     StopInput();
-                    EmitSignal("BackToMap");
+                    AnimateHide();
                 }
             }
         }
@@ -243,3 +290,4 @@ namespace Hopper
         }
     }
 }
+

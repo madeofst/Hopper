@@ -35,7 +35,7 @@ material = ExtResource( 5 )
 material = SubResource( 1 )
 texture = ExtResource( 2 )
 hframes = 13
-frame = 1
+frame = 8
 
 [node name="AnimationPlayer" parent="LilySprite" index="0"]
 autoplay = "Activate"

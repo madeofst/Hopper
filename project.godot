@@ -8,15 +8,11 @@
 
 config_version=4
 
-_global_script_classes=[  ]
-_global_script_class_icons={
-}
-
 [application]
 
 config/name="Hopper"
 run/main_scene="res://Menus/LoadingScreen.tscn"
-boot_splash/image="res://HUD/Resources/Quit.png"
+boot_splash/image="res://Menus/Placeholder_Splash.png"
 config/icon="res://Player/Resources/Frog1_32x32_front.png"
 
 [autoload]
@@ -90,6 +86,11 @@ ui_quit={
 ui_map={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":77,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_level_select={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":76,"unicode":0,"echo":false,"script":null)
  ]
 }
 

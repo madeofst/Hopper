@@ -450,7 +450,8 @@ namespace Hopper
                     CheckGoal();
                     LoadNextLevel();
                 }
-                else if (HopsRemaining < CurrentLevel.MaximumHops)
+                else if (//CurrentAnimationNode != null && 
+                         HopsRemaining < CurrentLevel.MaximumHops)
                 {                
                     if (AnimationQueue.Count > 0)
                     {
@@ -462,8 +463,18 @@ namespace Hopper
 
                         if (!CheckGoal())
                         {
-                            if (!fromBossMove && !CurrentAnimationNode.Free)
+                            if (CurrentAnimationNode == null) 
+                            {
+                                //nothing
+                            }
+                            else if (!fromBossMove && !CurrentAnimationNode.Free)
+                            {
                                 EmitSignal(nameof(BossMove));
+                            }
+                            else if (CurrentAnimationNode.Free)
+                            {
+                                //nothing
+                            }
 
                             CheckHopsAndFinaliseAnimation();
                         }
@@ -657,7 +668,8 @@ namespace Hopper
 
         public override void _Input(InputEvent @event)
         {
-            if (Active && @event.IsActionPressed("ui_cancel"))
+            if (Active && (@event.IsActionPressed("ui_cancel") ||
+                           @event.IsActionPressed("ui_level_select")))
             {   
                 Deactivate();
                 EmitSignal(nameof(Pause));

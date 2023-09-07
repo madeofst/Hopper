@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=7 format=2]
+[gd_resource type="Theme" load_steps=8 format=2]
 
 [ext_resource path="res://Themes/StyleBox/MenuButtonNormal.tres" type="StyleBox" id=1]
 [ext_resource path="res://Themes/StyleBox/MenuButtonSelected.tres" type="StyleBox" id=2]
 [ext_resource path="res://Themes/StyleBox/MenuButtonHover.tres" type="StyleBox" id=3]
 [ext_resource path="res://Menus/Resources/MenuButtonNormal.tres" type="StyleBox" id=4]
+[ext_resource path="res://Fonts/DigitalDiscoSimple.tres" type="DynamicFont" id=5]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Fonts/DigitalDisco.ttf"
@@ -12,6 +13,7 @@ font_path = "res://Fonts/DigitalDisco.ttf"
 font_data = SubResource( 1 )
 
 [resource]
+default_font = ExtResource( 5 )
 Button/fonts/font = SubResource( 2 )
 Button/styles/disabled = ExtResource( 4 )
 Button/styles/focus = ExtResource( 2 )

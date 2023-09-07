@@ -141,15 +141,6 @@ namespace Hopper
             BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
             BossData.Init("Boss4");
             BossData.AddTileChange(new TileChangeInstruction(
-                    actionOnTurn:       0,
-                    tileGridPosition:   new Vector2(2, 2),
-                    tileType:           Type.Goal,
-                    score:              0,
-                    eaten:              false,
-                    bounceDirection:    new Vector2(0, 0),
-                    activated:          false
-                ));
-            BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       1,
                     tileGridPosition:   new Vector2(2, 2),
                     tileType:           Type.Goal,
@@ -250,7 +241,7 @@ namespace Hopper
                 )); */
             BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       1,
-                    tileGridPosition:   new Vector2(2, 2),
+                    tileGridPosition:   new Vector2(3, 2),
                     tileType:           Type.Water,
                     score:              0,
                     eaten:              false,

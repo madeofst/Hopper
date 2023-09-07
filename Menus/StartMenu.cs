@@ -111,7 +111,7 @@ namespace Hopper
 
         internal void ShowMenu()
         {
-			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Menu);
+			//HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Menu);
 			Modulate = new Color (1, 1, 1, 1);
             Show();
 

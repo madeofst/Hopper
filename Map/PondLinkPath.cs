@@ -29,12 +29,23 @@ namespace Hopper
         private bool Animating = false;
         private float FillDirection;
         private float Speed;
+        private Sprite Sprite;
 
         public override void _Ready()
         {
             Visible = false;
             Shader = (ShaderMaterial)Material;
-            if (Shader != null ) Shader.SetShaderParam("fill", 0f);
+            if (Shader != null) Shader.SetShaderParam("fill", 0f);
+
+            if (GetChildCount() > 0)
+            {
+                Sprite = GetNode<Sprite>("Sprite");
+                if (Sprite != null)
+                {
+                    Vector2 TextureSize = Sprite.Texture.GetSize();
+                    Speed = 60 / Mathf.Max(TextureSize.x, TextureSize.y);
+                }
+            }
         }
 
         internal void AnimateReveal()
@@ -43,7 +54,6 @@ namespace Hopper
             {
                 Shader.SetShaderParam("fill", 0f);
                 FillDirection = 1;
-                Speed = 1f;
                 Animating = true;
             }
             else
@@ -59,7 +69,7 @@ namespace Hopper
             {
                 float fill = (float)Shader.GetShaderParam("fill");
 
-                if ((FillDirection == 1 && fill >= 1) && Animating)
+                if (FillDirection == 1 && fill >= 1 && Animating)
                 {
                     Animating = false;
                     active = true;

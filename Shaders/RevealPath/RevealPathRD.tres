@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Shaders/RevealPath/SimpleShaderRD.png" type="Texture" id=1]
 
-[sub_resource type="Shader" id=36]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform float fill : hint_range(-0.01,1.0) = -0.01;
@@ -38,7 +38,8 @@ void fragment(){
 }"
 
 [resource]
-shader = SubResource( 36 )
+resource_local_to_scene = true
+shader = SubResource( 1 )
 shader_param/fill = 1.0
 shader_param/color = Color( 1, 1, 1, 1 )
 shader_param/texture_size = Vector2( 500, 500 )

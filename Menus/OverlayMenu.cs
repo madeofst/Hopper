@@ -14,12 +14,14 @@ public class OverlayMenu : MarginContainer
     public RestartButton RestartButton { get; set; }
     public MapButton MapButton { get; set; }
     public QuitButton QuitButton { get; set; }
+    public LevelSelectOverlayButton LevelSelectButton { get; set; }
 
     public override void _Ready()
     {
         RestartButton = GetNode<RestartButton>("Buttons/Restart");
         MapButton = GetNode<MapButton>("Buttons/Map");
         QuitButton = GetNode<QuitButton>("Buttons/Quit");
+        LevelSelectButton = GetNode<LevelSelectOverlayButton>("Buttons/LevelSelect");
     }
 
     public void ChangeMode(OverlayMenuMode Mode)
@@ -34,6 +36,7 @@ public class OverlayMenu : MarginContainer
         {
             RestartButton.Hide();
             MapButton.Hide();
+            LevelSelectButton.Hide();
             QuitButton.Show();
             Show();
         }
@@ -41,6 +44,7 @@ public class OverlayMenu : MarginContainer
         {
             RestartButton.Hide();
             MapButton.Show();
+            LevelSelectButton.Hide();
             QuitButton.Show();
             Show();
         }
@@ -48,6 +52,7 @@ public class OverlayMenu : MarginContainer
         {
             RestartButton.Show();
             MapButton.Show();
+            LevelSelectButton.Show();
             QuitButton.Show();
             Show();
         }
@@ -58,5 +63,6 @@ public class OverlayMenu : MarginContainer
         RestartButton.HideLabel();
         MapButton.HideLabel();
         QuitButton.HideLabel();
+        LevelSelectButton.HideLabel();
     } 
 }

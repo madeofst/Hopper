@@ -178,21 +178,20 @@ namespace Hopper
 
         public void SlideUp()
         {
+            if (Type != Type.Goal && !Activated) LilyAnimation.Stop();
+            BugAnimation.Stop();
+
             if (Type == Type.Direct)
             {
                 LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/Director_32x32_{LilySprite.Frame + 1}.png");
-                LilySprite.Hframes = 1;
-                LilySprite.Vframes = 1;
-                LilySprite.Frame = 0;
+                SetSingleFrame(LilySprite);
                 LilySprite.Position = new Vector2(LilySprite.Position.x, LilySprite.Position.y + 16);
             }
             else if (Type == Type.Score)
             {
                 (BugSprite.Material as ShaderMaterial).SetShaderParam("offset", -8f);
                 BugSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Dragonfly Single Frame.png");
-                BugSprite.Hframes = 1;
-                BugSprite.Vframes = 1;
-                BugSprite.Frame = 0;
+                SetSingleFrame(BugSprite);
             }
 /*             else if (Type == Type.Goal && Activated)
             {
@@ -246,44 +245,40 @@ namespace Hopper
         public void SlideAcross(TileChangeInstruction I)
         {
             Animate("RESET");
+            LilyAnimation.Stop();
+            BugAnimation.Stop();
             
             if (Type == Type.Score)
             {
                 BugSprite.Texture = GD.Load<Texture>("res://Levels/Resources/Dragonfly Single Frame.png");
-                BugSprite.Hframes = 1;
-                BugSprite.Vframes = 1;
-                BugSprite.Frame = 0;
-                
+                SetSingleFrame(BugSprite);
+            }
+            else if (Type == Type.Bounce)
+            {
+                LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/UpdatedPalette/LilyPad_Bounce_SingleTile.png");
+                SetSingleFrame(LilySprite);
             }
             else if (Type == Type.Direct)
             {
                 LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/Director_32x32_{LilySprite.Frame + 1}.png");
-                LilySprite.Hframes = 1;
-                LilySprite.Vframes = 1;
-                LilySprite.Frame = 0;
+                SetSingleFrame(LilySprite);
                 LilySprite.Position = new Vector2(LilySprite.Position.x, LilySprite.Position.y + 16);
             }
             else if (Type == Type.Rock)
             {
                 LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/UpdatedPalette/Rocks_32x32_{LilySprite.Frame + 1}.png");
-                LilySprite.Hframes = 1;
-                LilySprite.Vframes = 1;
-                LilySprite.Frame = 0;
+                SetSingleFrame(LilySprite);
             }
             else if (Type == Type.Jump)
             {
                 LilySprite.Texture = GD.Load<Texture>("res://Levels/Resources/UpdatedPalette/LilyPad_Spring_Single_Frame.png");
-                LilySprite.Hframes = 1;
-                LilySprite.Vframes = 1;
-                LilySprite.Frame = 0;
+                SetSingleFrame(LilySprite);
             }
             else if (Type == Type.Goal && Activated)
             {
                 (LilySprite.Material as ShaderMaterial).SetShaderParam("image_width_px", 64f);
-                LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/UpdatedPalette/LilyPad_Goal_Animate_{LilySprite.Frame + 1}.png");
-                LilySprite.Hframes = 1;
-                LilySprite.Vframes = 1;
-                LilySprite.Frame = 0;
+                LilySprite.Texture = GD.Load<Texture>($"res://Levels/Resources/UpdatedPalette/LilyPad_Goal_Animate_{LilySprite.Frame - 8 + 1}.png");
+                SetSingleFrame(LilySprite);
             }
 
             TileChangeInstruction = I;
@@ -317,15 +312,24 @@ namespace Hopper
             Tween.Start();
         }
 
+        private void SetSingleFrame(Sprite sprite)
+        {
+            sprite.Hframes = 1;
+            sprite.Vframes = 1;
+            sprite.Frame = 0;
+        }
+
         public void AfterSlide()
         {
             if (TileChangeInstruction != null)
             {
+                //After Slide Across
                 GetParent<Grid>().UpdateTile(TileChangeInstruction);
                 TileChangeInstruction = null;
             }
             else
             {
+                //After Slide Up
                 WaterSprite.Visible = false;
                 BackgroundSprite.Visible = false;
                 EmitSignal(nameof(TileSlidUp), GridPosition);
@@ -347,8 +351,9 @@ namespace Hopper
                     BugSprite.Texture = GD.Load<Texture>($"res://Levels/Resources/Dragonfly Sprite Sheet.png");
                     BugSprite.Hframes = 7;
                     BugSprite.Vframes = 4;
-                    //BugAnimation.Play($"Hover{rand.Next(1, 3)}");
+                    BugAnimation.Play();
                 }
+                if (Type == Type.Goal && Activated) LilyAnimation.Play();
             }
         }
 

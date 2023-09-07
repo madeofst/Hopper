@@ -166,7 +166,7 @@ namespace Hopper
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.TitleScreenLoaded), this, nameof(OnTitleScreenLoaded), new Godot.Collections.Array { false });
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.StartMusic), this, nameof(PlayMusic));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.SelectLevel), this, nameof(NewLevel));
-            LevelTitleScreen.Connect(nameof(LevelTitleScreen.Unpause), this, nameof(Unpause));
+            LevelTitleScreen.Connect(nameof(LevelTitleScreen.Resume), this, nameof(Resume));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.BackToMap), this, nameof(QuitToMap));
             LevelTitleScreen.Connect(nameof(LevelTitleScreen.QuitToMenu), this, nameof(QuitToMenu));
 
@@ -223,6 +223,8 @@ namespace Hopper
         private void InitialiseLevelTitle(Level level)
         {
             MoveToTop(LevelTitleScreen);
+            HUD.HideHopCounter();
+            HUD.HideScoreBox();
             HUD.OverlayMenu.ChangeMode(OverlayMenuMode.LevelTitle);
             LevelTitleScreen.SetPosition(Position);
             LevelTitleScreen.Init(StageData,
@@ -240,7 +242,7 @@ namespace Hopper
         {
             UpdateLevelReached();
             MoveToTop(HUD);
-            if (!Paused) BuildLevel(replay);
+            //if (!Paused) BuildLevel(replay);
         }
 
         private void BuildLevel(bool replay = false)
@@ -255,7 +257,11 @@ namespace Hopper
             
             Grid.Connect(nameof(Grid.TileSlidUp), this, nameof(CalculatePlayerMovementAfterBossMove));
             
-            HUD.ShowScoreBox();
+            if (NextLevel.ScoreRequired > 0)
+                HUD.ShowScoreBox();
+            else
+                HUD.HideScoreBox();
+                
             HUD.SetButtonToRestart();
             HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
             HUD.CountInActiveHops();
@@ -317,17 +323,34 @@ namespace Hopper
                 if (PuzzleMode)
                 {
                     //Level reached will be 1 higher than available levels when complete
-                    if (iLevel == StageData.LevelReached) StageData.LevelReached++;
-                    EmitSignal(nameof(UpdateLocationProgress), StageData.LevelReached);
+                    if (iLevel == StageData.LevelReached)
+                    {
+                        StageData.LevelReached++;
+                        if (StageData.LevelReached < Levels.Length)
+                        {
+                            LevelUnlocked(StageData.LevelReached);
+                        }
+                        EmitSignal(nameof(UpdateLocationProgress), StageData.LevelReached);
+                    }
                     iLevel++;
 
                     if (iLevel >= Levels.Length)
                     {
                         bool StageComplete = true;
-                        QuitToMap(StageComplete); 
+                        if (StageData.Pond == "Boss")
+                        {
+                            QuitToMenu();
+                            VictoryScreen VC = (VictoryScreen)GD.Load<PackedScene>("res://Menus/VictoryScreen.tscn").Instance();
+                            GetViewport().AddChild(VC);
+                        }
+                        else
+                        {
+                            QuitToMap(StageComplete); 
+                        }
                     }
                     else 
                     {
+                        
                         NewLevel(Levels[iLevel]);
                     }
                     EmitSignal(nameof(SaveState));
@@ -339,8 +362,15 @@ namespace Hopper
             }
         }
 
+        private void LevelUnlocked(int levelReached)
+        {
+            LevelTitleScreen.LevelUnlocked = levelReached;
+        }
+
+
         private void UpdateLevelReached()
         {
+            //TODO: Potentially add a flag for pause mode to prevent rebuilding the level
             LevelTitleScreen.UpdateLevelReached(StageData.LevelReached);
         }
 
@@ -506,6 +536,10 @@ namespace Hopper
             if (HUD.OverlayMenu.MapButton.IsConnected("pressed", this, nameof(QuitToMap)))
                 HUD.OverlayMenu.MapButton.Disconnect("pressed", this, nameof(QuitToMap));
             HUD.OverlayMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
+
+            if (HUD.OverlayMenu.LevelSelectButton.IsConnected("pressed", this, nameof(Pause)))
+                HUD.OverlayMenu.LevelSelectButton.Disconnect("pressed", this, nameof(Pause));
+            HUD.OverlayMenu.LevelSelectButton.Connect("pressed", this, nameof(Pause));
         }
 
         private void ScoreAnimationFinished()   { ScoreAnimFinished = true; }
@@ -538,7 +572,7 @@ namespace Hopper
             GetViewport().MoveChild(node, GetViewport().GetChildCount());
         }
 
-        private void Unpause()
+        private void Resume()
         {
             HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Stage);
             MoveToTop(HUD);
