@@ -744,5 +744,27 @@ namespace Hopper
 
         public void EmitMoveToTop()     { EmitSignal(nameof(MoveToTop)); }
         public void EmitMoveBehind()    { EmitSignal(nameof(MoveBehind)); }
+
+        public void Shock()
+        {
+            //GD.Print(CurrentAnimationNode.Animation.ResourceName);
+            if (CurrentAnimationNode.Animation.ResourceName.Contains("Up"))
+            {
+                PlayerAnimation.Play("ShockUp");
+            }
+            else if (CurrentAnimationNode.Animation.ResourceName.Contains("Down"))
+            {
+                PlayerAnimation.Play("ShockDown");
+            }
+            else if (CurrentAnimationNode.Animation.ResourceName.Contains("Right"))
+            {
+                PlayerAnimation.Play("ShockRight");
+            }
+            else if (CurrentAnimationNode.Animation.ResourceName.Contains("Left"))
+            {
+                PlayerAnimation.Play("ShockLeft");
+            }
+        }
+
     }
 }

@@ -1,29 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Levels/Resources/White_32x32.png" type="Texture" id=1]
-[ext_resource path="res://Menus/Character.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/Resources/UpdatedPalette/Frog1_64x96_AllJumpsCombined.png" type="Texture" id=2]
 [ext_resource path="res://Menus/VictoryScreen.cs" type="Script" id=3]
 [ext_resource path="res://Themes/StartMenu.tres" type="Theme" id=4]
-[ext_resource path="res://Fonts/DigitalDiscoSimple.tres" type="DynamicFont" id=5]
-[ext_resource path="res://Menus/Resources/MenuButtonNormal.tres" type="StyleBox" id=6]
-[ext_resource path="res://Themes/StyleBox/MenuButtonNormal.tres" type="StyleBox" id=7]
-[ext_resource path="res://Themes/StyleBox/MenuButtonSelected.tres" type="StyleBox" id=8]
-[ext_resource path="res://Themes/StyleBox/MenuButtonHover.tres" type="StyleBox" id=9]
-
-[sub_resource type="DynamicFontData" id=1]
-font_path = "res://Fonts/DigitalDisco.ttf"
-
-[sub_resource type="DynamicFont" id=2]
-font_data = SubResource( 1 )
-
-[sub_resource type="Theme" id=3]
-default_font = ExtResource( 5 )
-Button/fonts/font = SubResource( 2 )
-Button/styles/disabled = ExtResource( 6 )
-Button/styles/focus = ExtResource( 8 )
-Button/styles/hover = ExtResource( 9 )
-Button/styles/normal = ExtResource( 7 )
-Button/styles/pressed = ExtResource( 8 )
 
 [node name="VictoryScreen" type="Control"]
 script = ExtResource( 3 )
@@ -35,8 +15,12 @@ margin_bottom = 270.0
 texture = ExtResource( 1 )
 stretch_mode = 2
 
-[node name="Character" parent="." instance=ExtResource( 2 )]
-position = Vector2( 240, 136 )
+[node name="PlayerSprite2" type="Sprite" parent="."]
+position = Vector2( 240, 126 )
+texture = ExtResource( 2 )
+hframes = 36
+vframes = 11
+frame = 6
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_right = 480.0
@@ -65,7 +49,7 @@ margin_top = 116.0
 margin_right = 480.0
 margin_bottom = 228.0
 size_flags_vertical = 3
-theme = SubResource( 3 )
+theme = ExtResource( 4 )
 bbcode_enabled = true
 bbcode_text = "[wave amp=10 freq=6][center]Goodbye and godspeed.[/center][/wave]"
 text = "Goodbye and godspeed."

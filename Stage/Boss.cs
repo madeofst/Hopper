@@ -25,7 +25,7 @@ namespace Hopper
         {
             // Create resource
             BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
-            BossData.Init("Boss1");
+            BossData.Init("Of the moon");
             BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       1,
                     tileGridPosition:   new Vector2(4, 4),
@@ -51,7 +51,7 @@ namespace Hopper
         {
             // Create resource
             BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
-            BossData.Init("Boss2");
+            BossData.Init("Status Quo");
             BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       1,
                     tileGridPosition:   new Vector2(4, 4),
@@ -77,7 +77,7 @@ namespace Hopper
         {
             // Create resource
             BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
-            BossData.Init("Boss3");
+            BossData.Init("Climb that wall");
             BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       1,
                     tileGridPosition:   new Vector2(2, 4),
@@ -282,7 +282,7 @@ namespace Hopper
         {
             // Create resource
             BossBattleData BossData = ResourceLoader.Load<BossBattleData>("res://Stage/BossBattleData.tres");
-            BossData.Init("Boss5");
+            BossData.Init("What is this place");
             BossData.AddTileChange(new TileChangeInstruction(
                     actionOnTurn:       1,
                     tileGridPosition:   new Vector2(4, 5),
@@ -333,21 +333,21 @@ namespace Hopper
             Grid.UpdateTile(tci);
         }
 
-        public int Move(int hopsCompleted)
+        public List<Tile> Move(int hopsCompleted)
         {
             int lastTurnForLoop = LastTurnForLoop();
-            int TileCount = 0;
-            
+            List<Tile> tiles = new List<Tile>();
+
             foreach (TileChangeInstruction I in TileChangeInstructions)
             {
-
                 if (I.ActionOnTurn == (hopsCompleted - 1) % lastTurnForLoop)
                 {
-                    Grid.GetTile(I.TileGridPosition).SlideAcross(I);
-                    TileCount ++;
+                    Tile tile = Grid.GetTile(I.TileGridPosition);
+                    tile.SlideAcross(I);
+                    tiles.Add(tile);
                 } 
             }
-            return TileCount;
+            return tiles;
         }
 
         public void UpdateIndicatorAnimations(int hopsCompleted, string AnimationName)

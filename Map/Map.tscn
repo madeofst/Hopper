@@ -556,7 +556,7 @@ position = Vector2( 152, 120 )
 Texture = ExtResource( 6 )
 ID = 1
 Pond = "Hawkins"
-Levels = PoolStringArray( "Intro", "StarterForOne", "Up", "WanderingThrough" )
+Levels = PoolStringArray( "Intro", "Starter For One", "Up", "Wandering Through" )
 LocationsToUnlock = PoolStringArray( "World2" )
 
 [node name="World2" parent="World1" instance=ExtResource( 12 )]
@@ -576,7 +576,7 @@ position = Vector2( 104, 104 )
 Texture = ExtResource( 6 )
 ID = 2
 Pond = "Hawkins"
-Levels = PoolStringArray( "MovingOnNew_1", "JumpAround1", "RockBounceLesson1", "AroundAndABounce", "BounceToTheSides" )
+Levels = PoolStringArray( "Moving On", "Jump Around", "No Bell", "Borders and Boundaries", "Wine Country" )
 LocationsToUnlock = PoolStringArray( "World3", "World10" )
 
 [node name="World1" parent="World2" instance=ExtResource( 12 )]
@@ -612,7 +612,7 @@ position = Vector2( 57, 120 )
 Texture = ExtResource( 6 )
 ID = 10
 Pond = "Hawkins"
-Levels = PoolStringArray( "WeirdMirror1", "Jumpington" )
+Levels = PoolStringArray( "Weird Mirror", "Jumpington" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World2" parent="World10" instance=ExtResource( 12 )]
@@ -625,7 +625,7 @@ position = Vector2( 256, 32 )
 Texture = ExtResource( 8 )
 ID = 3
 Pond = "BelAir"
-Levels = PoolStringArray( "SimplePondInPond1", "DifferentLengths2", "UnderInsteadOfIn", "NewCrossBack", "TheSquare3", "LittleSquare" )
+Levels = PoolStringArray( "Pond In Pond", "The Fonder Heart", "The Boardwalk", "Combination Lock", "Where you came from", "Balance - Repitition" )
 LocationsToUnlock = PoolStringArray( "World4", "World7" )
 
 [node name="World2" parent="World3" instance=ExtResource( 12 )]
@@ -660,7 +660,7 @@ position = Vector2( 304, 16 )
 Texture = ExtResource( 8 )
 ID = 4
 Pond = "BelAir"
-Levels = PoolStringArray( "FourFishingHoles1", "CrissCross", "PondInPond", "StuckInJumpLoop", "BlueLine" )
+Levels = PoolStringArray( "Good Food Day", "Wood For Trees", "Two Thirds", "Looper", "Blue Line" )
 LocationsToUnlock = PoolStringArray( "World5" )
 
 [node name="World3" parent="World4" instance=ExtResource( 12 )]
@@ -720,7 +720,7 @@ position = Vector2( 128, -64 )
 Texture = ExtResource( 21 )
 ID = 7
 Pond = "Liffey"
-Levels = PoolStringArray( "UpOrDown", "BounceOne", "Tramlines", "OutsideTheBox", "AngledRectangled" )
+Levels = PoolStringArray( "Trampoline", "Tea Time", "Tramlines", "Outside The Box", "Angled Rectangled" )
 LocationsToUnlock = PoolStringArray( "World8", "World9" )
 
 [node name="World3" parent="World7" instance=ExtResource( 12 )]
@@ -755,7 +755,7 @@ position = Vector2( 80, -48 )
 Texture = ExtResource( 21 )
 ID = 8
 Pond = "Liffey"
-Levels = PoolStringArray( "FillipeFilloppe2", "Twins", "TrickierTrickery" )
+Levels = PoolStringArray( "Fillipe Fillope", "Twins", "Trick Me" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World7" parent="World8" instance=ExtResource( 12 )]
@@ -768,7 +768,7 @@ position = Vector2( 195, -145 )
 Texture = ExtResource( 9 )
 ID = 9
 Pond = "Idwal"
-Levels = PoolStringArray( "TripleSpin", "SingleTurn", "SpinAndBounce", "EdgeWise", "Middle4_1" )
+Levels = PoolStringArray( "Triple Spin", "Shipwrecked", "Hard Case", "Edge Wise", "Surrounded" )
 LocationsToUnlock = PoolStringArray( "World11", "Boss1" )
 
 [node name="World7" parent="World9" instance=ExtResource( 12 )]
@@ -801,7 +801,7 @@ position = Vector2( 227, -172 )
 Texture = ExtResource( 9 )
 ID = 11
 Pond = "Idwal"
-Levels = PoolStringArray( "TwoSpinIslandPartTwo", "OffsetSpinPair", "InvertedT", "ThePointedStar", "Lucky13", "HardLines" )
+Levels = PoolStringArray( "Call Back", "Pairs", "Channels", "Imperfect Circle", "Lucky Thirteen", "Hard Lines" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World9" parent="World11" instance=ExtResource( 12 )]
@@ -835,7 +835,7 @@ position = Vector2( 195, -352 )
 Texture = ExtResource( 27 )
 ID = 13
 Pond = "Boss"
-Levels = PoolStringArray( "Boss5", "Boss1", "Boss2", "Boss3", "BossTemp" )
+Levels = PoolStringArray( "What is this place", "Of the moon", "Status Quo", "Climb that wall" )
 LocationsToUnlock = PoolStringArray(  )
 
 [node name="World9" parent="Boss1" instance=ExtResource( 12 )]

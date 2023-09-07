@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace Hopper
 {
@@ -265,6 +266,9 @@ namespace Hopper
             HUD.SetButtonToRestart();
             HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
             HUD.CountInActiveHops();
+
+            LevelTitleScreen.LevelNameLabel.Text = $" {NextLevel.LevelName}";
+
             Player.Init(NextLevel, replay);
 
             if (!PuzzleMode && !TempForTesting)
@@ -367,7 +371,6 @@ namespace Hopper
             LevelTitleScreen.LevelUnlocked = levelReached;
         }
 
-
         private void UpdateLevelReached()
         {
             //TODO: Potentially add a flag for pause mode to prevent rebuilding the level
@@ -386,9 +389,19 @@ namespace Hopper
         {
             if (Boss != null)
             {
-                int TileCount = Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining);
+                List<Tile> tiles = Boss.Move(CurrentLevel.MaximumHops - Player.HopsRemaining);
 
-                if (TileCount == 0) CalculatePlayerMovementAfterBossMove(new Vector2(-1, -1));
+                if (tiles.Count == 0)
+                {
+                    CalculatePlayerMovementAfterBossMove(new Vector2(-1, -1));
+                }
+                else
+                {
+                    foreach (Tile t in tiles)
+                    {
+                        if (t.GridPosition == Player.GridPosition) Player.Shock();
+                    }
+                }
             }
         }
 

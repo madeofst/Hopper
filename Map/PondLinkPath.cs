@@ -39,7 +39,7 @@ namespace Hopper
 
             if (GetChildCount() > 0)
             {
-                Sprite = GetNode<Sprite>("Sprite");
+                Sprite = GetNodeOrNull<Sprite>("Sprite");
                 if (Sprite != null)
                 {
                     Vector2 TextureSize = Sprite.Texture.GetSize();

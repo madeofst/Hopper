@@ -80,7 +80,7 @@ script = ExtResource( 1 )
 position = Vector2( 0, -10 )
 texture = ExtResource( 2 )
 hframes = 36
-vframes = 11
+vframes = 12
 frame = 20
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

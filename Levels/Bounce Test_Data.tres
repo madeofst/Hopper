@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Levels/Template/LevelData.cs" type="Script" id=1]
+
+[resource]
+resource_name = "LevelData"
+script = ExtResource( 1 )
+Name = "Bounce Test"
+Width = 7
+Height = 7
+TileSize = 32
+StartingHops = 99
+MaximumHops = 99
+ScoreRequired = 0
+PlayerStartPosition = Vector2( 0, 0 )
+TileType = PoolIntArray( 0, 6, 0, 0, 0, 0, 0, 5, 0, 6, 0, 0, 0, 0, 0, 4, 4, 6, 0, 0, 0, 0, 6, 4, 0, 0, 0, 0, 0, 6, 3, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 )
+TilePointValue = PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )

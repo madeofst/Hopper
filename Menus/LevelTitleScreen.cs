@@ -60,6 +60,9 @@ namespace Hopper
 
 
         private HBoxContainer LevelButtons;
+
+        public RichTextLabel LevelNameLabel { get; set; }
+
         private List<TextureButton> LevelSelectors = new List<TextureButton>();
 
         private ShaderMaterial Shader;
@@ -84,7 +87,8 @@ namespace Hopper
         public override void _Ready()
         {
             Shader = (ShaderMaterial)Material;
-            LevelButtons = GetNode<HBoxContainer>("LevelTitle/LevelSelector/LevelButtons");
+            LevelButtons = GetNode<HBoxContainer>("LevelTitle/LevelSelector/VBoxContainer/LevelButtons");
+            LevelNameLabel = GetNode<RichTextLabel>("LevelTitle/LevelSelector/VBoxContainer/MarginContainer/LevelName");
         }
 
         public void Init(StageData StageData, int LevelCount, int iLevel, int maxHops, int reqScore)
@@ -118,6 +122,7 @@ namespace Hopper
         public void UpdateLevelReached(int levelReached)
         {
             LevelReached = levelReached;
+
             foreach (LevelSelectButton b in LevelSelectors)
             {
                 int LevelNumber = int.Parse(b.Name);
@@ -173,6 +178,7 @@ namespace Hopper
                     b.GrabFocus();
                 }
             }
+            LevelNameLabel.Visible = true;
             StartInput();
         }
 
@@ -196,6 +202,7 @@ namespace Hopper
             EmitSignal(nameof(StartMusic));
 
             foreach (LevelSelectButton b in LevelSelectors) b.Visible = false;
+            LevelNameLabel.Visible = false;
             FillDirection = -1;
             Speed = 3;
             Animating = true;
