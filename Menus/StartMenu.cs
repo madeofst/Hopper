@@ -92,6 +92,12 @@ namespace Hopper
 			}
         }
 
+		public void OptionsPressed()
+		{
+			OptionsMenu optionsMenu = (OptionsMenu)GD.Load<PackedScene>("res://Menus/OptionsMenu.tscn").Instance();
+			GetViewport().AddChild(optionsMenu);
+		}
+
 		public void EditorPressed()
 		{
 			EditorMode = true;
@@ -101,6 +107,11 @@ namespace Hopper
 			GetViewport().AddChild(editor);
 			Music.Stop();
 			FadeOut();
+		}
+
+		public void QuitPressed()
+		{
+			GetTree().Quit();
 		}
 
 		private void FadeOut()
