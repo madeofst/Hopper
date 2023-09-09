@@ -55,7 +55,7 @@ namespace Hopper
 				LoadMap(ResourceLoader.Load<SaveData>("res://Saving/DefaultSaveFile.tres"));
 			}
 
-            LoadHUD();
+			LoadHUD();
 			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Map);
 
 			Map.FadeIn();
@@ -71,26 +71,26 @@ namespace Hopper
 
 			LoadMap(ResourceLoader.Load<SaveData>("user://SaveFile.tres"));
 
-            LoadHUD();
+			LoadHUD();
 			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Map);
 
 			Map.FadeIn();
 		}
 
-        public void UpdateLoadButton()
-        {
-            File SaveFile = new File();
-            if (!SaveFile.FileExists("user://SaveFile.tres"))
-            {
-                LoadButton.Hide();
+		public void UpdateLoadButton()
+		{
+			File SaveFile = new File();
+			if (!SaveFile.FileExists("user://SaveFile.tres"))
+			{
+				LoadButton.Hide();
 				NewGameButton.GrabFocus();
-            }
+			}
 			else
 			{
 				LoadButton.Show();
 				LoadButton.GrabFocus();
 			}
-        }
+		}
 
 		public void OptionsPressed()
 		{
@@ -120,50 +120,50 @@ namespace Hopper
 			Tween.Start();
 		}
 
-        internal void ShowMenu()
-        {
+		internal void ShowMenu()
+		{
 			//HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Menu);
 			Modulate = new Color (1, 1, 1, 1);
-            Show();
+			Show();
 
 			NewGameButton.Disabled = false;
 			LoadButton.Disabled = false;
-        }
+		}
 
 		public void AfterFade(object x, string key)
-        {
-            Music.Stop();
-            if (!EditorMode)
-            {
-                HUD.UnlockPosition();
-                HUD.Visible = true;
-            }
-            else
-            {
-                HUD.Visible = false;
-            }
-            //GetViewport().MoveChild(this, 2);
-            Hide();
-        }
+		{
+			Music.Stop();
+			if (!EditorMode)
+			{
+				HUD.UnlockPosition();
+				HUD.Visible = true;
+			}
+			else
+			{
+				HUD.Visible = false;
+			}
+			//GetViewport().MoveChild(this, 2);
+			Hide();
+		}
 
-        private void LoadHUD()
-        {
-            HUD = (HUD)GD.Load<PackedScene>("res://HUD/HUD.tscn").Instance();
-            GetViewport().AddChild(HUD);
-            HUD.HideHopCounter();
-            HUD.HideScoreBox();
-            HUD.SetButtonToEnter();
-        }
+		private void LoadHUD()
+		{
+			HUD = (HUD)GD.Load<PackedScene>("res://HUD/HUD.tscn").Instance();
+			GetViewport().AddChild(HUD);
+			HUD.HideHopCounter();
+			HUD.HideScoreBox();
+			HUD.SetButtonToEnter();
+		}
 
-        private void LoadMap(SaveData SaveData)
-        {
-            if (!EditorMode)
-            {
-                Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
-                Map.Modulate = new Color(1, 1, 1, 0);
-                MapViewport.AddChild(Map);
+		private void LoadMap(SaveData SaveData)
+		{
+			if (!EditorMode)
+			{
+				Map = (Map)GD.Load<PackedScene>("res://Map/Map.tscn").Instance();
+				Map.Modulate = new Color(1, 1, 1, 0);
+				MapViewport.AddChild(Map);
 				Map.Init(SaveData);
-            }
-        }
-    }
+			}
+		}
+	}
 }

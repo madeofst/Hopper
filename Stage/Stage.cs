@@ -119,11 +119,11 @@ namespace Hopper
 
             if (StageData.Pond == "Hawkins")
             {
-                Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
             }
             else if (StageData.Pond == "BelAir")
             {
-                Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
             }
             else if (StageData.Pond == "Liffey")
             {
@@ -493,8 +493,12 @@ namespace Hopper
                     if (!level.GoalActive && updatedScore <= 0)
                     {
                         level.UpdateGoalState(updatedScore);
-                        GoalActivate.Play();
-                        HUD.AnimateScoreBox();
+                        
+                        if (level.MaximumHops - Player.HopsRemaining > 0)
+                        {
+                            GoalActivate.Play();
+                            HUD.AnimateScoreBox();
+                        }
                     }
                 }
             }
@@ -613,6 +617,8 @@ namespace Hopper
         {
             if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
 
+            Music.Stop();
+
             HUD.HideHopCounter();
             HUD.HideScoreBox();
             HUD.SetButtonToEnter();
@@ -645,6 +651,7 @@ namespace Hopper
         {
             if (LevelTitleScreen.Visible == true) LevelTitleScreen.AnimateHide();
 
+            Music.Stop();
             HUD.Close();
             QueueFree();
             if (!TempForTesting)
