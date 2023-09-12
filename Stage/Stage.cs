@@ -91,7 +91,6 @@ namespace Hopper
             HUD = GetNode<HUD>("../HUD"); 
             LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
 
-            Music = GetNode<AudioStreamPlayer>("../AudioRepository/Music");
             FailLevel = GetNode<AudioStreamPlayer>("../AudioRepository/FailLevel");
             SucceedLevel = GetNode<AudioStreamPlayer>("../AudioRepository/SucceedLevel");
             GoalActivate = GetNode<AudioStreamPlayer>("../AudioRepository/GoalActivate");
@@ -120,22 +119,27 @@ namespace Hopper
             if (StageData.Pond == "Hawkins")
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+                Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
             }
             else if (StageData.Pond == "BelAir")
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
+                Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
             }
             else if (StageData.Pond == "Liffey")
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+                Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
             }
             else if (StageData.Pond == "Boss")
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/BossPond.png");
+                Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
             }
             else
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+                Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
             }
 
             HUD.LockPosition(Position);
