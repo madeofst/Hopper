@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/GardenPond.ogg-84d6d21de10e2bd15752e104ccf8c902.oggstr"
+
+[deps]
+
+source_file="res://Music/GardenPond.ogg"
+dest_files=[ "res://.import/GardenPond.ogg-84d6d21de10e2bd15752e104ccf8c902.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

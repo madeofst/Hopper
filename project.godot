@@ -18,6 +18,7 @@ config/icon="res://Player/Resources/Frog1_32x32_front.png"
 [autoload]
 
 ResourceRepository="*res://Stage/ResourceRepository.tscn"
+AudioRepository="*res://Music/AudioRepository.tscn"
 
 [display]
 
