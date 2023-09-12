@@ -142,6 +142,8 @@ namespace Hopper
                 Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
             }
 
+            Music.Play();
+            
             HUD.LockPosition(Position);
 
             //Connect(nameof(Stage.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
@@ -469,7 +471,6 @@ namespace Hopper
 
         public void GoalReached()
         {
-            Music.Stop();
             Player.ClearQueues();
             SucceedLevel.Play();
         }

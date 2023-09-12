@@ -199,8 +199,6 @@ namespace Hopper
 
         public void AnimateHide()
         {
-            EmitSignal(nameof(StartMusic));
-
             foreach (LevelSelectButton b in LevelSelectors) b.Visible = false;
             LevelNameLabel.Visible = false;
             FillDirection = -1;
@@ -229,6 +227,7 @@ namespace Hopper
                 {
                     Triggered = true;
                     EmitSignal(nameof(TitleScreenLoaded));
+                    //EmitSignal(nameof(StartMusic));
                 }
 
                 if (FillDirection == -1 && fill <= 0 && Visible == true)
