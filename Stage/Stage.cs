@@ -119,13 +119,17 @@ namespace Hopper
 
             if (StageData.Pond == "Hawkins")
             {
-                Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/GardenPond.png");
             }
             else if (StageData.Pond == "BelAir")
             {
-                Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
             }
             else if (StageData.Pond == "Liffey")
+            {
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
+            }
+            else if (StageData.Pond == "Idwal")
             {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
             }
