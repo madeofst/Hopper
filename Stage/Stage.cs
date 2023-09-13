@@ -128,6 +128,10 @@ namespace Hopper
             }
             else if (StageData.Pond == "Liffey")
             {
+                Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
+            }
+            else if (StageData.Pond == "Idwal")
+            {
                 Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
                 Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
             }

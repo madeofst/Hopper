@@ -111,7 +111,14 @@ namespace Hopper
 
 		public void QuitPressed()
 		{
-			GetTree().Quit();
+			if (OS.HasFeature("JavaScript"))
+			{ 
+				JavaScript.Eval("window.close()");
+			}
+			else
+			{
+				GetTree().Quit();
+			}
 		}
 
 		private void FadeOut()

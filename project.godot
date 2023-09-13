@@ -25,7 +25,6 @@ AudioRepository="*res://Music/AudioRepository.tscn"
 window/size/width=480
 window/size/height=270
 window/size/resizable=false
-window/size/fullscreen=true
 window/size/test_width=480
 window/size/test_height=270
 window/dpi/allow_hidpi=true
