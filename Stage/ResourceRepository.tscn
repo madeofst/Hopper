@@ -22,3 +22,4 @@ WaterScene = ExtResource( 7 )
 JumpScene = ExtResource( 8 )
 BounceScene = ExtResource( 9 )
 DirectScene = ExtResource( 10 )
+DEVMODE = true
