@@ -138,10 +138,6 @@ margin_right = -44.5005
 margin_bottom = -26.5071
 
 [node name="ScoreBox" parent="." instance=ExtResource( 5 )]
-margin_left = 386.262
-margin_top = 23.5206
-margin_right = 456.262
-margin_bottom = 41.5206
 
 [node name="PopUpText" parent="." instance=ExtResource( 11 )]
 visible = false
@@ -211,7 +207,7 @@ visibility_mode = 1
 [node name="OverlayMenu" parent="." instance=ExtResource( 18 )]
 mouse_filter = 1
 
-[node name="Restart" parent="OverlayMenu/Buttons" index="1"]
+[node name="Restart" parent="OverlayMenu/Buttons" index="0"]
 focus_mode = 0
 mouse_filter = 1
 enabled_focus_mode = 0

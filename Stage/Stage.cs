@@ -49,7 +49,6 @@ namespace Hopper
         public int ID { get; set; }
         public bool Paused { get; private set; } = false;
         public bool TempForTesting { get; set; } = false;
-        public bool ScoreAnimFinished = false;
         public bool GameOver = false;
         private bool _PuzzleMode = true;
         public bool PuzzleMode
@@ -154,8 +153,6 @@ namespace Hopper
             //Connect(nameof(Stage.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
 
             ScoreBox ScoreBox = GetNode<ScoreBox>("../HUD/ScoreBox"); //FIXME: this basically defeats the object of signaling up I think
-            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationFinished), this, nameof(ScoreAnimationFinished));
-            ScoreBox.PlayerLevelScore.Connect(nameof(ScoreLabel.ScoreAnimationStarted), this, nameof(ScoreAnimationStarted));
 
             if (Map != null) Map.ConnectSaveSignal(this);
 
@@ -270,7 +267,7 @@ namespace Hopper
             Grid.Connect(nameof(Grid.TileSlidUp), this, nameof(CalculatePlayerMovementAfterBossMove));
             
             if (NextLevel.ScoreRequired > 0)
-                HUD.ShowScoreBox();
+                HUD.ShowScoreBox(NextLevel.ScoreRequired);
             else
                 HUD.HideScoreBox();
                 
@@ -488,7 +485,7 @@ namespace Hopper
 
             if (level != null)
             {
-                HUD.UpdateScore(updatedScore);
+                HUD.UpdateScore(level.ScoreRequired - updatedScore);
                 
                 if (Boss != null)
                 {
@@ -568,9 +565,6 @@ namespace Hopper
                 HUD.OverlayMenu.LevelSelectButton.Disconnect("pressed", this, nameof(Pause));
             HUD.OverlayMenu.LevelSelectButton.Connect("pressed", this, nameof(Pause));
         }
-
-        private void ScoreAnimationFinished()   { ScoreAnimFinished = true; }
-        private void ScoreAnimationStarted()    { ScoreAnimFinished = false; }
 
         public void ShowStage()
         {

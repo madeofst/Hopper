@@ -75,9 +75,10 @@ namespace Hopper
             ScoreBox.Visible = false;
         }
 
-        public void ShowScoreBox()
+        public void ShowScoreBox(int score)
         {
             ScoreBox.Visible = true;
+            ScoreBox.Init(score);
         }
 
         public void ShowTouchButtons()
@@ -114,7 +115,7 @@ namespace Hopper
 
         public void UpdateMinScore(int score, bool postGoal)
         {
-            ScoreBox.BugsRemaining.UpdateText(score.ToString(), postGoal);
+            //ScoreBox.BugsRemaining.UpdateText(score.ToString(), postGoal);
         }
 
         public void AnimateScoreBox()

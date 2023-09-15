@@ -1,32 +1,48 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class ScoreBox : Control
 {
-    public ScoreLabel PlayerLevelScore { get; set; }
-    public ScoreLabel BugsRemaining { get; set; }
+	private List<TextureRect> ScoreImages { get; set; }
 
-    public override void _Ready()
-    {
-        PlayerLevelScore = GetNode<ScoreLabel>("PlayerLevelScore");
-        BugsRemaining = GetNode<ScoreLabel>("BugsRemaining");
-    }
+	public override void _Ready()
+	{
+		ScoreImages = new List<TextureRect>();
+	}
 
-    public void UpdatePlayerScore(int levelScore)
-    {
-        if (levelScore <= 0)
-        {
-            BugsRemaining.UpdateText("0", true);
-        } 
-        else
-        {
-            BugsRemaining.UpdateText(levelScore.ToString(), true);
-        }
-    }
+	public void Init(int score)
+	{
+		ScoreImages = new List<TextureRect>();
 
-    internal void Animate()
-    {
-        PlayerLevelScore.Shake();
-        BugsRemaining.Shake();
-    }
+		foreach (TextureRect tr in GetTree().GetNodesInGroup("BugTextures"))
+		{
+			tr.Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBox.png");
+			tr.Visible = false;
+		}
+
+		for (int i = 1; i <= score; i++)
+		{
+			TextureRect tr = GetNode<TextureRect>($"HBoxContainer/Bug{i}");
+			tr.Visible = true;
+			ScoreImages.Add(tr);
+		}
+	}
+
+	public void UpdatePlayerScore(int levelScore)
+	{
+		for (int i = 0; i < ScoreImages.Count; i++)
+		{
+			if (levelScore > i)
+			{
+				ScoreImages[i].Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBoxTicked.png");
+			}
+		}
+	}
+
+	internal void Animate()
+	{
+		//ScoreImages.Shake();
+		//BugsRemaining.Shake();
+	}
 }
