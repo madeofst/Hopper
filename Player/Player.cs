@@ -420,12 +420,9 @@ namespace Hopper
                 else if (AnimationEndTile.Type == Type.Direct)
                 {
                     AnimationEndTile.RotateBounceDirectionVisual();
-                    EmitSignal(nameof(UpdateTileInstructionFromTile), AnimationEndTile);
+                    EmitSignal(nameof(UpdateTileInstruction), AnimationEndTile);
                 }
             }
-        }
-
-        public void AddTileChangeUndoInstruction(int turnNumber, Tile tile)
         }
         
         public void TriggerSplashAnimation()
@@ -576,7 +573,7 @@ namespace Hopper
             if (scoreIncrement > 0)
             {
                 CurrentTile.SetAsEaten();
-                EmitSignal(nameof(UpdateTileInstructionFromTile), CurrentTile);
+                EmitSignal(nameof(UpdateTileInstruction), CurrentTile);
             } 
             LevelScore -= scoreIncrement;
             EmitSignal(nameof(ScoreUpdated), LevelScore);
