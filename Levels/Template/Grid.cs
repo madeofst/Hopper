@@ -31,11 +31,16 @@ namespace Hopper
 
         public ResourceRepository Resources { get; set; }
         
+
         //private Vector2 ViewportSize;
+
         public Vector2 Offset;
         public Vector2 Size;
         public Vector2 TileSize;
         public bool BossMode = false;
+        //public bool FirstTileSlidUp { get;  set; } = true;
+        //FIXME: taking this out as not sure it's doing anything
+
 
         public Tile[,] Tiles;
 
@@ -230,10 +235,19 @@ namespace Hopper
             if(Editable) Input.SetDefaultCursorShape(Input.CursorShape.Arrow);
         }
 
-        public void UpdateTile(TileChangeInstruction tci)
+        public void UpdateTile(TileChangeInstruction tci, bool slide = true)
         {
             UpdateTile(tci.TileGridPosition, tci.TileType, tci.Score, tci.BounceDirection, tci.Eaten, tci.Activated);
-            GetTile(tci.TileGridPosition).SlideUp();
+            Tile tile = GetTile(tci.TileGridPosition);
+            if (slide)
+            {
+                tile.SlideUp();
+            }
+            else
+            {
+                tile.WaterSprite.Visible = false;
+                tile.BackgroundSprite.Visible = false;
+            }
         }
 
         //For updating a tile in the editor (called by signal in Tile) and boss moves

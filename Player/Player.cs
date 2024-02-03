@@ -115,6 +115,7 @@ namespace Hopper
             Visible = false;
             AnimationEndTile = null;
             CurrentAnimationNode = null;
+            PreviousAnimationNode = null;
             AnimationTimeElapsed = 0;
 
             RestartingLevel = false;
@@ -128,7 +129,7 @@ namespace Hopper
 
             EmitSignal(nameof(HopCompleted), HopsRemaining);
             EmitMoveToTop();
-            ResetAnimation();
+            ResetAnimation(Vector2.Down);
         }
 
         public void CalculateMovement(Vector2 Movement, bool Free = false)
@@ -406,14 +407,25 @@ namespace Hopper
             if (AnimationEndTile.IsInsideTree() && AnimationEndTile.Type != Type.Rock) 
             {
                 AnimationEndTile.SplashAnimation.Play("Land");
-                if (AnimationEndTile.Type != Type.Water) AnimationEndTile.LilyAnimation.Play("Land");
-                if (AnimationEndTile.Type == Type.Score) AnimationEndTile.Eat(); 
-                if (AnimationEndTile.Type == Type.Direct)
+                if (AnimationEndTile.Type != Type.Water)
                 {
-                    AnimationEndTile.RotateBounceDirectionVisual(); 
-                    EmitSignal(nameof(UpdateTileInstruction), AnimationEndTile);
-                } 
+                    AnimationEndTile.LilyAnimation.Play("Land");
+                }
+
+                if (AnimationEndTile.Type == Type.Score)
+                {
+                    //AddTileChangeUndoInstruction(CurrentLevel.MaximumHops - HopsRemaining, AnimationEndTile);
+                    AnimationEndTile.Eat(); 
+                }
+                else if (AnimationEndTile.Type == Type.Direct)
+                {
+                    AnimationEndTile.RotateBounceDirectionVisual();
+                    EmitSignal(nameof(UpdateTileInstructionFromTile), AnimationEndTile);
+                }
             }
+        }
+
+        public void AddTileChangeUndoInstruction(int turnNumber, Tile tile)
         }
         
         public void TriggerSplashAnimation()
@@ -437,10 +449,10 @@ namespace Hopper
             }
         }
 
-        public void AfterAnimation(string animationName, bool fromBossMove = false) //TODO: Need to review this part of the procedure
+        public void AfterAnimation(string animationName, bool fromScoreTileUp = false)
         {
             AnimationTimeElapsed = 0;
-            
+
             if (CurrentLevel != null)
             {
                 if (AnimationEndTile != null) GridPosition = AnimationEndTile.GridPosition;
@@ -459,21 +471,21 @@ namespace Hopper
                     }
                     else
                     {
-                        UpdateScore();
+                        UpdateScore(CurrentTile.PointValue);
 
                         if (!CheckGoal())
                         {
-                            if (CurrentAnimationNode == null) 
+                            if (CurrentAnimationNode != null)
                             {
-                                //nothing
+                                if (!fromScoreTileUp && !CurrentAnimationNode.Free)
+                                {
+                                    EmitSignal(nameof(BossMove));
+                                }
                             }
-                            else if (!fromBossMove && !CurrentAnimationNode.Free)
+
+                            if (FreeMoveComplete(fromScoreTileUp))
                             {
-                                EmitSignal(nameof(BossMove));
-                            }
-                            else if (CurrentAnimationNode.Free)
-                            {
-                                //nothing
+                                //PrimeUndoEntry(); // FIXME: add back in
                             }
 
                             CheckHopsAndFinaliseAnimation();
@@ -486,6 +498,27 @@ namespace Hopper
                 }
             }
         }
+
+        private bool FreeMoveComplete(bool fromScoreTileUp)
+        {
+            if (fromScoreTileUp)
+            {
+                return true;
+            }
+            else if (CurrentAnimationNode != null)
+            {
+                if (CurrentAnimationNode.Free)
+                    return true;
+            }
+            else if (CurrentAnimationNode == null && PreviousAnimationNode != null)
+            {
+                if (PreviousAnimationNode.Free)
+                    return true;
+            }
+            return false;
+        }
+
+
 
         public void CheckHopsAndFinaliseAnimation()
         {
@@ -503,7 +536,6 @@ namespace Hopper
                 }
             }
         }
-
 
         private void LoadNextLevel()
         {
@@ -538,17 +570,16 @@ namespace Hopper
             EmitSignal(nameof(HopCompleted), HopsRemaining);
         }
 
-        public void UpdateScore()
+        public void UpdateScore(int scoreIncrement = 0)
         {
-            if (CurrentTile.PointValue > 0)
+
+            if (scoreIncrement > 0)
             {
-                if (CurrentTile.Type == Type.Score) 
-                {
-                    CurrentTile.SetAsEaten();
-                    LevelScore -= 1;
-                    EmitSignal(nameof(ScoreUpdated), LevelScore);
-                }
-            }
+                CurrentTile.SetAsEaten();
+                EmitSignal(nameof(UpdateTileInstructionFromTile), CurrentTile);
+            } 
+            LevelScore -= scoreIncrement;
+            EmitSignal(nameof(ScoreUpdated), LevelScore);
         }
 
         private bool CheckGoal()
@@ -567,9 +598,24 @@ namespace Hopper
             if (HopsRemaining <= 0) Smoke();
         }
 
-        public void ResetAnimation()
+        public void ResetAnimation(Vector2 FacingDirection)
         {
-            PlayerAnimation.Play("IdleDown");
+            if (FacingDirection == Vector2.Down)
+            {
+                PlayerAnimation.Play("IdleDown");
+            }
+            else if (FacingDirection == Vector2.Up)
+            {
+                PlayerAnimation.Play("IdleUp");
+            }
+            else if (FacingDirection == Vector2.Left)
+            {
+                PlayerAnimation.Play("IdleLeft");
+            }
+            else if (FacingDirection == Vector2.Right)
+            {
+                PlayerAnimation.Play("IdleRight");
+            }
         }
 
         public void Appear()

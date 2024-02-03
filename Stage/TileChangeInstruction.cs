@@ -3,7 +3,7 @@ using System;
 
 namespace Hopper
 {
-    public class TileChangeInstruction
+    public class TileChangeInstruction : Godot.Object
     {
         public int ActionOnTurn;
         public Vector2 TileGridPosition;
@@ -12,6 +12,17 @@ namespace Hopper
         public bool Eaten;
         public Vector2 BounceDirection;
         public bool Activated;
+
+        public TileChangeInstruction(int actionOnTurn, Tile tile)
+        {
+            ActionOnTurn = actionOnTurn;
+            TileGridPosition = tile.GridPosition;
+            TileType = tile.Type;
+            Score = tile.PointValue;
+            Eaten = !tile.BugSprite.Visible;
+            BounceDirection = tile.BounceDirection;
+            Activated = tile.Activated;
+        }
 
         public TileChangeInstruction(int actionOnTurn, Vector2 tileGridPosition, Type tileType, int score, bool eaten, Vector2 bounceDirection, bool activated)
         {

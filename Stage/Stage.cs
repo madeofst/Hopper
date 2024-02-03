@@ -489,9 +489,9 @@ namespace Hopper
                 
                 if (Boss != null)
                 {
-                    //GD.Print("Updated the tile change instruction list here.");
                     // This is only changing the eaten value of a score tile that has just appeared
-                    Boss.UpdateInstruction(Grid.GetTile(Player.GridPosition), level.MaximumHops - Player.HopsRemaining, true);
+
+                    //Boss.UpdateInstruction(Grid.GetTile(Player.GridPosition), level.MaximumHops - Player.HopsRemaining, true);
                 }
 
                 if (updatedScore <= 0)
@@ -499,7 +499,7 @@ namespace Hopper
                     if (Boss != null) Boss.UpdateGoalInstructions(true);
                     if (!level.GoalActive && updatedScore <= 0)
                     {
-                        level.UpdateGoalState(updatedScore);
+                        level.UpdateGoalState(true);
                         
                         if (level.MaximumHops - Player.HopsRemaining > 0)
                         {
@@ -507,6 +507,10 @@ namespace Hopper
                             HUD.AnimateScoreBox();
                         }
                     }
+                }
+                else if (level.GoalActive && updatedScore > 0)
+                {
+                    level.UpdateGoalState(false);
                 }
             }
         }

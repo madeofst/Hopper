@@ -95,14 +95,26 @@ namespace Hopper
             LevelData.PlayerStartPosition = PlayerStartPosition;
         }
 
-        public bool UpdateGoalState(int currentScore)
+        public bool UpdateGoalState(bool On)
         {
-            GoalActive = true;
-            foreach (Tile t in Grid.Tiles)
+            if (On)
             {
-                if (t.Type == Type.Goal) Grid.ReplaceTile(t.GridPosition, Resources.GoalOnScene.Instance() as Tile);
+                GoalActive = true;
+                foreach (Tile t in Grid.Tiles)
+                {
+                    if (t.Type == Type.Goal) Grid.ReplaceTile(t.GridPosition, Resources.GoalOnScene.Instance() as Tile);
+                }
+                return true;
             }
-            return true;
+            else
+            {
+                GoalActive = false;
+                foreach (Tile t in Grid.Tiles)
+                {
+                    if (t.Type == Type.Goal) Grid.ReplaceTile(t.GridPosition, Resources.GoalOffScene.Instance() as Tile);
+                }
+                return true;
+            }
         }
 
         private void UpdatePlayerStart(Vector2 gridPosition)

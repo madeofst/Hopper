@@ -15,7 +15,7 @@ namespace Hopper
             MapContainer = (Node2D)GD.Load<PackedScene>("res://Map/MapContainer.tscn").Instance();
             StartMenu = (StartMenu)GD.Load<PackedScene>("res://Menus/StartMenu.tscn").Instance();
             LevelTitleScreen = (LevelTitleScreen)GD.Load<PackedScene>("res://Menus/LevelTitleScreen.tscn").Instance();
-            AudioRepo = (AudioRepository)GD.Load<PackedScene>("res://Music/AudioRepository.tscn").Instance();
+            AudioRepo = GetNode<AudioRepository>("/root/AudioRepository");
             CallDeferred(nameof(AddMenusToTree));
         }
 
@@ -23,7 +23,6 @@ namespace Hopper
         {
             GetViewport().AddChild(MapContainer);
             AudioRepo.Visible = false;
-            GetViewport().AddChild(AudioRepo);
             GetViewport().AddChild(StartMenu);
             StartMenu.UpdateLoadButton();
             LevelTitleScreen.Visible = false;

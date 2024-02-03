@@ -37,6 +37,10 @@ public class ScoreBox : Control
 			{
 				ScoreImages[i].Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBoxTicked.png");
 			}
+			else
+			{
+				ScoreImages[i].Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBox.png");
+			}
 		}
 	}
 
