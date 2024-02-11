@@ -59,11 +59,29 @@ namespace Hopper
         public delegate void BossMove();
         [Signal]
         public delegate void UpdateTileInstruction(Tile tile);
+        [Signal]
+        public delegate void SaveUndoState();
+        [Signal]
+        public delegate void InitUndo();
 
         //Player general parameters
         public int HopsRemaining { get; set; } = 3;
-        public int TotalScore { get; set; } = 0;
-        public int LevelScore { get; set; } = 0;
+        //public int TotalScore { get; set; } = 0;
+
+        public int _LevelScore;
+        public int LevelScore
+        { 
+            get
+            {
+                return _LevelScore;
+            }
+            set
+            {
+                _LevelScore = value;
+                EmitSignal(nameof(ScoreUpdated), _LevelScore);
+            } 
+        }
+
         public bool Active { get; private set; } = false;
         public bool RestartingLevel = false;
         public bool BossMode = false;
@@ -99,6 +117,7 @@ namespace Hopper
         }
 
         public bool CurrentAnimationNearEnd { get; private set; }
+        public Vector2 FacingDirection { get; set; }
 
         public override void _Ready()
         {
@@ -117,6 +136,7 @@ namespace Hopper
             CurrentAnimationNode = null;
             PreviousAnimationNode = null;
             AnimationTimeElapsed = 0;
+            LevelScore = 0;
 
             RestartingLevel = false;
             CurrentLevel = currentLevel;
@@ -124,6 +144,7 @@ namespace Hopper
             GridPosition = CurrentLevel.PlayerStartPosition;
             HopsRemaining = CurrentLevel.MaximumHops;
             LevelScore = CurrentLevel.ScoreRequired;
+            FacingDirection = Vector2.Down;
 
             MoveInputQueue = new Queue<Vector2>();
 
@@ -218,7 +239,7 @@ namespace Hopper
                 }
                 if (MovementNodes.Count >= 100)
                 {
-                    GD.Print("Movement nodes exhausted.");
+                    //GD.Print("Movement nodes exhausted.");
                     break;
                 }
             } while (true);
@@ -252,6 +273,7 @@ namespace Hopper
                     current = next;
                 }
                 next = movementNodes.Dequeue();
+                if (movementNodes.Count <= 0) FacingDirection = next.MovementDirection;
 
                 AnimationNode nextAnimationNode = NextAnimationNode(current, next, free);
 
@@ -446,6 +468,13 @@ namespace Hopper
             }
         }
 
+        public void HaltAnimation()
+        {
+            ClearQueues();
+            CurrentAnimationNode = null;
+            AnimationEndTile = null;
+        }
+
         public void AfterAnimation(string animationName, bool fromScoreTileUp = false)
         {
             AnimationTimeElapsed = 0;
@@ -480,10 +509,10 @@ namespace Hopper
                                 }
                             }
 
-                            if (FreeMoveComplete(fromScoreTileUp))
+/*                             if (FreeMoveComplete(fromScoreTileUp))
                             {
                                 //PrimeUndoEntry(); // FIXME: add back in
-                            }
+                            } */
 
                             CheckHopsAndFinaliseAnimation();
                         }
@@ -644,6 +673,9 @@ namespace Hopper
                 if(CurrentAnimationNode == null && MoveInputQueue.Count > 0)
                 {
                     if(BossMode) Deactivate();
+                    //GD.Print("Start of next key press");
+                    //GD.Print(PreviousAnimationNode);
+                    EmitSignal(nameof(SaveUndoState));
                     CalculateMovement(MoveInputQueue.Dequeue());
                 }
             }
@@ -698,7 +730,7 @@ namespace Hopper
                 //GD.Print($"{an.Animation.ResourceName} -AniLen {animationLength} -TotDis {totalDistance} -DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
                 //GD.Print($"-DisTra {distanceTravelled} -DisRem {distanceRemaining} -Pix {pixelsToMove} -TimRat {timeRatio} -Interp {CurrentMovementCurve.Interpolate(timeRatio)}");
                 //GD.Print($"DR{distanceRemaining}_   TR {timeRatio}");
-                
+
                 if (GlobalPosition == AnimationEndTile.GlobalPosition &&
                     (an.Curve == SwimCurve) &&
                     an.Animation.ResourceName.Right(an.Animation.ResourceName.Length - 4) != "Turn")
@@ -734,15 +766,18 @@ namespace Hopper
 
             if (Active && 
                 MoveInputQueue.Count <= HopsRemaining && 
-               ((BossMode && CurrentAnimationNode == null) || !BossMode) &&
-               (CurrentAnimationNearEnd || (!currentResourceName.Contains("Swim") &&
-                                            !currentResourceName.Contains("Splash") &&
-                                            !currentResourceName.Contains("Bounce"))))
+               ((BossMode && CurrentAnimationNode == null) || !BossMode))
             {
-                if      (@event.IsActionPressed("ui_left"))  MoveInputQueue.Enqueue(Vector2.Left);
-                else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);
-                else if (@event.IsActionPressed("ui_up"))    MoveInputQueue.Enqueue(Vector2.Up);
-                else if (@event.IsActionPressed("ui_down"))  MoveInputQueue.Enqueue(Vector2.Down);
+                if (@event.IsActionPressed("ui_undo"))  EmitSignal(nameof(InitUndo));
+                if (CurrentAnimationNearEnd || (!currentResourceName.Contains("Swim") &&
+                                            !currentResourceName.Contains("Splash") &&
+                                            !currentResourceName.Contains("Bounce")))
+                {
+                    if      (@event.IsActionPressed("ui_left"))  MoveInputQueue.Enqueue(Vector2.Left);
+                    else if (@event.IsActionPressed("ui_right")) MoveInputQueue.Enqueue(Vector2.Right);
+                    else if (@event.IsActionPressed("ui_up"))    MoveInputQueue.Enqueue(Vector2.Up);
+                    else if (@event.IsActionPressed("ui_down"))  MoveInputQueue.Enqueue(Vector2.Down);
+                }
 
 /*                 if (@event.IsActionPressed("ui_left")  ||
                     @event.IsActionPressed("ui_right") ||

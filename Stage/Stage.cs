@@ -24,6 +24,9 @@ namespace Hopper
         //Boss
         private Boss Boss { get; set; }
 
+        //Undo Manager
+        private UndoManager UndoManager { get; set; }
+
         //Level
         public Level CurrentLevel { get; set; }
         public Level NextLevel { get; set; }
@@ -88,6 +91,7 @@ namespace Hopper
             Water = GetNode<TextureRect>("Water");
             Background = GetNode<TextureRect>("Background");
             HUD = GetNode<HUD>("../HUD"); 
+            UndoManager = GetNode<UndoManager>("UndoManager"); 
             LevelTitleScreen = GetNode<LevelTitleScreen>("../LevelTitleScreen");
 
             FailLevel = GetNode<AudioStreamPlayer>("../AudioRepository/FailLevel");
@@ -149,8 +153,6 @@ namespace Hopper
             Music.Play();
             
             HUD.LockPosition(Position);
-
-            //Connect(nameof(Stage.TimeUpdate), Stopwatch, "UpdateStopwatch"); //FIXME: need to sort out stopwatch at some point
 
             ScoreBox ScoreBox = GetNode<ScoreBox>("../HUD/ScoreBox"); //FIXME: this basically defeats the object of signaling up I think
 
@@ -310,8 +312,9 @@ namespace Hopper
             if (CurrentLevel != null) CurrentLevel.QueueFree();
             CurrentLevel = NextLevel;
             NextLevel = null;
+            
+            UndoManager.Init(Player, CurrentLevel);
             Visible = true;
-
         }
 /* 
         private void ModulateBackgrounds()
@@ -413,7 +416,7 @@ namespace Hopper
             }
         }
 
-        private void UpdateBossIndicators(Level level)
+        public void UpdateBossIndicators(Level level)
         {
             if (Boss != null)
             {
@@ -588,7 +591,7 @@ namespace Hopper
 
         private void PlayMusic()    { Music.Play(); }
 
-        private void MovePlayerToTop()  { MoveChild(Player, GetChildCount()); }
+        public void MovePlayerToTop()  { MoveChild(Player, GetChildCount()); }
         private void MovePlayerBehind() { MoveChild(Player, Background.GetPositionInParent()); }
 
         private void MoveToTop(Node node = null)
