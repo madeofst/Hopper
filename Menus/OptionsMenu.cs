@@ -50,7 +50,6 @@ namespace Hopper
 		private double CalculateLinear(float dB)
 		{
 			double result = Math.Pow(10, dB/10);
-			GD.Print(result);
 			return result;
 		}
 
