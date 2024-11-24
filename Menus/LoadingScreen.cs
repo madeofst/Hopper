@@ -16,10 +16,9 @@ namespace Hopper
             StartMenu = (StartMenu)GD.Load<PackedScene>("res://Menus/StartMenu.tscn").Instance();
             LevelTitleScreen = (LevelTitleScreen)GD.Load<PackedScene>("res://Menus/LevelTitleScreen.tscn").Instance();
             AudioRepo = GetNode<AudioRepository>("/root/AudioRepository");
-            CallDeferred(nameof(AddMenusToTree));
         }
 
-        private void AddMenusToTree()
+        private void AfterAnimation()
         {
             GetViewport().AddChild(MapContainer);
             AudioRepo.Visible = false;

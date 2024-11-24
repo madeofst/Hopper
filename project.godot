@@ -12,7 +12,7 @@ config_version=4
 
 config/name="Hopper"
 run/main_scene="res://Menus/LoadingScreen.tscn"
-boot_splash/image="res://Menus/Placeholder_Splash.png"
+boot_splash/image="res://Menus/Resources/BootSplash_NS.png"
 config/icon="res://Player/Resources/Frog1_32x32_front.png"
 
 [autoload]
@@ -24,6 +24,7 @@ AudioRepository="*res://Music/AudioRepository.tscn"
 
 window/size/width=480
 window/size/height=270
+window/size/fullscreen=true
 window/size/test_width=480
 window/size/test_height=270
 window/dpi/allow_hidpi=true
