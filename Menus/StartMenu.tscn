@@ -3,13 +3,14 @@
 [ext_resource path="res://Themes/StartMenu.tres" type="Theme" id=1]
 [ext_resource path="res://Menus/NewGameButton.cs" type="Script" id=2]
 [ext_resource path="res://Menus/StartMenu.cs" type="Script" id=3]
-[ext_resource path="res://Music/Menu_short.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Music/menu_short_norain_intro.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Menus/Resources/Menu.png" type="Texture" id=10]
 [ext_resource path="res://Stage/Resources/TestPondDrawing.png" type="Texture" id=12]
 [ext_resource path="res://Shaders/WaterShader.tres" type="Material" id=13]
 [ext_resource path="res://Menus/Resources/Blue.png" type="Texture" id=14]
 
 [node name="StartMenu" type="MarginContainer"]
+modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 3.05176e-05
@@ -21,6 +22,7 @@ custom_constants/margin_bottom = 0
 script = ExtResource( 3 )
 
 [node name="WaterShader" type="TextureRect" parent="."]
+visible = false
 material = ExtResource( 13 )
 margin_right = 480.0
 margin_bottom = 270.0
@@ -47,6 +49,7 @@ texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
 margin_right = 480.0
 margin_bottom = 270.0
 mouse_filter = 2
@@ -105,7 +108,7 @@ text = "Quit"
 [node name="Tween" type="Tween" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
+stream = ExtResource( 4 )
 autoplay = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/LoadButton" to="." method="LoadPressed"]

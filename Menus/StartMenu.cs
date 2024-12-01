@@ -17,16 +17,20 @@ namespace Hopper
 		private bool EditorMode;
 		private Viewport MapViewport;
 		private bool DEVMODE;
+		private MarginContainer MarginContainer;
 
 		public override void _Ready()
 		{
 			MapViewport = GetNode<Viewport>("/root/MapContainer/ViewportContainer/Viewport");
 			Music = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 			Tween = GetNode<Tween>("Tween");
+			MarginContainer = GetNode<MarginContainer>("MarginContainer");
 			NewGameButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/NewGameButton");
 			LoadButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/LoadButton");
 			EditorButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/EditorButton");
 			DEVMODE = GetNode<ResourceRepository>("/root/ResourceRepository").DEVMODE;
+
+			FadeIn();
 
 			if (DEVMODE)
 			{
@@ -121,6 +125,12 @@ namespace Hopper
 			}
 		}
 
+        public void FadeIn()
+        {
+            Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 3.42f, Tween.TransitionType.Sine, Tween.EaseType.In);
+			Tween.Start();
+        }
+
 		private void FadeOut()
 		{
 			Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), 1f, Tween.TransitionType.Sine, Tween.EaseType.Out);
@@ -139,18 +149,25 @@ namespace Hopper
 
 		public void AfterFade(object x, string key)
 		{
-			Music.Stop();
-			if (!EditorMode)
+			if (this.Modulate.a == 0)
 			{
-				HUD.UnlockPosition();
-				HUD.Visible = true;
+				Music.Stop();
+				if (!EditorMode)
+				{
+					HUD.UnlockPosition();
+					HUD.Visible = true;
+				}
+				else
+				{
+					HUD.Visible = false;
+				}
+				//GetViewport().MoveChild(this, 2);
+				Hide();
 			}
 			else
 			{
-				HUD.Visible = false;
+				MarginContainer.Visible = true;
 			}
-			//GetViewport().MoveChild(this, 2);
-			Hide();
 		}
 
 		private void LoadHUD()
