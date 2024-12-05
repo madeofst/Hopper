@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://HUD/Resources/ScoreBox.png" type="Texture" id=1]
+[ext_resource path="res://HUD/ScoreBug.tscn" type="PackedScene" id=2]
 [ext_resource path="res://HUD/ScoreBox.cs" type="Script" id=3]
 
 [node name="ScoreBox" type="MarginContainer"]
@@ -9,7 +9,7 @@ margin_bottom = 18.0
 custom_constants/margin_top = 8
 script = ExtResource( 3 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Bugs" type="HBoxContainer" parent="."]
 margin_left = 122.0
 margin_top = 8.0
 margin_right = 358.0
@@ -17,61 +17,51 @@ margin_bottom = 26.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Bug1" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug1" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_right = 20.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug2" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug2" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 24.0
 margin_right = 44.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug3" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug3" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 48.0
 margin_right = 68.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug4" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug4" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 72.0
 margin_right = 92.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug5" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug5" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 96.0
 margin_right = 116.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug6" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug6" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 120.0
 margin_right = 140.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug7" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug7" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 144.0
 margin_right = 164.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug8" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug8" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 168.0
 margin_right = 188.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug9" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug9" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 192.0
 margin_right = 212.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )
 
-[node name="Bug10" type="TextureRect" parent="HBoxContainer" groups=["BugTextures"]]
+[node name="Bug10" parent="Bugs" groups=["ScoreBugs"] instance=ExtResource( 2 )]
 margin_left = 216.0
 margin_right = 236.0
 margin_bottom = 18.0
-texture = ExtResource( 1 )

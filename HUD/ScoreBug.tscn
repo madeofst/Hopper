@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://HUD/Resources/ScoreBox.png" type="Texture" id=1]
+[ext_resource path="res://HUD/ScoreBug.cs" type="Script" id=2]
+[ext_resource path="res://HUD/Resources/ScoreBoxBackground.png" type="Texture" id=3]
+
+[node name="Bug" type="TextureRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_left = -2.0
+margin_top = -15.0
+margin_right = 38.0
+margin_bottom = 25.0
+texture = ExtResource( 3 )
+
+[node name="BugTexture" type="TextureRect" parent="." groups=["BugTextures"]]
+margin_right = 20.0
+margin_bottom = 18.0
+texture = ExtResource( 1 )

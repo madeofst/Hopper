@@ -4,42 +4,42 @@ using System.Collections.Generic;
 
 public class ScoreBox : Control
 {
-	private List<TextureRect> ScoreImages { get; set; }
+	private List<ScoreBug> ScoreBugs { get; set; }
 
 	public override void _Ready()
 	{
-		ScoreImages = new List<TextureRect>();
+		ScoreBugs = new List<ScoreBug>();
 	}
 
 	public void Init(int score)
 	{
-		ScoreImages = new List<TextureRect>();
+		ScoreBugs = new List<ScoreBug>();
 
-		foreach (TextureRect tr in GetTree().GetNodesInGroup("BugTextures"))
+		foreach (ScoreBug scoreBug in GetTree().GetNodesInGroup("ScoreBugs"))
 		{
-			tr.Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBox.png");
-			tr.Visible = false;
+			scoreBug.Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBox.png");
+			scoreBug.Visible = false;
 		}
 
 		for (int i = 1; i <= score; i++)
 		{
-			TextureRect tr = GetNode<TextureRect>($"HBoxContainer/Bug{i}");
-			tr.Visible = true;
-			ScoreImages.Add(tr);
+			ScoreBug scoreBug = GetNode<ScoreBug>($"Bugs/Bug{i}");
+			scoreBug.Visible = true;
+			ScoreBugs.Add(scoreBug);
 		}
 	}
 
 	public void UpdatePlayerScore(int levelScore)
 	{
-		for (int i = 0; i < ScoreImages.Count; i++)
+		for (int i = 0; i < ScoreBugs.Count; i++)
 		{
 			if (levelScore > i)
 			{
-				ScoreImages[i].Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBoxTicked.png");
+				ScoreBugs[i].BugTexture.Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBoxTicked.png");
 			}
 			else
 			{
-				ScoreImages[i].Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBox.png");
+				ScoreBugs[i].BugTexture.Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBox.png");
 			}
 		}
 	}
