@@ -296,6 +296,8 @@ namespace Hopper
 			ConnectRestartButton(NextLevel);
 			ConnectOverlayMenu(NextLevel);
 
+			if (Boss != null) Boss.QueueFree();
+
 			File file = new File();
 			if (file.FileExists(NextLevel.LevelData.ResourcePath.Replace("_Data","_BossData")))
 			{
@@ -529,7 +531,6 @@ namespace Hopper
 		public void RestartLevel(string levelName, bool fail = false)
 		{
 			Player.RestartingLevel = true;
-			if (Boss!= null) Boss.QueueFree();
 			NewLevel(levelName, true);
 			if (fail) HUD.ShowPopUp("Try again!");
 			Player.Appear();

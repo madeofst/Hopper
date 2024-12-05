@@ -12,6 +12,7 @@ namespace Hopper
 
         public override void _Ready()
         {
+            Input.SetMouseMode(Input.MouseMode.Hidden);
             MapContainer = (Node2D)GD.Load<PackedScene>("res://Map/MapContainer.tscn").Instance();
             StartMenu = (StartMenu)GD.Load<PackedScene>("res://Menus/StartMenu.tscn").Instance();
             LevelTitleScreen = (LevelTitleScreen)GD.Load<PackedScene>("res://Menus/LevelTitleScreen.tscn").Instance();
