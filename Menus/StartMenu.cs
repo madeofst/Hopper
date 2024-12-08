@@ -30,14 +30,15 @@ namespace Hopper
 			EditorButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/EditorButton");
 			DEVMODE = GetNode<ResourceRepository>("/root/ResourceRepository").DEVMODE;
 
-			FadeIn();
-
 			if (DEVMODE)
 			{
+				this.Modulate = new Color(1, 1, 1, 1);
+				MarginContainer.Visible = true;
 				EditorButton.Show();
 			}
 			else
 			{
+				FadeIn();
 				EditorButton.Hide();
 			}
 		}

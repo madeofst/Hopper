@@ -8,6 +8,7 @@ namespace Hopper
         private StartMenu StartMenu;
         private LevelTitleScreen LevelTitleScreen;
         private AudioRepository AudioRepo;
+        private bool DEVMODE;
         private Node2D MapContainer;
 
         public override void _Ready()
@@ -17,6 +18,12 @@ namespace Hopper
             StartMenu = (StartMenu)GD.Load<PackedScene>("res://Menus/StartMenu.tscn").Instance();
             LevelTitleScreen = (LevelTitleScreen)GD.Load<PackedScene>("res://Menus/LevelTitleScreen.tscn").Instance();
             AudioRepo = GetNode<AudioRepository>("/root/AudioRepository");
+            DEVMODE = GetNode<ResourceRepository>("/root/ResourceRepository").DEVMODE;
+            
+            if (DEVMODE)
+            {
+                CallDeferred(nameof(AfterAnimation));
+            }
         }
 
         private void AfterAnimation()
