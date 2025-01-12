@@ -741,11 +741,15 @@ namespace Hopper
             }
         }
 
-        public override void _Input(InputEvent @event)
+        public override void _UnhandledKeyInput(InputEventKey @event)
         {
-            if (Active && (@event.IsActionPressed("ui_cancel") ||
-                           @event.IsActionPressed("ui_level_select")))
+/*             if (Active && @event.IsActionPressed("ui_cancel"))
             {   
+                GD.Print("Escape propagated to player.");
+            } */
+
+/*             if (Active && @event.IsActionPressed("ui_level_select"))
+            {
                 Deactivate();
                 EmitSignal(nameof(Pause));
             }
@@ -760,7 +764,7 @@ namespace Hopper
             else if (Active && @event.IsActionPressed("ui_map"))
             {
                 EmitSignal(nameof(BackToMap));
-            }
+            } */
 
             string currentResourceName = CurrentAnimationNode == null ? "" : CurrentAnimationNode.Animation.ResourceName;
 

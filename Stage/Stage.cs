@@ -559,19 +559,19 @@ namespace Hopper
 		{
 			if (HUD.OverlayMenu.RestartButton.IsConnected("pressed", Player, nameof(Player.RestartPressed)))
 				HUD.OverlayMenu.RestartButton.Disconnect("pressed", Player, nameof(Player.RestartPressed));
-			HUD.OverlayMenu.RestartButton.Connect("pressed", Player, nameof(Player.RestartPressed));
+				HUD.OverlayMenu.RestartButton.Connect("pressed", Player, nameof(Player.RestartPressed));
 
 			if (HUD.OverlayMenu.QuitButton.IsConnected("pressed", this, nameof(QuitToMenu)))
 				HUD.OverlayMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
-			HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+				HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
 
 			if (HUD.OverlayMenu.MapButton.IsConnected("pressed", this, nameof(QuitToMap)))
 				HUD.OverlayMenu.MapButton.Disconnect("pressed", this, nameof(QuitToMap));
-			HUD.OverlayMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
+				HUD.OverlayMenu.MapButton.Connect("pressed", this, nameof(QuitToMap));
 
-			if (HUD.OverlayMenu.LevelSelectButton.IsConnected("pressed", this, nameof(Pause)))
-				HUD.OverlayMenu.LevelSelectButton.Disconnect("pressed", this, nameof(Pause));
-			HUD.OverlayMenu.LevelSelectButton.Connect("pressed", this, nameof(Pause));
+			if (HUD.OverlayMenu.LevelSelectOverlayButton.IsConnected("pressed", this, nameof(Pause)))
+				HUD.OverlayMenu.LevelSelectOverlayButton.Disconnect("pressed", this, nameof(Pause));
+				HUD.OverlayMenu.LevelSelectOverlayButton.Connect("pressed", this, nameof(Pause));
 		}
 
 		public void ShowStage()
@@ -603,7 +603,7 @@ namespace Hopper
 
 		private void Resume()
 		{
-			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Stage);
+			HUD.OverlayMenu.ChangeMode(OverlayMenuMode.Minimised);
 			MoveToTop(HUD);
 			if (Player.HopsRemaining == CurrentLevel.MaximumHops)
 			{

@@ -5,7 +5,7 @@ namespace Hopper
 {
     public class VictoryScreen : Control
     {
-        public override void _Input(InputEvent @event)
+        public override void _UnhandledInput(InputEvent @event)
         {
             if (@event.IsActionPressed("ui_accept") ||
                 @event.IsActionPressed("ui_cancel") )

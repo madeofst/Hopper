@@ -7,6 +7,8 @@ public class LevelSelectButton : TextureButton
     public delegate void ChangeFocus(string name);
     [Signal]
     public delegate void AnimationComplete();
+    [Signal]
+    public delegate void LevelSelectionMade();
 
     public ShaderMaterial ThickShader {get; set; }
     public ShaderMaterial ThinShader {get; set; }
@@ -69,4 +71,14 @@ public class LevelSelectButton : TextureButton
         }
     }
 
+    public void SelectionMade()
+    {
+        GD.Print("Level selected. " + Name);
+        EmitSignal(nameof(LevelSelectionMade));
+    }
+    
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (HasFocus()) AcceptEvent();
+    }
 }

@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Menus/OverlayMenuButton.cs" type="Script" id=1]
+
+[node name="MenuButton" type="Button"]
+rect_min_size = Vector2( 25, 20 )
+size_flags_vertical = 0
+text = "M"
+script = ExtResource( 1 )
+ButtonLabelText = "Menu button"
+
+[node name="Label" type="RichTextLabel" parent="."]
+modulate = Color( 0.141176, 0.2, 0.160784, 1 )
+margin_left = 30.0
+margin_top = 2.0
+margin_right = 128.0
+margin_bottom = 22.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+bbcode_enabled = true
+bbcode_text = "Menu button"
+text = "Menu button"
+
+[connection signal="focus_entered" from="." to="." method="OnFocus"]
+[connection signal="focus_exited" from="." to="." method="LostFocus"]
+[connection signal="pressed" from="." to="." method="MenuButtonPressed"]

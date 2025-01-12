@@ -28,12 +28,15 @@ namespace Hopper
 
         private void AfterAnimation()
         {
-            GetViewport().AddChild(MapContainer);
-            AudioRepo.Visible = false;
-            GetViewport().AddChild(StartMenu);
-            StartMenu.UpdateLoadButton();
-            LevelTitleScreen.Visible = false;
-            GetViewport().AddChild(LevelTitleScreen);
+            if (GetNode<Node2D>("/root/MapContainer") == null)
+            {
+                GetViewport().AddChild(MapContainer);
+                AudioRepo.Visible = false;
+                GetViewport().AddChild(StartMenu);
+                StartMenu.UpdateLoadButton();
+                LevelTitleScreen.Visible = false;
+                GetViewport().AddChild(LevelTitleScreen);
+            }
         }
 
 

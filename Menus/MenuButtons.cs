@@ -19,4 +19,20 @@ public class MenuButton : Button
     {
         Label.Hide();
     }
+
+    public void UpdateLabel(string newText)
+    {
+        Label.BbcodeText = newText;
+    }
+
+    public void HighlightLabelText()
+    {
+        Label.Modulate = new Color(1, 1, 1, 1);
+    }
+
+    public void DehighlightLabelText()
+    {
+        Label.Modulate = new Color(0.14f, 0.2f, 0.16f, 1);
+    }
+
 }

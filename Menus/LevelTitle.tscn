@@ -6,6 +6,7 @@
 [node name="LevelTitle" type="Control"]
 use_parent_material = true
 rect_min_size = Vector2( 480, 270 )
+input_pass_on_modal_close_click = false
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 1 )

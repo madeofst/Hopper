@@ -116,6 +116,7 @@ namespace Hopper
                 LevelSelectors.Add(b);
                 b.Connect(nameof(LevelSelectButton.ChangeFocus), this, nameof(UpdateFocus));
                 b.Connect(nameof(LevelSelectButton.AnimationComplete), this, nameof(SetButtonFocus));
+                b.Connect(nameof(LevelSelectButton.LevelSelectionMade), this, nameof(AnimateHide));
             }
         }
 
@@ -240,32 +241,36 @@ namespace Hopper
             }
         }
 
-        public override void _Input(InputEvent @event)
+        public override void _GuiInput(InputEvent @event)
         {
-            if (!Animating && Visible)
+            /* if (!Animating && Visible)
             {
                 if (@event.IsActionPressed("ui_accept") ||
                     @event is InputEventScreenTouch && @event.IsPressed())
                 {
+                    AcceptEvent();
                     StopInput();
                     AnimateHide();
                 }
                 else if (@event.IsActionPressed("ui_map"))
                 {
+                    AcceptEvent();
                     StopInput();
                     EmitSignal("BackToMap");
                 }
                 else if (@event.IsActionPressed("ui_quit"))
                 {
+                    AcceptEvent();
                     StopInput();
                     EmitSignal("QuitToMenu");
                 }
                 else if (@event.IsActionPressed("ui_cancel"))
                 {
+                    AcceptEvent();
                     StopInput();
                     AnimateHide();
                 }
-            }
+            } */
         }
 
         private void StartInput()
@@ -284,10 +289,10 @@ namespace Hopper
             }
         }
 
-        private void MoveLevelSelection(Vector2 direction)
+/*         private void MoveLevelSelection(Vector2 direction)
         {
             //GD.Print($"Select {direction}");
-        }
+        } */
 
         public void ClickToHide()
         {

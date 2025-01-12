@@ -63,11 +63,11 @@ shader_param/pixelSize = 1
 shader_param/heightMap = ExtResource( 6 )
 
 [node name="LevelSelectButton" type="TextureButton"]
-visible = false
 use_parent_material = true
 margin_right = 48.0
 margin_bottom = 48.0
 focus_mode = 0
+input_pass_on_modal_close_click = false
 enabled_focus_mode = 0
 texture_normal = ExtResource( 1 )
 texture_focused = ExtResource( 2 )
@@ -84,4 +84,4 @@ position = Vector2( -2, 24 )
 texture = ExtResource( 5 )
 
 [connection signal="focus_entered" from="." to="." method="GotFocus"]
-[connection signal="pressed" from="." to="." method="GotFocus"]
+[connection signal="pressed" from="." to="." method="SelectionMade"]
