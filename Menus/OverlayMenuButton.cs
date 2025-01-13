@@ -7,11 +7,6 @@ public class OverlayMenuButton : MenuButton
     [Export]
     public string ButtonLabelText;
 
-    public virtual void MenuButtonPressed()
-    {
-        GD.Print("Standard menu button press.");
-    }
-
     public override void _Process(float delta)
     {
         UpdateLabel(ButtonLabelText);

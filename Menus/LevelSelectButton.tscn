@@ -63,6 +63,7 @@ shader_param/pixelSize = 1
 shader_param/heightMap = ExtResource( 6 )
 
 [node name="LevelSelectButton" type="TextureButton"]
+visible = false
 use_parent_material = true
 margin_right = 48.0
 margin_bottom = 48.0

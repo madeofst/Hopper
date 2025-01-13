@@ -23,4 +23,3 @@ text = "Menu button"
 
 [connection signal="focus_entered" from="." to="." method="OnFocus"]
 [connection signal="focus_exited" from="." to="." method="LostFocus"]
-[connection signal="pressed" from="." to="." method="MenuButtonPressed"]

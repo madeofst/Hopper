@@ -76,9 +76,13 @@ public class LevelSelectButton : TextureButton
         GD.Print("Level selected. " + Name);
         EmitSignal(nameof(LevelSelectionMade));
     }
-    
-    public override void _UnhandledInput(InputEvent @event)
+
+    public override void _GuiInput(InputEvent @event)
     {
-        if (HasFocus()) AcceptEvent();
+        if (@event.IsActionPressed("ui_accept") || 
+            @event.IsActionPressed("ui_select"))
+        {
+            AcceptEvent();
+        }
     }
 }

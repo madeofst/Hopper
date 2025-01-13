@@ -94,37 +94,40 @@ namespace Hopper
             }
         }
 
-        public override void _UnhandledInput(InputEvent @event)
-        {           
-            if (@event.IsActionPressed("ui_left"))
+        public override void _UnhandledKeyInput(InputEventKey @event)
+        {
+            if (IsProcessingInput())
             {
-                currentPath = GetPath("Left");
-            }
-            else if (@event.IsActionPressed("ui_right"))
-            {
-                currentPath = GetPath("Right");
-            }
-            else if (@event.IsActionPressed("ui_down"))
-            {
-                currentPath = GetPath("Down");
-            }
-            else if (@event.IsActionPressed("ui_up"))
-            {
-                currentPath = GetPath("Up");
-            }
-            else if (@event.IsActionPressed("ui_accept"))
-            {
-                if (PointerOnStage()) LoadStage();
-            }
-            else if (@event.IsActionPressed("ui_quit"))
-            {
-                GetParent<Map>().QuitToMenu();
-            }
+                if (@event.IsActionPressed("ui_left"))
+                {
+                    currentPath = GetPath("Left");
+                }
+                else if (@event.IsActionPressed("ui_right"))
+                {
+                    currentPath = GetPath("Right");
+                }
+                else if (@event.IsActionPressed("ui_down"))
+                {
+                    currentPath = GetPath("Down");
+                }
+                else if (@event.IsActionPressed("ui_up"))
+                {
+                    currentPath = GetPath("Up");
+                }
+                else if (@event.IsActionPressed("ui_accept"))
+                {
+                    if (PointerOnStage()) LoadStage();
+                }
+    /*             else if (@event.IsActionPressed("ui_quit"))
+                {
+                    GetParent<Map>().QuitToMenu();
+                } */
 
-            if (currentPath != null)
-            {
-                currentPathFollow = currentPath.GetNode<PathFollow2D>("PathFollow2D");
-                AnimationState.Travel("Jump");
+                if (currentPath != null)
+                {
+                    currentPathFollow = currentPath.GetNode<PathFollow2D>("PathFollow2D");
+                    AnimationState.Travel("Jump");
+                }
             }
         }
 
@@ -160,6 +163,7 @@ namespace Hopper
         private void LoadStage()
         {
             SetProcessInput(false);
+            
             
             Map Map = GetNode<Map>("..");
             Map.SetProcessInput(false);

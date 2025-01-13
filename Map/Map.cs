@@ -182,8 +182,10 @@ namespace Hopper
         public void ConnectPauseSignals()
         {
             if (HUD.OverlayMenu.QuitButton.IsConnected("pressed", this, nameof(QuitToMenu)))
+            {
                 DisconnectPauseSignals();
-            HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+                HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+            }
         }
 
         public void DisconnectPauseSignals()

@@ -12,6 +12,7 @@ public enum OverlayMenuMode
 
 public class OverlayMenu : MarginContainer
 {
+    public OverlayMenuButton BackButton { get; set; }
     public OverlayMenuButton RestartButton { get; set; }
     public OverlayMenuButton MapButton { get; set; }
     public OverlayMenuButton QuitButton { get; set; }
@@ -24,6 +25,7 @@ public class OverlayMenu : MarginContainer
 
     public override void _Ready()
     {
+        BackButton = GetNode<OverlayMenuButton>("Buttons/Back");
         RestartButton = GetNode<OverlayMenuButton>("Buttons/Restart");
         MapButton = GetNode<OverlayMenuButton>("Buttons/Map");
         QuitButton = GetNode<OverlayMenuButton>("Buttons/Quit");
@@ -49,6 +51,7 @@ public class OverlayMenu : MarginContainer
         else if (Mode == OverlayMenuMode.Minimised)
         {
             ShowMenuButton.ShowMenuButton();
+            BackButton.Hide();
             RestartButton.Hide();
             MapButton.Hide();
             LevelSelectOverlayButton.Hide();
@@ -61,6 +64,7 @@ public class OverlayMenu : MarginContainer
         else if (Mode == OverlayMenuMode.Map)
         {
             ShowMenuButton.Hide();
+            BackButton.Hide();
             RestartButton.Hide();
             MapButton.Hide();
             LevelSelectOverlayButton.Hide();
@@ -73,18 +77,19 @@ public class OverlayMenu : MarginContainer
         else if (Mode == OverlayMenuMode.LevelTitle)
         {
             ShowMenuButton.Hide();
+            BackButton.Hide();
             RestartButton.Hide();
             MapButton.ShowMenuButton();
             LevelSelectOverlayButton.Hide();
-            QuitButton.ShowMenuButton();
+            QuitButton.Hide();
 
             ColourRect.Hide();
-
             Show();
         }
         else if (Mode == OverlayMenuMode.Stage)
         {
             ShowMenuButton.Hide();
+            BackButton.ShowMenuButton();
             RestartButton.ShowMenuButton();
             MapButton.ShowMenuButton();
             LevelSelectOverlayButton.ShowMenuButton();
@@ -92,6 +97,8 @@ public class OverlayMenu : MarginContainer
 
             ColourRect.Show();
             Show();
+
+            BackButton.GrabFocus();
         }
 
         CurrentMode = Mode; //TODO: Check this is OK and what happens if no mode sent.
@@ -103,7 +110,6 @@ public class OverlayMenu : MarginContainer
         {   
             GD.Print("Escape pressed.");
             ChangeMode(OverlayMenuMode.Stage);
-            RestartButton.GrabFocus();
             AcceptEvent();
         }
     }

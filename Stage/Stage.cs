@@ -328,7 +328,7 @@ namespace Hopper
 		   }
 		} */
 
-		public void IncrementLevel()
+		public void IncrementLevel() //FIXME: Intermittent error when completing last level of a set
 		{
 			if (TempForTesting)
 			{

@@ -241,36 +241,19 @@ namespace Hopper
             }
         }
 
-        public override void _GuiInput(InputEvent @event)
+        public override void _UnhandledKeyInput(InputEventKey @event)
         {
-            /* if (!Animating && Visible)
+            
+            if (@event.IsActionPressed("ui_map") ||
+                @event.IsActionPressed("ui_cancel"))
             {
-                if (@event.IsActionPressed("ui_accept") ||
-                    @event is InputEventScreenTouch && @event.IsPressed())
-                {
-                    AcceptEvent();
-                    StopInput();
-                    AnimateHide();
-                }
-                else if (@event.IsActionPressed("ui_map"))
+                if (!Animating && Visible)
                 {
                     AcceptEvent();
                     StopInput();
                     EmitSignal("BackToMap");
                 }
-                else if (@event.IsActionPressed("ui_quit"))
-                {
-                    AcceptEvent();
-                    StopInput();
-                    EmitSignal("QuitToMenu");
-                }
-                else if (@event.IsActionPressed("ui_cancel"))
-                {
-                    AcceptEvent();
-                    StopInput();
-                    AnimateHide();
-                }
-            } */
+            }
         }
 
         private void StartInput()
