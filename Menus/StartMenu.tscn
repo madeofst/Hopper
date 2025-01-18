@@ -10,7 +10,6 @@
 [ext_resource path="res://Menus/Resources/Blue.png" type="Texture" id=14]
 
 [node name="StartMenu" type="MarginContainer"]
-modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 3.05176e-05
@@ -22,7 +21,6 @@ custom_constants/margin_bottom = 0
 script = ExtResource( 3 )
 
 [node name="WaterShader" type="TextureRect" parent="."]
-visible = false
 material = ExtResource( 13 )
 margin_right = 480.0
 margin_bottom = 270.0
@@ -49,7 +47,6 @@ texture = ExtResource( 10 )
 stretch_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-visible = false
 margin_right = 480.0
 margin_bottom = 270.0
 mouse_filter = 2
@@ -67,49 +64,50 @@ margin_top = 51.0
 margin_right = 480.0
 margin_bottom = 67.0
 theme = ExtResource( 1 )
-custom_constants/separation = 35
+custom_constants/separation = 28
 alignment = 1
 
 [node name="LoadButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 34.0
-margin_right = 100.0
+margin_left = 74.0
+margin_right = 126.0
 margin_bottom = 16.0
-text = "Continue"
+text = "continue"
 
 [node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 135.0
-margin_right = 213.0
+margin_left = 154.0
+margin_right = 217.0
 margin_bottom = 16.0
-text = "New game"
+text = "new game"
 script = ExtResource( 2 )
 
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 248.0
-margin_right = 304.0
+margin_left = 245.0
+margin_right = 289.0
 margin_bottom = 16.0
-text = "Options"
+text = "options"
 
 [node name="EditorButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 339.0
-margin_right = 381.0
+margin_left = 317.0
+margin_right = 353.0
 margin_bottom = 16.0
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource( 1 )
-text = "Editor"
+text = "editor"
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 416.0
-margin_right = 446.0
+margin_left = 381.0
+margin_right = 405.0
 margin_bottom = 16.0
-text = "Quit"
+text = "quit"
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 autoplay = true
+bus = "Music"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/LoadButton" to="." method="LoadPressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/NewGameButton" to="." method="NewGamePressed"]

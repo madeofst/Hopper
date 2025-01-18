@@ -100,6 +100,7 @@ namespace Hopper
 		public void OptionsPressed()
 		{
 			OptionsMenu optionsMenu = (OptionsMenu)GD.Load<PackedScene>("res://Menus/OptionsMenu.tscn").Instance();
+			optionsMenu.Connect(nameof(OptionsMenu.OptionsScreenClosed), this, nameof(UpdateLoadButton));
 			GetViewport().AddChild(optionsMenu);
 		}
 

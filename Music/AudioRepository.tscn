@@ -12,6 +12,7 @@ script = ExtResource( 5 )
 
 [node name="GardenPondMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+bus = "Music"
 
 [node name="ForestPondMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )

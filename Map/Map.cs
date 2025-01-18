@@ -190,12 +190,6 @@ namespace Hopper
                 HUD.OverlayMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
             }
             HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
-
-            if (Pointer.IsConnected(nameof(Pointer.QuitToMenu), this, nameof(QuitToMenu)))
-            {
-                Pointer.Disconnect(nameof(QuitToMenu), this, nameof(QuitToMenu));
-            }
-            Pointer.Connect(nameof(Pointer.QuitToMenu), HUD.OverlayMenu, nameof(QuitToMenu));
         }
 
         //UTILITY FUNCTIONS

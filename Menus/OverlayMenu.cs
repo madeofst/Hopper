@@ -10,7 +10,7 @@ public enum OverlayMenuMode
     Stage
 }
 
-public class OverlayMenu : MarginContainer
+public class OverlayMenu : ColorRect
 {
     public OverlayMenuButton BackButton { get; set; }
     public OverlayMenuButton RestartButton { get; set; }
@@ -20,20 +20,18 @@ public class OverlayMenu : MarginContainer
     public OverlayMenuButton ShowMenuButton { get; set; }
     public OverlayMenuButton UndoButton { get; set; }
 
-    private ColorRect ColourRect { get; set; }
 
     public OverlayMenuMode CurrentMode;
 
     public override void _Ready()
     {
-        BackButton = GetNode<OverlayMenuButton>("Buttons/Back");
-        RestartButton = GetNode<OverlayMenuButton>("Buttons/Restart");
-        MapButton = GetNode<OverlayMenuButton>("Buttons/Map");
-        QuitButton = GetNode<OverlayMenuButton>("Buttons/Quit");
-        LevelSelectOverlayButton = GetNode<OverlayMenuButton>("Buttons/LevelSelect");
-        ShowMenuButton = GetNode<OverlayMenuButton>("Buttons/ShowMenu");
-        UndoButton = GetNode<OverlayMenuButton>("Buttons/Undo");
-        ColourRect = GetNode<ColorRect>("ColorRect");
+        BackButton = GetNode<OverlayMenuButton>("MarginContainer/Buttons/Back");
+        RestartButton = GetNode<OverlayMenuButton>("MarginContainer/Buttons/Restart");
+        MapButton = GetNode<OverlayMenuButton>("MarginContainer/Buttons/Map");
+        QuitButton = GetNode<OverlayMenuButton>("MarginContainer/Buttons/Quit");
+        LevelSelectOverlayButton = GetNode<OverlayMenuButton>("MarginContainer/Buttons/LevelSelect");
+        ShowMenuButton = GetNode<OverlayMenuButton>("MarginContainer/Buttons/ShowMenu");
+        UndoButton = GetNode<OverlayMenuButton>("MarginContainer/Buttons/Undo");
         ChangeMode(OverlayMenuMode.Minimised);
     }
 
@@ -60,7 +58,7 @@ public class OverlayMenu : MarginContainer
             LevelSelectOverlayButton.Hide();
             QuitButton.Hide();
 
-            ColourRect.Hide();
+            //ColourRect.Hide();
 
             Show();
         }
@@ -74,7 +72,7 @@ public class OverlayMenu : MarginContainer
             LevelSelectOverlayButton.Hide();
             QuitButton.ShowMenuButton();
 
-            ColourRect.Hide();
+            //ColourRect.Hide();
 
             Show();
         }
@@ -88,7 +86,7 @@ public class OverlayMenu : MarginContainer
             LevelSelectOverlayButton.Hide();
             QuitButton.Hide();
 
-            ColourRect.Hide();
+            //ColourRect.Hide();
             Show();
         }
         else if (Mode == OverlayMenuMode.Stage)
@@ -101,7 +99,7 @@ public class OverlayMenu : MarginContainer
             LevelSelectOverlayButton.ShowMenuButton();
             QuitButton.ShowMenuButton();
 
-            ColourRect.Show();
+            //ColourRect.Show();
             Show();
 
             BackButton.GrabFocus();

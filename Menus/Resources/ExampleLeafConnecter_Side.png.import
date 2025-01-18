@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ExampleLeafConnecter.png-db35f135b0f6dda2a3eec90390211df2.stex"
+path="res://.import/ExampleLeafConnecter_Side.png-247737c8a8304bf33242f121a8610a79.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Menus/Resources/ExampleLeafConnecter.png"
-dest_files=[ "res://.import/ExampleLeafConnecter.png-db35f135b0f6dda2a3eec90390211df2.stex" ]
+source_file="res://Menus/Resources/ExampleLeafConnecter_Side.png"
+dest_files=[ "res://.import/ExampleLeafConnecter_Side.png-247737c8a8304bf33242f121a8610a79.stex" ]
 
 [params]
 

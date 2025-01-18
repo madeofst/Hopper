@@ -13,11 +13,19 @@ namespace Hopper
 		private HSlider MusicSlider;
 		private HSlider FXSlider;
 
+		private Button MainMenuButton;
+
+		[Signal]
+		public delegate void OptionsScreenClosed();
+
 		public override void _Ready()
 		{
 			AllSlider = GetNode<HSlider>("AllControls/MarginContainer/VBoxContainer/All/AllSlider");
 			MusicSlider = GetNode<HSlider>("AllControls/MarginContainer/VBoxContainer/Music/MusicSlider");
 			FXSlider = GetNode<HSlider>("AllControls/MarginContainer/VBoxContainer/FX/FXSlider");
+
+			MainMenuButton = GetNode<Button>("AllControls/MainMenuButton");
+			MainMenuButton.GrabFocus();
 
 			iMaster = AudioServer.GetBusIndex("Master");
 			iMusic = AudioServer.GetBusIndex("Music");
@@ -39,6 +47,7 @@ namespace Hopper
 		public void MenuPressed()
 		{
 			QueueFree();
+			EmitSignal(nameof(OptionsScreenClosed));
 		}
 
 		private float CalculateDB(float linear)

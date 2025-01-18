@@ -1,22 +1,18 @@
-[gd_resource type="Theme" load_steps=8 format=2]
+[gd_resource type="Theme" load_steps=6 format=2]
 
 [ext_resource path="res://Themes/StyleBox/MenuButtonNormal.tres" type="StyleBox" id=1]
-[ext_resource path="res://Themes/StyleBox/MenuButtonSelected.tres" type="StyleBox" id=2]
-[ext_resource path="res://Themes/StyleBox/MenuButtonHover.tres" type="StyleBox" id=3]
+[ext_resource path="res://Menus/Resources/MenuButtonFocused.tres" type="StyleBox" id=2]
+[ext_resource path="res://Menus/Resources/MenuButtonPressed.tres" type="StyleBox" id=3]
 [ext_resource path="res://Menus/Resources/MenuButtonNormal.tres" type="StyleBox" id=4]
-[ext_resource path="res://Fonts/DigitalDiscoSimple.tres" type="DynamicFont" id=5]
-
-[sub_resource type="DynamicFontData" id=1]
-font_path = "res://Fonts/DigitalDisco.ttf"
-
-[sub_resource type="DynamicFont" id=2]
-font_data = SubResource( 1 )
+[ext_resource path="res://Fonts/LycheeSoda.tres" type="DynamicFont" id=5]
 
 [resource]
 default_font = ExtResource( 5 )
-Button/fonts/font = SubResource( 2 )
+Button/colors/font_color_pressed = Color( 0.513726, 0.74902, 0.870588, 1 )
+Button/fonts/font = null
 Button/styles/disabled = ExtResource( 4 )
 Button/styles/focus = ExtResource( 2 )
-Button/styles/hover = ExtResource( 3 )
+Button/styles/hover = ExtResource( 2 )
 Button/styles/normal = ExtResource( 1 )
-Button/styles/pressed = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 3 )
+RichTextLabel/fonts/normal_font = ExtResource( 5 )

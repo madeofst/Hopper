@@ -277,7 +277,7 @@ namespace Hopper
 			HUD.UpdateMinScore(NextLevel.ScoreRequired, false);
 			HUD.CountInActiveHops();
 
-			LevelTitleScreen.LevelNameLabel.Text = $" {NextLevel.LevelName}";
+			LevelTitleScreen.LevelNameLabel.BbcodeText = $"[center]{NextLevel.LevelName}[/center]";
 
 			Player.Init(NextLevel, replay);
 

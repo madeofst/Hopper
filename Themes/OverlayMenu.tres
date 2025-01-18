@@ -2,14 +2,15 @@
 
 [ext_resource path="res://Menus/Resources/OverlayMenuButtonNormal.tres" type="StyleBox" id=1]
 [ext_resource path="res://Menus/Resources/OverlayMenuButtonPressed.tres" type="StyleBox" id=2]
-[ext_resource path="res://Fonts/DigitalDiscoSimple.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Fonts/LycheeSoda.tres" type="DynamicFont" id=3]
 
 [resource]
+default_font = ExtResource( 3 )
 Button/colors/font_color = Color( 0.141176, 0.2, 0.160784, 1 )
 Button/colors/font_color_focus = Color( 0.878431, 0.878431, 0.878431, 1 )
 Button/colors/font_color_hover = Color( 0.878431, 0.878431, 0.878431, 1 )
 Button/colors/font_color_pressed = Color( 0.878431, 0.878431, 0.878431, 1 )
-Button/fonts/font = ExtResource( 3 )
+Button/fonts/font = null
 Button/styles/focus = ExtResource( 1 )
 Button/styles/hover = ExtResource( 1 )
 Button/styles/normal = ExtResource( 1 )
@@ -18,4 +19,4 @@ MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
 MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
-RichTextLabel/fonts/normal_font = ExtResource( 3 )
+RichTextLabel/fonts/normal_font = null

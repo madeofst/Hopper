@@ -14,16 +14,24 @@ public class LevelSelectButton : TextureButton
     public ShaderMaterial ThinShader {get; set; }
     private bool Animating;
     private readonly float Speed = 0.95f;
+    private Sprite LevelSelector { get; set; }
 
     public override void _Ready()
     {
         ThickShader = GetNode<Sprite>("Branch1").Material as ShaderMaterial;
         ThinShader = GetNode<Sprite>("Branch2").Material as ShaderMaterial;
+        LevelSelector = GetNode<Sprite>("LevelSelector");
     }
 
     public void GotFocus()
     {
         EmitSignal(nameof(ChangeFocus), Name);
+        LevelSelector.Texture = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf2.png");
+    }
+
+    public void LostFocus()
+    {
+        LevelSelector.Texture = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");
     }
 
     public void AnimateBranch()
@@ -46,6 +54,7 @@ public class LevelSelectButton : TextureButton
 
         Disabled = false;
         TextureNormal = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");
+        LevelSelector.Texture = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -58,9 +67,13 @@ public class LevelSelectButton : TextureButton
             if (thickFill >= 1 && Animating)
             {
                 Animating = false;
-                TextureNormal = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf3.png");
                 Disabled = false;
                 EmitSignal(nameof(AnimationComplete));
+            }
+            else if (thickFill >=0.75 && Animating)
+            {
+                TextureNormal = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf2.png");
+                LevelSelector.Texture = GD.Load<Texture>("res://Menus/Resources/ExampleLeaf2.png");
             }
 
             if (Animating)

@@ -33,7 +33,7 @@ namespace Hopper
                     colour = Color.Color8(217, 165, 232);
                 }
                 GetNode<TextureRect>("Background").Modulate = colour;
-                GetNode<TextureRect>("LevelTitle/PondName").Texture = GD.Load<Texture>($"res://Menus/Resources/{value}Pond.png");
+                GetNode<TextureRect>("LevelTitle/MarginContainer/VBoxContainer/PondName").Texture = GD.Load<Texture>($"res://Menus/Resources/{value}Pond.png");
             }
         }
         private int stageID;
@@ -87,8 +87,8 @@ namespace Hopper
         public override void _Ready()
         {
             Shader = (ShaderMaterial)Material;
-            LevelButtons = GetNode<HBoxContainer>("LevelTitle/LevelSelector/VBoxContainer/LevelButtons");
-            LevelNameLabel = GetNode<RichTextLabel>("LevelTitle/LevelSelector/VBoxContainer/MarginContainer/LevelName");
+            LevelButtons = GetNode<HBoxContainer>("LevelTitle/LevelSelector/LevelButtons");
+            LevelNameLabel = GetNode<RichTextLabel>("LevelTitle/MarginContainer/VBoxContainer/LevelName");
         }
 
         public void Init(StageData StageData, int LevelCount, int iLevel, int maxHops, int reqScore)

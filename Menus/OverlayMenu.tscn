@@ -53,22 +53,22 @@ pressed = true
 [sub_resource type="ShortCut" id=14]
 shortcut = SubResource( 13 )
 
-[node name="OverlayMenu" type="MarginContainer"]
+[node name="OverlayMenu" type="ColorRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource( 1 )
+color = Color( 1, 1, 1, 0 )
 script = ExtResource( 5 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
-modulate = Color( 0.105882, 0.235294, 0.14902, 0.596078 )
+[node name="MarginContainer" type="MarginContainer" parent="."]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 475.0
-margin_bottom = 265.0
+margin_right = 10.0
+margin_bottom = 10.0
 
-[node name="Buttons" type="VBoxContainer" parent="."]
+[node name="Buttons" type="VBoxContainer" parent="MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
 margin_right = 30.0
@@ -77,14 +77,14 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 alignment = 2
 
-[node name="ShowMenu" parent="Buttons" instance=ExtResource( 6 )]
+[node name="ShowMenu" parent="MarginContainer/Buttons" instance=ExtResource( 6 )]
 margin_right = 25.0
 margin_bottom = 20.0
 shortcut = SubResource( 12 )
-text = "Esc"
+text = "esc"
 ButtonLabelText = ""
 
-[node name="Back" parent="Buttons" instance=ExtResource( 6 )]
+[node name="Back" parent="MarginContainer/Buttons" instance=ExtResource( 6 )]
 margin_top = 24.0
 margin_right = 25.0
 margin_bottom = 44.0
@@ -92,44 +92,44 @@ shortcut = SubResource( 2 )
 text = "<-"
 ButtonLabelText = ""
 
-[node name="Restart" parent="Buttons" instance=ExtResource( 6 )]
+[node name="Restart" parent="MarginContainer/Buttons" instance=ExtResource( 6 )]
 margin_top = 48.0
 margin_right = 25.0
 margin_bottom = 68.0
 shortcut = SubResource( 4 )
 text = "R"
-ButtonLabelText = "Restart"
+ButtonLabelText = "restart"
 
-[node name="LevelSelect" parent="Buttons" instance=ExtResource( 6 )]
+[node name="LevelSelect" parent="MarginContainer/Buttons" instance=ExtResource( 6 )]
 margin_top = 72.0
 margin_right = 25.0
 margin_bottom = 92.0
 shortcut = SubResource( 6 )
 text = "L"
-ButtonLabelText = "Level Select"
+ButtonLabelText = "level select"
 
-[node name="Map" parent="Buttons" instance=ExtResource( 6 )]
+[node name="Map" parent="MarginContainer/Buttons" instance=ExtResource( 6 )]
 margin_top = 96.0
 margin_right = 25.0
 margin_bottom = 116.0
 shortcut = SubResource( 8 )
-ButtonLabelText = "Map"
+ButtonLabelText = "map"
 
-[node name="Quit" parent="Buttons" instance=ExtResource( 6 )]
+[node name="Quit" parent="MarginContainer/Buttons" instance=ExtResource( 6 )]
 margin_top = 120.0
 margin_right = 25.0
 margin_bottom = 140.0
 shortcut = SubResource( 10 )
 text = "Q"
-ButtonLabelText = "Quit"
+ButtonLabelText = "quit"
 
-[node name="Undo" parent="Buttons" instance=ExtResource( 6 )]
+[node name="Undo" parent="MarginContainer/Buttons" instance=ExtResource( 6 )]
 margin_top = 144.0
 margin_right = 25.0
 margin_bottom = 164.0
 shortcut = SubResource( 14 )
 text = "Z"
-ButtonLabelText = "Undo"
+ButtonLabelText = "undo"
 
-[connection signal="pressed" from="Buttons/Back" to="." method="ChangeMode" binds= [ "Minimised" ]]
-[connection signal="pressed" from="Buttons/Restart" to="." method="ChangeMode" binds= [ "Minimised" ]]
+[connection signal="pressed" from="MarginContainer/Buttons/Back" to="." method="ChangeMode" binds= [ "Minimised" ]]
+[connection signal="pressed" from="MarginContainer/Buttons/Restart" to="." method="ChangeMode" binds= [ "Minimised" ]]
