@@ -244,8 +244,7 @@ namespace Hopper
         public override void _UnhandledKeyInput(InputEventKey @event)
         {
             
-            if (@event.IsActionPressed("ui_map") ||
-                @event.IsActionPressed("ui_cancel"))
+            if (@event.IsActionPressed("ui_cancel"))
             {
                 if (!Animating && Visible)
                 {

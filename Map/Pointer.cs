@@ -38,6 +38,9 @@ namespace Hopper
 
         private float MovementDirection = 1;
 
+        [Signal]
+        public delegate void QuitToMenu();
+
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
@@ -45,6 +48,7 @@ namespace Hopper
             AnimationTree = GetNode<AnimationTree>("AnimationTree");
             AnimationState = (AnimationNodeStateMachinePlayback)AnimationTree.Get("parameters/playback");
             SetProcessInput(false);
+            SetProcessUnhandledInput(false);
             //CurrentLocation = Start;
         }
 
@@ -118,10 +122,11 @@ namespace Hopper
                 {
                     if (PointerOnStage()) LoadStage();
                 }
-    /*             else if (@event.IsActionPressed("ui_quit"))
+                else if (@event.IsActionPressed("ui_quit") ||
+                         @event.IsActionPressed("ui_cancel"))
                 {
-                    GetParent<Map>().QuitToMenu();
-                } */
+                    //EmitSignal(nameof(QuitToMenu));
+                }
 
                 if (currentPath != null)
                 {
@@ -163,10 +168,12 @@ namespace Hopper
         private void LoadStage()
         {
             SetProcessInput(false);
+            SetProcessUnhandledInput(false);
             
             
             Map Map = GetNode<Map>("..");
             Map.SetProcessInput(false);
+            Map.SetProcessUnhandledInput(false);
 
             Stage Stage = (Stage)GD.Load<PackedScene>("res://Stage/Stage.tscn").Instance();
             Stage.Visible = false;

@@ -18,10 +18,11 @@ public class OverlayMenu : MarginContainer
     public OverlayMenuButton QuitButton { get; set; }
     public OverlayMenuButton LevelSelectOverlayButton { get; set; }
     public OverlayMenuButton ShowMenuButton { get; set; }
+    public OverlayMenuButton UndoButton { get; set; }
 
     private ColorRect ColourRect { get; set; }
 
-    private OverlayMenuMode CurrentMode;
+    public OverlayMenuMode CurrentMode;
 
     public override void _Ready()
     {
@@ -31,6 +32,7 @@ public class OverlayMenu : MarginContainer
         QuitButton = GetNode<OverlayMenuButton>("Buttons/Quit");
         LevelSelectOverlayButton = GetNode<OverlayMenuButton>("Buttons/LevelSelect");
         ShowMenuButton = GetNode<OverlayMenuButton>("Buttons/ShowMenu");
+        UndoButton = GetNode<OverlayMenuButton>("Buttons/Undo");
         ColourRect = GetNode<ColorRect>("ColorRect");
         ChangeMode(OverlayMenuMode.Minimised);
     }
@@ -52,7 +54,8 @@ public class OverlayMenu : MarginContainer
         {
             ShowMenuButton.ShowMenuButton();
             BackButton.Hide();
-            RestartButton.Hide();
+            RestartButton.ShowMenuButton();
+            UndoButton.ShowMenuButton();
             MapButton.Hide();
             LevelSelectOverlayButton.Hide();
             QuitButton.Hide();
@@ -66,6 +69,7 @@ public class OverlayMenu : MarginContainer
             ShowMenuButton.Hide();
             BackButton.Hide();
             RestartButton.Hide();
+            UndoButton.Hide();
             MapButton.Hide();
             LevelSelectOverlayButton.Hide();
             QuitButton.ShowMenuButton();
@@ -79,6 +83,7 @@ public class OverlayMenu : MarginContainer
             ShowMenuButton.Hide();
             BackButton.Hide();
             RestartButton.Hide();
+            UndoButton.Hide();
             MapButton.ShowMenuButton();
             LevelSelectOverlayButton.Hide();
             QuitButton.Hide();
@@ -90,7 +95,8 @@ public class OverlayMenu : MarginContainer
         {
             ShowMenuButton.Hide();
             BackButton.ShowMenuButton();
-            RestartButton.ShowMenuButton();
+            RestartButton.Hide();
+            UndoButton.Hide();
             MapButton.ShowMenuButton();
             LevelSelectOverlayButton.ShowMenuButton();
             QuitButton.ShowMenuButton();
@@ -118,7 +124,7 @@ public class OverlayMenu : MarginContainer
     {
         if (CurrentMode == OverlayMenuMode.Stage)
         {
-            AcceptEvent();
+            AcceptEvent();  //Prevents propagating to player etc.
         }
     }
 }

@@ -96,6 +96,7 @@ namespace Hopper
             else
             {
                 Pointer.SetProcessInput(true);
+                Pointer.SetProcessUnhandledInput(true);
             }
         }
 
@@ -118,6 +119,7 @@ namespace Hopper
             else
             {
                 Pointer.SetProcessInput(true);
+                Pointer.SetProcessUnhandledInput(true);
             }
 
         }
@@ -154,6 +156,7 @@ namespace Hopper
             {
                 Location.Activate(Locations);
                 Pointer.SetProcessInput(true);
+                Pointer.SetProcessUnhandledInput(true);
             }
             else
             {
@@ -176,6 +179,7 @@ namespace Hopper
         private void ConnectToPauseMenuAndHUD()
         {
             HUD = GetNode<HUD>("/root/HUD");
+            
             ConnectPauseSignals();
         }
 
@@ -183,14 +187,15 @@ namespace Hopper
         {
             if (HUD.OverlayMenu.QuitButton.IsConnected("pressed", this, nameof(QuitToMenu)))
             {
-                DisconnectPauseSignals();
-                HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
+                HUD.OverlayMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
             }
-        }
+            HUD.OverlayMenu.QuitButton.Connect("pressed", this, nameof(QuitToMenu));
 
-        public void DisconnectPauseSignals()
-        {
-            HUD.OverlayMenu.QuitButton.Disconnect("pressed", this, nameof(QuitToMenu));
+            if (Pointer.IsConnected(nameof(Pointer.QuitToMenu), this, nameof(QuitToMenu)))
+            {
+                Pointer.Disconnect(nameof(QuitToMenu), this, nameof(QuitToMenu));
+            }
+            Pointer.Connect(nameof(Pointer.QuitToMenu), HUD.OverlayMenu, nameof(QuitToMenu));
         }
 
         //UTILITY FUNCTIONS
@@ -198,18 +203,21 @@ namespace Hopper
         private void Pause()
         {
             Pointer.SetProcessInput(false);
+            Pointer.SetProcessUnhandledInput(false);
             SetProcessInput(false);
+            SetProcessUnhandledInput(false);
         }
 
         public void FadeIn()
         {
             Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 0.5f, Tween.TransitionType.Sine, Tween.EaseType.In);
-			Tween.Start();
+            Tween.Start();
         }
 
 
         public void QuitToMenu()
         {
+            HUD.OverlayMenu.QuitButton.Pressed = true;
             StartMenu StartMenu = GetNode<StartMenu>("/root/StartMenu");
             StartMenu.UpdateLoadButton();
             Pointer.MoveToMenuPosition(StartMenu.RectPosition);

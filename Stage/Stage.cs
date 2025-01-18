@@ -644,6 +644,7 @@ namespace Hopper
 				Map.UpdateActivationState(StageData.LevelReached);
 				Map.Show();
 				Map.SetProcessInput(true);
+				Map.SetProcessUnhandledInput(true);
 				if (StageComplete)
 				{
 					EmitSignal(nameof(UnlockNextStage));
@@ -651,6 +652,7 @@ namespace Hopper
 				else
 				{
 					Map.Pointer.SetProcessInput(true);
+					Map.Pointer.SetProcessUnhandledInput(true);
 				}
 			}
 			else
