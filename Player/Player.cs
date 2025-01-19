@@ -436,7 +436,6 @@ namespace Hopper
 
                 if (AnimationEndTile.Type == Type.Score)
                 {
-                    //AddTileChangeUndoInstruction(CurrentLevel.MaximumHops - HopsRemaining, AnimationEndTile);
                     AnimationEndTile.Eat(); 
                 }
                 else if (AnimationEndTile.Type == Type.Direct)
@@ -444,6 +443,12 @@ namespace Hopper
                     AnimationEndTile.RotateBounceDirectionVisual();
                     EmitSignal(nameof(UpdateTileInstruction), AnimationEndTile);
                 }
+            }
+            else
+            {
+                AudioStreamPlayer audioFX = AnimationEndTile.GetNode<AudioStreamPlayer>("AudioFX1");
+                audioFX.PitchScale = ((float)new Random().Next(0, 20) / 40f) + 0.95f;
+                audioFX.Play();
             }
         }
         
@@ -743,29 +748,6 @@ namespace Hopper
 
         public override void _UnhandledKeyInput(InputEventKey @event)
         {
-/*             if (Active && @event.IsActionPressed("ui_cancel"))
-            {   
-                GD.Print("Escape propagated to player.");
-            } */
-
-/*             if (Active && @event.IsActionPressed("ui_level_select"))
-            {
-                Deactivate();
-                EmitSignal(nameof(Pause));
-            }
-            else if (Active && @event.IsActionPressed("ui_restart"))
-            {
-                RestartPressed();
-            }
-            else if (Active && @event.IsActionPressed("ui_quit"))
-            {
-                EmitSignal(nameof(Quit));
-            }
-            else if (Active && @event.IsActionPressed("ui_map"))
-            {
-                EmitSignal(nameof(BackToMap));
-            } */
-
             string currentResourceName = CurrentAnimationNode == null ? "" : CurrentAnimationNode.Animation.ResourceName;
 
             if (Active && 
@@ -782,14 +764,6 @@ namespace Hopper
                     else if (@event.IsActionPressed("ui_up"))    MoveInputQueue.Enqueue(Vector2.Up);
                     else if (@event.IsActionPressed("ui_down"))  MoveInputQueue.Enqueue(Vector2.Down);
                 }
-
-/*                 if (@event.IsActionPressed("ui_left")  ||
-                    @event.IsActionPressed("ui_right") ||
-                    @event.IsActionPressed("ui_up")   ||
-                    @event.IsActionPressed("ui_down"))
-                    {
-                        if (@event is InputEventKey eventKey) GD.Print(OS.GetScancodeString(eventKey.PhysicalScancode));
-                    } */
             }
         }
 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/FX Crunch.ogg-58b114f882dd65cbaeff890810d3f123.oggstr"
+
+[deps]
+
+source_file="res://Music/FX/FX Crunch.ogg"
+dest_files=[ "res://.import/FX Crunch.ogg-58b114f882dd65cbaeff890810d3f123.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

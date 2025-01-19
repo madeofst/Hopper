@@ -148,6 +148,7 @@ namespace Hopper
         {
             if (Type == Type.Score && BugSprite.Visible == true)
             {
+                GetNode<AudioStreamPlayer>("AudioFX1").Play(); //FIXME: cuts off or skipped when moving quickly
                 GetNode<CPUParticles2D>("CPUParticles2D").Emitting = true;
                 GetNode<CPUParticles2D>("CPUParticles2D2").Emitting = true;
             }
@@ -155,6 +156,7 @@ namespace Hopper
 
         public void SetAsEaten()
         {
+
             BugSprite.Visible = false;
             PointValue = 0;
             Label.Visible = false;

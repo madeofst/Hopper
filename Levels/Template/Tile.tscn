@@ -55,7 +55,7 @@ tracks/1/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=18]
 resource_name = "Jump"
 length = 0.25
 step = 0.07
@@ -86,7 +86,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 )
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=17]
 resource_name = "Land"
 length = 0.21
 step = 0.035
@@ -209,7 +209,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 )
 }
 
-[sub_resource type="ShaderMaterial" id=17]
+[sub_resource type="ShaderMaterial" id=19]
 resource_local_to_scene = true
 shader = ExtResource( 11 )
 shader_param/image_height_px = 32.0
@@ -297,8 +297,8 @@ texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="LilySprite"]
 anims/Idle = SubResource( 13 )
-anims/Jump = SubResource( 2 )
-anims/Land = SubResource( 3 )
+anims/Jump = SubResource( 18 )
+anims/Land = SubResource( 17 )
 
 [node name="SplashSprite" type="Sprite" parent="."]
 self_modulate = Color( 1, 1, 1, 0.784314 )
@@ -317,7 +317,7 @@ anims/Land = SubResource( 6 )
 anims/Splash = SubResource( 7 )
 
 [node name="BugSprite" parent="." instance=ExtResource( 8 )]
-material = SubResource( 17 )
+material = SubResource( 19 )
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 self_modulate = Color( 1, 1, 1, 0.294118 )
