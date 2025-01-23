@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/FX trampoline.ogg-c41da00b97f4041ba1f12e5ebecfae35.oggstr"
+
+[deps]
+
+source_file="res://Music/FX/FX trampoline.ogg"
+dest_files=[ "res://.import/FX trampoline.ogg-c41da00b97f4041ba1f12e5ebecfae35.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
