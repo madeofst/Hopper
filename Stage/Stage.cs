@@ -127,27 +127,27 @@ namespace Hopper
 			else if (StageData.Pond == "BelAir")
 			{
 				Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
-				Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
+				Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
 			}
 			else if (StageData.Pond == "Liffey")
 			{
 				Background.Texture = GD.Load<Texture>("res://Stage/Resources/DesertPond.png");
-				Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
+				Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
 			}
 			else if (StageData.Pond == "Idwal")
 			{
 				Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
-				Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
+				Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
 			}
 			else if (StageData.Pond == "Boss")
 			{
 				Background.Texture = GD.Load<Texture>("res://Stage/Resources/BossPond.png");
-				Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
+				Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
 			}
 			else
 			{
 				Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
-				Music = GetNode<AudioStreamPlayer>("../AudioRepository/ForestPondMusic");
+				Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
 			}
 
 			Music.Play();

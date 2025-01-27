@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/FX Goal activated 2.ogg-aecf0a58a2564c78dfc32146c62b7bcb.oggstr"
+
+[deps]
+
+source_file="res://Music/FX/FX Goal activated 2.ogg"
+dest_files=[ "res://.import/FX Goal activated 2.ogg-aecf0a58a2564c78dfc32146c62b7bcb.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

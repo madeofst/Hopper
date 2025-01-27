@@ -349,7 +349,6 @@ self_modulate = Color( 1, 1, 1, 0.843137 )
 position = Vector2( 16, 16 )
 texture = ExtResource( 16 )
 hframes = 5
-frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BossIndicatorSprite"]
 autoplay = "RESET"
@@ -370,6 +369,7 @@ script = ExtResource( 3 )
 
 [node name="AudioFX1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
+volume_db = -5.749
 mix_target = 2
 bus = "FX"
 

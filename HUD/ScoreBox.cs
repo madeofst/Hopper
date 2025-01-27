@@ -35,11 +35,14 @@ public class ScoreBox : Control
 		{
 			if (levelScore > i)
 			{
-				ScoreBugs[i].BugTexture.Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBoxTicked.png");
+				if (i + 1 == levelScore && !ScoreBugs[i].Ticked)
+				{
+					ScoreBugs[i].Pop();
+				}
 			}
 			else
 			{
-				ScoreBugs[i].BugTexture.Texture = GD.Load<Texture>("res://HUD/Resources/ScoreBox.png");
+				ScoreBugs[i].Ticked = false;
 			}
 		}
 	}

@@ -29,6 +29,7 @@ namespace Hopper
         public int JumpLength;
         [Export]
         public Vector2 BounceDirection;
+        public int BounceDirectionQueueCount = -1;
 
         [Signal]
         public delegate void TileUpdated(Vector2 gridPosition, Type type, int Score, Vector2 bounceDirection, bool eaten = false, bool activated = false); //TODO: need to fix this now I've changed the parameters
@@ -88,7 +89,7 @@ namespace Hopper
                 float Wrapped = Mathf.Wrap(BounceDirection.Angle(), 0, Mathf.Tau);
                 float FullAngle = Wrapped / Mathf.Tau * 4;
                 int IntFullAngle = Mathf.RoundToInt(FullAngle);
-                LilySprite.Frame = IntFullAngle;
+                LilySprite.Frame = IntFullAngle * LilySprite.Hframes / 4;
             }
 
             Connect("mouse_entered", this, "OnMouseEnter");
@@ -148,7 +149,7 @@ namespace Hopper
         {
             if (Type == Type.Score && BugSprite.Visible == true)
             {
-                GetNode<AudioStreamPlayer>("AudioFX1").Play(); //FIXME: cuts off or skipped when moving quickly
+                GetNode<AudioStreamPlayer>("AudioFX2").Play(); //FIXME: cuts off or skipped when moving quickly
                 GetNode<CPUParticles2D>("CPUParticles2D").Emitting = true;
                 GetNode<CPUParticles2D>("CPUParticles2D2").Emitting = true;
             }
@@ -156,7 +157,6 @@ namespace Hopper
 
         public void SetAsEaten()
         {
-
             BugSprite.Visible = false;
             PointValue = 0;
             Label.Visible = false;
@@ -165,12 +165,13 @@ namespace Hopper
         public Vector2 RotateBounceDirection()
         {
             BounceDirection = BounceDirection.Rotated(Mathf.Pi / 2).Round();
+            BounceDirectionQueueCount++;
             return BounceDirection;
         }
 
         public void RotateBounceDirectionVisual()
         {
-            LilySprite.Frame = (LilySprite.Frame + LilySprite.Hframes + 1) % LilySprite.Hframes;
+            LilySprite.Frame = (LilySprite.Frame + LilySprite.Hframes + (LilySprite.Hframes / 5)) % LilySprite.Hframes;
         }
 
         public void UpdateBounceDirection(Vector2 updatedBounceDirection)

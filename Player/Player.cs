@@ -65,7 +65,7 @@ namespace Hopper
         public delegate void InitUndo();
 
         //Player general parameters
-        public int HopsRemaining { get; set; } = 3;
+        public int HopsRemaining { get; set; }
         //public int TotalScore { get; set; } = 0;
 
         public int _LevelScore;
@@ -136,7 +136,6 @@ namespace Hopper
             CurrentAnimationNode = null;
             PreviousAnimationNode = null;
             AnimationTimeElapsed = 0;
-            LevelScore = 0;
 
             RestartingLevel = false;
             CurrentLevel = currentLevel;
@@ -429,7 +428,15 @@ namespace Hopper
             if (AnimationEndTile.IsInsideTree() && AnimationEndTile.Type != Type.Rock) 
             {
                 AnimationEndTile.SplashAnimation.Play("Land");
-                if (AnimationEndTile.Type != Type.Water)
+
+                if (AnimationEndTile.Type == Type.Direct)
+                {
+                    float LandAnimationSelector = ((AnimationEndTile.BounceDirection.Angle() + Mathf.Tau) % Mathf.Tau) / (Mathf.Tau / 4);
+                    float wrapped = Mathf.Wrap(LandAnimationSelector + 4 - AnimationEndTile.BounceDirectionQueueCount, 1, 5);
+                    AnimationEndTile.BounceDirectionQueueCount--;
+                    AnimationEndTile.LilyAnimation.Play("Land" + wrapped);
+                }
+                else if (AnimationEndTile.Type != Type.Water)
                 {
                     AnimationEndTile.LilyAnimation.Play("Land");
                 }
@@ -440,11 +447,11 @@ namespace Hopper
                 }
                 else if (AnimationEndTile.Type == Type.Direct)
                 {
-                    AnimationEndTile.RotateBounceDirectionVisual();
+                    //AnimationEndTile.RotateBounceDirectionVisual();
                     EmitSignal(nameof(UpdateTileInstruction), AnimationEndTile);
                 }
             }
-            else
+            else //Rock
             {
                 AudioStreamPlayer audioFX = AnimationEndTile.GetNode<AudioStreamPlayer>("AudioFX1");
                 audioFX.PitchScale = ((float)new Random().Next(0, 20) / 40f) + 0.95f;
@@ -502,7 +509,7 @@ namespace Hopper
                     }
                     else
                     {
-                        UpdateScore(CurrentTile.PointValue);
+                        if (CurrentTile.Type == Type.Score) UpdateScore(CurrentTile.PointValue);
 
                         if (!CheckGoal())
                         {
@@ -610,7 +617,6 @@ namespace Hopper
                 EmitSignal(nameof(UpdateTileInstruction), CurrentTile);
             } 
             LevelScore -= scoreIncrement;
-            EmitSignal(nameof(ScoreUpdated), LevelScore);
         }
 
         private bool CheckGoal()

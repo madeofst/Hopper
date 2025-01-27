@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Music/Game_1.ogg" type="AudioStream" id=1]
 [ext_resource path="res://Music/FX/FX End level (fail).ogg" type="AudioStream" id=2]
-[ext_resource path="res://Music/FX/FX Goal activated.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Music/FX/FX Goal activated 2.ogg" type="AudioStream" id=3]
 [ext_resource path="res://Music/FX/FX End level (success).ogg" type="AudioStream" id=4]
 [ext_resource path="res://Music/AudioRepository.cs" type="Script" id=5]
 [ext_resource path="res://Music/GardenPond.ogg" type="AudioStream" id=6]
@@ -20,15 +20,15 @@ bus = "Music"
 
 [node name="FailLevel" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -3.0
+volume_db = -7.0
 bus = "FX"
 
 [node name="SucceedLevel" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
-volume_db = -3.0
+volume_db = -8.0
 bus = "FX"
 
 [node name="GoalActivate" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = -3.0
+volume_db = -9.0
 bus = "FX"

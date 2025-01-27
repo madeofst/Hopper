@@ -428,6 +428,7 @@ script = ExtResource( 2 )
 
 [node name="AudioFX1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
+volume_db = -6.0
 mix_target = 2
 bus = "FX"
 
