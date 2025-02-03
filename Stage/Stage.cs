@@ -136,13 +136,13 @@ namespace Hopper
 			}
 			else if (StageData.Pond == "Idwal")
 			{
-				Background.Texture = GD.Load<Texture>("res://Stage/Resources/TestPondDrawing4.png");
-				Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
+				Background.Texture = GD.Load<Texture>("res://Stage/Resources/CityPond.png");
+				Music = GetNode<AudioStreamPlayer>("../AudioRepository/Pond3Music");
 			}
 			else if (StageData.Pond == "Boss")
 			{
 				Background.Texture = GD.Load<Texture>("res://Stage/Resources/BossPond.png");
-				Music = GetNode<AudioStreamPlayer>("../AudioRepository/GardenPondMusic");
+				Music = GetNode<AudioStreamPlayer>("../AudioRepository/Pond3Music");
 			}
 			else
 			{

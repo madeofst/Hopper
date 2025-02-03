@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Hopper
 {
-	public class StartMenu : MarginContainer
+	public class StartMenu : TextureRect
 	{
 		public AudioStreamPlayer Music;
 		private Tween Tween;
@@ -18,17 +18,26 @@ namespace Hopper
 		private Viewport MapViewport;
 		private bool DEVMODE;
 		private MarginContainer MarginContainer;
+		private MarginContainer AllVisibleItems;
+		private List<Button> Buttons;
 
 		public override void _Ready()
 		{
 			MapViewport = GetNode<Viewport>("/root/MapContainer/ViewportContainer/Viewport");
 			Music = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 			Tween = GetNode<Tween>("Tween");
-			MarginContainer = GetNode<MarginContainer>("MarginContainer");
-			NewGameButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/NewGameButton");
-			LoadButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/LoadButton");
-			EditorButton = GetNode<Button>("MarginContainer/VBoxContainer/HBoxContainer/EditorButton");
+			AllVisibleItems = GetNode<MarginContainer>("AllVisibleItems");
+			MarginContainer = GetNode<MarginContainer>("AllVisibleItems/MarginContainer");
+			NewGameButton = GetNode<Button>("AllVisibleItems/MarginContainer/VBoxContainer/HBoxContainer/NewGameButton");
+			LoadButton = GetNode<Button>("AllVisibleItems/MarginContainer/VBoxContainer/HBoxContainer/LoadButton");
+			EditorButton = GetNode<Button>("AllVisibleItems/MarginContainer/VBoxContainer/HBoxContainer/EditorButton");
 			DEVMODE = GetNode<ResourceRepository>("/root/ResourceRepository").DEVMODE;
+
+			Buttons = new List<Button>();
+			foreach (Button b in GetNode<HBoxContainer>("AllVisibleItems/MarginContainer/VBoxContainer/HBoxContainer").GetChildren().OfType<Button>())
+			{
+				Buttons.Add(b);
+			}
 
 			if (DEVMODE)
 			{
@@ -129,7 +138,7 @@ namespace Hopper
 
         public void FadeIn()
         {
-            Tween.InterpolateProperty(this, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 3.42f, Tween.TransitionType.Sine, Tween.EaseType.In);
+            Tween.InterpolateProperty(AllVisibleItems, "modulate", new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), 3.42f, Tween.TransitionType.Sine, Tween.EaseType.In);
 			Tween.Start();
         }
 
@@ -168,7 +177,10 @@ namespace Hopper
 			}
 			else
 			{
-				MarginContainer.Visible = true;
+				foreach (Button b in Buttons)
+				{
+					b.Disabled = false;
+				}
 			}
 		}
 

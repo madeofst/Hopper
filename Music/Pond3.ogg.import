@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Pond3.ogg-489c460e61c94750f60619decd77468d.oggstr"
+
+[deps]
+
+source_file="res://Music/Pond3.ogg"
+dest_files=[ "res://.import/Pond3.ogg-489c460e61c94750f60619decd77468d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0.0

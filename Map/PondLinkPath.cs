@@ -43,7 +43,7 @@ namespace Hopper
                 if (Sprite != null)
                 {
                     Vector2 TextureSize = Sprite.Texture.GetSize();
-                    Speed = 60 / Mathf.Max(TextureSize.x, TextureSize.y);
+                    Speed = 0.7f; // / Mathf.Max(TextureSize.x, TextureSize.y);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace Hopper
 
                 if (Animating)
                 {
-                    Shader.SetShaderParam("fill", Mathf.Clamp(fill + delta * Speed * FillDirection, 0, 1));
+                    Shader.SetShaderParam("fill", Mathf.Clamp(fill + (delta * Speed * FillDirection), 0, 1));
                 }
             }
         }
