@@ -51,6 +51,7 @@ margin_bottom = 0.0
 anims/ShowPopUpText = SubResource( 2 )
 
 [node name="TouchButtons" type="Control" parent="."]
+visible = false
 margin_top = 1.0
 margin_right = 139.0
 margin_bottom = 270.0

@@ -13,6 +13,10 @@ namespace Hopper
         public Vector2 BounceDirection;
         public bool Activated;
 
+        public TileChangeInstruction()
+        {}
+
+
         public TileChangeInstruction(int actionOnTurn, Tile tile)
         {
             ActionOnTurn = actionOnTurn;

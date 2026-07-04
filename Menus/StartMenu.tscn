@@ -20,11 +20,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 3.05176e-05
 mouse_filter = 2
-texture = ExtResource( 14 )
 script = ExtResource( 3 )
 
 [node name="AllVisibleItems" type="MarginContainer" parent="."]
-modulate = Color( 1, 1, 1, 0 )
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -76,14 +74,12 @@ alignment = 1
 margin_left = 74.0
 margin_right = 126.0
 margin_bottom = 16.0
-disabled = true
 text = "continue"
 
 [node name="NewGameButton" type="Button" parent="AllVisibleItems/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 154.0
 margin_right = 217.0
 margin_bottom = 16.0
-disabled = true
 text = "new game"
 script = ExtResource( 2 )
 
@@ -91,7 +87,6 @@ script = ExtResource( 2 )
 margin_left = 245.0
 margin_right = 289.0
 margin_bottom = 16.0
-disabled = true
 text = "options"
 
 [node name="EditorButton" type="Button" parent="AllVisibleItems/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -102,14 +97,12 @@ mouse_default_cursor_shape = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource( 1 )
-disabled = true
 text = "editor"
 
 [node name="Quit" type="Button" parent="AllVisibleItems/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 381.0
 margin_right = 405.0
 margin_bottom = 16.0
-disabled = true
 shortcut = SubResource( 2 )
 text = "quit"
 

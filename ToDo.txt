@@ -68,7 +68,7 @@ _________________________
     //Presentational
     * Animate main menu
     * Improve score assignment
-    * bounce and double bounce improvments
+    * bounce and double bounce improvements
 
     // For timed mode
     * Timer reduces with each goal reached?
