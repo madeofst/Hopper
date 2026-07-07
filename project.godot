@@ -100,10 +100,6 @@ ui_undo={
  ]
 }
 
-[input_devices]
-
-pointing/emulate_touch_from_mouse=false
-
 [mono]
 
 project/assembly_name="Hopper"

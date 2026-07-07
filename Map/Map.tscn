@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://Map/Location.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map/Pointer.tscn" type="PackedScene" id=2]
@@ -72,7 +72,7 @@ shader_param/heightMap = ExtResource( 7 )
 [sub_resource type="Curve2D" id=29]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 232, 216, 0.690925, 14.5965, -0.690925, -14.5965, 200, 192, 0.115477, 21.2765, -0.115477, -21.2765, 208, 144, 0, 0, 0, 0, 184, 120, 0, 0, 0, 0, 152, 120 )
+"points": PoolVector2Array( 0, 0, 0, 0, 232, 216, 0.690925, 14.5965, -0.690925, -14.5965, 231, 192, 0.115477, 21.2765, -0.115477, -21.2765, 208, 144, 0, 0, 0, 0, 184, 120, 0, 0, 0, 0, 152, 120 )
 }
 
 [sub_resource type="Shader" id=30]
@@ -130,6 +130,38 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 16 )
 }
 
+[sub_resource type="ShaderMaterial" id=42]
+shader = SubResource( 30 )
+shader_param/fill = 1.0
+shader_param/color = Color( 1, 1, 1, 1 )
+shader_param/texture_size = Vector2( 500, 500 )
+shader_param/pixelSize = 1
+shader_param/heightMap = ExtResource( 7 )
+
+[sub_resource type="Curve2D" id=22]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -48, 16 )
+}
+
+[sub_resource type="Curve2D" id=50]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, -72, 0, 0, 0, 0, 200, -88 )
+}
+
+[sub_resource type="Curve2D" id=23]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, -16 )
+}
+
+[sub_resource type="Curve2D" id=8]
+resource_local_to_scene = true
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 104, -192, 0, 0, 0, 0, -48, -160, 0, 0, 0, 0, -96, -104 )
+}
+
 [sub_resource type="Shader" id=32]
 code = "shader_type canvas_item;
 
@@ -165,46 +197,6 @@ void fragment(){
 	//COLOR = text;
 }"
 
-[sub_resource type="ShaderMaterial" id=41]
-shader = SubResource( 32 )
-shader_param/fill = 1.0
-shader_param/color = Color( 1, 1, 1, 1 )
-shader_param/texture_size = Vector2( 500, 500 )
-shader_param/pixelSize = 1
-shader_param/heightMap = ExtResource( 20 )
-
-[sub_resource type="Curve2D" id=7]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 104, 0, -0.707906, 14.866, 0.707906, -14.866, 104, -32, -15.064, 1.5098, 15.064, -1.5098, 128, -56, -24.7086, 15.0686, 24.7086, -15.0686, 176, -56, 0, 0, 0, 0, 256, -72 )
-}
-
-[sub_resource type="ShaderMaterial" id=42]
-shader = SubResource( 30 )
-shader_param/fill = 1.0
-shader_param/color = Color( 1, 1, 1, 1 )
-shader_param/texture_size = Vector2( 500, 500 )
-shader_param/pixelSize = 1
-shader_param/heightMap = ExtResource( 7 )
-
-[sub_resource type="Curve2D" id=22]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -47, 16 )
-}
-
-[sub_resource type="Curve2D" id=23]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 47, -17 )
-}
-
-[sub_resource type="Curve2D" id=8]
-resource_local_to_scene = true
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 56, -185, 25.1682, -14.6999, -25.1682, 14.6999, -24, -168, 14.8083, -0.63182, -14.8083, 0.63182, -72, -168, 0.264866, -15.6271, -0.264866, 15.6271, -96, -144, 0, 0, 0, 0, -96, -113 )
-}
-
 [sub_resource type="ShaderMaterial" id=34]
 shader = SubResource( 32 )
 shader_param/fill = 1.0
@@ -230,7 +222,7 @@ shader_param/heightMap = ExtResource( 7 )
 [sub_resource type="Curve2D" id=10]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 21, 0.75, -21, -0.75, -32, 0, 0, 33.0356, 0, -33.0356, -64, -48, 11, 0.25, -11, -0.25, -96, -96, 0, 0, 0, 0, -128, -96 )
+"points": PoolVector2Array( 0, 0, 0, 0, 0, 0, 21, 0.75, -21, -0.75, -24, -48, 17.8583, 17.9553, -17.8583, -17.9553, -66, -67, 11, 0.25, -11, -0.25, -96, -96, 0, 0, 0, 0, -128, -96 )
 }
 
 [sub_resource type="Curve2D" id=11]
@@ -242,7 +234,7 @@ _data = {
 [sub_resource type="Curve2D" id=15]
 resource_local_to_scene = true
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 104, -184, -11.2666, -0.0280628, 11.2666, 0.0280628, 136, -184, 0, -31.6198, 0, 31.6198, 168, -136, -20.5, 0, 20.5, 0, 200, -88, 0, 0, 0, 0, 232, -88 )
+"points": PoolVector2Array( 0, 0, 0, 0, 104, -184, -11.2666, -0.0280628, 11.2666, 0.0280628, 136, -184, -6.74645, -10.1899, 6.74645, 10.1899, 165, -156, -34.3898, -1.98425, 34.3898, 1.98425, 200, -136, 0, 0, 0, 0, 232, -88 )
 }
 
 [sub_resource type="Shader" id=39]
@@ -477,25 +469,13 @@ position = Vector2( 104, 104 )
 Texture = ExtResource( 6 )
 ID = 2
 Pond = "Hawkins"
-Levels = PoolStringArray( "Bouncetime", "Tramlines", "Outside The Box", "Springtime", "Jump Around", "Stone Ceiling", "Jumpington", "2026-wall_bounce_1", "2026-BSR_2" )
-LocationsToUnlock = PoolStringArray( "World3", "World10" )
+Levels = PoolStringArray( "Bouncetime", "Tramlines", "Outside The Box" )
+LocationsToUnlock = PoolStringArray( "World10" )
 
 [node name="World1" parent="World2" instance=ExtResource( 12 )]
 material = null
 curve = SubResource( 5 )
 Directions = PoolStringArray( "Right" )
-
-[node name="World3" parent="World2" instance=ExtResource( 12 )]
-material = SubResource( 41 )
-position = Vector2( -104, 0 )
-curve = SubResource( 7 )
-Directions = PoolStringArray( "Up" )
-
-[node name="Sprite" type="Sprite" parent="World2/World3"]
-use_parent_material = true
-position = Vector2( 101, -18 )
-texture = ExtResource( 13 )
-offset = Vector2( 69, -28 )
 
 [node name="World10" parent="World2" instance=ExtResource( 12 )]
 material = SubResource( 42 )
@@ -509,15 +489,25 @@ texture = ExtResource( 19 )
 offset = Vector2( -10, 6 )
 
 [node name="World10" parent="." instance=ExtResource( 1 )]
-position = Vector2( 57, 120 )
+position = Vector2( 56, 120 )
 Texture = ExtResource( 6 )
 ID = 10
 Pond = "Hawkins"
-Levels = PoolStringArray( "Wine Country" )
-LocationsToUnlock = PoolStringArray(  )
+Levels = PoolStringArray( "Springtime", "Jump Around", "Stone Ceiling", "Jumpington", "2026-wall_bounce_1", "2026-BSR_2" )
+LocationsToUnlock = PoolStringArray( "World3" )
+
+[node name="World3" parent="World10" instance=ExtResource( 12 )]
+curve = SubResource( 50 )
+Directions = PoolStringArray( "Up" )
+
+[node name="Sprite" type="Sprite" parent="World10/World3"]
+use_parent_material = true
+position = Vector2( 45, -35 )
+scale = Vector2( 1.00046, 1 )
+texture = ExtResource( 13 )
+offset = Vector2( 69, -28 )
 
 [node name="World2" parent="World10" instance=ExtResource( 12 )]
-position = Vector2( 0, 1 )
 curve = SubResource( 23 )
 Directions = PoolStringArray( "Right" )
 
@@ -529,8 +519,8 @@ Pond = "BelAir"
 Levels = PoolStringArray( "Pond In Pond", "Doing lengths", "2026-swim_under_0", "2026-combo_swim", "2026-swim_under_2", "Where you came from" )
 LocationsToUnlock = PoolStringArray( "World4", "World7" )
 
-[node name="World2" parent="World3" instance=ExtResource( 12 )]
-position = Vector2( -56, 185 )
+[node name="World10" parent="World3" instance=ExtResource( 12 )]
+position = Vector2( -104, 192 )
 curve = SubResource( 8 )
 Directions = PoolStringArray( "Down" )
 
@@ -686,8 +676,8 @@ script = ExtResource( 4 )
 
 [connection signal="PathAnimated" from="Start/World1" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World1/World2" to="." method="ActivateLocation"]
-[connection signal="PathAnimated" from="World2/World3" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World2/World10" to="." method="ActivateLocation"]
+[connection signal="PathAnimated" from="World10/World3" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World3/World4" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World3/World7" to="." method="ActivateLocation"]
 [connection signal="PathAnimated" from="World7/World8" to="." method="ActivateLocation"]

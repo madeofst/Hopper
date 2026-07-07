@@ -12,13 +12,16 @@ namespace Hopper
         { 
             get 
             {
+                //GD.Print(Position);
                 foreach (Location l in Locations)
                 {
                     if (l.Position.IsEqualApprox(Position))
                     {
+                        //GD.Print("Location found: " + l.Name);
                         return l;
                     }
                 }
+                //GD.Print("No matching location at this position.");
                 return null;
             } 
             set
